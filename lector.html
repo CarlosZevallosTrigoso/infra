@@ -706,6 +706,10 @@
     md = md.replace(/<!--\s*p\.\s*(\d+)(?::[^>]*)?\s*-->/g, (m, n)=> '<span class="pg" id="p-' + n + '" data-p="' + n + '"></span>');
     // ancla de página sola entre párrafos: se pega al párrafo siguiente para no abrir un hueco
     md = md.replace(/\n\n(<span class="pg"[^>]*><\/span>)\n\n(?=[^\s#*<>\[-])/g, '\n\n$1');
+    // párrafo cortado por el cambio de página: si el fragmento anterior no cierra frase y el siguiente
+    // empieza en minúscula (o paréntesis), se unen en un solo párrafo con la marca de página dentro
+    md = md.replace(/(^|\n)([^\n]*[^\s.?!:;"”»)\]>])[ \t]*\n\n(<span class="pg"[^>]*><\/span>)\n?(?=[a-zà-ÿ(])/g, (m, ini, linea, pg)=>
+      /^\s*(#|>|\||[-*+]\s|\d+\.\s|<)/.test(linea) ? m : ini + linea + ' ' + pg);
     md = md.replace(/^\[\^([a-z0-9-]+)\]:\s*(.*)$/gm, (m, id, txt)=>{
       const n = id.replace(/^[a-z0-9]+-/, '');
       return '<span class="fn-n">' + n + '.</span>' + txt + ' <a class="fn-back" href="#fnref-' + id + '" title="volver al texto">↩</a>\n<a id="fn-' + id + '" class="fn-def-anchor"></a>';
@@ -1426,6 +1430,41 @@
     return escRe(m[1]) + '[*_]{0,2}' + escRe(m[2]) + '[*_]{0,2}' + escRe(m[3]);
   }
   const patSeq = ts => ts.map(patTok).join(SEP);
+  // Reescribe el tramo del .md que corresponde a las palabras viejas conservando lo que no es texto:
+  // marcas de página, llamadas a notas y comentarios quedan en su sitio, y las cursivas de cada palabra
+  // se mantienen cuando se cambia palabra por palabra.
+  const protegido = sep => sep.replace(/[\s*_]/g, '') !== '';
+  function rehacerMedio(txt, viejo, nuevas){
+    const re = new RegExp('^' + viejo.map(t => '(' + patTok(t) + ')').join('(' + SEP + ')') + '$');
+    const g = txt.match(re);
+    if (!g) return nuevas.join(' ');
+    const toks = [], seps = [];
+    for (let i = 1; i < g.length; i++) (i % 2 ? toks : seps).push(g[i]);
+    const conMarcas = (orig, nueva) => {
+      const ini = (orig.match(/^[^A-Za-z0-9À-ÿ]*/) || [''])[0].match(/[*_]+$/), fin = (orig.match(/[^A-Za-z0-9À-ÿ]*$/) || [''])[0].match(/^[*_]+/);
+      const core = nueva.match(/^([^A-Za-z0-9À-ÿ]*)(.*?)([^A-Za-z0-9À-ÿ]*)$/);
+      if (!core || !core[2] || (!ini && !fin)) return nueva;
+      return core[1] + (ini ? ini[0] : '') + core[2] + (fin ? fin[0] : '') + core[3];
+    };
+    if (nuevas.length === toks.length){
+      let out = '';
+      toks.forEach((t, i) => { out += conMarcas(t, nuevas[i]); if (i < seps.length) out += seps[i]; });
+      return out;
+    }
+    // distinto número de palabras: las nuevas van en orden y cada separador protegido queda en la posición proporcional
+    const prot = seps.map((sp, i) => ({ sp, i })).filter(x => protegido(x.sp));
+    if (!nuevas.length) return prot.map(x => x.sp).join('');
+    let out = '';
+    nuevas.forEach((w, j) => {
+      out += w;
+      if (j < nuevas.length - 1){
+        const aqui = prot.filter(x => Math.min(nuevas.length - 2, Math.round((x.i + 1) * nuevas.length / toks.length) - 1) === j);
+        out += aqui.length ? aqui.map(x => x.sp).join('') : ' ';
+      }
+    });
+    const sobran = prot.filter(x => Math.min(nuevas.length - 2, Math.round((x.i + 1) * nuevas.length / toks.length) - 1) < 0 || nuevas.length < 2);
+    return out + sobran.map(x => x.sp).join('');
+  }
   function aplicarTramo(md, a, b, h){
     const viejo = a.slice(h.a0, h.a1), nuevo = b.slice(h.b0, h.b1).join(' ');
     const intentar = k => {
@@ -1442,7 +1481,8 @@
       const m = ms[0];
       let rep;
       if (viejo.length){
-        if (nuevo) rep = m[1] + nuevo + m[3];
+        const medio = rehacerMedio(m[2], viejo, nuevo ? nuevo.split(' ') : []);
+        if (medio) rep = (m[1] + medio + m[3]).replace(/[ \t]*(\n\n\{\d+\}-{3,}\n\n)[ \t]*/g, '$1');
         else rep = m[1].length ? m[1].replace(/\s+$/, '') + m[3] : m[3].replace(/^\s+/, '');
       } else {
         if (izq.length && der.length) rep = m[1] + m[2] + nuevo + ' ' + m[3];
