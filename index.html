@@ -20,6 +20,16 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.62}
 a{color:var(--accent-dark)}
 .wrap{max-width:860px;margin:0 auto;padding:0 22px}
+.lay{max-width:1180px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:230px minmax(0,860px);gap:40px}
+header.top .lay{display:block}
+aside.toc{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:26px 6px 40px 0;border-right:1px solid var(--line)}
+aside.toc .label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+aside.toc a{display:block;text-decoration:none;color:var(--ink);font-size:.86em;line-height:1.35;padding:5px 8px 5px 10px;border-left:2px solid transparent}
+aside.toc a:hover{color:var(--accent-dark);border-left-color:var(--line)}
+aside.toc a.on{color:var(--accent-dark);border-left-color:var(--accent);font-weight:600}
+aside.toc a.sub{font-size:.76em;color:var(--muted);padding:3px 8px 3px 22px}
+aside.toc a.sub.on{color:var(--accent-dark);font-weight:600}
+main{min-width:0}
 header.top{border-bottom:3px solid var(--accent);padding:22px 0 16px}
 .crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .crumbs a{color:var(--accent-dark);text-decoration:none}
@@ -29,11 +39,12 @@ h1{font-size:1.7em;line-height:1.2;margin:0 0 8px}
 .btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px;cursor:pointer}
 .btn:hover{border-color:var(--accent);color:var(--accent-dark)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-nav.secs{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
+nav.secs{display:none;position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
 nav.secs .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:6px;padding-bottom:6px;scrollbar-width:none}
 nav.secs a{font-family:var(--mono);font-size:12px;white-space:nowrap;text-decoration:none;color:var(--muted);padding:6px 9px;border-radius:4px}
 nav.secs a:hover{background:var(--accent-soft);color:var(--accent-dark)}
 section{padding:30px 0 6px;scroll-margin-top:48px}
+h3[id],h4[id]{scroll-margin-top:56px}
 h2{font-size:1.32em;margin:0 0 14px;display:flex;gap:12px;align-items:baseline}
 h2 .n{font-family:var(--mono);font-size:.62em;color:var(--accent);font-weight:500}
 h3{font-size:1.06em;margin:22px 0 8px}
@@ -117,6 +128,11 @@ table.dia td:first-child{font-weight:600;width:16%}
 
 footer{color:var(--muted);font-family:var(--mono);font-size:11.5px;padding:34px 0 40px;border-top:1px solid var(--line);margin-top:30px}
 
+@media (max-width:1000px){
+  .lay{display:block}
+  aside.toc{display:none}
+  nav.secs{display:block}
+}
 @media (max-width:640px){
   .paso,.trans{grid-template-columns:1fr;gap:4px}
   .pp{text-align:left;padding-top:0}
@@ -129,11 +145,11 @@ footer{color:var(--muted);font-family:var(--mono);font-size:11.5px;padding:34px 
   table.dia td:first-child{width:auto;border-top:1px solid var(--line);background:var(--quote)}
   table.dia td[data-t]::before{content:attr(data-t) " · ";font-family:var(--mono);font-size:11px;color:var(--muted)}
 }
-@media print{nav.secs,.tools{display:none}}
+@media print{nav.secs,.tools,aside.toc{display:none}.lay{display:block}}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap">
+<header class="top"><div class="lay">
   <div class="crumbs"><span>Círculo de lecturas · antropología de las infraestructuras</span></div>
   <h1>Antropología de las infraestructuras</h1>
   <div class="ref">Matrices de lectura de tres textos: Star y Ruhleder (1994), Star (1999) y Harvey, Jensen y Morita (2016).</div>
@@ -144,12 +160,15 @@ footer{color:var(--muted);font-family:var(--mono);font-size:11.5px;padding:34px 
   </div>
 </div></header>
 <nav class="secs" aria-label="Secciones"><div class="wrap"><a href="#textos">Textos</a><a href="#dialogo">Cómo dialogan</a></div></nav>
-<main class="wrap">
+<div class="lay">
+<aside class="toc" aria-label="Contenido"><div class="label">Contenido</div><a href="#textos">Textos</a><a href="#dialogo">Cómo dialogan</a></aside>
+<main>
 <section id="textos"><h2><span class="n">01</span>Los tres textos</h2><p class="intro">Cada matriz trae la tesis, un esquema del texto, su núcleo (hallazgos, principios o movimientos), los argumentos clave, las citas, los límites y una síntesis.</p><div class="textos"><div class="texto"><div class="ano">1994 · hallazgos</div><h3>Steps Towards an Ecology of Infrastructure</h3><div class="ref">Star y Ruhleder · ponencia en CSCW 94</div><p>Un sistema elogiado por sus usuarios y casi no usado. La infraestructura es una relación, y los problemas de adopción son discontinuidades entre contextos que producen dobles vínculos.</p><div class="tools"><a class="btn primary" href="star-ruhleder-1994.html">abrir la matriz</a><a class="btn" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md">leer el texto ↗</a></div></div><div class="texto"><div class="ano">1999 · principios</div><h3>The Ethnography of Infrastructure</h3><div class="ref">Star · American Behavioral Scientist</div><p>Un programa para estudiar «cosas aburridas»: la infraestructura es relacional y ecológica, tiene nueve propiedades y se lee con unos trucos del oficio.</p><div class="tools"><a class="btn primary" href="star-1999.html">abrir la matriz</a><a class="btn" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md">leer el texto ↗</a></div></div><div class="texto"><div class="ano">2016 · movimientos</div><h3>Introduction: Infrastructural Complications</h3><div class="ref">Harvey, Jensen y Morita · Routledge</div><p>Las infraestructuras son formaciones complicadas: producen conexiones y huecos a la vez, nadie las controla y su estudio debe empezar por los huecos.</p><div class="tools"><a class="btn primary" href="harvey-jensen-morita-2016.html">abrir la matriz</a><a class="btn" href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md">leer el texto ↗</a></div></div></div></section>
 <section id="dialogo"><h2><span class="n">02</span>Cómo dialogan</h2><p class="intro">La secuencia es genealógica: el caso del Worm Community System (1994) se vuelve programa de método (1999), y ese programa es revisado desde contextos donde la falla es la norma (2016).</p><table class="dia"><thead><tr><th></th><th>Star y Ruhleder 1994</th><th>Star 1999</th><th>Harvey, Jensen y Morita 2016</th></tr></thead><tbody><tr><td>¿Qué es infraestructura?</td><td data-t="1994">Una relación con prácticas organizadas, nunca una cosa.</td><td data-t="1999">Una propiedad relacional, descrita por nueve propiedades.</td><td data-t="2016">Un ensamblaje doblemente relacional, definido de forma mínima y abierta.</td></tr><tr><td>Visibilidad</td><td data-t="1994">Aparece al conectarse: los problemas de «enchufe».</td><td data-t="1999">Invisible en el uso, visible en la ruptura.</td><td data-t="2016">Un espectro de visibilidades; la inversión también ocurre en el campo.</td></tr><tr><td>La falla</td><td data-t="1994">Un doble vínculo entre niveles de contexto.</td><td data-t="1999">La ruptura revela la infraestructura.</td><td data-t="2016">Las infraestructuras funcionan averiándose; se empieza por los huecos.</td></tr><tr><td>Método</td><td data-t="1994">Etnografía dentro del equipo de diseño; niveles de Bateson.</td><td data-t="1999">El campo como lectura de inscripciones; trucos del oficio.</td><td data-t="2016">Definir experimentando; tomar los huecos como hechos.</td></tr><tr><td>Política</td><td data-t="1994">Desigualdad de acceso; quién es dueño del problema.</td><td data-t="1999">Valores inscritos, narrativas maestras, puentes que excluyen.</td><td data-t="2016">Desarrollo que nadie controla, responsabilidad distribuida, ética del cuidado.</td></tr></tbody></table></section>
 
+<footer>Matriz · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026 · Traducciones propias. Los enlaces «↗» abren el pasaje en el lector.</footer>
 </main>
-<div class="wrap"><footer>Matriz · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026 · Traducciones propias. Los enlaces «↗» abren el pasaje en el lector.</footer></div>
+</div>
 <script>
 (function(){
   var K='adinf-matriz-fs', r=document.documentElement;
@@ -159,6 +178,21 @@ footer{color:var(--muted);font-family:var(--mono);font-size:11.5px;padding:34px 
   var a=document.getElementById('fsMenos'), b=document.getElementById('fsMas');
   if(a) a.onclick=function(){ v=Math.max(13,v-1); set(v); };
   if(b) b.onclick=function(){ v=Math.min(24,v+1); set(v); };
+})();
+(function(){
+  var links=[].slice.call(document.querySelectorAll('aside.toc a[href^="#"]'));
+  if(!links.length || !('IntersectionObserver' in window)) return;
+  var dest=links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); });
+  function marcar(){
+    var y=window.innerHeight*0.25, act=-1, actSub=-1;
+    dest.forEach(function(el,i){ if(el && el.getBoundingClientRect().top<=y){ if(links[i].classList.contains('sub')) actSub=i; else { act=i; actSub=-1; } } });
+    links.forEach(function(a,i){ a.classList.toggle('on', i===act || i===actSub); });
+    var on=document.querySelector('aside.toc a.on.sub')||document.querySelector('aside.toc a.on');
+    var t=document.querySelector('aside.toc');
+    if(on && t){ var r=on.getBoundingClientRect(), rt=t.getBoundingClientRect(); if(r.top<rt.top+40||r.bottom>rt.bottom-40) t.scrollTop+=r.top-rt.top-rt.height/3; }
+  }
+  var pend=false; window.addEventListener('scroll', function(){ if(!pend){ pend=true; requestAnimationFrame(function(){ pend=false; marcar(); }); } }, {passive:true});
+  marcar();
 })();
 </script>
 </body>
