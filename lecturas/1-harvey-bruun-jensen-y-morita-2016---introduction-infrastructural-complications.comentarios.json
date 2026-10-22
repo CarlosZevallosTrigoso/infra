@@ -1,6 +1,6 @@
 {
   "forjaAnotador": "1",
-  "generado": "2026-10-22T14:45:59.871Z",
+  "generado": "2026-10-22T14:55:07.630Z",
   "documento": {
     "nombre": "1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md",
     "hashMd": "31cc1435",
@@ -333,6 +333,50 @@
         {
           "texto": "El caracter experimental del desarrollo infraestructural!",
           "creado": "2026-10-22T14:43:53.122Z"
+        }
+      ]
+    },
+    {
+      "id": "amvjnqwb0uz01",
+      "creado": "2026-10-22T14:50:05.964Z",
+      "objetivo": {
+        "exact": "No one could know in advance, for example, that oil extraction in the Middle East would end up being a (or the) main factor in twentieth-century politics, creating wars and zones of incredible richness and poverty and leading to ecological catastrophe (Mitchell 2013). Often taken as self-explanatory by critics, the politics and economics of oil co-emerged with oil infrastructures in a contingent process.",
+        "prefix": "unfolding experimental process.\n",
+        "suffix": "\nAt the same time, of course, oi",
+        "textoPlano": {
+          "start": 36944,
+          "end": 37351
+        },
+        "fuenteMd": null
+      },
+      "comentarios": [
+        {
+          "texto": "Resaltar",
+          "creado": "2026-10-22T14:50:07.968Z"
+        }
+      ]
+    },
+    {
+      "id": "amvjnrun8pwbo",
+      "creado": "2026-10-22T14:50:50.468Z",
+      "objetivo": {
+        "exact": "every new connection also creates new gaps. ",
+        "prefix": " pleated arrangements, in which ",
+        "suffix": "It is not, however, that such ar",
+        "textoPlano": {
+          "start": 39371,
+          "end": 39415
+        },
+        "fuenteMd": {
+          "start": 40626,
+          "end": 40670,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Complexity.",
+          "creado": "2026-10-22T14:50:53.638Z"
         }
       ]
     }
