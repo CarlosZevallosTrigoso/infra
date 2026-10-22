@@ -15,6 +15,10 @@ Sitio estático para GitHub Pages: matrices analíticas de las lecturas del cír
 
 Sube su `.md` a `lecturas/` y ábrelo con `lector.html?f=<nombre>.md`. Para que aparezca en la lista inicial, con su título, su desfase de páginas y su matriz, agrega una entrada a `LECTURAS` dentro de `lector.html`. Las marcas `{n}----` de la conversión se muestran como página `n + 1 + desfase`.
 
+## Comentarios fijos
+
+Si junto a un texto existe `lecturas/<nombre-del-texto>.comentarios.json`, el lector lo carga al abrirlo y muestra esos comentarios en azul, de solo lectura, intercalados por posición en el panel. Se pueden ocultar en «ajustes». El formato es el mismo que produce «exportar .json» del lector: para fijar anotaciones propias basta con exportarlas, renombrar el archivo con el sufijo `.comentarios.json` y subirlo a `lecturas/`. Las anotaciones personales con el mismo identificador que una fija se retiran del navegador para no duplicarse.
+
 ## Notas
 
 - Las anotaciones del lector se guardan en el navegador, por texto, y se pueden exportar e importar como `.json`.

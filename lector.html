@@ -424,6 +424,15 @@
   #elegir a small{display:block; font-family:var(--mono); font-size:11px; color:var(--ink-dim); margin-top:4px}
   #doc img{display:none}
   ::highlight(lectura-cita){ background:rgba(240,196,64,.55); }
+  /* comentarios fijos (del repo): azul, de solo lectura */
+  ::highlight(lectura-fija){ background:rgba(63,111,168,.20); }
+  ::highlight(lectura-fija-activa){ background:rgba(63,111,168,.38); }
+  .nota.fija{border-color:#9fb8d6; border-left:3px solid #3f6fa8; background:#f4f8fc}
+  .nota.fija.activa{border-color:#3f6fa8}
+  .nota.fija .quote{border-left-color:#3f6fa8}
+  .nota.fija .etq{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:#3f6fa8; margin-bottom:4px}
+  .nota.fija .coment{border-left-color:#c7d6e8}
+  body.sin-fijas .nota.fija{display:none}
   #avisoCita{position:fixed; left:50%; top:70px; transform:translateX(-50%); z-index:80; background:var(--panel); border:1px solid var(--moss); border-radius:4px; padding:6px 12px; font-size:11px; color:var(--ink); box-shadow:0 4px 14px #0002; display:none}
   /* tablet vertical y pantallas estrechas: índice y anotaciones como cajones sobre el texto */
   @media (max-width:1100px){
@@ -506,6 +515,9 @@
         <span>letra</span>
         <input type="range" id="letra" min="14" max="26" step="1" value="17">
         <span class="val" id="letra-v">17</span>
+      </div>
+      <div class="ajuste-row" id="filaFijas" style="display:none">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="verFijas" checked style="width:auto;accent-color:#3f6fa8"> comentarios fijos</label>
       </div>
       <div class="ajuste-row hide">
         <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="glosSubrayar" checked style="width:auto;accent-color:var(--moss)"> subrayar glosario</label>
@@ -611,6 +623,7 @@
       render(texto, ARCH);
       docUrl = DOC; updateChrome();
       cargarGuardadas();
+      await cargarFijas();
       listo = true;
       annos.sort(cmpAnnos); refreshHighlights(); renderList(); updateChrome();
       const tit = (texto.match(/^title:\s*(.+)$/m) || [])[1];
@@ -1392,7 +1405,100 @@
     }
     CSS.highlights.set('forja-nota', base);
     CSS.highlights.set('forja-activa', act);
+    asegurarFijas();
+    const fb = new Highlight(), fa = new Highlight();
+    if (!document.body.classList.contains('sin-fijas'))
+      for (const f of fijas){ if (f.range) (f.id === activeId ? fa : fb).add(f.range); }
+    CSS.highlights.set('lectura-fija', fb);
+    CSS.highlights.set('lectura-fija-activa', fa);
   }
+
+  // ===== comentarios fijos: lecturas/<texto>.comentarios.json, versionado en el repo, de solo lectura =====
+  let fijas = [], fijasTexto = null;
+  async function cargarFijas(){
+    fijas = [];
+    const url = CARPETA + ARCH.replace(/\.(md|markdown|txt)$/i, '') + '.comentarios.json';
+    try {
+      const r = await fetch(url + '?_t=' + Date.now(), { cache:'no-store' });
+      if (!r.ok) return;
+      const data = await r.json();
+      const items = Array.isArray(data) ? data : (data.anotaciones || []);
+      fijas = items.map(it => {
+        const obj = it.objetivo || it;
+        return { id: it.id || ('f' + Math.random().toString(36).slice(2, 8)), exact: obj.exact || '', prefix: obj.prefix || '', suffix: obj.suffix || '', textoPlano: obj.textoPlano || null,
+                 comentarios: (it.comentarios || []).filter(c => c && c.texto) };
+      }).filter(f => f.exact);
+      // las anotaciones personales que ya pasaron a ser fijas (mismo id) dejan de duplicarse
+      const ids = new Set(fijas.map(f => f.id));
+      if (annos.some(a => ids.has(a.id))) annos = annos.filter(a => !ids.has(a.id));
+      fijasTexto = null; asegurarFijas();
+      $('filaFijas').style.display = fijas.length ? 'flex' : 'none';
+    } catch(e){ console.warn('comentarios fijos no disponibles', e); }
+  }
+  function asegurarFijas(){
+    if (fijasTexto === docText) return;
+    for (const f of fijas){
+      const r = resolveAnchor({ exact: f.exact, prefix: f.prefix, suffix: f.suffix, textoPlano: f.textoPlano });
+      f.range = r ? r.range : null; f.start = r ? r.start : null;
+    }
+    fijas.sort((a, b) => (a.start == null ? 1e15 : a.start) - (b.start == null ? 1e15 : b.start));
+    fijasTexto = docText;
+  }
+  function nodoFija(f){
+    const item = document.createElement('div');
+    item.className = 'nota fija' + (f.id === activeId ? ' activa' : '');
+    item.dataset.id = f.id; item.dataset.start = f.start == null ? 1e15 : f.start;
+    const et = document.createElement('div'); et.className = 'etq'; et.textContent = 'comentario fijo' + (f.range ? '' : ' · sin anclar');
+    const q = document.createElement('div'); q.className = 'quote';
+    q.textContent = f.exact.length > 160 ? f.exact.slice(0, 160) + '…' : f.exact;
+    q.title = 'Ir al pasaje';
+    q.addEventListener('click', ()=> irAFija(f.id));
+    const cs = document.createElement('div'); cs.className = 'coments';
+    for (const c of f.comentarios){ const row = document.createElement('div'); row.className = 'coment'; const tx = document.createElement('div'); tx.className = 'coment-tx'; tx.textContent = c.texto; row.appendChild(tx); cs.appendChild(row); }
+    item.append(et, q, cs);
+    return item;
+  }
+  function insertarFijas(){
+    asegurarFijas();
+    if (!fijas.length) return;
+    const vacio = list.querySelector('.vacio'); if (vacio) vacio.remove();
+    for (const f of fijas){
+      const el = nodoFija(f);
+      const sig = [...list.children].find(ch => ch.dataset.start != null && +ch.dataset.start > (f.start == null ? 1e15 : f.start) && !ch.classList.contains('fija'));
+      list.insertBefore(el, sig || null);
+    }
+  }
+  function irAFija(id){
+    const f = fijas.find(x => x.id === id); if (!f) return;
+    activeId = id;
+    list.querySelectorAll('.nota').forEach(n => n.classList.toggle('activa', n.dataset.id === id));
+    refreshHighlights();
+    if (f.range && !editando){
+      const rc = f.range.getBoundingClientRect(), cc = read.getBoundingClientRect();
+      read.scrollTop += (rc.top - cc.top) - 100;
+    }
+  }
+  // clic en un pasaje resaltado en azul: activa su comentario en el panel
+  docEl.addEventListener('click', e => {
+    if (!fijas.length || document.body.classList.contains('sin-fijas')) return;
+    const sel = window.getSelection(); if (sel && !sel.isCollapsed) return;
+    const cr = document.caretRangeFromPoint ? document.caretRangeFromPoint(e.clientX, e.clientY)
+             : (document.caretPositionFromPoint ? (p => p && { startContainer: p.offsetNode, startOffset: p.offset })(document.caretPositionFromPoint(e.clientX, e.clientY)) : null);
+    if (!cr) return;
+    const off = pointOffset(cr.startContainer, cr.startOffset);
+    if (off == null) return;
+    const f = fijas.find(x => x.range && x.start != null && off >= x.start && off <= x.start + x.exact.length);
+    if (!f) return;
+    if (document.body.classList.contains('no-panel')) aplicarPanel(true);
+    irAFija(f.id);
+    const el = list.querySelector('.nota.fija[data-id="' + CSS.escape(f.id) + '"]'); if (el) el.scrollIntoView({ block:'nearest' });
+  });
+  $('verFijas').addEventListener('change', ()=>{
+    document.body.classList.toggle('sin-fijas', !$('verFijas').checked);
+    try { localStorage.setItem('adinf-ver-fijas', $('verFijas').checked ? '1' : '0'); } catch(e){}
+    refreshHighlights();
+  });
+  (function(){ let v = null; try { v = localStorage.getItem('adinf-ver-fijas'); } catch(e){} if (v === '0'){ $('verFijas').checked = false; document.body.classList.add('sin-fijas'); } })();
 
   // ===== crear anotación desde la captura pendiente =====
   function addAnno(){
@@ -1459,7 +1565,8 @@
     return row;
   }
 
-  function renderList(focusNew){
+  function renderList(focusNew){ renderListBase(focusNew); insertarFijas(); }
+  function renderListBase(focusNew){
     list.innerHTML = '';
     if (!annos.length){
       list.innerHTML = '<p class="vacio">Selecciona texto y pulsa «anotar» para empezar.</p>';
@@ -1469,6 +1576,7 @@
       const item = document.createElement('div');
       item.className = 'nota' + (a.id === activeId ? ' activa' : '') + (a.huerfana ? ' huerfana' : '');
       item.dataset.id = a.id;
+      item.dataset.start = a.start == null ? 1e15 : a.start;
 
       const q = document.createElement('div');
       q.className = 'quote';
