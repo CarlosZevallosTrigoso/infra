@@ -1,6 +1,6 @@
 {
   "forjaAnotador": "1",
-  "generado": "2026-10-22T14:24:17.912Z",
+  "generado": "2026-10-22T14:45:59.871Z",
   "documento": {
     "nombre": "1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md",
     "hashMd": "31cc1435",
@@ -217,6 +217,122 @@
         {
           "texto": "La insistencia en la experimentación se fundamenta en la observación de que la infraestructura parece estar desbordándose por completo en la actualidad.",
           "creado": "2026-10-22T14:24:09.968Z"
+        }
+      ]
+    },
+    {
+      "id": "amvjmutyflaei",
+      "creado": "2026-10-22T14:25:09.927Z",
+      "objetivo": {
+        "exact": "Attention to infrastructure offers a welcome reconfiguration of anthropological approaches to the political.\" ",
+        "prefix": " Bear defended the motion that \"",
+        "suffix": "In the ensuing discussion, where",
+        "textoPlano": {
+          "start": 18797,
+          "end": 18907
+        },
+        "fuenteMd": {
+          "start": 19588,
+          "end": 19698,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Pensar la relación entre infraestructura y política.",
+          "creado": "2026-10-22T14:25:21.888Z"
+        }
+      ]
+    },
+    {
+      "id": "amvjn7oyvdrwc",
+      "creado": "2026-10-22T14:35:09.991Z",
+      "objetivo": {
+        "exact": "Now, Strum and Latour did not, of course, argue that technologies in general make human lives simpler rather than more complex. Instead, they evoked a distinction between the complex and the complicated. Whereas complex relations, like those of baboons, are intrinsically unsettled, the complications of technologically mediated relations pivot on their potential extendibility and the ways in which they fold together heterogeneous entities in networks, allowing for temporary simplification of certain kinds of relations. Yet, although networks and their components can be interconnected, their alignments are never exact. Infrastructural formations always to some degree remain out of synch with each other – they may also run in parallel or even work against one other.",
+        "prefix": "porarily simplify interactions.\n",
+        "suffix": "\nThe implication is that differe",
+        "textoPlano": {
+          "start": 22603,
+          "end": 23376
+        },
+        "fuenteMd": null
+      },
+      "comentarios": [
+        {
+          "texto": "Ahora bien, Strum y Latour, por supuesto, no argumentaron que las tecnologías en general hagan la vida humana más simple en lugar de más compleja. En cambio, evocaron una distinción entre lo complejo y lo complicado. Mientras que las relaciones complejas, como las de los babuinos, son intrínsecamente inestables, las complicaciones de las relaciones mediadas tecnológicamente giran en torno a su extensibilidad potencial y a las formas en que entrelazan entidades heterogéneas en redes, lo que permite una simplificación temporal de ciertos tipos de relaciones. Sin embargo, aunque las redes y sus componentes pueden interconectarse, sus alineaciones nunca son exactas. Las formaciones infraestructurales siempre permanecen, hasta cierto punto, desincronizadas entre sí; también pueden funcionar en paralelo o incluso actuar unas contra otras.",
+          "creado": "2026-10-22T14:35:11.020Z"
+        }
+      ]
+    },
+    {
+      "id": "amvjnf1gw2czi",
+      "creado": "2026-10-22T14:40:52.784Z",
+      "objetivo": {
+        "exact": "Civic infrastructural systems are increasingly managed by public authorities in partnership with private capital and shaped by a politics of decentralization that encourages the monetization of component networks in line with neoliberal agendas focusing on the out-sourcing of service provision.",
+        "prefix": " from diverse charges to users. ",
+        "suffix": " The consequences of such decent",
+        "textoPlano": {
+          "start": 26334,
+          "end": 26629
+        },
+        "fuenteMd": {
+          "start": 27309,
+          "end": 27604,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "El ensamblaje entre infraestructuras publicas e intereses privados.",
+          "creado": "2026-10-22T14:41:04.076Z"
+        }
+      ]
+    },
+    {
+      "id": "amvjnhivt0lbt",
+      "creado": "2026-10-22T14:42:48.665Z",
+      "objetivo": {
+        "exact": "ll of who depict situations where \"nature\" is presently enrolled to do jobs previously assigned to infrastructures.",
+        "prefix": "016), and Ashley Carse (2012), a",
+        "suffix": " As environments now have to be ",
+        "textoPlano": {
+          "start": 28161,
+          "end": 28276
+        },
+        "fuenteMd": {
+          "start": 29149,
+          "end": 29264,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Interesante.",
+          "creado": "2026-10-22T14:42:51.184Z"
+        }
+      ]
+    },
+    {
+      "id": "amvjnim13wv8e",
+      "creado": "2026-10-22T14:43:39.399Z",
+      "objetivo": {
+        "exact": "As we further discuss below, this infrastructural emergence is important because it indexes the experimental character of infrastructure development (Jensen and Morita 2015).",
+        "prefix": "n particular (cf. Latour 1996). ",
+        "suffix": "\nEmergence nevertheless introduc",
+        "textoPlano": {
+          "start": 30385,
+          "end": 30559
+        },
+        "fuenteMd": {
+          "start": 31435,
+          "end": 31609,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "El caracter experimental del desarrollo infraestructural!",
+          "creado": "2026-10-22T14:43:53.122Z"
         }
       ]
     }
