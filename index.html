@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matrices de infraestructura</title>
+<meta name="description" content="Índice de las matrices analíticas del círculo de lecturas de antropología de las infraestructuras: Star y Ruhleder (1994), Star (1999) y Harvey, Jensen y Morita (2016), con matriz comparativa, genealogía y lector de los textos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --ink:#1d1f1b; --muted:#5b6157; --accent:#5a7a3a; --accent-dark:#3f5728;
+  --accent-soft:#eef3e8; --line:#dfe3da; --quote:#f7f8f4; --warn:#8a5a14; --warn-soft:#fbf3e4;
+  --steel:#3f5f78; --steel-soft:#e9eff4; --plum:#6b3f63; --plum-soft:#f3ebf1;
+  --mono:'Fira Code',ui-monospace,Menlo,Consolas,monospace;
+  --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --fs:16.5px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.58}
+a{color:var(--accent-dark)}
+code{font-family:var(--mono);font-size:.88em}
+button{font-family:var(--mono);cursor:pointer}
+
+/* cabecera */
+header.top{border-bottom:3px solid var(--accent);padding:22px 32px 18px;background:#fff}
+.crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:8px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.crumbs a{color:var(--accent-dark);text-decoration:none}
+header.top h1{font-size:1.75em;line-height:1.2;margin:0 0 6px}
+header.top .ref{color:var(--muted);font-size:.93em;max-width:1000px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px}
+.btn:hover{border-color:var(--accent);color:var(--accent-dark)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:var(--accent-dark);color:#fff}
+.btn.on{border-color:var(--accent);color:var(--accent-dark);background:var(--accent-soft)}
+
+/* disposición */
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1560px}
+aside.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:20px 18px 40px 32px;border-right:1px solid var(--line)}
+.label{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
+aside.side nav a{display:block;text-decoration:none;color:var(--ink);font-size:.88em;padding:5px 0 5px 10px;border-left:2px solid transparent}
+aside.side nav a:hover{border-left-color:var(--accent);color:var(--accent-dark)}
+#navToggle{display:none}
+.search input{width:100%;font-family:var(--mono);font-size:13px;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink)}
+.search input:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+.count{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:6px 0 18px;min-height:1em}
+.other{margin-top:24px}
+.other a{display:block;font-size:.85em;margin:5px 0}
+main{padding:24px 36px 120px;min-width:0}
+section{margin:0 0 56px;scroll-margin-top:12px}
+h2{font-size:1.45em;margin:0 0 6px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h2 .n{font-family:var(--mono);font-size:.6em;color:var(--accent);margin-right:10px;font-weight:500}
+h3{font-size:1.1em;margin:26px 0 8px}
+p.intro{color:var(--muted);margin:8px 0 14px;max-width:920px}
+
+/* tablas */
+.tw{overflow-x:auto;margin:10px 0 18px;border:1px solid var(--line);border-radius:6px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:.88em;line-height:1.5}
+th{font-family:var(--mono);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-dark);background:var(--accent-soft);text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:bottom}
+td{padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+td.k{font-weight:600;min-width:140px}
+td.en{font-style:italic;background:var(--quote);min-width:230px}
+td.es{min-width:230px}
+td.id{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.ficha td.k{width:210px}
+.pgl{font-family:var(--mono);font-size:12px;color:var(--accent-dark);white-space:nowrap;text-decoration:none;border-bottom:1px dotted var(--accent)}
+.pgl:hover{color:var(--warn);border-bottom-color:var(--warn)}
+.ver{font-family:var(--mono);font-size:11.5px;white-space:nowrap;text-decoration:none;color:var(--steel);border:1px solid var(--steel-soft);background:var(--steel-soft);padding:2px 7px;border-radius:3px;display:inline-block;margin-top:6px}
+.ver:hover{border-color:var(--steel)}
+
+/* fichas de referencia cruzada */
+.chip{display:inline-block;font-family:var(--mono);font-size:11px;line-height:1.35;padding:2px 7px;margin:2px 3px 2px 0;border:1px solid var(--accent);color:var(--accent-dark);background:#fff;border-radius:3px;white-space:nowrap;cursor:pointer}
+.chip:hover{background:var(--accent-soft)}
+.chip.c{border-color:var(--steel);color:var(--steel)}
+.chip.c:hover{background:var(--steel-soft)}
+.chip.k{border-color:var(--plum);color:var(--plum)}
+.chip.k:hover{background:var(--plum-soft)}
+.chip.s,.chip.d{border-color:#9aa094;color:#4c5148}
+.chip.s:hover,.chip.d:hover{background:#f1f2ee}
+.chip .lb{font-family:var(--serif);font-size:12px;margin-left:5px;color:var(--ink)}
+.tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 6px;margin:1px 2px 1px 0;border:1px solid var(--accent);color:var(--accent-dark);border-radius:3px;white-space:nowrap}
+.tag.t2{border-color:#8a8f84;color:#4c5148}
+.tag.t3{border-color:var(--warn);color:var(--warn)}
+
+/* modo hilo */
+body.foco [data-refs]:not(.on){opacity:.28}
+body.foco.solo [data-refs]:not(.on){display:none}
+body.foco [data-refs].on{box-shadow:inset 4px 0 0 var(--accent)}
+body.foco tr[data-refs].on td{background:#fafcf7}
+#focoBar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;background:#fff;border:1px solid var(--accent);border-radius:8px;box-shadow:0 6px 24px #0002;padding:10px 14px;display:none;align-items:center;gap:10px;flex-wrap:wrap;max-width:min(940px,calc(100vw - 24px));font-size:.88em}
+body.foco #focoBar{display:flex}
+#focoBar .ft{font-weight:600}
+#focoBar .fc{font-family:var(--mono);font-size:12px;color:var(--muted)}
+#focoBar label{font-family:var(--mono);font-size:12px;display:flex;gap:6px;align-items:center;cursor:pointer}
+.flash{animation:flash 1.6s ease-out}
+@keyframes flash{0%{background:#fff3c4}100%{background:transparent}}
+tr.flash td{animation:flash 1.6s ease-out}
+
+/* mapa de sustento */
+.grid{border-collapse:separate;border-spacing:3px;font-size:12px;width:auto}
+.grid th{background:none;border:none;padding:4px 2px;text-align:center;font-size:11px;color:var(--muted)}
+.grid th.row{text-align:left;white-space:nowrap;color:var(--ink);font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:13px;padding-right:10px}
+.grid td{border:none;padding:0;text-align:center;vertical-align:middle;width:58px;height:38px;border-radius:4px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--ink)}
+.grid td.v0{background:#f6f7f4;color:#c3c7bd}
+.grid td.v1{background:#e3ecd8}
+.grid td.v2{background:#c9dbb5}
+.grid td.v3{background:#a9c58f}
+.grid td.v4{background:#86ab66;color:#fff}
+.grid td.arg{outline:2px solid var(--accent-dark);outline-offset:-2px}
+.legend{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+
+/* hilos argumentales */
+details.hilo{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;margin:0 0 12px;background:#fff}
+details.hilo>summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+details.hilo>summary::-webkit-details-marker{display:none}
+details.hilo>summary .tid{font-family:var(--mono);color:#fff;background:var(--accent);border-radius:3px;padding:1px 7px;font-size:12px}
+details.hilo>summary .tt{font-weight:600;flex:1;min-width:220px}
+details.hilo>summary .tc{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+details.hilo[open]>summary{border-bottom:1px solid var(--line)}
+.hb{padding:12px 18px 16px}
+.hb .form{font-size:1.02em;border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:6px 0 12px}
+.hb .row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px dashed var(--line)}
+.hb .row>b{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500;padding-top:2px}
+.hb ul{margin:0;padding-left:1.1em}
+.hb li{margin:4px 0}
+.hb .q{font-style:italic;background:var(--quote);padding:6px 10px;border-radius:4px;margin:6px 0}
+.hb .q .tr{font-style:normal;display:block;color:var(--muted);margin-top:3px}
+.hb .obj{border-left:3px solid var(--warn);background:var(--warn-soft);padding:6px 10px;border-radius:4px;margin:6px 0}
+
+/* progresión */
+.flow{list-style:none;margin:16px 0;padding:0;counter-reset:f}
+.flow li{position:relative;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 16px 12px 52px;margin:0 0 28px;background:#fff;counter-increment:f}
+.flow li::before{content:counter(f);position:absolute;left:14px;top:12px;font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px}
+.flow li:not(:last-child)::after{content:"↓";position:absolute;left:50%;bottom:-25px;font-family:var(--mono);color:var(--accent);font-size:17px}
+.flow .mv{font-weight:700}
+.flow .why{display:block;color:var(--muted);font-size:.92em;margin-top:4px}
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.levels div{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:12px 14px;font-size:.9em}
+.levels div b{display:block;font-family:var(--mono);font-size:12px;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.box{border:1px solid var(--line);background:var(--quote);padding:14px 18px;border-radius:6px;margin:12px 0}
+.hidden-row{display:none !important}
+footer{border-top:1px solid var(--line);padding:18px 32px;color:var(--muted);font-size:13px;font-family:var(--mono)}
+
+/* vista de fichas (tablet vertical, móvil o elegida) */
+body.fichas table.mx thead{display:none}
+body.fichas table.mx,body.fichas table.mx tbody{display:block;width:100%}
+body.fichas table.mx tr{display:block;border:1px solid var(--line);border-radius:6px;margin:0 0 12px;padding:6px 4px;background:#fff}
+body.fichas table.mx td{display:block;border:none;padding:6px 10px;min-width:0 !important}
+body.fichas table.mx td::before{content:attr(data-label);display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;font-style:normal}
+body.fichas table.mx td.en{border-radius:4px}
+body.fichas .tw{border:none;overflow:visible}
+body.fichas table.ficha td.k{width:auto}
+body.fichas table.ficha td::before{display:none}
+
+/* tablet y pantallas estrechas */
+@media (max-width:1100px){
+  .layout{grid-template-columns:1fr}
+  aside.side{position:sticky;top:0;z-index:40;background:#fff;max-height:none;border-right:none;border-bottom:1px solid var(--line);padding:10px 16px}
+  #navToggle{display:inline-flex}
+  aside.side .collapsible{display:none;padding-top:12px;max-height:70vh;overflow:auto}
+  aside.side.open .collapsible{display:block}
+  .sidebar-head{display:flex;gap:8px;align-items:center}
+  .sidebar-head .search{flex:1}
+  .sidebar-head .count{display:none}
+  main{padding:20px 20px 120px}
+  header.top{padding:18px 20px}
+  .levels{grid-template-columns:1fr}
+  .hb .row{grid-template-columns:1fr}
+  footer{padding:16px 20px}
+}
+@media (min-width:1101px){ .sidebar-head .count{display:block} }
+@media (max-width:600px){ main{padding:16px 16px 120px} header.top{padding:16px} :root{--fs:16px} }
+@media (pointer:coarse){
+  .chip{padding:5px 9px;font-size:12px;margin:3px 4px 3px 0}
+  aside.side nav a{padding:9px 0 9px 10px}
+  .pgl{padding:2px 0}
+}
+@media print{
+  aside.side,#focoBar,.tools{display:none !important}
+  .layout{display:block}
+  main{padding:0}
+  .tw{overflow:visible;border:none}
+  tr{break-inside:avoid}
+  details.hilo{break-inside:avoid}
+  body{font-size:11pt}
+}
+</style>
+<style>
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:14px 0 8px}
+.card{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:8px;padding:16px 18px;background:#fff;display:flex;flex-direction:column;gap:10px}
+.card .yr{font-family:var(--mono);font-size:12px;color:var(--accent-dark)}
+.card h3{margin:0;font-size:1.12em;line-height:1.3}
+.card .rf{color:var(--muted);font-size:.86em}
+.card .th{font-size:.93em;border-left:3px solid var(--accent);padding-left:10px}
+.card .nums{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.card .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.tl{list-style:none;margin:16px 0;padding:0;position:relative}
+.tl::before{content:"";position:absolute;left:58px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.tl li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:22px;margin:0 0 16px;position:relative}
+.tl li::before{content:"";position:absolute;left:53px;top:7px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--accent)}
+.tl li.ext::before{border-color:#9aa094}
+.tl .y{font-family:var(--mono);font-size:13px;color:var(--accent-dark);text-align:right;padding-top:2px}
+.tl .b{padding-left:6px}
+.tl .b b{display:block}
+.tl .b span{color:var(--muted);font-size:.92em}
+a.chip{text-decoration:none}
+.legend2{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:4px 0 10px}
+@media (max-width:1100px){ .cards{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="crumbs"><span>círculo de lecturas · antropología de las infraestructuras</span><span>octubre de 2026</span></div>
+  <h1>Matrices analíticas: tres textos sobre infraestructura</h1>
+  <div class="ref">Star y Ruhleder (1994), Star (1999) y Harvey, Jensen y Morita (2016). Cada matriz articula tesis, casos, citas, secciones, conceptos y evaluación crítica, y enlaza con el texto en el lector. Esta página las reúne y las compara.</div>
+  <div class="tools">
+    <a class="btn primary" href="lector.html">lector de textos</a>
+    <button class="btn" id="vista" title="Alternar entre tablas y fichas">vista: tabla</button>
+    <button class="btn" id="fmenos" title="Reducir la letra">A−</button>
+    <button class="btn" id="fmas" title="Aumentar la letra">A+</button>
+  </div>
+</header>
+
+<div class="layout">
+<aside class="side" id="side">
+  <div class="sidebar-head">
+    <button class="btn" id="navToggle" aria-expanded="false">☰ contenido</button>
+    <div class="search">
+      <input id="q" type="search" placeholder="buscar en la matriz comparativa…" aria-label="Buscar en la matriz comparativa">
+      <div class="count" id="count"></div>
+    </div>
+  </div>
+  <div class="collapsible">
+    <p class="label">Contenido</p>
+    <nav id="nav">
+      <a href="#textos">1. Los tres textos</a>
+      <a href="#uso">2. Cómo usar las matrices</a>
+      <a href="#genealogia">3. Genealogía</a>
+      <a href="#comparativa">4. Matriz comparativa</a>
+      <a href="#conceptos">5. Conceptos que viajan</a>
+    </nav>
+    <div class="other">
+      <p class="label">Matrices</p>
+      <a href="star-ruhleder-1994.html">Star y Ruhleder (1994)</a>
+      <a href="star-1999.html">Star (1999)</a>
+      <a href="harvey-jensen-morita-2016.html">Harvey, Jensen y Morita (2016)</a>
+      <a href="lector.html">Lector de textos</a>
+    </div>
+  </div>
+</aside>
+
+<main>
+
+<section id="textos">
+<h2><span class="n">01</span>Los tres textos</h2>
+<div class="cards">
+  <div class="card">
+    <div class="yr">1994 · ponencia CSCW</div>
+    <h3>Star y Ruhleder. Pasos hacia una ecología de la infraestructura</h3>
+    <div class="rf">"Steps Towards an Ecology of Infrastructure". <i>CSCW 94</i>, Chapel Hill. PDF de 12 pp.</div>
+    <div class="th">La infraestructura es una relación, no una cosa. Los fracasos de adopción se explican por discontinuidades entre niveles de contexto (Bateson) que producen dobles vínculos.</div>
+    <div class="nums">12 tesis · 36 casos · 33 citas · 26 conceptos</div>
+    <div class="acts"><a class="btn primary" href="star-ruhleder-1994.html">matriz</a><a class="btn" href="star-ruhleder-1994.html#hilo=T0">hilo central</a><a class="btn" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md">leer</a></div>
+  </div>
+  <div class="card">
+    <div class="yr">1999 · American Behavioral Scientist</div>
+    <h3>Star. La etnografía de la infraestructura</h3>
+    <div class="rf">"The Ethnography of Infrastructure". <i>ABS</i> 43(3): 377-391.</div>
+    <div class="th">Un llamado a estudiar cosas aburridas: la infraestructura es relacional y ecológica, tiene nueve propiedades y se lee con cuatro trucos del oficio. La escala queda abierta.</div>
+    <div class="nums">13 tesis · 44 casos · 40 citas · 30 conceptos</div>
+    <div class="acts"><a class="btn primary" href="star-1999.html">matriz</a><a class="btn" href="star-1999.html#hilo=T0">hilo central</a><a class="btn" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md">leer</a></div>
+  </div>
+  <div class="card">
+    <div class="yr">2016 · introducción a un compendio</div>
+    <h3>Harvey, Jensen y Morita. Complicaciones infraestructurales</h3>
+    <div class="rf">"Introduction: Infrastructural Complications". <i>Infrastructures and Social Complexity</i>, Routledge, pp. 1-22.</div>
+    <div class="th">Las infraestructuras son formaciones complicadas que producen conexiones y huecos; seis desplazamientos respecto de Bowker y Star, del flujo a los huecos y del panóptico al oligóptico.</div>
+    <div class="nums">14 tesis · 46 casos · 44 citas · 34 conceptos</div>
+    <div class="acts"><a class="btn primary" href="harvey-jensen-morita-2016.html">matriz</a><a class="btn" href="harvey-jensen-morita-2016.html#hilo=T0">hilo central</a><a class="btn" href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md">leer</a></div>
+  </div>
+</div>
+</section>
+
+<section id="uso">
+<h2><span class="n">02</span>Cómo usar las matrices</h2>
+<div class="box">
+<p><b>Códigos.</b> En cada matriz, T son tesis, K casos, C citas, S secciones, D conceptos y E tensiones críticas. Todas las fichas son pulsables y llevan al elemento al que remiten.</p>
+<p><b>Modo hilo.</b> Al pulsar una ficha de tesis (T), la página resalta todo lo que la sostiene: casos, citas, conceptos, secciones y críticas. "Solo este hilo" oculta el resto. El hilo queda en la dirección de la página, de modo que se puede enlazar (por ejemplo, <code>star-1999.html#hilo=T7</code>).</p>
+<p><b>Mapa de sustento.</b> Cuadrícula de tesis por secciones: muestra dónde se argumenta cada tesis y cuánta evidencia la sostiene.</p>
+<p><b>Lector.</b> Los números de página abren el texto en esa página; "ver en el texto" abre el pasaje de la cita y lo resalta. En el lector se puede anotar: las anotaciones se guardan en el navegador, por texto, y se exportan como <code>.json</code>.</p>
+<p><b>Tablet.</b> Por debajo de 1100 px las tablas se muestran como fichas; el botón "vista" alterna. A− y A+ ajustan la letra.</p>
+</div>
+</section>
+
+<section id="genealogia">
+<h2><span class="n">03</span>Genealogía</h2>
+<p class="intro">Los tres textos forman una secuencia. Los puntos grises son textos que no están en este conjunto pero sin los cuales la secuencia no se entiende.</p>
+<ol class="tl">
+  <li class="ext"><span class="y">1994</span><span class="b"><b>Bowker, "Information Mythology and Infrastructure"</b><span>Formula la inversión infraestructural: cambio de figura y fondo.</span></span></li>
+  <li><span class="y">1994</span><span class="b"><b><a href="star-ruhleder-1994.html">Star y Ruhleder, ponencia CSCW</a></b><span>Infraestructura como relación; niveles de Bateson; doble vínculo; el Worm Community System.</span></span></li>
+  <li class="ext"><span class="y">1996</span><span class="b"><b>Star y Ruhleder, <i>Information Systems Research</i></b><span>Versión canónica: aparece la lista de ocho dimensiones de la infraestructura.</span></span></li>
+  <li><span class="y">1999</span><span class="b"><b><a href="star-1999.html">Star, "The Ethnography of Infrastructure"</a></b><span>Nueve propiedades (se añade "fixed in modular increments"); trucos del oficio; la escala como problema.</span></span></li>
+  <li class="ext"><span class="y">1999</span><span class="b"><b>Bowker y Star, <i>Sorting Things Out</i></b><span>Clasificación y estándares; fuente de muchos casos de Star (1999).</span></span></li>
+  <li class="ext"><span class="y">2013</span><span class="b"><b>Larkin, "The Politics and Poetics of Infrastructure"</b><span>Espectro de visibilidades, de la opacidad al espectáculo: la objeción a la invisibilidad.</span></span></li>
+  <li><span class="y">2016</span><span class="b"><b><a href="harvey-jensen-morita-2016.html">Harvey, Jensen y Morita, introducción</a></b><span>Responde a Larkin; complicación; empezar por los huecos; visión oligóptica; escala como efecto.</span></span></li>
+</ol>
+</section>
+
+<section id="comparativa">
+<h2><span class="n">04</span>Matriz comparativa</h2>
+<p class="intro">Cada fila es una dimensión de análisis; cada celda resume la posición del texto y enlaza con las tesis (T), conceptos (D) o casos (K) de su matriz.</p>
+<div class="legend2">Las fichas abren la matriz correspondiente en el elemento indicado; las fichas de tesis abren el modo hilo.</div>
+<div class="tw"><table class="mx" id="tComp"></table></div>
+</section>
+
+<section id="conceptos">
+<h2><span class="n">05</span>Conceptos que viajan</h2>
+<p class="intro">Conceptos que pasan de un texto a otro y cómo cambian en el camino.</p>
+<div class="tw"><table class="mx" id="tViajan"></table></div>
+</section>
+
+</main>
+</div>
+
+<footer>Matrices analíticas · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026</footer>
+
+<script>
+const F = { a:'star-ruhleder-1994.html', b:'star-1999.html', c:'harvey-jensen-morita-2016.html' };
+const ref = (f, id) => `<a class="chip ${id[0]==='T'?'t':id[0]==='K'?'k':'d'}" href="${F[f]}#${id[0]==='T' ? 'hilo=' + id : id}">${id}</a>`;
+const refs = (f, ids) => ids.map(i => ref(f, i)).join(' ');
+
+const COMP = [
+ ['Pregunta que responde', [`¿Por qué un sistema bien diseñado y elogiado por sus usuarios no se usa?`, ['T0']], [`¿Cómo hacer etnografía de lo que parece aburrido y está incrustado en estándares, formularios y diseños?`, ['T0','T1']], [`¿Qué implica el auge del interés por la infraestructura, y cómo pensarla donde falla, se exhibe o se desconoce?`, ['T0','T1']]],
+ ['Definición', [`Relación, nunca cosa; contexto de la comunicación y el aprendizaje.`, ['T1','T5']], [`Propiedad relacional "not as a thing stripped of use"; relacional y ecológica.`, ['T3']], [`Ensamblajes materiales extendidos, diseñados o no, doblemente relacionales; definición mínima y abierta.`, ['T4','T5']]],
+ ['Aparato conceptual', [`Tipos lógicos, niveles de comunicación y aprendizaje, doble vínculo (Bateson).`, ['T4','D23']], [`Nueve propiedades y cuatro trucos del oficio.`, ['T4','T7','T8','T9','T10']], [`Complejo y complicado, huecos, orden fractal, oligóptico, escala producida.`, ['T6','T11','T12','T13']]],
+ ['Inversión', [`Herramienta del analista (Bowker): el sustrato se vuelve sustancia.`, ['D3']], [`Llevar al frente lo que está tras bambalinas.`, ['D6']], [`Se multiplica: inversiones que ocurren por sí solas en el campo y producen conceptos.`, ['T3','K12']]],
+ ['Visibilidad', [`Implícita: el no-uso revela la infraestructura (la semana sin usuarios).`, ['K35']], [`Propiedad 8: visible en la ruptura.`, ['D15','K20']], [`Exhibición frente a operación; respuesta a Larkin.`, ['T2','D4']]],
+ ['Material empírico', [`Un caso: el Worm Community System; 25 laboratorios, más de 100 biólogos, testimonios.`, ['K18','K19']], [`Trayectoria de la autora: WCS, enfermería, OMS, apartheid, Illinois; ejemplos ajenos.`, ['K22','K24','K27']], [`Cadena de referencias, muchas del propio volumen; pocos casos desarrollados.`, ['K12','K19','K46']]],
+ ['Método', [`Etnografía en equipos de desarrollo; observación y entrevistas.`, ['T10']], [`Trabajo de campo como lectura: historia, análisis literario, análisis de sistemas.`, ['T5']], [`Experimentación conceptual y empírica; empezar por los huecos.`, ['T5','T11']]],
+ ['El trabajo', [`Construir herramientas no da crédito; trabajo de articulación mencionado.`, ['K30','D7']], [`Trabajo invisible y de articulación como truco central.`, ['T8','T9']], [`Responsabilidad distribuida y ética del cuidado.`, ['T8']]],
+ ['Falla y huecos', [`Problemas de "enchufe" letales por crónicos y ubicuos; doble vínculo.`, ['T9']], [`Obstáculos mínimos magnificados; los "otros" de la narrativa maestra.`, ['T9','T7']], [`Todo orden produce sus otros; las infraestructuras funcionan averiándose.`, ['T11']]],
+ ['Control', [`La culpa no está en ningún bando.`, ['T10']], [`"Nobody is really in charge of infrastructure."`, ['K21']], [`Nadie puede imponer un desarrollo lineal; la crítica sobrestima el control.`, ['T8']]],
+ ['Política y desigualdad', [`Laboratorios ricos y pobres; externalidades; política del refuerzo; equidad.`, ['T6','T11']], [`Puentes y barreras; valores inscritos; censo de 2000.`, ['T11']], [`Astillamiento, abandono biopolítico, gente y naturaleza como infraestructura.`, ['T7','T8']]],
+ ['Escala', [`De un laboratorio a la National Information Infrastructure.`, ['T11']], [`Problema de método: la etnografía de miles.`, ['T6']], [`La escala como efecto de la infraestructura.`, ['T13']]],
+ ['Visión y conocimiento', [`—`, []], [`Estatus de los indicadores; sustituir validez por precisión.`, ['T10']], [`Oligóptico; datos masivos; opacidad de los datos privados.`, ['T12']]],
+ ['Lugar del investigador', [`Mediador en equipos multidisciplinarios.`, ['T10']], [`Lector de documentos y diseños; informante de informáticos.`, ['T5']], [`Experimentador conceptual y empírico.`, ['T5']]],
+ ['Límite principal', [`La jerarquía de niveles reintroduce la división técnico/social.`, ['E2']], [`La lista se vuelve inventario; la invisibilidad como premisa.`, ['E2','E3']], [`Amplitud del concepto; criterios para atribuir responsabilidad.`, ['E3','E4']]],
+ ['Qué rinde para infraestructuras visuales', [`El doble vínculo entre niveles: la imagen "simple" para el diseñador y compleja para el usuario.`, ['T0']], [`"Regímenes infraestructurales" en los que vemos y nombramos distinto; narrativas maestras inscritas.`, ['D7','T7']], [`Visión oligóptica, huecos como hechos, escala producida.`, ['T12','T11','T13']]]
+];
+
+const VIAJAN = [
+ ['Relación', `Fundamento: "always a relation, never a thing".`, ['a','D1'], `Se precisa con posiciones: ingeniero, silla de ruedas, cocinera.`, ['b','D1'], `Doble relacionalidad: interna y externa.`, ['c','D8']],
+ ['Inversión', `Bowker: el sustrato se vuelve sustancia.`, ['a','D3'], `Llevar al frente lo que está tras bambalinas.`, ['b','D6'], `Inversiones del campo que producen conceptos.`, ['c','D2']],
+ ['Trabajo de articulación', `Mencionado con Schmidt y Bannon.`, ['a','D7'], `Central: explica las paradojas.`, ['b','D23'], `Reaparece como cuidado y responsabilidad.`, ['c','D20']],
+ ['Lo que queda fuera', `Laboratorios pobres; quien no se conecta.`, ['a','D19'], `Narrativas maestras y sus "otros"; no personas.`, ['b','D19'], `Órdenes y sus otros; intersticios.`, ['c','D24']],
+ ['Estándares', `El sistema y sus plataformas.`, ['a','K2'], `Propiedad 6; heteropraxia y heteroglosia.`, ['b','D13'], `Salas de máquinas; prótesis de visión.`, ['c','D32']],
+ ['Ruptura', `Problemas crónicos y ubicuos.`, ['a','T9'], `Visible en la ruptura.`, ['b','D15'], `Funcionar averiándose; fragilidad.`, ['c','D27']]
+];
+
+function cell(txt, f, ids){ return `${txt}${ids.length ? '<div style="margin-top:6px">' + refs(f, ids) + '</div>' : ''}`; }
+document.getElementById('tComp').innerHTML = '<thead><tr><th>Dimensión</th><th>Star y Ruhleder (1994)</th><th>Star (1999)</th><th>Harvey, Jensen y Morita (2016)</th></tr></thead><tbody>' +
+  COMP.map(r => `<tr><td class="k">${r[0]}</td><td>${cell(r[1][0],'a',r[1][1])}</td><td>${cell(r[2][0],'b',r[2][1])}</td><td>${cell(r[3][0],'c',r[3][1])}</td></tr>`).join('') + '</tbody>';
+document.getElementById('tViajan').innerHTML = '<thead><tr><th>Concepto</th><th>1994</th><th>1999</th><th>2016</th></tr></thead><tbody>' +
+  VIAJAN.map(r => `<tr><td class="k">${r[0]}</td><td>${r[1]}<div style="margin-top:6px">${ref(r[2][0], r[2][1])}</div></td><td>${r[3]}<div style="margin-top:6px">${ref(r[4][0], r[4][1])}</div></td><td>${r[5]}<div style="margin-top:6px">${ref(r[6][0], r[6][1])}</div></td></tr>`).join('') + '</tbody>';
+
+const $ = s => document.querySelector(s);
+const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} } };
+function setFichas(on){ document.body.classList.toggle('fichas', on); $('#vista').textContent = on ? 'vista: fichas' : 'vista: tabla'; $('#vista').classList.toggle('on', on); }
+$('#vista').addEventListener('click', () => { const on = !document.body.classList.contains('fichas'); setFichas(on); store.set('adinf-matriz-fichas', on ? '1' : '0'); });
+(function(){ const v = store.get('adinf-matriz-fichas'); setFichas(v != null ? v === '1' : matchMedia('(max-width:1100px)').matches); })();
+function setFs(px){ px = Math.max(14, Math.min(22, px)); document.documentElement.style.setProperty('--fs', px + 'px'); store.set('adinf-matriz-fs', px); }
+$('#fmas').addEventListener('click', () => setFs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs')) + 1));
+$('#fmenos').addEventListener('click', () => setFs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs')) - 1));
+(function(){ const v = parseFloat(store.get('adinf-matriz-fs')); if (v) setFs(v); })();
+$('#navToggle').addEventListener('click', () => { const o = $('#side').classList.toggle('open'); $('#navToggle').setAttribute('aria-expanded', o); });
+$('#nav').addEventListener('click', e => { if (e.target.closest('a') && matchMedia('(max-width:1100px)').matches) $('#side').classList.remove('open'); });
+const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+$('#q').addEventListener('input', () => {
+  const q = norm($('#q').value.trim()); const rows = [...document.querySelectorAll('main tbody tr')];
+  if (!q){ rows.forEach(r => r.classList.remove('hidden-row')); $('#count').textContent = ''; return; }
+  let n = 0; rows.forEach(r => { const hit = norm(r.textContent).includes(q); r.classList.toggle('hidden-row', !hit); if (hit) n++; });
+  $('#count').textContent = n + (n === 1 ? ' fila coincide' : ' filas coinciden');
+});
+document.querySelectorAll('table.mx').forEach(t => { const hs = [...t.querySelectorAll('thead th')].map(th => th.textContent); t.querySelectorAll('tbody tr').forEach(tr => [...tr.children].forEach((td, i) => td.dataset.label = hs[i] || '')); });
+</script>
+</body>
+</html>

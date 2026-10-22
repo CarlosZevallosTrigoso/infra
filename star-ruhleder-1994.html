@@ -544,6 +544,9 @@ const X = [
  {t:'Lugar del etnógrafo', e:'Mediador en equipos de desarrollo.', s:'Lector de documentos y diseños; informante de informáticos.', h:'Experimentador conceptual y empírico.', tt:['T10']}
 ];
 
+const NIVEL_COL = 'Nivel';
+const CONEX_COLS = ['Tema','En este texto','Star (1999)','Harvey, Jensen y Morita (2016)','Tesis'];
+
 /* ===================== UTILIDADES ===================== */
 const $ = s => document.querySelector(s);
 const byId = {}; [...T, ...K, ...C, ...S, ...D, ...E].forEach(x => byId[x.id] = x);
@@ -556,6 +559,7 @@ function chip(id, withLabel){
   return `<button class="chip ${cls}" data-go="${id}" title="${lb.replace(/"/g,'&quot;').replace(/<[^>]+>/g,'')}">${id}${withLabel ? `<span class="lb">${lb}</span>` : ''}</button>`;
 }
 const chips = (ids, wl) => (ids || []).map(i => chip(i, wl)).join(' ');
+const pl = (n, a, b) => n + ' ' + (n === 1 ? a : b);
 const tag = (txt, cls) => `<span class="tag ${cls || ''}">${txt}</span>`;
 const casesOf = t => K.filter(k => k.tt.includes(t));
 const quotesOf = t => C.filter(c => c.tt.includes(t));
@@ -590,7 +594,7 @@ function renderHilos(){
   $('#hilosBox').innerHTML = T.map(t => {
     const ks = casesOf(t.id), cs = quotesOf(t.id), ds = conceptsOf(t.id), es = evalOf(t.id), fs = flowOf(t.id);
     return `<details class="hilo" id="hilo-${t.id}" data-refs="${t.id}">
-      <summary><span class="tid">${t.id}</span><span class="tt">${t.c}</span><span class="tc">${ks.length} casos · ${cs.length} citas · ${ds.length} conceptos</span></summary>
+      <summary><span class="tid">${t.id}</span><span class="tt">${t.c}</span><span class="tc">${pl(ks.length,'caso','casos')} · ${pl(cs.length,'cita','citas')} · ${pl(ds.length,'concepto','conceptos')}</span></summary>
       <div class="hb">
         <div class="form">${t.f}</div>
         <div class="row"><b>Estatus</b><div>${tag(t.est, t.est.startsWith('inferida') ? 't2' : '')} · páginas ${pages(t.p)}</div></div>
@@ -619,10 +623,10 @@ function renderSecciones(){
 }
 
 function renderCasos(){
-  table($('#tCasos'), ['ID','Caso','Actores','Qué ocurre','Qué demuestra','Nivel','Sostiene','Citas','Sección','Pág.'],
+  table($('#tCasos'), ['ID','Caso','Actores','Qué ocurre','Qué demuestra',NIVEL_COL,'Sostiene','Citas','Sección','Pág.'],
     K.map(k => {
       const cs = C.filter(c => c.k === k.id).map(c => c.id);
-      return `<tr id="${k.id}" data-refs="${refsOf(k)}"><td class="id">${k.id}</td><td class="k">${k.t}</td><td>${k.a}</td><td>${k.q}</td><td>${k.d}</td><td>${tag(k.n, k.n === '3' ? 't3' : k.n.startsWith('doble') ? 't2' : '')}</td><td>${chips(k.tt, true)}</td><td>${chips(cs) || '—'}</td><td>${chip(k.s)}</td><td>${pages(k.p)}</td></tr>`;
+      return `<tr id="${k.id}" data-refs="${refsOf(k)}"><td class="id">${k.id}</td><td class="k">${k.t}</td><td>${k.a}</td><td>${k.q}</td><td>${k.d}</td><td>${tag(k.n, k.n === '3' ? 't3' : /^(doble|nombrado|enumerado)/.test(k.n) ? 't2' : '')}</td><td>${chips(k.tt, true)}</td><td>${chips(cs) || '—'}</td><td>${chip(k.s)}</td><td>${pages(k.p)}</td></tr>`;
     }));
 }
 
@@ -647,7 +651,7 @@ function renderEval(){
 }
 
 function renderConex(){
-  table($('#tConex'), ['Tema','En este texto','Star (1999)','Harvey, Jensen y Morita (2016)','Tesis'],
+  table($('#tConex'), CONEX_COLS,
     X.map(x => `<tr data-refs="${refsOf(x)}"><td class="k">${x.t}</td><td>${x.e.replace(/\b(K\d+)\b/g, m => chip(m))}</td><td>${x.s}</td><td>${x.h}</td><td>${chips(x.tt)}</td></tr>`));
 }
 
@@ -660,7 +664,7 @@ function setFoco(id){
   if (id){
     const t = byId[id];
     $('#focoT').textContent = id + ' · ' + t.c;
-    $('#focoC').textContent = casesOf(id).length + ' casos · ' + quotesOf(id).length + ' citas · ' + conceptsOf(id).length + ' conceptos · ' + t.s.length + ' secciones';
+    $('#focoC').textContent = pl(casesOf(id).length,'caso','casos') + ' · ' + pl(quotesOf(id).length,'cita','citas') + ' · ' + pl(conceptsOf(id).length,'concepto','conceptos') + ' · ' + pl(t.s.length,'sección','secciones');
     try { history.replaceState(null, '', '#hilo=' + id); } catch(e){}
   } else {
     try { history.replaceState(null, '', location.pathname + location.search); } catch(e){}
