@@ -3,761 +3,216 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Matriz · Harvey, Jensen y Morita 2016</title>
-<meta name="description" content="Matriz analítica articulada de Harvey, Jensen y Morita (2016), Introduction: Infrastructural Complications: tesis, desplazamientos, casos, citas, conceptos y evaluación, enlazados entre sí y con el texto.">
+<title>Introduction: Infrastructural Complications</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#ffffff; --ink:#1d1f1b; --muted:#5b6157; --accent:#5a7a3a; --accent-dark:#3f5728;
-  --accent-soft:#eef3e8; --line:#dfe3da; --quote:#f7f8f4; --warn:#8a5a14; --warn-soft:#fbf3e4;
-  --steel:#3f5f78; --steel-soft:#e9eff4; --plum:#6b3f63; --plum-soft:#f3ebf1;
+  --accent-soft:#eef3e8; --line:#dfe3da; --quote:#f7f8f4; --steel:#3f5f78; --steel-soft:#e9eff4;
   --mono:'Fira Code',ui-monospace,Menlo,Consolas,monospace;
   --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
-  --fs:16.5px;
+  --fs:17px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.58}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.62}
 a{color:var(--accent-dark)}
-code{font-family:var(--mono);font-size:.88em}
-button{font-family:var(--mono);cursor:pointer}
-
-/* cabecera */
-header.top{border-bottom:3px solid var(--accent);padding:22px 32px 18px;background:#fff}
-.crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:8px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+header.top{border-bottom:3px solid var(--accent);padding:22px 0 16px}
+.crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .crumbs a{color:var(--accent-dark);text-decoration:none}
-header.top h1{font-size:1.75em;line-height:1.2;margin:0 0 6px}
-header.top .ref{color:var(--muted);font-size:.93em;max-width:1000px}
+h1{font-size:1.7em;line-height:1.2;margin:0 0 8px}
+.ref{color:var(--muted);font-size:.92em}
 .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px}
+.btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px;cursor:pointer}
 .btn:hover{border-color:var(--accent);color:var(--accent-dark)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.primary:hover{background:var(--accent-dark);color:#fff}
-.btn.on{border-color:var(--accent);color:var(--accent-dark);background:var(--accent-soft)}
+nav.secs{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
+nav.secs .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:6px;padding-bottom:6px;scrollbar-width:none}
+nav.secs a{font-family:var(--mono);font-size:12px;white-space:nowrap;text-decoration:none;color:var(--muted);padding:6px 9px;border-radius:4px}
+nav.secs a:hover{background:var(--accent-soft);color:var(--accent-dark)}
+section{padding:30px 0 6px;scroll-margin-top:48px}
+h2{font-size:1.32em;margin:0 0 14px;display:flex;gap:12px;align-items:baseline}
+h2 .n{font-family:var(--mono);font-size:.62em;color:var(--accent);font-weight:500}
+h3{font-size:1.06em;margin:22px 0 8px}
+.intro{color:var(--muted);margin:-4px 0 16px}
+.tesis{font-size:1.08em;border-left:4px solid var(--accent);padding:4px 0 4px 18px;margin:0}
 
-/* disposición */
-.layout{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1560px}
-aside.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:20px 18px 40px 32px;border-right:1px solid var(--line)}
-.label{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
-aside.side nav a{display:block;text-decoration:none;color:var(--ink);font-size:.88em;padding:5px 0 5px 10px;border-left:2px solid transparent}
-aside.side nav a:hover{border-left-color:var(--accent);color:var(--accent-dark)}
-#navToggle{display:none}
-.search input{width:100%;font-family:var(--mono);font-size:13px;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink)}
-.search input:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
-.count{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:6px 0 18px;min-height:1em}
-.other{margin-top:24px}
-.other a{display:block;font-size:.85em;margin:5px 0}
-main{padding:24px 36px 120px;min-width:0}
-section{margin:0 0 56px;scroll-margin-top:12px}
-h2{font-size:1.45em;margin:0 0 6px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-h2 .n{font-family:var(--mono);font-size:.6em;color:var(--accent);margin-right:10px;font-weight:500}
-h3{font-size:1.1em;margin:26px 0 8px}
-p.intro{color:var(--muted);margin:8px 0 14px;max-width:920px}
+/* esquema */
+.esq{margin:4px 0 0}
+.paso{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px}
+.pp{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;padding-top:13px}
+.pp a{color:var(--accent-dark);text-decoration:none}
+.caja{border:1px solid var(--line);border-radius:6px;padding:11px 15px 12px;background:#fff}
+.caja .tit{font-style:italic;font-weight:600}
+.fun{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--accent-dark);background:var(--accent-soft);border-radius:3px;padding:1px 7px;margin-left:8px;font-style:normal;font-weight:400;vertical-align:2px}
+.caja p{margin:6px 0 0}
+.caja ul{margin:8px 0 0;padding-left:20px}
+.caja li{margin:3px 0}
+.caja li .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.trans{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;color:var(--muted);font-size:.86em;font-style:italic}
+.trans span:last-child{padding:5px 0 5px 16px;border-left:2px dashed var(--line);margin-left:14px}
 
-/* tablas */
-.tw{overflow-x:auto;margin:10px 0 18px;border:1px solid var(--line);border-radius:6px;-webkit-overflow-scrolling:touch}
-table{border-collapse:collapse;width:100%;font-size:.88em;line-height:1.5}
-th{font-family:var(--mono);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-dark);background:var(--accent-soft);text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:bottom}
-td{padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top}
-tbody tr:last-child td{border-bottom:none}
-td.k{font-weight:600;min-width:140px}
-td.en{font-style:italic;background:var(--quote);min-width:230px}
-td.es{min-width:230px}
-td.id{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
-.ficha td.k{width:210px}
-.pgl{font-family:var(--mono);font-size:12px;color:var(--accent-dark);white-space:nowrap;text-decoration:none;border-bottom:1px dotted var(--accent)}
-.pgl:hover{color:var(--warn);border-bottom-color:var(--warn)}
-.ver{font-family:var(--mono);font-size:11.5px;white-space:nowrap;text-decoration:none;color:var(--steel);border:1px solid var(--steel-soft);background:var(--steel-soft);padding:2px 7px;border-radius:3px;display:inline-block;margin-top:6px}
-.ver:hover{border-color:var(--steel)}
+/* núcleo */
+.bloque{margin:0 0 8px}
+.fichas{display:grid;gap:10px}
+.ficha{border:1px solid var(--line);border-radius:6px;padding:11px 15px}
+.ficha .cab{font-weight:600}
+.ficha .cab .en{font-weight:400;font-style:italic;color:var(--muted)}
+.ficha .cab .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;margin-left:6px}
+.ficha p{margin:5px 0 0}
+.ficha .ej{color:var(--muted);font-size:.95em}
+.ficha .ej b{color:var(--ink);font-weight:600}
+.ficha ul{margin:6px 0 0;padding-left:20px}
+.ficha li{margin:4px 0}
+.mov{border:1px solid var(--line);border-left:4px solid var(--steel);border-radius:6px;padding:12px 16px;margin:0 0 12px}
+.mov .cab{font-weight:700}
+.mov .cab .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;margin-left:6px}
+.mov dl{margin:8px 0 0;display:grid;grid-template-columns:92px minmax(0,1fr);gap:6px 12px}
+.mov dt{font-family:var(--mono);font-size:11.5px;color:var(--steel);padding-top:3px;text-transform:uppercase;letter-spacing:.04em}
+.mov dd{margin:0}
+.caso{background:var(--quote);border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin:0 0 14px}
+.caso p{margin:6px 0 0}.caso p:first-child{margin-top:0}
+.qi{font-style:italic}
+.qi a,.lk{font-family:var(--mono);font-size:11px;text-decoration:none;font-style:normal;white-space:nowrap}
 
-/* fichas de referencia cruzada */
-.chip{display:inline-block;font-family:var(--mono);font-size:11px;line-height:1.35;padding:2px 7px;margin:2px 3px 2px 0;border:1px solid var(--accent);color:var(--accent-dark);background:#fff;border-radius:3px;white-space:nowrap;cursor:pointer}
-.chip:hover{background:var(--accent-soft)}
-.chip.c{border-color:var(--steel);color:var(--steel)}
-.chip.c:hover{background:var(--steel-soft)}
-.chip.k{border-color:var(--plum);color:var(--plum)}
-.chip.k:hover{background:var(--plum-soft)}
-.chip.s,.chip.d{border-color:#9aa094;color:#4c5148}
-.chip.s:hover,.chip.d:hover{background:#f1f2ee}
-.chip .lb{font-family:var(--serif);font-size:12px;margin-left:5px;color:var(--ink)}
-.tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 6px;margin:1px 2px 1px 0;border:1px solid var(--accent);color:var(--accent-dark);border-radius:3px;white-space:nowrap}
-.tag.t2{border-color:#8a8f84;color:#4c5148}
-.tag.t3{border-color:var(--warn);color:var(--warn)}
+/* argumentos */
+.arg{border:1px solid var(--line);border-radius:6px;padding:14px 18px 6px;margin:0 0 14px}
+.arg h3{margin:0 0 8px;display:flex;gap:10px}
+.arg h3 .n{font-family:var(--mono);font-size:.78em;color:var(--accent);font-weight:500;padding-top:2px}
+.arg ol{margin:4px 0 8px;padding-left:22px}
+.arg li{margin:4px 0}
+.arg .ev{margin:6px 0 10px}
+.arg .ev b{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-right:6px}
 
-/* modo hilo */
-body.foco [data-refs]:not(.on){opacity:.28}
-body.foco.solo [data-refs]:not(.on){display:none}
-body.foco [data-refs].on{box-shadow:inset 4px 0 0 var(--accent)}
-body.foco tr[data-refs].on td{background:#fafcf7}
-#focoBar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;background:#fff;border:1px solid var(--accent);border-radius:8px;box-shadow:0 6px 24px #0002;padding:10px 14px;display:none;align-items:center;gap:10px;flex-wrap:wrap;max-width:min(940px,calc(100vw - 24px));font-size:.88em}
-body.foco #focoBar{display:flex}
-#focoBar .ft{font-weight:600}
-#focoBar .fc{font-family:var(--mono);font-size:12px;color:var(--muted)}
-#focoBar label{font-family:var(--mono);font-size:12px;display:flex;gap:6px;align-items:center;cursor:pointer}
-.flash{animation:flash 1.6s ease-out}
-@keyframes flash{0%{background:#fff3c4}100%{background:transparent}}
-tr.flash td{animation:flash 1.6s ease-out}
+/* citas */
+blockquote.q{margin:0 0 12px;padding:10px 16px;background:var(--quote);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+blockquote.q .en{font-style:italic}
+blockquote.q .es{color:var(--muted);margin-top:4px;font-size:.95em}
+blockquote.q .meta{font-family:var(--mono);font-size:11.5px;margin-top:6px;color:var(--muted)}
+blockquote.q .meta a{text-decoration:none}
+blockquote.q .co{font-size:.92em;margin-top:4px}
+.arg blockquote.q{margin-bottom:12px}
 
-/* mapa de sustento */
-.grid{border-collapse:separate;border-spacing:3px;font-size:12px;width:auto}
-.grid th{background:none;border:none;padding:4px 2px;text-align:center;font-size:11px;color:var(--muted)}
-.grid th.row{text-align:left;white-space:nowrap;color:var(--ink);font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:13px;padding-right:10px}
-.grid td{border:none;padding:0;text-align:center;vertical-align:middle;width:58px;height:38px;border-radius:4px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--ink)}
-.grid td.v0{background:#f6f7f4;color:#c3c7bd}
-.grid td.v1{background:#e3ecd8}
-.grid td.v2{background:#c9dbb5}
-.grid td.v3{background:#a9c58f}
-.grid td.v4{background:#86ab66;color:#fff}
-.grid td.arg{outline:2px solid var(--accent-dark);outline-offset:-2px}
-.legend{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
-.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+/* síntesis */
+.sint{border-top:1px solid var(--line);padding-top:6px}
+.sint h4{font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-dark);margin:26px 0 8px;font-weight:500}
+.sint p{margin:0 0 12px}
+.sint ol,.sint ul{padding-left:22px}
+.sint .ref0{color:var(--muted);font-size:.92em}
 
-/* hilos argumentales */
-details.hilo{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;margin:0 0 12px;background:#fff}
-details.hilo>summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
-details.hilo>summary::-webkit-details-marker{display:none}
-details.hilo>summary .tid{font-family:var(--mono);color:#fff;background:var(--accent);border-radius:3px;padding:1px 7px;font-size:12px}
-details.hilo>summary .tt{font-weight:600;flex:1;min-width:220px}
-details.hilo>summary .tc{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
-details.hilo[open]>summary{border-bottom:1px solid var(--line)}
-.hb{padding:12px 18px 16px}
-.hb .form{font-size:1.02em;border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:6px 0 12px}
-.hb .row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px dashed var(--line)}
-.hb .row>b{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500;padding-top:2px}
-.hb ul{margin:0;padding-left:1.1em}
-.hb li{margin:4px 0}
-.hb .q{font-style:italic;background:var(--quote);padding:6px 10px;border-radius:4px;margin:6px 0}
-.hb .q .tr{font-style:normal;display:block;color:var(--muted);margin-top:3px}
-.hb .obj{border-left:3px solid var(--warn);background:var(--warn-soft);padding:6px 10px;border-radius:4px;margin:6px 0}
+/* índice */
+.textos{display:grid;gap:14px;margin-top:6px}
+.texto{border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.texto .ano{font-family:var(--mono);font-size:12px;color:var(--accent-dark)}
+.texto h3{margin:4px 0 4px;font-size:1.12em}
+.texto p{margin:6px 0}
+.texto .tools{margin-top:10px}
+table.dia{width:100%;border-collapse:collapse;font-size:.93em}
+table.dia th,table.dia td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
+table.dia th{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--muted);background:var(--quote)}
+table.dia td:first-child{font-weight:600;width:16%}
 
-/* progresión */
-.flow{list-style:none;margin:16px 0;padding:0;counter-reset:f}
-.flow li{position:relative;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 16px 12px 52px;margin:0 0 28px;background:#fff;counter-increment:f}
-.flow li::before{content:counter(f);position:absolute;left:14px;top:12px;font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px}
-.flow li:not(:last-child)::after{content:"↓";position:absolute;left:50%;bottom:-25px;font-family:var(--mono);color:var(--accent);font-size:17px}
-.flow .mv{font-weight:700}
-.flow .why{display:block;color:var(--muted);font-size:.92em;margin-top:4px}
-.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
-.levels div{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:12px 14px;font-size:.9em}
-.levels div b{display:block;font-family:var(--mono);font-size:12px;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.box{border:1px solid var(--line);background:var(--quote);padding:14px 18px;border-radius:6px;margin:12px 0}
-.hidden-row{display:none !important}
-footer{border-top:1px solid var(--line);padding:18px 32px;color:var(--muted);font-size:13px;font-family:var(--mono)}
+footer{color:var(--muted);font-family:var(--mono);font-size:11.5px;padding:34px 0 40px;border-top:1px solid var(--line);margin-top:30px}
 
-/* vista de fichas (tablet vertical, móvil o elegida) */
-body.fichas table.mx thead{display:none}
-body.fichas table.mx,body.fichas table.mx tbody{display:block;width:100%}
-body.fichas table.mx tr{display:block;border:1px solid var(--line);border-radius:6px;margin:0 0 12px;padding:6px 4px;background:#fff}
-body.fichas table.mx td{display:block;border:none;padding:6px 10px;min-width:0 !important}
-body.fichas table.mx td::before{content:attr(data-label);display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;font-style:normal}
-body.fichas table.mx td.en{border-radius:4px}
-body.fichas .tw{border:none;overflow:visible}
-body.fichas table.ficha td.k{width:auto}
-body.fichas table.ficha td::before{display:none}
-
-/* tablet y pantallas estrechas */
-@media (max-width:1100px){
-  .layout{grid-template-columns:1fr}
-  aside.side{position:sticky;top:0;z-index:40;background:#fff;max-height:none;border-right:none;border-bottom:1px solid var(--line);padding:10px 16px}
-  #navToggle{display:inline-flex}
-  aside.side .collapsible{display:none;padding-top:12px;max-height:70vh;overflow:auto}
-  aside.side.open .collapsible{display:block}
-  .sidebar-head{display:flex;gap:8px;align-items:center}
-  .sidebar-head .search{flex:1}
-  .sidebar-head .count{display:none}
-  main{padding:20px 20px 120px}
-  header.top{padding:18px 20px}
-  .levels{grid-template-columns:1fr}
-  .hb .row{grid-template-columns:1fr}
-  footer{padding:16px 20px}
+@media (max-width:640px){
+  .paso,.trans{grid-template-columns:1fr;gap:4px}
+  .pp{text-align:left;padding-top:0}
+  .trans span:first-child{display:none}
+  .trans span:last-child{margin-left:10px}
+  .mov dl{grid-template-columns:1fr}
+  table.dia, table.dia tbody, table.dia tr, table.dia td, table.dia th{display:block;width:auto}
+  table.dia thead{display:none}
+  table.dia td{border-top:none}
+  table.dia td:first-child{width:auto;border-top:1px solid var(--line);background:var(--quote)}
+  table.dia td[data-t]::before{content:attr(data-t) " · ";font-family:var(--mono);font-size:11px;color:var(--muted)}
 }
-@media (min-width:1101px){ .sidebar-head .count{display:block} }
-@media (max-width:600px){ main{padding:16px 16px 120px} header.top{padding:16px} :root{--fs:16px} }
-@media (pointer:coarse){
-  .chip{padding:5px 9px;font-size:12px;margin:3px 4px 3px 0}
-  aside.side nav a{padding:9px 0 9px 10px}
-  .pgl{padding:2px 0}
-}
-@media print{
-  aside.side,#focoBar,.tools{display:none !important}
-  .layout{display:block}
-  main{padding:0}
-  .tw{overflow:visible;border:none}
-  tr{break-inside:avoid}
-  details.hilo{break-inside:avoid}
-  body{font-size:11pt}
-}
+@media print{nav.secs,.tools{display:none}}
 </style>
 </head>
 <body>
-
-<header class="top">
-  <div class="crumbs"><a href="index.html">← matrices · antropología de las infraestructuras</a><span>3 de 3</span></div>
-  <h1>Harvey, Jensen y Morita (2016). Complicaciones infraestructurales</h1>
-  <div class="ref">Harvey, Penny, Casper Bruun Jensen y Atsuro Morita (2016). "Introduction: Infrastructural Complications". En P. Harvey, C. B. Jensen y A. Morita (eds.), <i>Infrastructures and Social Complexity: A Companion</i>. Londres: Routledge (serie CRESC; copyright 2017), pp. 1-22. Páginas: las del libro, que son también las del lector.</div>
+<header class="top"><div class="wrap">
+  <div class="crumbs"><a href="index.html">← índice</a><span>Círculo de lecturas · antropología de las infraestructuras</span></div>
+  <h1>Introduction: Infrastructural Complications</h1>
+  <div class="ref">Harvey, Penny, Casper Bruun Jensen y Atsuro Morita (2016). «Introduction: Infrastructural Complications». En P. Harvey, C. B. Jensen y A. Morita (eds.), <i>Infrastructures and Social Complexity: A Companion</i>. Londres: Routledge, pp. 1-22. Páginas del libro.</div>
   <div class="tools">
-    <a class="btn primary" id="leer" href="#">leer el texto</a>
-    <button class="btn" id="vista" title="Alternar entre tablas y fichas">vista: tabla</button>
-    <button class="btn" id="fmenos" title="Reducir la letra">A−</button>
-    <button class="btn" id="fmas" title="Aumentar la letra">A+</button>
+    <a class="btn primary" href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md">leer el texto ↗</a>
+    <button class="btn" id="fsMenos" title="Letra más pequeña">A−</button>
+    <button class="btn" id="fsMas" title="Letra más grande">A+</button>
   </div>
-</header>
-
-<div class="layout">
-<aside class="side" id="side">
-  <div class="sidebar-head">
-    <button class="btn" id="navToggle" aria-expanded="false">☰ contenido</button>
-    <div class="search">
-      <input id="q" type="search" placeholder="buscar en las matrices: Larkin, arroz, oligóptico…" aria-label="Buscar en las matrices">
-      <div class="count" id="count"></div>
-    </div>
-  </div>
-  <div class="collapsible">
-    <p class="label">Contenido</p>
-    <nav id="nav">
-      <a href="#ficha">1. Ficha</a>
-      <a href="#mapa">2. Mapa de sustento</a>
-      <a href="#hilos">3. Hilos argumentales</a>
-      <a href="#progresion">4. Progresión lógica</a>
-      <a href="#secciones">5. Matriz por secciones</a>
-      <a href="#casos">6. Matriz de casos</a>
-      <a href="#citas">7. Citas clave</a>
-      <a href="#conceptos">8. Conceptos</a>
-      <a href="#autores">9. Autores citados</a>
-      <a href="#evaluacion">10. Evaluación crítica</a>
-      <a href="#conexiones">11. Conexiones</a>
-      <a href="#fuentes">12. Nota sobre fuentes</a>
-    </nav>
-    <div class="other">
-      <p class="label">Otras matrices</p>
-      <a href="index.html">Índice y matriz comparativa</a>
-      <a href="star-ruhleder-1994.html">Star y Ruhleder (1994)</a>
-      <a href="star-1999.html">Star (1999)</a>
-    </div>
-  </div>
-</aside>
-
-<main>
-
-<section id="ficha">
-<h2><span class="n">01</span>Ficha</h2>
-<p class="intro">Cómo está hecha esta matriz: tesis (T0-T13), casos (K1-K46), citas (C1-C44), secciones (S1-S8), conceptos (D1-D34) y tensiones críticas (E1-E8) se remiten entre sí. Al pulsar una ficha de tesis se activa el <b>modo hilo</b>. Una advertencia de lectura: este texto es una introducción a un compendio, de modo que muchos de sus casos son referencias a otros estudios. La matriz distingue los casos que el texto desarrolla de los que solo nombra.</p>
-<div class="tw"><table class="ficha mx">
-<thead><tr><th>Campo</th><th>Contenido</th></tr></thead>
-<tbody>
-<tr><td class="k">Autores</td><td><b>Penny Harvey</b>, antropóloga de la Universidad de Manchester, vinculada al Centre for Research on Socio-Cultural Change (CRESC); su trabajo de campo sobre carreteras, Estado y residuos se ha hecho en buena parte en el Perú. <b>Casper Bruun Jensen</b>, antropólogo y estudioso de la ciencia y la tecnología, antes en la IT University de Copenhague, luego en la Universidad de Osaka. <b>Atsuro Morita</b>, antropólogo de la Universidad de Osaka, especialista en infraestructuras hidráulicas y en el delta del Chao Phraya, en Tailandia.</td></tr>
-<tr><td class="k">Volumen</td><td><i>Infrastructures and Social Complexity: A Companion</i> (Routledge, serie CRESC). Copyright de 2017; se cita habitualmente como 2016. Unas cuatrocientas cuarenta páginas, seis secciones temáticas y un capítulo final de Bowker sobre infraestructuras digitales de conocimiento (cap. 29).</td></tr>
-<tr><td class="k">Origen</td><td>El cruce de dos redes: el grupo del CRESC (Manchester y Open University), que estudiaba carreteras, aeropuertos y sistemas digitales, y el grupo de Osaka con investigadores daneses, que estudiaba infraestructuras y transformación ambiental. "Rather than joining our projects, we joined our networks" (p. 2).</td></tr>
-<tr><td class="k">Género</td><td>Introducción programática: presenta un campo, sitúa el volumen y propone una orientación propia mediante una serie de desplazamientos conceptuales. Avanza por cadenas de referencias más que por un caso propio.</td></tr>
-<tr><td class="k">Estructura</td><td>Apertura (coyuntura y origen); "Turning to infrastructure: some inversions"; "But what is infrastructure? A minimal point of entry"; "Complexity, complication, experimentation"; "Orders and interstices: on the politics of infrastructure"; "Infrastructural visions"; "The structure of the collection"; diez notas; referencias.</td></tr>
-<tr><td class="k">Interlocutores principales</td><td>Bowker y Star (inversión, clasificación), Star y Ruhleder (1996), Larkin (2013), Strum y Latour (1987), Graham y Marvin (2001), Serres, Strathern, Deleuze y Guattari, Scott (1998), Latour y Hermant, Mitchell (2013), Haraway, Mol.</td></tr>
-<tr><td class="k">Componente peruano</td><td>No explícito pero importante: la ruptura regular (Harvey 2005, carretera en los Andes), la doble relacionalidad (Harvey 2017, carreteras en el Perú), los seres-tierra (de la Cadena 2015), las carreteras de Harvey y Knox (2015) y los futuros de los residuos en el sur del Perú (Harvey 2016).</td></tr>
-<tr><td class="k">Lugar en la genealogía</td><td>Recibe la tradición de Bowker y Star, responde a Larkin y la desplaza hacia la complicación, la experimentación y el análisis de los huecos. Es una de las síntesis de referencia del "giro infraestructural" en antropología.</td></tr>
-</tbody></table></div>
-</section>
-
-<section id="mapa">
-<h2><span class="n">02</span>Mapa de sustento</h2>
-<p class="intro">Dónde y con qué se sostiene cada tesis. Filas: tesis. Columnas: secciones. Cada celda cuenta los casos y las citas de esa sección que apoyan la tesis; el borde oscuro marca dónde se formula o argumenta. Pulsa una fila o una celda para seguir el hilo.</p>
-<div class="legend"><span><i style="background:#f6f7f4"></i>sin apoyo</span><span><i style="background:#e3ecd8"></i>1</span><span><i style="background:#c9dbb5"></i>2</span><span><i style="background:#a9c58f"></i>3</span><span><i style="background:#86ab66"></i>4 o más</span><span><i style="background:#fff;outline:2px solid #3f5728;outline-offset:-2px"></i>sección donde se argumenta</span></div>
-<div class="tw" style="border:none"><table class="grid" id="grid"></table></div>
-</section>
-
-<section id="hilos">
-<h2><span class="n">03</span>Hilos argumentales</h2>
-<p class="intro">Cada tesis reconstruida con todo lo que la sostiene: dónde se argumenta, qué paso del razonamiento ocupa, qué conceptos usa, qué casos la prueban, qué citas la condensan y qué tensión crítica la afecta.</p>
-<div id="hilosBox"></div>
-</section>
-
-<section id="progresion">
-<h2><span class="n">04</span>Progresión lógica del argumento</h2>
-<p class="intro">El texto avanza por desplazamientos respecto de la tradición de Bowker y Star: de la inversión del analista a las inversiones del campo, de la definición a la experimentación, de la complejidad a la complicación, del flujo a los huecos, del panóptico al oligóptico y de la escala dada a la escala producida.</p>
-<ol class="flow" id="flow"></ol>
-<h3>Los desplazamientos, de un vistazo</h3>
-<div class="levels" id="props"></div>
-</section>
-
-<section id="secciones">
-<h2><span class="n">05</span>Matriz por secciones</h2>
-<p class="intro">Recorrido sección por sección, con las tesis que cada una sostiene y los casos y citas que contiene.</p>
-<div class="tw"><table class="mx" id="tSecciones"></table></div>
-</section>
-
-<section id="casos">
-<h2><span class="n">06</span>Matriz de casos</h2>
-<p class="intro">Casos desarrollados en el texto y casos solo nombrados como referencia. La columna "tratamiento" indica cuál es cuál. Para cada uno: actores o autores, qué ocurre, qué demuestra, qué tesis sostiene y qué citas lo condensan.</p>
-<div class="tw"><table class="mx" id="tCasos"></table></div>
-</section>
-
-<section id="citas">
-<h2><span class="n">07</span>Citas clave</h2>
-<p class="intro">Fragmentos breves en el original con traducción propia. Cada cita indica la tesis que sostiene y el caso del que proviene; "ver en el texto" abre el lector y resalta el pasaje.</p>
-<div class="tw"><table class="mx" id="tCitas"></table></div>
-</section>
-
-<section id="conceptos">
-<h2><span class="n">08</span>Matriz de conceptos</h2>
-<p class="intro">Conceptos que el texto propone, toma o desplaza, con su origen, su función y las tesis en las que intervienen.</p>
-<div class="tw"><table class="mx" id="tConceptos"></table></div>
-</section>
-
-<section id="autores">
-<h2><span class="n">09</span>Autores citados y modo de uso</h2>
-<p class="intro">Interlocutores del texto agrupados por función: qué toma de cada uno, en qué modo y para qué tesis.</p>
-<div class="tw"><table class="mx" id="tAutores"></table></div>
-</section>
-
-<section id="evaluacion">
-<h2><span class="n">10</span>Evaluación crítica</h2>
-<p class="intro">Fortalezas, tensiones y preguntas abiertas, con las tesis que cada tensión afecta.</p>
-<div class="tw"><table class="mx" id="tEval"></table></div>
-</section>
-
-<section id="conexiones">
-<h2><span class="n">11</span>Conexiones con los otros textos</h2>
-<p class="intro">Qué hereda, transforma o discute este texto de Star y Ruhleder (1994) y de Star (1999).</p>
-<div class="tw"><table class="mx" id="tConex"></table></div>
-</section>
-
-<section id="fuentes">
-<h2><span class="n">12</span>Nota sobre fuentes</h2>
-<div class="box">
-<p><b>Fuente principal.</b> La introducción (pp. 1-22) y su conversión a Markdown, que es la que abre el lector con la paginación del libro. Las notas al final están enlazadas a sus llamadas en el lector.</p>
-<p><b>Datos verificados externamente.</b> Fecha de copyright (2017), serie CRESC y extensión del volumen.</p>
-<p><b>Contexto no tomado del texto.</b> Las adscripciones institucionales de los autores y el lugar del trabajo de campo de Harvey en el Perú provienen de conocimiento del campo y de los títulos de la bibliografía; no se verificaron con fuente primaria en esta matriz.</p>
-<p><b>Traducciones.</b> Propias.</p>
-</div>
-</section>
+</div></header>
+<nav class="secs" aria-label="Secciones"><div class="wrap"><a href="#tesis">Tesis</a><a href="#esquema">Esquema</a><a href="#nucleo">Movimientos</a><a href="#argumentos">Argumentos</a><a href="#citas">Citas</a><a href="#limites">Límites</a><a href="#sintesis">Síntesis</a></div></nav>
+<main class="wrap">
+<section id="tesis"><h2><span class="n">01</span>Tesis central</h2><p class="tesis">Las infraestructuras son <b>formaciones complicadas</b>, no sistemas que tienden al flujo sin fisuras ni a una complejidad creciente. Todo orden infraestructural produce a la vez conexiones y huecos, visibilidades y opacidades, y su desarrollo es <b>emergente y experimental</b>: no sigue el plan de nadie. Con eso los autores desplazan la tradición de Bowker y Star: la inversión ocurre en el campo y no solo en el escritorio del analista, la definición se vuelve una pregunta empírica, el análisis <b>empieza por los huecos</b> y la visión que las infraestructuras permiten es parcial.</p></section>
+<section id="esquema"><h2><span class="n">02</span>Esquema del texto</h2><p class="intro">Cómo está organizada la introducción. Cada página abre el lector en ese punto.</p><div class="esq"><div class="paso"><div class="pp"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=1" title="Abrir en el lector">p. 1</a></div><div class="caja"><span class="tit">Apertura</span><span class="fun">sitúa</span><p>Diagnóstico de época: superpotencias que compiten invirtiendo en infraestructura y millones de despojados que buscan su lugar en los intersticios, todos enredados en el impulso de «apalancar el futuro». Origen del volumen en dos redes (CRESC en Manchester; Osaka y Copenhague) y sus infraestructuras pobladas de no humanos.</p></div></div><div class="trans"><span></span><span>↓ de la coyuntura a la tradición que van a revisar</span></div><div class="paso"><div class="pp"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=3" title="Abrir en el lector">p. 3</a></div><div class="caja"><span class="tit">Turning to infrastructure: some inversions</span><span class="fun">revisa la tradición</span><p>La inversión infraestructural de Bowker y Star frente a dos objeciones: la fragilidad visible y el espectro de visibilidades de Larkin. Respuesta: la inversión también ocurre en el campo.</p></div></div><div class="trans"><span></span><span>↓ si la inversión ocurre en el campo, la definición no puede cerrarse</span></div><div class="paso"><div class="pp"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=5" title="Abrir en el lector">p. 5</a></div><div class="caja"><span class="tit">But what is infrastructure? A minimal point of entry</span><span class="fun">define</span><p>Una definición mínima y abierta. El concepto «revienta por las costuras». El debate de Manchester en que Laura Bear defiende su valor político.</p></div></div><div class="trans"><span></span><span>↓ una definición abierta pide otra idea de cómo cambian las infraestructuras</span></div><div class="paso"><div class="pp"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=7" title="Abrir en el lector">p. 7</a></div><div class="caja"><span class="tit">Complexity, complication, experimentation</span><span class="fun">propone el concepto</span><p>Contra el relato lineal del progreso: lo complejo y lo complicado (Strum y Latour). Consecuencias: crisis, astillamiento, naturaleza vuelta infraestructura, poder que no controla, responsabilidad distribuida, fragilidad.</p></div></div><div class="trans"><span></span><span>↓ si nada se alinea del todo, hay que mirar los desajustes</span></div><div class="paso"><div class="pp"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=11" title="Abrir en el lector">p. 11</a></div><div class="caja"><span class="tit">Orders and interstices: on the politics of infrastructure</span><span class="fun">reorienta el método</span><p>Recursividad entre infraestructura y sociedad. Todo orden produce sus otros; el orden es fractal. Propuesta: empezar por los huecos.</p></div></div><div class="trans"><span></span><span>↓ de los huecos del orden a los límites de lo que el poder ve</span></div><div class="paso"><div class="pp"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=14" title="Abrir en el lector">p. 14</a></div><div class="caja"><span class="tit">Infrastructural visions</span><span class="fun">aplica a la visión y la escala</span><p>Opacidad general, vigilancia digital, crítica a Scott, el oligóptico, los datos masivos. Al final, la escala como efecto (Darwin).</p></div></div><div class="trans"><span></span><span>↓ del argumento al libro</span></div><div class="paso"><div class="pp"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=17" title="Abrir en el lector">p. 17</a></div><div class="caja"><span class="tit">The structure of the collection</span><span class="fun">presenta el volumen</span><p>Seis secciones (desarrollo, ciudades, energía, ambiente, digital, «figuras infraestructurales») y un hilo común: la tensión entre la fragilidad y la obstinación de las infraestructuras.</p></div></div></div></section>
+<section id="nucleo"><h2><span class="n">03</span>Movimientos</h2><p class="intro">Es la introducción programática de un volumen colectivo: no defiende una tesis con un caso propio sino que avanza por desplazamientos, cada uno apoyado en casos de la literatura. Cada movimiento discute algo, propone algo y deja abierta la pregunta que toma el siguiente.</p><div class="mov"><div class="cab">1 · Multiplicar las inversiones<span class="pg"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=3">pp. 3-5 ↗</a></span></div><dl><dt>Discute</dt><dd>La inversión infraestructural (Bowker; Star y Ruhleder) suponía infraestructuras invisibles que funcionan. Dos objeciones: donde la ruptura es regular la visibilidad es otra, y Larkin muestra un espectro que va de la opacidad al espectáculo.</dd><dt>Propone</dt><dd>Distinguir la exhibición pública (Larkin) de los procesos operativos cotidianos (Bowker): una infraestructura exhibida puede tener operaciones opacas. Y reconocer inversiones que ocurren solas, en el campo, que incluso producen conceptos: en el delta del Chao Phraya los ingenieros pasaron a ver el arroz como infraestructura. <span class="qi">«inversion is an empirical condition before becoming an analytical tool»</span> <a class="lk" href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=4&amp;q=inversion%20is%20an%20empirical%20condition%20before%20becoming" title="p. 4-5">p. 4-5 ↗</a></dd><dt>Abre</dt><dd>Si la frontera entre lo conceptual y lo empírico se desdibuja, ¿qué es entonces una infraestructura?</dd></dl></div><div class="mov"><div class="cab">2 · Una definición mínima y abierta<span class="pg"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=5">pp. 5-7 ↗</a></span></div><dl><dt>Discute</dt><dd>La aspiración a una definición definitiva, que juzgan contraproducente porque otros actores no dejan de declarar infraestructuras nuevas.</dd><dt>Propone</dt><dd>Formas dinámicas que producen relaciones sociotécnicas; ensamblajes materiales extendidos, <span class="qi">«doubly relational»</span> <a class="lk" href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=5&amp;q=infrastructures%20are%20doubly%20relational" title="p. 5">p. 5 ↗</a> (multiplicidad interna y conexión hacia afuera). Pueden fallar y seguir produciendo efectos (el alcantarillado de Phnom Penh). El concepto «revienta por las costuras», y para Laura Bear llamar algo infraestructura tiene efectos de gobierno.</dd><dt>Abre</dt><dd>Si la definición no cierra, hace falta otra idea de cómo se forman y cambian las infraestructuras.</dd></dl></div><div class="mov"><div class="cab">3 · De la complejidad a la complicación<span class="pg"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=7">pp. 7-11 ↗</a></span></div><dl><dt>Discute</dt><dd>El relato lineal: de la piedra al acero, de caminos locales a redes que lo atraviesan todo. Los caminos inka muestran una complejidad extrema anterior a la modernidad.</dd><dt>Propone</dt><dd>La distinción de Strum y Latour: lo complejo (los babuinos que renegocian todo y no pueden «cerrar la puerta») frente a lo complicado (redes que simplifican localmente pero nunca se alinean del todo). De ahí: la nieve técnica de los Alpes que agrava lo que repara; el astillamiento urbano que también genera relaciones; la naturaleza vuelta infraestructura; un poder que no controla los resultados; la responsabilidad distribuida y la ética del cuidado; el jarrón de Serres.</dd><dt>Abre</dt><dd>Si las fallas son esperables, la tarea es explicar qué hace que algunas infraestructuras funcionen contra todo pronóstico.</dd></dl></div><div class="mov"><div class="cab">4 · Empezar por los huecos<span class="pg"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=11">pp. 11-14 ↗</a></span></div><dl><dt>Discute</dt><dd>La imagen del flujo como hecho básico, en la que la interrupción es una desviación que hay que explicar.</dd><dt>Propone</dt><dd>La relación entre infraestructura y sociedad es recursiva (el petróleo coemergió con la política que lo volvió indispensable). Todo orden produce su desorden (Serres); la alergia de Star a la cebolla muestra los intersticios de McDonald's. El orden es fractal: <span class="qi">«every new connection also creates new gaps»</span> <a class="lk" href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=13&amp;q=every%20new%20connection%20also%20creates%20new%20gaps" title="p. 13">p. 13 ↗</a>. Las infraestructuras funcionan a través de sus inconsistencias, como máquinas de Rube Goldberg.</dd><dt>Abre</dt><dd>Preguntas de composición: qué actores, materiales y estándares se pliegan en la infraestructura y cuáles quedan como sus «otros».</dd></dl></div><div class="mov"><div class="cab">5 · Visión oligóptica<span class="pg"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=14">pp. 14-16 ↗</a></span></div><dl><dt>Discute</dt><dd>La imagen del ojo que todo lo ve (panóptico, Sauron) y la lectura de Scott, que toma el flujo como hecho y el hueco como residuo.</dd><dt>Propone</dt><dd>Empezar por el hueco muestra un Estado con serios impedimentos de visión. El oligóptico de Latour y Hermant ve con detalle cosas muy específicas y nunca el conjunto. Los datos masivos fallan, atraen hackers y aun así reprimen: la vigilancia también funciona averiándose.</dd><dt>Abre</dt><dd>Si la visión es parcial, también lo es la escala que se atribuye a las infraestructuras.</dd></dl></div><div class="mov"><div class="cab">6 · La escala como efecto<span class="pg"><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=16">pp. 16-17 ↗</a></span></div><dl><dt>Discute</dt><dd>La idea de que las infraestructuras tienen una escala y se difunden de centros a periferias.</dd><dt>Propone</dt><dd>Las infraestructuras producen escala al configurarse, extenderse, mantenerse o fallar. Darwin es «pequeña» en Australia y «grande» en el Pacífico como nodo militar estadounidense: márgenes y centros proliferan.</dd><dt>Abre</dt><dd>Cierra con la tensión que recorre el volumen: fragilidad y obstinación.</dd></dl></div></section>
+<section id="argumentos"><h2><span class="n">04</span>Argumentos clave</h2><p class="intro">Cada argumento con su desarrollo, el caso que lo sostiene y una cita.</p><div class="arg"><h3><span class="n">01</span><span>La inversión es una condición empírica antes que una herramienta analítica</span></h3><ol><li>Bowker propuso la inversión como cambio de figura y fondo hecho por el analista.</li><li>Las objeciones (fragilidad, espectáculo) parecen restringirla a infraestructuras invisibles que funcionan.</li><li>Los autores separan visibilidad pública e invisibilidad operativa, y así salvan la inversión.</li><li>Muestran que la inversión ocurre en el campo, la hacen ingenieros, usuarios y activistas, y produce conceptos nuevos.</li></ol><p class="ev"><b>Caso y evidencia</b>El arroz del Chao Phraya visto como infraestructura; la vivienda aborigen de «This Is Not a Pipe», donde exhibir tuberías no garantiza que funcionen (pp. 4-5).</p><blockquote class="q"><div class="en">&quot;the forms of inversion have multiplied in a way that blurs the distinction between the conceptual and the empirical&quot;</div><div class="es">&quot;las formas de inversión se han multiplicado de un modo que desdibuja la distinción entre lo conceptual y lo empírico&quot;</div><div class="meta">p. 5 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=5&amp;q=the%20forms%20of%20inversion%20have%20multiplied%20in%20a%20way%20that%20blurs">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">02</span><span>No cerrar la definición es una decisión de método</span></h3><ol><li>Proponen una definición mínima: ensamblajes materiales extendidos, doblemente relacionales.</li><li>Rechazan la definición definitiva porque otros actores no dejan de declarar infraestructuras nuevas.</li><li>La definición no predice qué verá la gente como infraestructura; por eso la pregunta es a la vez conceptual y empírica.</li><li>Ante la objeción de vaguedad, Bear sostiene que nombrar algo infraestructura tiene efectos de gobierno.</li></ol><p class="ev"><b>Caso y evidencia</b>El alcantarillado colapsado de Phnom Penh, que sigue produciendo riesgos sanitarios; el debate del GDAT en Manchester (pp. 5-7).</p><blockquote class="q"><div class="en">&quot;the aspiration to unequivocal specification can be seen as itself conceptually and empirically counter-productive&quot;</div><div class="es">&quot;la aspiración a una especificación inequívoca puede verse como contraproducente, conceptual y empíricamente&quot;</div><div class="meta">p. 5 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=5&amp;q=the%20aspiration%20to%20unequivocal%20specification">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">03</span><span>Las infraestructuras son complicadas, y por eso nadie las controla</span></h3><ol><li>Lo complicado simplifica relaciones plegando entidades heterogéneas en redes extensibles.</li><li>Esas redes nunca se alinean del todo: corren desfasadas, en paralelo o unas contra otras.</li><li>Los diagnósticos que atribuyen todo al neoliberalismo sobrestiman la capacidad de los poderosos para prever y controlar.</li><li>El desarrollo es emergente y experimental; la responsabilidad se distribuye, y donde la causalidad no se puede desenredar hace falta una ética del cuidado.</li></ol><p class="ev"><b>Caso y evidencia</b>La nieve técnica de los Alpes; el Challenger y el ingeniero «responsable en una millonésima» (pp. 8-10).</p><blockquote class="q"><div class="en">&quot;exceedingly unlikely that they will function according to the plans of anyone in particular&quot;</div><div class="es">&quot;sumamente improbable que funcionen según los planes de nadie en particular&quot;</div><div class="meta">p. 10 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=10&amp;q=exceedingly%20unlikely%20that%20they%20will%20function%20according%20to%20the%20plans%20of">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">04</span><span>El orden produce sus propios huecos</span></h3><ol><li>La relación entre infraestructura y sociedad es recursiva: los efectos vuelven sobre quienes la hicieron.</li><li>Ninguna infraestructura lo abarca todo, porque todo orden genera su desorden correlativo.</li><li>Relaciones y huecos se multiplican a la vez: el orden es fractal y las infraestructuras funcionan a través de sus inconsistencias.</li><li>Hay que invertir la pregunta: tomar los huecos como hechos infraestructurales y preguntar en qué ordenamientos participan.</li></ol><p class="ev"><b>Caso y evidencia</b>La alergia de Star a la cebolla, que le devolvía siempre la responsabilidad en McDonald's; el petróleo de Mitchell (pp. 11-13).</p><blockquote class="q"><div class="en">&quot;Infrastructural studies might begin with gaps, interstices, and zones of opacity as infrastructural facts&quot;</div><div class="es">&quot;Los estudios de infraestructura podrían empezar por los huecos, los intersticios y las zonas de opacidad como hechos infraestructurales&quot;</div><div class="meta">p. 13 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=13&amp;q=Infrastructural%20studies%20might%20begin%20with%20gaps">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">05</span><span>El poder infraestructural ve mucho de muy poco</span></h3><ol><li>La opacidad es general, alcanza a los propios expertos y deja huecos que permiten maniobrar.</li><li>Scott tomó el flujo como hecho; empezar por el hueco muestra un Estado con serios impedimentos de visión.</li><li>El oligóptico ve con detalle cosas específicas y nunca el conjunto.</li><li>Los datos masivos fallan y atraen hackers, sin que eso niegue la represión: la visibilidad relativa es una cuestión política.</li></ol><p class="ev"><b>Caso y evidencia</b><i>Paris ville invisible</i> de Latour y Hermant; el hackeo de Ashley Madison en 2015 (pp. 14-16).</p><blockquote class="q"><div class="en">&quot;Even in the age of big data, information is never exact and overviews never total.&quot;</div><div class="es">&quot;Incluso en la época de los datos masivos, la información nunca es exacta ni las visiones de conjunto totales.&quot;</div><div class="meta">p. 15 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=15&amp;q=information%20is%20never%20exact%20and%20overviews%20never%20total">leer en el texto ↗</a></div></blockquote></div></section>
+<section id="citas"><h2><span class="n">05</span>Citas clave</h2><p class="intro">En inglés, con traducción.</p><blockquote class="q"><div class="en">&quot;The projects of the powerful and the engagements of the poor are thus thoroughly entangled in this contemporary drive to &#x27;leverage the future.&#x27;&quot;</div><div class="es">&quot;Los proyectos de los poderosos y las prácticas de los pobres quedan así completamente enredados en este impulso contemporáneo de &#x27;apalancar el futuro&#x27;.&quot;</div><div class="co">El diagnóstico de época con que abre el texto.</div><div class="meta">p. 1 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=1&amp;q=The%20projects%20of%20the%20powerful%20and%20the%20engagements%20of%20the%20poor">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;seamless flow was a fragile achievement&quot;</div><div class="es">&quot;el flujo sin fisuras era un logro frágil&quot;</div><div class="co">La herencia de Star y Ruhleder que el texto radicaliza.</div><div class="meta">p. 3 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=3&amp;q=seamless%20flow%20was%20a%20fragile%20achievement">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;infrastructures are in fact often not unnoticed&quot;</div><div class="es">&quot;de hecho, las infraestructuras a menudo no pasan inadvertidas&quot;</div><div class="co">La objeción de Larkin.</div><div class="meta">p. 4 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=4&amp;q=infrastructures%20are%20in%20fact%20often%20not%20unnoticed">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;infrastructure seems presently to be bursting at the seams&quot;</div><div class="es">&quot;la infraestructura parece estar reventando por las costuras&quot;</div><div class="co">El estado del concepto.</div><div class="meta">p. 6 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=6&amp;q=infrastructure%20seems%20presently%20to%20be%20bursting%20at%20the%20seams">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;It can never just go home and lock the door.&quot;</div><div class="es">&quot;Nunca puede simplemente irse a casa y cerrar la puerta.&quot;</div><div class="co">Lo complejo: los babuinos.</div><div class="meta">p. 8 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=8&amp;q=It%20can%20never%20just%20go%20home%20and%20lock%20the%20door">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;Infrastructural formations always to some degree remain out of synch with each other&quot;</div><div class="es">&quot;Las formaciones infraestructurales siempre quedan en alguna medida desfasadas unas de otras&quot;</div><div class="co">Lo complicado: los desajustes.</div><div class="meta">p. 8 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=8&amp;q=Infrastructural%20formations%20always%20to%20some%20degree%20remain%20out%20of%20synch">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;the notion that infrastructural development is generically progressive evaporates alongside the melting glaciers&quot;</div><div class="es">&quot;la idea de que el desarrollo infraestructural es genéricamente progresivo se evapora junto con los glaciares que se derriten&quot;</div><div class="co">El cierre del caso de la nieve técnica.</div><div class="meta">p. 8 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=8&amp;q=evaporates%20alongside%20the%20melting%20glaciers">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;they may overestimate the extent to which those in power are themselves able to foresee, not to say control, infrastructural transformations&quot;</div><div class="es">&quot;pueden sobrestimar en qué medida quienes tienen el poder son capaces de prever, y menos aún de controlar, las transformaciones infraestructurales&quot;</div><div class="co">La tesis política.</div><div class="meta">p. 10 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=10&amp;q=they%20may%20overestimate%20the%20extent%20to%20which%20those%20in%20power">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;where lines of causality become too complicated to disentangle, a different ethic of care and/or concern is required&quot;</div><div class="es">&quot;donde las líneas de causalidad se vuelven demasiado complicadas para desenredarlas, hace falta otra ética del cuidado o de la preocupación&quot;</div><div class="co">De la responsabilidad a la ética del cuidado.</div><div class="meta">p. 10-11 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=10&amp;q=a%20different%20ethic%20of%20care%20and">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;say that infrastructures work only by breaking down&quot;</div><div class="es">&quot;[digamos] que las infraestructuras solo funcionan averiándose&quot;</div><div class="co">Deleuze y Guattari, como imagen y no como decreto.</div><div class="meta">p. 13 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=13&amp;q=say%20that%20infrastructures%20work%20only%20by%20breaking%20down">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;it is not so much that infrastructures have a scale, but rather that scales are generated through the work of configuring, extending, maintaining, or disrupting infrastructures&quot;</div><div class="es">&quot;no es tanto que las infraestructuras tengan una escala, sino que las escalas se generan con el trabajo de configurar, extender, mantener o perturbar infraestructuras&quot;</div><div class="co">La escala como efecto.</div><div class="meta">p. 16 · <a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md&amp;p=16&amp;q=scales%20are%20generated%20through%20the%20work%20of%20configuring">leer en el texto ↗</a></div></blockquote></section>
+<section id="limites"><h2><span class="n">06</span>Límites y tensiones</h2><p>Si cualquier cosa puede ser infraestructura, el concepto pierde capacidad de discriminar, y la respuesta de Bear (nombrar tiene efectos de gobierno) desplaza el problema más que resolverlo. El argumento de que la crítica al neoliberalismo sobrestima el control de los poderosos es razonable, pero no da criterios para distinguir una causalidad realmente inextricable de una opacidad producida por quienes se benefician de ella. El vocabulario tampoco es estable: el texto usa «complejidad» en sentido corriente (los caminos inka) y en el técnico de Strum y Latour, y lo que llama complicación (emergencia, efectos no lineales) es lo que las teorías de sistemas complejos llaman complejidad. Por último, como introducción, es una cadena de referencias más que un análisis: su fuerza depende de estudios que el lector no tiene delante.</p></section>
+<section id="sintesis"><h2><span class="n">07</span>Síntesis</h2><div class="sint"><p class="ref0">Harvey, Penny, Casper Bruun Jensen y Atsuro Morita (2016). "Introduction: Infrastructural Complications". En P. Harvey, C. B. Jensen y A. Morita (eds.), Infrastructures and Social Complexity: A Companion. Londres: Routledge (serie CRESC; copyright 2017), pp. 1-22. Las páginas citadas son las del libro.</p><h4>1. TESIS CENTRAL</h4>
+<p>Las infraestructuras deben pensarse como formaciones complicadas, en el sentido de Strum y Latour, y no como sistemas que tienden al flujo sin fisuras o a la complejidad creciente. Todo orden infraestructural produce simultáneamente conexiones y huecos, visibilidades y opacidades, y su desarrollo es emergente y experimental, de modo que no obedece al plan de nadie. De ahí se siguen cuatro desplazamientos respecto de la tradición inaugurada por Bowker y Star: la inversión deja de ser solo una operación del analista y ocurre en el campo; la pregunta &quot;qué es una infraestructura&quot; se vuelve a la vez conceptual y empírica; el análisis debe empezar por los huecos y no por el flujo; y la visión que las infraestructuras hacen posible es oligóptica y parcial, no panóptica (p. 4-5, 7-10, 13, 15).</p>
+<h4>2. GÉNERO Y SITUACIÓN DEL TEXTO</h4>
+<p>Es la introducción programática de un compendio de cuatrocientas páginas. No defiende una tesis a partir de un caso propio, sino que avanza por desplazamientos conceptuales, cada uno apoyado en una cadena de casos de la literatura, muchos de ellos capítulos del volumen. Conviene distinguir los casos que el texto desarrolla (caminos inka, babuinos, nieve técnica, arroz del Chao Phraya, cebolla de Star, oligóptico de París, Darwin) de los que solo nombra como indicadores de una línea de investigación.</p>
+<p>El diagnóstico de época abre el texto: una carrera frenética de inversión infraestructural entre superpotencias que compiten por hacer circular energía, mercancías y dinero, frente a millones de personas despojadas por corredores comerciales, enclaves securitizados y servicios privatizados que buscan sus propias posibilidades en los intersticios de esas inversiones. Ambos quedan enredados en el impulso de &quot;apalancar el futuro&quot;, expresión de AbdouMaliq Simone (p. 1).</p>
+<p>El volumen nace del cruce de dos redes. En el CRESC (Manchester y Open University), Harvey estudiaba cómo carreteras, aeropuertos y sistemas digitales reúnen fuerzas políticas y económicas con efectos inesperados, a partir de trabajos previos sobre objetos y materiales. En Osaka y Copenhague, Morita y Jensen pensaban la infraestructura desde la transformación ambiental, partiendo de que &quot;infraestructura&quot; y &quot;naturaleza&quot; funcionan ambas como fondos invisibles, y llegaron a verla como doble medio para conocer y controlar entornos. Ambos grupos encontraron que sus infraestructuras estaban pobladas por no humanos heterogéneos: bacterias, relieves, arroz y espíritus en un caso; suelo, concreto, pasaportes falsos, salas de aeropuerto, gatos, fantasmas, datos y &quot;seres-tierra&quot; en el otro. La convergencia se da en torno a las dimensiones experimentales, inciertas, afectivas, temporales y políticas de las infraestructuras entendidas como mundos relacionales (p. 1-2). La mención de los seres-tierra remite a Marisol de la Cadena y anuncia la proximidad del texto con el giro ontológico.</p>
+<h4>3. PRIMER DESPLAZAMIENTO: MULTIPLICAR LAS INVERSIONES</h4>
+<p>Punto de partida. La inversión infraestructural de Bowker (1995) respondía a enfoques que leían las infraestructuras como superficies donde decodificar motivos culturales: el automóvil estadounidense como reflejo del individualismo, los trenes japoneses atestados como &quot;espejo&quot; de la orientación grupal. La inversión proponía un cambio de figura y fondo y una entrada por la materialidad: el aumento de la esperanza de vida en el siglo XIX no se debió tanto al conocimiento científico como a los cambios en la producción y el consumo de alimentos y al alcantarillado. Star y Ruhleder (1996) hicieron de la invisibilidad un rasgo definitorio y, con su pregunta por el &quot;cuándo&quot; de la infraestructura, mostraron que el flujo sin fisuras es un logro frágil (p. 3).</p>
+<p>Primera objeción: no todo funciona. La inversión parecía pertinente sobre todo donde las infraestructuras funcionan bien. El auge actual del tema se explica en parte por su fragilidad visible: donde la ruptura es regular (Harvey en los Andes peruanos, Campbell en la Amazonía) o hubo colapso (Simone en Johannesburgo, Jensen en Phnom Penh), los patrones de visibilidad son otros (p. 3).</p>
+<p>Segunda objeción: Larkin. En su revisión de 2013, Larkin mostró que las infraestructuras habitan un espectro que va de la opacidad al espectáculo, y que muchas están diseñadas para suscitar asombro: satélites indonesios (Barker), electricidad mongola (Sneath), desarrollo urbano de Kinshasa (de Boeck). Si la inversión dependiera de una invisibilidad inicial, quedaría limitada al extremo bajo de esa escala (p. 4).</p>
+<p>Respuesta de los autores. Larkin habla de visibilidad como exhibición pública; Bowker, de invisibilidad de los procesos operativos cotidianos. No son comparables: una infraestructura exhibida puede tener operaciones opacas. Hace falta entender cómo llegan efectivamente las imágenes satelitales a los hogares indonesios, y qué relaciones acompañan la llegada de la electricidad (Boyer), una carretera (Harvey y Knox) o una base de datos (Jensen y Winthereik). El caso de Lea y Pholeros sobre vivienda aborigen, &quot;This Is Not a Pipe&quot;, lo resume: exhibir tuberías no garantiza una infraestructura que funcione (p. 4).</p>
+<p>El movimiento propio. La verdadera dificultad de la inversión es que supone una separación nítida entre lo conceptual-analítico y lo empírico-etnográfico: en su formulación original es el analista quien revela lo invisible. Pero hay inversiones que ocurren por sí solas, en las que urgencias diversas vuelven visibles las operaciones para ciertas personas (Blok, Fennell sobre la calefacción en la vivienda pública de Chicago, Nakazora) o inducen ajustes y sabotajes (Anand sobre el agua urbana, Howe sobre los vientos de Oaxaca, von Schnitzler sobre el agua prepagada en Sudáfrica). Allí la inversión es una condición empírica antes que una herramienta analítica. Y esas inversiones pueden producir conceptos nuevos: en el delta del Chao Phraya, en Tailandia, ingenieros e hidrólogos pasaron a ver el arroz como infraestructura por derecho propio y no como producto sostenido por un sistema hidráulico externo (Morita). La conclusión: la inversión no queda obsoleta; sus formas se multiplican y desdibujan la frontera entre lo conceptual y lo empírico (p. 4-5).</p>
+<h4>4. SEGUNDO DESPLAZAMIENTO: UNA DEFINICIÓN MÍNIMA Y ABIERTA</h4>
+<p>Definición provisional: formas dinámicas, mediadas tecnológicamente, que producen y transforman de manera continua relaciones sociotécnicas; ensamblajes materiales extendidos que generan efectos y estructuran relaciones mediante actividades diseñadas (planificadas) o no diseñadas (emergentes). Son doblemente relacionales, por su multiplicidad interna y por su capacidad de conexión hacia afuera (idea de Harvey a propósito de las carreteras peruanas). Pueden fallar por perturbación interna o por ruptura de su relación con la actividad que sostienen, y un sistema fallido puede seguir produciendo efectos: el alcantarillado colapsado de Phnom Penh sigue generando riesgos sanitarios (p. 5).</p>
+<p>Los autores rechazan buscar una definición definitiva por considerarla contraproducente, dado que otros actores no cesan de declarar infraestructurales sitios nuevos. La definición mínima enfoca las cualidades &quot;infra&quot;, el alcance espacial y temporal y las capacidades relacionales abiertas, pero no predice qué verá la gente como infraestructura. Por eso el enfoque atiende tanto a lo que no es objeto de reflexión como a los momentos en que las personas sí reflexionan sobre sus condiciones sociomateriales, y así atraviesa la tensión entre superficie y profundidad de la teoría social. La pregunta &quot;qué es infraestructura&quot; debe experimentarse en registros conceptuales y empíricos a la vez (p. 5-6).</p>
+<p>El concepto &quot;revienta por las costuras&quot;: empíricamente, porque las noticias sobre petróleo, energías renovables, sequías, oleoductos, cuencas, vigilancia, ciberseguridad o drones se formulan como asuntos infraestructurales; analíticamente, porque el término se cruza con la biopolítica foucaultiana, los marxismos, la teoría del actor-red, el pensamiento ecológico, la antropología multiespecie y los rizomas deleuzianos. No hay medida común entre los ingenieros de Suez, el Chao Phraya y los congresos académicos, y para los autores esa divergencia es lo que vuelve el campo fértil, porque arrastra a la conversación actores y materiales cada vez más variados (p. 6).</p>
+<p>El debate del GDAT (Manchester, 2015) introduce la objeción principal. Laura Bear defendió que la atención a la infraestructura reconfigura la aproximación antropológica a lo político. Ante quienes objetaron la vaguedad del concepto, concedió que cualquier cosa puede ser convocada como infraestructura, pero sostuvo que hacerlo tiene implicaciones en la formación de sitios de gobierno y pone de relieve las dimensiones no humanas de lo político (p. 6-7).</p>
+<h4>5. TERCER DESPLAZAMIENTO: DE LA COMPLEJIDAD A LA COMPLICACIÓN</h4>
+<p>Crítica del relato lineal. Las historias populares narran progreso (piedra, bronce, hierro, petróleo, microelectrónica; feudalismo, democracia) y complejidad creciente (caminos locales, luego redes ferroviarias y eléctricas, luego tecnologías de información que lo atraviesan todo). Los autores preguntan quién es el &quot;nosotros&quot; de esas historias (p. 7).</p>
+<p>Caso: los caminos inka (Hyslop). Simples frente a Internet, pero trazaban geometrías de poder sobre un paisaje sensible, no natural, mediante alineamientos geológicos, astrológicos y sociales; dejan entrever una complejidad infraestructural extrema anterior a la modernidad (p. 7).</p>
+<p>Caso: babuinos y humanos (Strum y Latour, 1987). Los babuinos viven abrumados por la complejidad porque la jerarquía de la tropa está en negociación continua: el babuino exhausto &quot;nunca puede irse a casa y cerrar la puerta&quot;. Para muchos humanos, cerraduras y puertas simplifican temporalmente las interacciones. La distinción clave: lo complejo es intrínsecamente inestable; lo complicado pliega entidades heterogéneas en redes extensibles que simplifican localmente ciertas relaciones, pero cuyos alineamientos nunca son exactos. Las formaciones infraestructurales quedan siempre desfasadas entre sí, corren en paralelo o trabajan unas contra otras (p. 7-8). Este es el núcleo conceptual del texto: la complicación no es menos complejidad, sino un modo de orden que simplifica aquí a costa de producir desajustes allá.</p>
+<p>Caso: la nieve técnica en los Alpes (Nöbauer). Las estaciones de esquí solo se sostienen con nieve confiable; la nieve técnica reemplaza a los glaciares en retroceso, pero exige reservorios y más gasto de energía fósil, la misma que causó el problema. &quot;La idea de que el desarrollo infraestructural es genéricamente progresivo se evapora junto con los glaciares&quot; (p. 8).</p>
+<p>Crisis y astillamiento. Ciudades que se inundan o se quedan a oscuras; infraestructuras digitales que prometían ciudadanía ilustrada y trajeron inseguridad y vigilancia. Las infraestructuras resultan buenas &quot;para algunas personas, algunas veces&quot;, y su mantenimiento es caro en contextos de austeridad (p. 8-9). El urbanismo astillado de Graham y Marvin describe sistemas antes públicos y financiados por impuestos, ahora repartidos entre propietarios privados, alianzas público-privadas y cobros a usuarios, con menos rendición de cuentas y más diferenciación del acceso (p. 9). Pero el astillamiento es generativo: las relaciones sociales adquieren propiedades infraestructurales donde la infraestructura técnica falla (Simone, &quot;la gente como infraestructura&quot; en Johannesburgo; Elyachar y el trabajo fático en El Cairo; Chalfin y los residuos en Ghana). Y la naturaleza se vuelve infraestructura: ríos, deltas y cuencas son reclutados para trabajos antes asignados a la ingeniería (Verran en Australia, Morita en Tailandia, Carse en la cuenca del canal de Panamá), hasta que la línea entre lo natural y lo diseñado se vuelve difícil de trazar (p. 9).</p>
+<p>La tesis política. Los diagnósticos que atribuyen astillamiento y colapso al neoliberalismo son importantes, pero pueden sobrestimar la capacidad de los poderosos para prever y controlar. Si se supone un desarrollo lineal y racional, la crítica se centra en los motivos o la mala ejecución; si se abandona la historia progresiva, nadie tiene el poder de imponer linealidad. Desde la complicación, las infraestructuras emergen de interacciones distribuidas de múltiples agentes durante largo tiempo y no funcionan según el plan de nadie (Latour, Aramis); esa emergencia indica su carácter experimental (p. 10).</p>
+<p>El problema de la responsabilidad. Si los efectos emergen, la responsabilidad no puede atribuirse sin más a individuos u organizaciones. Star, a partir de Arendt, discutió el caso del Challenger (Vaughan), que causó siete muertes: cierta ética de la ingeniería consideraría a cada participante &quot;responsable en una millonésima&quot;, lo que no tiene sentido pero señala la dificultad. Sin embargo, las comunidades afectadas exigen que respondan quienes más ganan, y Estados y corporaciones son a veces coautores del desplazamiento y del abandono biopolítico (de la Cadena; capítulos de Lea y Reeves). Donde la causalidad es inextricable, los autores proponen una ética del cuidado: la respons-habilidad de Haraway y la lógica del cuidado de Mol, frente a la ética de la elección (p. 10-11).</p>
+<p>Caso: el jarrón de Serres. Hacerlo exige destreza y paciencia; romperlo, un empujón. Las grandes infraestructuras son logros frágiles, no colosos (Edwards sobre los modelos climáticos). Si las fallas son esperables, señalarlas pierde interés: la tarea es explicar qué hace que algunas funcionen contra todo pronóstico y pensar formas más viables (p. 11).</p>
+<h4>6. CUARTO DESPLAZAMIENTO: EMPEZAR POR LOS HUECOS</h4>
+<p>Clasificación y recursividad. Bowker y Star, en continuidad con Douglas y Kristeva, mostraron cómo las clasificaciones se vuelven estándares incrustados &quot;en la columna vertebral&quot; de la infraestructura, e invitaron a entrar en las salas de máquinas donde se fabrican (p. 11). La relación entre infraestructura y sociedad es recursiva: el ferrocarril abrió paso a la revolución de la información (Beniger), produjo nuevas percepciones (Schivelbusch) y acciones (Fisch sobre los suicidios en los trenes de Tokio); las ONG que aprendieron a pensarse en red se organizaron en red (Riles); la cooperación comprometida con la rendición mutua de cuentas transformó la ayuda misma (Jensen y Winthereik); el petróleo coemergió con formas de democracia, guerra y vida moderna que lo hicieron indispensable (Mitchell). La recursividad sustituye la imagen de la infraestructura como dominio pasivo, &quot;determinado&quot; por la política o la economía, por relaciones indeterminadas a priori. Nadie podía saber que el petróleo de Oriente Medio organizaría la política del siglo XX (p. 11-12).</p>
+<p>Órdenes y sus otros. Ninguna infraestructura lo abarca todo, porque todo orden produce su desorden correlativo (Serres). Berg y Timmermans mostraron que los estándares médicos crean zonas de visibilidad y, a la vez, de opacidad. Caso: la alergia de Star a la cebolla. Los procedimientos de McDonald&#39;s no preveían hamburguesas sin cebolla, de modo que la responsabilidad le era devuelta siempre a ella, y eso le mostró los intersticios de la comida rápida. Kockelman y Rottenburg observan lo mismo en cualquier infraestructura (p. 12-13).</p>
+<p>Orden fractal. En lugar de sistemas integrados interrumpidos por obstrucciones inusuales, aparecen arreglos plegados en los que cada conexión crea huecos nuevos; el orden es fractal porque relaciones y huecos se multiplican a la vez (Strathern, Jensen). Las infraestructuras funcionan a través de sus inconsistencias y son impulsadas por la energía invertida en resolver los problemas que ellas mismas generan. Los autores parafrasean a Deleuze y Guattari: las infraestructuras solo funcionan averiándose, aunque toman la idea como imagen para mantener la curiosidad empírica y no como decreto filosófico. Muchas se parecen a máquinas de Rube Goldberg, complicadísimas para tareas simples (Morita, a partir de Gad) (p. 13).</p>
+<p>La propuesta de método: invertir la pregunta. Si el flujo es el hecho básico, la interrupción es una desviación que hay que explicar. Los estudios de infraestructura deberían empezar por los huecos, intersticios y zonas de opacidad como hechos infraestructurales, y preguntar en qué ordenamientos participan. Son, en el fondo, preguntas de composición: qué actores, materiales, estándares e imágenes se pliegan en la infraestructura y cuáles quedan designados como sus otros invisibles o denigrados (p. 13-14).</p>
+<h4>7. QUINTO DESPLAZAMIENTO: VISIÓN OLIGÓPTICA</h4>
+<p>La opacidad es general. La complejidad técnica vuelve las infraestructuras impenetrables para la mayoría (Hughes, Winner), pero no implica impotencia: los huecos permiten navegar y manipular con conocimiento local, como en el agua prepagada sudafricana (von Schnitzler). Y la opacidad alcanza también a diseñadores y expertos (p. 14).</p>
+<p>Vigilancia digital. Las revelaciones de Snowden sugieren infraestructuras que lo ven casi todo, como el ojo de Sauron. Pero la experiencia cotidiana de teléfonos y tabletas es amable; los críticos recurren a Orwell y al panóptico de Foucault, los apologistas a la conectividad de Facebook, que deja elegir qué mostrar y vuelve rastreable cada movimiento (p. 14-15).</p>
+<p>Crítica a Scott. Seeing Like a State mostró que la visión estatal depende de sus estándares (&quot;si entra basura, sale basura&quot;), pero centró el análisis en el poder del Estado para rehacer ciudadanos y paisajes, tomando el flujo como hecho y el hueco como residuo. Si se empieza por el hueco, aparece un Estado con serios impedimentos de visión y prótesis extrañas (p. 15).</p>
+<p>Caso: el oligóptico (Latour y Hermant, Paris ville invisible). Frente al panóptico, desde cuya torre todo puede en principio verse, el oligóptico ve con gran detalle solo cosas muy específicas y es incapaz de una visión de conjunto (Gad y Lauritsen sobre la inspección pesquera danesa). La obra documenta los rastros infraestructurales, es decir, los dispositivos de medición distribuidos por la ciudad que permiten a los planificadores saber mucho de muy poco, en línea con la aritmética política de Petty para el gobierno colonial de Irlanda (Carroll) (p. 15).</p>
+<p>Datos masivos. Incluso con algoritmos de filtrado y publicidad dirigida, la visión depende de rastros particulares, y las indeterminaciones aparecen pronto: sospechosos de terrorismo mal identificados en aeropuertos, recomendaciones de productos irrelevantes. Los datos masivos exigen trabajo calificado, vigilancia constante e inversiones enormes; generan desórdenes internos y atraen a hackers que explotan sus debilidades (el caso Ashley Madison, hackeado en julio de 2015 por The Impact Team) o que protegen a los vigilados con cifrado. &quot;La infraestructura de vigilancia también es una máquina que solo funciona averiándose&quot; (p. 15-16). Esto no niega la represión (Reeves): listas de sospechosos mal construidas, amenazas a activistas. Por eso la visibilidad relativa, y las salvaguardas para permanecer fuera de la vista, son centrales (p. 16).</p>
+<p>Opacidad de los datos. Las infraestructuras estadísticas nacionales tenían certezas, protocolos y controles institucionalizados; los datos masivos son más completos y más opacos, propiedad de empresas como Google que liberan datos parciales y ocultan algoritmos (Ruppert y otros), y grandes volúmenes se retiran del escrutinio en nombre de la seguridad nacional (Galison) (p. 16).</p>
+<h4>8. SEXTO DESPLAZAMIENTO: LA ESCALA COMO EFECTO</h4>
+<p>Las infraestructuras no tienen escala: la producen al configurarse, extenderse, mantenerse o perturbarse, y pueden invertir lo grande y lo pequeño. No se difunden de centros a periferias, sino que hacen esas geografías (Callon y Latour, Harvey, Jensen, Tsing). El petróleo configuró las escalas de la política moderna y del cambio climático (Mitchell) (p. 16-17).</p>
+<p>Caso: Darwin (Lea). Vista desde Sídney o Melbourne, la capital del Territorio del Norte australiano es un rincón rural. Por su posición estratégica es, a la vez, un nodo central del &quot;teatro&quot; del Pacífico operado por las fuerzas armadas estadounidenses, inundado de dinero que circula por canales tácticos específicos con efectos desiguales. Darwin es pequeña en Australia y grande en el Pacífico: en lugar de un margen que responde a un centro, una imagen fractal donde márgenes y centros proliferan (p. 17).</p>
+<p>Arquitectura del volumen: seis secciones (infraestructuras del desarrollo, urbanas, energéticas, ambientales, digitales y &quot;figuras infraestructurales&quot;), con ausencias reconocidas (medios y finanzas), y un interés transversal en la visibilidad relativa, los huecos, el gobierno y las configuraciones alternativas, tensionado entre la fragilidad y la obstinación de las infraestructuras (p. 17).</p>
+<h4>9. CONCEPTOS CLAVE</h4>
+<p>Inversiones que ocurren por sí solas: revelaciones de la infraestructura producidas en el campo por ruptura, ausencia o urgencia, antes de cualquier análisis.<br>Doble relacionalidad: multiplicidad interna y capacidad de conexión externa.<br>Diseñado / no diseñado: actividad planificada frente a efectos emergentes, plegados entre sí.<br>Complejo / complicado (Strum y Latour): inestabilidad intrínseca frente a simplificación local mediante redes que nunca se alinean del todo.<br>Astillamiento (Graham y Marvin): fragmentación de sistemas públicos en regímenes de propiedad y acceso diferenciados.<br>Recursividad: bucle entre infraestructura y sociedad que vuelve indeterminadas a priori sus relaciones.<br>Orden fractal: multiplicación simultánea de conexiones y huecos.<br>Oligóptico (Latour y Hermant): visión fina de cosas específicas, incapaz de una visión de conjunto.<br>Escala como efecto: lo grande y lo pequeño producidos por el trabajo infraestructural.</p>
+<h4>10. EVALUACIÓN CRÍTICA</h4>
+<p>Frente a Star, el texto conserva la definición relacional y la inversión, y las desplaza con eficacia. La distinción entre la visibilidad del espectáculo y la invisibilidad de la operación responde bien a Larkin sin abandonar a Bowker. El movimiento más fuerte es sacar la inversión del escritorio del analista: la inversión la hacen ingenieros, usuarios y activistas, y produce conceptos nuevos. El cambio de punto de partida, del flujo al hueco, recibe con la distinción complejo/complicado un fundamento teórico preciso.</p>
+<p>Las tensiones son tres. Primera, la amplitud: si cualquier cosa puede ser infraestructura, el concepto pierde capacidad de discriminación, y la respuesta de Bear (nombrar algo infraestructura tiene efectos de gobierno) desplaza el problema más de lo que lo resuelve. Segunda, la política: el argumento de que la crítica al neoliberalismo sobrestima el control de los poderosos es razonable como observación empírica, y los autores lo equilibran con la ética del cuidado; pero no ofrecen criterios para distinguir cuándo una causalidad es genuinamente inextricable y cuándo la complicación es un efecto producido por quienes se benefician de la opacidad. Tercera, el método: como introducción, el texto es una cadena de referencias más que un análisis, y su fuerza depende de estudios que el lector no tiene delante.</p>
+<p>Hay una dimensión peruana que el texto no explicita: los casos de ruptura regular, la doble relacionalidad y las carreteras remiten al trabajo de Harvey en el Perú, y los seres-tierra a de la Cadena. Queda la pregunta que enlaza los tres textos: si &quot;empezar por los huecos&quot; es una inversión de la inversión o la misma operación de Star llevada a contextos donde el hueco es la norma. En el segundo caso habría que preguntarse si una etnografía de la infraestructura nacida en los laboratorios de biología estadounidenses puede leerse desde el Sur sin cambiar de concepto.</p>
+</div></section>
 
 </main>
-</div>
-
-<div id="focoBar" role="status">
-  <span class="ft" id="focoT"></span>
-  <span class="fc" id="focoC"></span>
-  <button class="btn" id="focoDossier">ver hilo</button>
-  <label><input type="checkbox" id="focoSolo"> solo este hilo</label>
-  <button class="btn" id="focoX" title="Salir del modo hilo">✕ salir</button>
-</div>
-
-<footer>Matriz analítica · Harvey, Jensen y Morita (2016) · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026</footer>
-
+<div class="wrap"><footer>Matriz · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026 · Traducciones propias. Los enlaces «↗» abren el pasaje en el lector.</footer></div>
 <script>
-/* ===================== DATOS ===================== */
-const LECTURA = '1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md';
-const NIVEL_COL = 'Tratamiento';
-const CONEX_COLS = ['Tema','En este texto','Star y Ruhleder (1994)','Star (1999)','Tesis'];
-
-const S = [
- {id:'S1', t:'Apertura: coyuntura y origen del volumen', p:'1-3', fn:'Diagnóstico de época y posicionamiento', arg:`Las infraestructuras como sitios atractivos para la investigación cualitativa en plena carrera de inversión. Poderosos y desposeídos enredados en "leverage the future" (Simone). Direcciones del campo. Origen del volumen en dos redes (CRESC; Osaka-Copenhague) y entidades heterogéneas (bacterias, arroz, espíritus, gatos, fantasmas, seres-tierra). Dimensiones experimentales, inciertas, afectivas, temporales y políticas.`, sus:`Descripción de coyuntura; trayectoria de los grupos.`, tr:`Anuncia qué tiene de interesante cómo "gira" el giro.`},
- {id:'S2', t:'Turning to infrastructure: some inversions', p:'3-5', fn:'Primer desplazamiento: multiplicar las inversiones', arg:`La inversión de Bowker contra la lectura de infraestructuras como reflejo cultural. Star y Ruhleder: invisibilidad y el "cuándo". Problema: la inversión parece valer donde todo funciona. Larkin: espectro de visibilidades. Respuesta: exhibición pública frente a operación cotidiana. Movimiento propio: inversiones que ocurren por sí solas y producen conceptos (el arroz).`, sus:`Cadena de casos de la literatura; caso de Morita.`, tr:`Si lo conceptual y lo empírico se mezclan, ¿qué es infraestructura?`},
- {id:'S3', t:'But what is infrastructure? A minimal point of entry', p:'5-7', fn:'Segundo desplazamiento: definición mínima y abierta', arg:`Definición provisional: formas dinámicas que producen relaciones sociotécnicas; ensamblajes materiales extendidos, diseñados o no; doble relacionalidad; dos tipos de falla. Rechazo de la definición definitiva. Experimentación conceptual y empírica. La infraestructura "revienta por las costuras". Divergencia como virtud. Debate del GDAT (Bear).`, sus:`Definición, ejemplos breves, debate académico.`, tr:`Pasa a criticar el relato de progreso que acompaña a las infraestructuras.`},
- {id:'S4', t:'Complexity, complication, experimentation', p:'7-11', fn:'Tercer desplazamiento: de la complejidad a la complicación', arg:`Crítica de las historias lineales. Caminos inka. Babuinos y humanos: complejo frente a complicado. Nieve técnica. Crisis infraestructurales. Urbanismo astillado y su lado generativo: gente y naturaleza como infraestructura. La crítica al neoliberalismo sobrestima el control. Emergencia, responsabilidad distribuida (Challenger), ética del cuidado. El jarrón de Serres: explicar por qué algo funciona.`, sus:`Casos desarrollados (inka, babuinos, Alpes, Challenger, jarrón) y referencias.`, tr:`De la complicación se pasa a la política de los órdenes.`},
- {id:'S5', t:'Orders and interstices: on the politics of infrastructure', p:'11-14', fn:'Cuarto desplazamiento: del flujo a los huecos', arg:`Clasificaciones y estándares (Bowker y Star). Recursividad infraestructura-sociedad (ferrocarril, ONG, ayuda, petróleo). Ninguna infraestructura lo abarca todo; todo orden produce su desorden. Berg y Timmermans; las cebollas de Star. Orden fractal. Funcionar averiándose (Deleuze y Guattari, con cautela). Rube Goldberg. Empezar por los huecos; preguntas de composición.`, sus:`Casos de la literatura; autoridad filosófica usada como imagen.`, tr:`Si los huecos son la norma, cambia la idea de visión y control.`},
- {id:'S6', t:'Infrastructural visions', p:'14-17', fn:'Quinto y sexto desplazamientos: visión oligóptica y escala producida', arg:`Opacidad para usuarios y expertos; navegación local. Vigilancia: Snowden, Sauron, panóptico, Facebook. Crítica a Scott. Oligóptico de París; Petty. Datos masivos y sus indeterminaciones; Ashley Madison. Represión y visibilidad relativa. Estadística nacional frente a datos privados; Galison. La escala como efecto; Darwin.`, sus:`Casos de vigilancia y datos; caso de Lea.`, tr:`Cierra el recorrido conceptual.`},
- {id:'S7', t:'The structure of the collection', p:'17', fn:'Arquitectura del volumen', arg:`Seis secciones: desarrollo, urbanas, energía, ambiente, digitales, figuras infraestructurales. Ausencias: medios y finanzas. Preguntas transversales: visibilidad relativa, conectividad y huecos, gobierno, configuraciones alternativas. Tensión entre fragilidad y obstinación.`, sus:`Descripción editorial.`, tr:`Cierre.`},
- {id:'S8', t:'Notas', p:'18', fn:'Precisiones', arg:`Diez notas: origen de "leverage the future" (GDAT 2015), web del CRESC, Boellstorff sobre los "giros", Nimmo y la leche, Nöbauer y la nieve técnica, Simpson y las carreteras del sur de Asia, la cita de Deleuze y Guattari, Gad y Rube Goldberg, el sitio de Paris ville invisible, Ashley Madison.`, sus:`Créditos y referencias.`, tr:`—`}
-];
-
-const T = [
- {id:'T0', c:'tesis central', p:'1-17', s:['S2','S3','S4','S5','S6'], est:'explícita', f:`Las infraestructuras deben pensarse como formaciones complicadas: órdenes que producen a la vez conexiones y huecos, visibilidades y opacidades, y cuyo desarrollo es emergente y experimental, sin seguir el plan de nadie. De ahí una serie de desplazamientos respecto de Bowker y Star.`, sus:`Encadenamiento de desplazamientos apoyados en la literatura del campo y en los capítulos del volumen.`},
- {id:'T1', c:'coyuntura', p:'1-2', s:['S1'], est:'explícita', f:`La infraestructura es un sitio decisivo de investigación porque concentra una carrera global de inversión en la que los proyectos de los poderosos y las prácticas de los desposeídos quedan enredados.`, sus:`Diagnóstico de época; origen del volumen.`},
- {id:'T2', c:'inversión frente a Larkin', p:'3-4', s:['S2'], est:'explícita', f:`La inversión de Bowker sigue siendo útil pese a la objeción de Larkin, porque la visibilidad de la exhibición pública no es la invisibilidad de la operación cotidiana: una infraestructura puede exhibirse y mantener opacas sus operaciones.`, sus:`Larkin y sus casos; satélites, electricidad, carreteras, bases de datos; tuberías aborígenes.`},
- {id:'T3', c:'inversiones del campo', p:'4-5', s:['S2'], est:'explícita', f:`La inversión no es solo una operación del analista: ocurre por sí sola donde las infraestructuras fallan, se interrumpen o faltan, y produce conceptos nuevos. Las formas de inversión se multiplican y desdibujan la frontera entre lo conceptual y lo empírico.`, sus:`Inversiones espontáneas (Blok, Fennell, Nakazora), ajustes y sabotajes (Anand, Howe, von Schnitzler), arroz del Chao Phraya.`},
- {id:'T4', c:'definición mínima', p:'5', s:['S3'], est:'explícita', f:`Las infraestructuras son ensamblajes materiales extendidos, mediados tecnológicamente, que generan efectos y estructuran relaciones mediante actividades diseñadas o no diseñadas. Son doblemente relacionales y pueden fallar por dentro o en su relación con lo que sostienen.`, sus:`Formulación propia; Harvey (2017); alcantarillado colapsado.`},
- {id:'T5', c:'experimentar con el concepto', p:'5-7', s:['S3'], est:'explícita', f:`Buscar una definición definitiva es contraproducente. La pregunta por la infraestructura debe experimentarse a la vez en lo conceptual y lo empírico, y la divergencia del concepto es su virtud, no su defecto.`, sus:`Proliferación empírica y teórica; Suez y Chao Phraya; debate del GDAT.`},
- {id:'T6', c:'complejo y complicado', p:'7-8', s:['S4'], est:'explícita', f:`El relato de progreso y complejidad creciente es falso. Siguiendo a Strum y Latour, lo complejo es inestable y lo complicado pliega entidades heterogéneas en redes que simplifican localmente, pero cuyos alineamientos nunca son exactos.`, sus:`Caminos inka, babuinos, nieve técnica, crisis infraestructurales.`},
- {id:'T7', c:'astillamiento generativo', p:'8-9', s:['S4'], est:'explícita', f:`El astillamiento de las infraestructuras desconecta y diferencia el acceso, pero también genera relaciones nuevas: personas y naturaleza adquieren propiedades infraestructurales, y la línea entre lo natural y lo diseñado se vuelve difícil de trazar.`, sus:`Graham y Marvin; Simone, Elyachar, Chalfin; Verran, Morita, Carse.`},
- {id:'T8', c:'control y responsabilidad', p:'9-11', s:['S4'], est:'explícita', f:`La crítica al neoliberalismo puede sobrestimar la capacidad de los poderosos para prever y controlar. Si las infraestructuras emergen de interacciones distribuidas, la responsabilidad se distribuye, y donde la causalidad es inextricable hace falta una ética del cuidado.`, sus:`Latour (Aramis), Challenger y Star, de la Cadena, Lea, Reeves, Haraway, Mol.`},
- {id:'T9', c:'fragilidad', p:'11, 17', s:['S4','S7'], est:'explícita', f:`Las grandes infraestructuras son logros frágiles, no colosos. Si las fallas son esperables, la tarea es explicar qué hace que algunas funcionen contra todo pronóstico.`, sus:`El jarrón de Serres; Edwards; cierre sobre fragilidad y obstinación.`},
- {id:'T10', c:'recursividad', p:'11-12', s:['S5'], est:'explícita', f:`La relación entre infraestructura y sociedad es recursiva: las infraestructuras producen efectos que vuelven sobre la sociedad y la remodelan. Las relaciones son indeterminadas a priori y, por eso, experimentales.`, sus:`Ferrocarril, ONG, ayuda al desarrollo, petróleo.`},
- {id:'T11', c:'empezar por los huecos', p:'11-14', s:['S5'], est:'explícita', f:`Todo orden produce sus otros. Las infraestructuras crean huecos con cada conexión, su orden es fractal y funcionan a través de sus inconsistencias. El análisis debería empezar por los huecos, los intersticios y las zonas de opacidad.`, sus:`Serres, Berg y Timmermans, cebollas de Star, Strathern, Deleuze y Guattari, Rube Goldberg.`},
- {id:'T12', c:'visión oligóptica', p:'14-16', s:['S6'], est:'explícita', f:`La visión que producen las infraestructuras no es panóptica sino oligóptica: muy precisa sobre cosas muy específicas e incapaz de una visión de conjunto. La opacidad alcanza también a expertos y poderosos, y los huecos permiten maniobrar.`, sus:`Crítica a Scott, Latour y Hermant, Petty, datos masivos, Ashley Madison.`},
- {id:'T13', c:'escala como efecto', p:'16-17', s:['S6'], est:'explícita', f:`Las infraestructuras no tienen una escala: la producen, y hacen las geografías de centros y periferias en lugar de difundirse de unos a otras.`, sus:`Mitchell; Darwin (Lea).`}
-];
-
-const FLOW = [
- {mv:'Coyuntura.', d:`Carrera global de inversión; poderosos y desposeídos enredados.`, w:`Justifica la urgencia del objeto.`, t:['T1'], p:'1'},
- {mv:'Herencia.', d:`La inversión de Bowker y la invisibilidad de Star y Ruhleder.`, w:`Establece la tradición que se va a desplazar.`, t:['T2'], p:'3'},
- {mv:'Objeción y respuesta.', d:`Larkin: espectro de visibilidades. Respuesta: exhibición frente a operación.`, w:`Salva la inversión sin hacerla depender del funcionamiento.`, t:['T2'], p:'4'},
- {mv:'Desplazamiento 1.', d:`Inversiones que ocurren por sí solas; el arroz como infraestructura.`, w:`Mezcla lo conceptual y lo empírico, lo que obliga a redefinir.`, t:['T3'], p:'4-5'},
- {mv:'Desplazamiento 2.', d:`Definición mínima, rechazo de la definición definitiva, experimentación.`, w:`Abre el concepto a la divergencia.`, t:['T4','T5'], p:'5-7'},
- {mv:'Desplazamiento 3.', d:`Contra el progreso lineal: inka, babuinos, nieve técnica; complejo y complicado.`, w:`Da el concepto que organiza todo el texto.`, t:['T6'], p:'7-8'},
- {mv:'Consecuencias políticas.', d:`Astillamiento generativo; control sobrestimado; responsabilidad distribuida; cuidado; fragilidad.`, w:`Reformula la crítica política desde la complicación.`, t:['T7','T8','T9'], p:'8-11'},
- {mv:'Desplazamiento 4.', d:`Clasificación, recursividad, órdenes y sus otros, orden fractal; empezar por los huecos.`, w:`Invierte la pregunta: el hueco es el hecho básico.`, t:['T10','T11'], p:'11-14'},
- {mv:'Desplazamiento 5.', d:`Opacidad, vigilancia, crítica a Scott, oligóptico, datos masivos.`, w:`Aplica los huecos a la visión y el control.`, t:['T12'], p:'14-16'},
- {mv:'Desplazamiento 6.', d:`La escala como efecto; Darwin.`, w:`Cierra con la geografía producida por las infraestructuras.`, t:['T13'], p:'16-17'},
- {mv:'Volumen.', d:`Arquitectura del libro; fragilidad y obstinación.`, w:`Devuelve el argumento al compendio.`, t:['T9'], p:'17'}
-];
-
-const K = [
- {id:'K1', t:'Carrera de inversión y despojo', s:'S1', p:'1', n:'desarrollado', a:`Superpotencias; millones de desposeídos`, q:`Las superpotencias compiten por los medios más eficaces para hacer circular energía, mercancías y dinero; millones de personas despojadas por corredores comerciales, enclaves securitizados y servicios privatizados buscan sus propias posibilidades en relación con esas inversiones.`, d:`La infraestructura es hoy un campo de disputa global.`, tt:['T1']},
- {id:'K2', t:'Dos redes: CRESC y Osaka-Copenhague', s:'S1', p:'1-2', n:'desarrollado', a:`Harvey y colegas (CRESC); Morita y Jensen (Osaka)`, q:`CRESC: carreteras, aeropuertos y sistemas digitales que reúnen fuerzas políticas y económicas con efectos inesperados. Osaka: infraestructura y naturaleza como fondos invisibles; la infraestructura como doble medio para conocer y controlar entornos.`, d:`El volumen nace del cruce entre lo político-económico y lo ambiental.`, tt:['T1']},
- {id:'K3', t:'Entidades heterogéneas', s:'S1', p:'2', n:'enumerado', a:`Ambos grupos`, q:`Bacterias, formas del relieve, arroz y espíritus (Osaka); suelo, concreto, pasaportes falsos, salas de aeropuerto, gatos, fantasmas, datos digitales y seres-tierra (CRESC).`, d:`Las infraestructuras incluyen no humanos y participan en proyectos ontológicos.`, tt:['T7','T10']},
- {id:'K4', t:'El auto estadounidense y el tren japonés', s:'S2', p:'3', n:'desarrollado', a:`Enfoques que Bowker critica`, q:`"Crudely put": la cultura automovilística estadounidense reflejaría el individualismo y los trenes japoneses atestados reflejarían la orientación grupal.`, d:`Contra leer las infraestructuras como superficies que reflejan la cultura.`, tt:['T2']},
- {id:'K5', t:'Esperanza de vida y alcantarillado', s:'S2', p:'3', n:'desarrollado', a:`Bowker (1995)`, q:`El aumento de la esperanza de vida en el siglo XIX no se debió tanto al conocimiento científico como a cambios en la producción y el consumo de alimentos y a la mejora del alcantarillado.`, d:`La inversión entra por la materialidad.`, tt:['T2']},
- {id:'K6', t:'Ruptura regular y colapso', s:'S2', p:'3', n:'nombrado', a:`Harvey (2005, carretera andina); Campbell (2012, Amazonía); Simone (2004, Johannesburgo); Harvey (2015); Jensen (2016, Phnom Penh)`, q:`Donde la ruptura es regular o la infraestructura colapsó, los patrones de visibilidad difieren de los lugares donde la conectividad se da por sentada.`, d:`La inversión clásica presupone que las cosas funcionan.`, tt:['T2','T3']},
- {id:'K7', t:'Larkin: satélites, electricidad, Kinshasa', s:'S2', p:'4', n:'nombrado', a:`Larkin (2013); Barker (Indonesia); Sneath (Mongolia); de Boeck (Kinshasa)`, q:`Infraestructuras diseñadas para suscitar asombro y admiración, lejos de ser invisibles.`, d:`La invisibilidad no es universal; existe un espectro que va de la opacidad al espectáculo.`, tt:['T2']},
- {id:'K8', t:'Imágenes satelitales en los hogares', s:'S2', p:'4', n:'desarrollado', a:`Boyer (electricidad); Harvey y Knox (carretera); Jensen y Winthereik (base de datos)`, q:`Aunque la televisión y los carteles presenten las infraestructuras como prueba de innovación nacional, hay que entender cómo llegan efectivamente las imágenes satelitales a los hogares indonesios y qué relaciones acompañan la llegada de la electricidad, una carretera o una base de datos.`, d:`La exhibición no responde a la pregunta por la operación.`, tt:['T2']},
- {id:'K9', t:'"This Is Not a Pipe"', s:'S2', p:'4', n:'desarrollado', a:`Lea y Pholeros (2010); vivienda aborigen en Australia`, q:`La exhibición pública de artefactos materiales, como las tuberías, no garantiza una infraestructura que funcione.`, d:`Visibilidad de exhibición frente a invisibilidad de operación.`, tt:['T2']},
- {id:'K10', t:'Inversiones espontáneas', s:'S2', p:'4', n:'nombrado', a:`Blok; Fennell (calefacción en vivienda pública de Chicago); Nakazora`, q:`Urgencias que vuelven muy visibles las operaciones infraestructurales para algunas personas.`, d:`La inversión ocurre en el campo antes que en el análisis.`, tt:['T3']},
- {id:'K11', t:'Ajustes y sabotajes', s:'S2', p:'4', n:'nombrado', a:`Anand (agua urbana); Howe (vientos de Oaxaca); von Schnitzler (agua prepagada en Sudáfrica)`, q:`Situaciones que inducen nuevas formas de intervención práctica, ajuste o sabotaje.`, d:`Los usuarios también invierten la infraestructura.`, tt:['T3']},
- {id:'K12', t:'El arroz del Chao Phraya', s:'S2', p:'5', n:'desarrollado', a:`Morita (2016); ingenieros e hidrólogos del delta`, q:`La transformación de las relaciones entre las infraestructuras del delta y el cultivo de arroz llevó a ingenieros e hidrólogos a ver el arroz como infraestructura por derecho propio, no como producto sostenido por un sistema hidráulico externo.`, d:`Las inversiones del campo producen conceptos nuevos y desdibujan lo conceptual y lo empírico.`, tt:['T3','T7']},
- {id:'K13', t:'Alcantarillado colapsado', s:'S3', p:'5', n:'desarrollado', a:`Jensen (capítulo del volumen; Phnom Penh)`, q:`Sistemas de alcantarillado disfuncionales o colapsados siguen generando riesgos sanitarios en el espacio urbano.`, d:`Un sistema diseñado que falla sigue produciendo efectos emergentes.`, tt:['T4']},
- {id:'K14', t:'Reventar por las costuras', s:'S3', p:'6', n:'enumerado', a:`Noticias; teorías`, q:`Petróleo y renovables, sequías e inundaciones, oleoductos, cuencas, vigilancia y privacidad, ciberseguridad y drones se piensan como asuntos infraestructurales; el concepto se cruza con la biopolítica, los marxismos, la teoría del actor-red, la ecología, la antropología multiespecie y los rizomas deleuzianos.`, d:`No hay acuerdo ni empírico ni analítico sobre la infraestructura.`, tt:['T5']},
- {id:'K15', t:'Suez, el Chao Phraya y los congresos', s:'S3', p:'6', n:'enumerado', a:`Ingenieros; antropólogos y estudiosos de CTS`, q:`La infraestructura no tiene medida común entre los ingenieros del canal de Suez, el delta del Chao Phraya y los paneles académicos.`, d:`La divergencia es lo que hace apasionante al concepto.`, tt:['T5']},
- {id:'K16', t:'El debate del GDAT 2015', s:'S3', p:'6-7', n:'desarrollado', a:`Laura Bear; participantes del Grupo de Manchester para el Debate en Teoría Antropológica`, q:`Bear defendió que la atención a la infraestructura reconfigura la aproximación antropológica a lo político. Ante la objeción de vaguedad, concedió que cualquier cosa puede ser convocada como infraestructura, pero insistió en que nombrarla así tiene implicaciones para la formación de sitios de gobierno.`, d:`La objeción de la amplitud del concepto y una respuesta política.`, tt:['T5']},
- {id:'K17', t:'Historias de progreso', s:'S4', p:'7', n:'desarrollado', a:`Historias populares; Hetherington (capítulo del volumen)`, q:`Piedra, bronce o hierro dieron paso a petróleo, acero y microelectrónica; del feudalismo a la democracia representativa; de caminos locales a redes eléctricas y tecnologías ubicuas.`, d:`El relato lineal supone un "nosotros" universal.`, tt:['T6']},
- {id:'K18', t:'Los caminos inka', s:'S4', p:'7', n:'desarrollado', a:`Hyslop (1984)`, q:`Estructuras simples frente a Internet, pero que trazaban geometrías de poder sobre un paisaje sensible, mediante alineamientos geológicos, astrológicos y sociales.`, d:`La complejidad no es un punto de llegada moderno.`, tt:['T6']},
- {id:'K19', t:'Babuinos y humanos', s:'S4', p:'7-8', n:'desarrollado', a:`Strum y Latour (1987)`, q:`La jerarquía de la tropa está en negociación continua; el babuino exhausto nunca puede irse a casa y cerrar la puerta. Para muchas personas, cerraduras y puertas simplifican temporalmente las interacciones.`, d:`Lo complejo es inestable; lo complicado simplifica localmente mediante redes desfasadas.`, tt:['T6']},
- {id:'K20', t:'La nieve técnica en los Alpes', s:'S4', p:'8', n:'desarrollado', a:`Nöbauer (taller en Viena, enero de 2016)`, q:`Las estaciones de esquí dependen de nieve confiable; la nieve técnica reemplaza a los glaciares en retroceso, pero exige reservorios y más gasto de energía fósil, la misma que causó el problema.`, d:`La idea de progreso infraestructural se evapora con los glaciares.`, tt:['T6']},
- {id:'K21', t:'Crisis infraestructurales', s:'S4', p:'8-9', n:'enumerado', a:`Literatura, noticias, blogs, arte`, q:`Ciudades que se inundan o se quedan a oscuras; infraestructuras digitales que prometían ciudadanía ilustrada y trajeron inseguridad, terror y vigilancia; agua y residuos caros de mantener en contextos de austeridad.`, d:`Las infraestructuras son buenas para algunos, algunas veces.`, tt:['T6','T7']},
- {id:'K22', t:'Urbanismo astillado', s:'S4', p:'9', n:'desarrollado', a:`Graham y Marvin (2001); Simpson (carreteras del sur de Asia, nota 6)`, q:`Sistemas antes públicos y financiados por impuestos se reparten entre propietarios, alianzas público-privadas y cobros a usuarios; menos rendición de cuentas y más diferenciación del acceso.`, d:`La fragmentación es una complicación que la regulación no atenúa.`, tt:['T7']},
- {id:'K23', t:'La gente como infraestructura', s:'S4', p:'9', n:'nombrado', a:`Simone (Johannesburgo); Elyachar (trabajo fático en El Cairo); Chalfin (residuos en Ghana)`, q:`Ciertas relaciones sociales adquieren propiedades infraestructurales cuando las infraestructuras técnicas no proveen las bases de la vida urbana.`, d:`El astillamiento es generativo.`, tt:['T7']},
- {id:'K24', t:'La naturaleza como infraestructura', s:'S4', p:'9', n:'nombrado', a:`Verran (mercados ambientales en Australia); Morita (Chao Phraya); Carse (cuenca del canal de Panamá)`, q:`Ríos, deltas y cuencas antes autónomos son absorbidos en órbitas infraestructurales; la naturaleza es reclutada para trabajos de infraestructura.`, d:`Se pliegan lo diseñado y lo no diseñado.`, tt:['T7']},
- {id:'K25', t:'El Challenger', s:'S4', p:'10', n:'desarrollado', a:`Vaughan (1996); Star (1995); Arendt (1963)`, q:`La decisión de lanzamiento causó siete muertes. Cierta ética de la ingeniería consideraría a cada participante "one millionth responsible"; Star comenta que eso no tiene sentido, pero señala la dificultad de atribuir responsabilidad.`, d:`La emergencia distribuye la responsabilidad.`, tt:['T8']},
- {id:'K26', t:'Abandono biopolítico', s:'S4', p:'10', n:'nombrado', a:`de la Cadena (2015); Lea y Reeves (capítulos del volumen)`, q:`Estados y corporaciones como coautores del desplazamiento y fuentes de abandono, marcado por la ausencia o escasez de infraestructuras.`, d:`Hay responsables, aunque la causalidad sea compleja.`, tt:['T8']},
- {id:'K27', t:'El jarrón de Serres', s:'S4', p:'11', n:'desarrollado', a:`Serres y Latour (1995); Edwards (2010)`, q:`Hacer un jarrón exige destreza, paciencia y esfuerzo; destruirlo, un empujón.`, d:`Las grandes infraestructuras son logros frágiles; la tarea es explicar qué las hace funcionar.`, tt:['T9']},
- {id:'K28', t:'Las salas de máquinas', s:'S5', p:'11', n:'desarrollado', a:`Bowker y Star (1999); Douglas; Kristeva; Lampland y Star`, q:`Las clasificaciones se vuelven estándares incrustados de manera invisible en la columna vertebral de la infraestructura.`, d:`Hay que entrar donde se fabrican los estándares con los que vive la gente.`, tt:['T10','T11']},
- {id:'K29', t:'El ferrocarril', s:'S5', p:'11-12', n:'nombrado', a:`Beniger; Schivelbusch; Fisch (suicidios en los trenes de Tokio)`, q:`Los trenes abrieron paso a la revolución de la información y produjeron nuevas percepciones y acciones que se volvieron insumo de nuevos desarrollos.`, d:`Bucle infraestructura-sociedad.`, tt:['T10']},
- {id:'K30', t:'ONG en red y ayuda al desarrollo', s:'S5', p:'12', n:'nombrado', a:`Riles (2000); Jensen y Winthereik (2013)`, q:`ONG que aprendieron a pensarse en red crearon formas en red; agencias comprometidas con la rendición mutua de cuentas desarrollaron infraestructuras que cambiaron la ayuda misma.`, d:`Las ideas se vuelven infraestructura y la infraestructura cambia las ideas.`, tt:['T10']},
- {id:'K31', t:'El petróleo', s:'S5', p:'12', n:'desarrollado', a:`Mitchell, <i>Carbon Democracy</i> (2013)`, q:`Las infraestructuras del petróleo coemergieron con formaciones políticas, formas de democracia y de guerra y estilos de vida que lo hicieron indispensable. Nadie podía saber que el petróleo de Oriente Medio organizaría la política del siglo XX.`, d:`Coemergencia contingente y efectos de ordenamiento en todas las escalas.`, tt:['T10','T13']},
- {id:'K32', t:'Estándares médicos', s:'S5', p:'12', n:'nombrado', a:`Berg y Timmermans (2000)`, q:`Crear zonas de visibilidad e intervención genera a la vez zonas de opacidad.`, d:`Todo orden produce sus otros.`, tt:['T11']},
- {id:'K33', t:'Las cebollas de Star', s:'S5', p:'12-13', n:'desarrollado', a:`Star (1991); McDonald's`, q:`Alérgica a la cebolla, Star tenía problemas constantes al pedir en McDonald's: los procedimientos no preveían hamburguesas sin cebolla y la responsabilidad le era devuelta siempre a ella.`, d:`La alergia revela los intersticios de una organización estandarizada.`, tt:['T11']},
- {id:'K34', t:'Huecos de cualquier infraestructura', s:'S5', p:'13', n:'nombrado', a:`Kockelman (2010); Rottenburg (2009)`, q:`Observaciones semejantes sobre los huecos que produce toda infraestructura.`, d:`Generalización del argumento.`, tt:['T11']},
- {id:'K35', t:'Máquinas que funcionan averiándose', s:'S5', p:'13', n:'desarrollado', a:`Deleuze y Guattari, <i>Anti-Edipo</i> (nota 7)`, q:`"Infrastructures work only by breaking down", paráfrasis de la máquina social que solo funciona a trompicones. Los autores la usan como imagen para mantener la curiosidad, no como decreto filosófico.`, d:`Las inconsistencias impulsan la innovación infraestructural, a veces.`, tt:['T11']},
- {id:'K36', t:'Rube Goldberg', s:'S5', p:'13', n:'nombrado', a:`Morita (2014), a partir de Gad`, q:`Muchas infraestructuras se parecen a máquinas extraordinariamente complicadas para tareas simples.`, d:`Las infraestructuras parecen menos racionales de lo esperado.`, tt:['T11']},
- {id:'K37', t:'Navegación con saber local', s:'S6', p:'14', n:'nombrado', a:`von Schnitzler (2008); Jensen y Winthereik (2013)`, q:`Los huecos permiten a los usuarios navegar y manipular infraestructuras con solo un conocimiento localizado.`, d:`La opacidad no implica impotencia.`, tt:['T12']},
- {id:'K38', t:'Snowden, Sauron y Facebook', s:'S6', p:'14-15', n:'desarrollado', a:`Snowden; Tolkien; Orwell; Foucault; defensores de la vigilancia de mercado`, q:`Las revelaciones sugieren infraestructuras casi omnividentes, como el ojo de Sauron; pero la experiencia cotidiana de los dispositivos es amable. Facebook deja elegir qué mostrar y vuelve rastreable cada movimiento.`, d:`Compensaciones complicadas entre seguridad y control, visibilidad y opacidad.`, tt:['T12']},
- {id:'K39', t:'Crítica a Scott', s:'S6', p:'15', n:'desarrollado', a:`James Scott, <i>Seeing Like a State</i> (1998)`, q:`Scott mostró que la visión estatal depende de sus estándares ("garbage in, garbage out"), pero centró el análisis en el poder estatal de rehacer ciudadanos y paisajes, tomando el flujo como hecho y los huecos como residuos.`, d:`Si se empieza por el hueco, aparece un Estado con impedimentos de visión.`, tt:['T12']},
- {id:'K40', t:'El oligóptico de París', s:'S6', p:'15', n:'desarrollado', a:`Latour y Hermant, <i>Paris ville invisible</i>; Gad y Lauritsen (inspección pesquera danesa)`, q:`Frente a la torre panóptica, el oligóptico ve con gran detalle solo cosas muy específicas. El "fotomontaje" parisino documenta los dispositivos de medición distribuidos por la ciudad.`, d:`La visión infraestructural es parcial y depende de rastros.`, tt:['T12']},
- {id:'K41', t:'La aritmética política de Petty', s:'S6', p:'15', n:'nombrado', a:`Carroll (2006); William Petty; Irlanda colonial`, q:`La aritmética política desplegada experimentalmente para el gobierno colonial de Irlanda.`, d:`Antecedente histórico de la visión oligóptica.`, tt:['T12']},
- {id:'K42', t:'Indeterminaciones de los datos masivos', s:'S6', p:'15-16', n:'desarrollado', a:`Aeropuertos; buscadores; programadores y analistas`, q:`Sospechosos de terrorismo mal identificados y retenidos en aeropuertos; recomendaciones de productos irrelevantes; datos que exigen trabajo calificado, vigilancia e inversiones enormes.`, d:`La información nunca es exacta ni la visión total.`, tt:['T12']},
- {id:'K43', t:'Ashley Madison', s:'S6', p:'16', n:'desarrollado', a:`The Impact Team (nota 10)`, q:`Sitio de citas para personas casadas hackeado en julio de 2015; se divulgó información de miles de perfiles. Otros hackers protegen a los vigilados con cifrado.`, d:`La vigilancia también funciona averiándose.`, tt:['T12','T11']},
- {id:'K44', t:'Represión y visibilidad relativa', s:'S6', p:'16', n:'nombrado', a:`Reeves (capítulo del volumen); activistas políticos y ambientales`, q:`Listas de sospechosos mal construidas, amenazas de cárcel o violencia; la pregunta de cómo quieren ser vistas las personas y qué salvaguardas las mantienen fuera de la vista.`, d:`La visibilidad relativa es política.`, tt:['T12']},
- {id:'K45', t:'Estadística nacional frente a datos privados', s:'S6', p:'16', n:'nombrado', a:`Ruppert et al. (2015); Google; Galison (2005)`, q:`Las oficinas nacionales de estadística tenían certezas y protocolos; los datos masivos son más completos y más opacos, propiedad privada con algoritmos secretos; otros datos se retiran en nombre de la seguridad nacional.`, d:`La accesibilidad de la información es una cuestión infraestructural.`, tt:['T12']},
- {id:'K46', t:'Darwin', s:'S6', p:'17', n:'desarrollado', a:`Tess Lea (2014 y capítulo del volumen); fuerzas armadas estadounidenses`, q:`Vista desde Sídney o Melbourne, la capital del Territorio del Norte es un rincón rural; por su posición es nodo del "teatro" del Pacífico, inundada de dinero que circula por canales tácticos con efectos desiguales.`, d:`Pequeña en Australia, grande en el Pacífico: centros y márgenes se multiplican.`, tt:['T13']}
-];
-
-const C = [
- {id:'C1', p:'1', s:'S1', k:'K1', tt:['T1'], en:`"The projects of the powerful and the engagements of the poor are thus thoroughly entangled in this contemporary drive to 'leverage the future.'"`, es:`"Los proyectos de los poderosos y las prácticas de los pobres quedan así completamente enredados en este impulso contemporáneo de 'apalancar el futuro'."`, fn:'Diagnóstico', co:`La expresión es de AbdouMaliq Simone (nota 1).`, a:'The projects of the powerful and the engagements of the poor'},
- {id:'C2', p:'1', s:'S1', k:'', tt:['T1'], en:`"infrastructures have emerged as compelling sites for qualitative social research"`, es:`"las infraestructuras se han vuelto sitios atractivos para la investigación social cualitativa"`, fn:'Apertura', co:`Primera frase del texto.`, a:'infrastructures have emerged as compelling sites for qualitative social research'},
- {id:'C3', p:'2', s:'S1', k:'K3', tt:['T7','T10'], en:`"from bacteria and landforms to rice and spirits"`, es:`"desde bacterias y formas del relieve hasta el arroz y los espíritus"`, fn:'Heterogeneidad', co:`Anuncia el horizonte ontológico del volumen.`, a:'from bacteria and landforms to rice and spirits'},
- {id:'C4', p:'3', s:'S2', k:'K4', tt:['T2'], en:`"infrastructural inversion entailed a figure-ground reversal"`, es:`"la inversión infraestructural suponía una inversión de figura y fondo"`, fn:'Herencia', co:`Definición de la inversión de Bowker.`, a:'infrastructural inversion entailed a figure-ground reversal'},
- {id:'C5', p:'3', s:'S2', k:'', tt:['T2','T9'], en:`"seamless flow was a fragile achievement"`, es:`"el flujo sin fisuras era un logro frágil"`, fn:'Herencia', co:`Lectura del "cuándo" de Star y Ruhleder.`, a:'seamless flow was a fragile achievement'},
- {id:'C6', p:'4', s:'S2', k:'K7', tt:['T2'], en:`"infrastructures are in fact often not unnoticed"`, es:`"de hecho, las infraestructuras a menudo no pasan inadvertidas"`, fn:'Objeción de Larkin', co:`El punto de partida del debate.`, a:'infrastructures are in fact often not unnoticed'},
- {id:'C7', p:'4', s:'S2', k:'K9', tt:['T2'], en:`"the public exhibit of material artifacts, like pipes, is no guarantee of a functioning infrastructure"`, es:`"la exhibición pública de artefactos materiales, como las tuberías, no garantiza una infraestructura que funcione"`, fn:'Respuesta', co:`Lea y Pholeros.`, a:'is no guarantee of a functioning infrastructure'},
- {id:'C8', p:'4-5', s:'S2', k:'K10', tt:['T3'], en:`"inversion is an empirical condition before becoming an analytical tool"`, es:`"la inversión es una condición empírica antes de volverse una herramienta analítica"`, fn:'Desplazamiento 1', co:`La frase clave de la sección.`, a:'inversion is an empirical condition before becoming'},
- {id:'C9', p:'5', s:'S2', k:'K12', tt:['T3'], en:`"the forms of inversion have multiplied in a way that blurs the distinction between the conceptual and the empirical"`, es:`"las formas de inversión se han multiplicado de un modo que desdibuja la distinción entre lo conceptual y lo empírico"`, fn:'Conclusión', co:`Remite a Jensen (2014) sobre variaciones continuas.`, a:'the forms of inversion have multiplied in a way that blurs'},
- {id:'C10', p:'5', s:'S3', k:'', tt:['T4'], en:`"infrastructures are extended material assemblages that generate effects and structure social relations"`, es:`"las infraestructuras son ensamblajes materiales extendidos que generan efectos y estructuran relaciones sociales"`, fn:'Definición mínima', co:`Provisional por declaración propia.`, a:'infrastructures are extended material assemblages'},
- {id:'C11', p:'5', s:'S3', k:'', tt:['T4'], en:`"infrastructures are doubly relational due to their simultaneous internal multiplicity and their connective capacities outwards"`, es:`"las infraestructuras son doblemente relacionales por su multiplicidad interna y su capacidad de conexión hacia afuera"`, fn:'Definición', co:`Idea de Harvey (2017), sobre carreteras en el Perú.`, a:'infrastructures are doubly relational'},
- {id:'C12', p:'5', s:'S3', k:'', tt:['T5'], en:`"the aspiration to unequivocal specification can be seen as itself conceptually and empirically counter-productive"`, es:`"la aspiración a una especificación inequívoca puede verse como contraproducente, conceptual y empíricamente"`, fn:'Rechazo de la definición', co:`Defensa de la apertura.`, a:'the aspiration to unequivocal specification'},
- {id:'C13', p:'6', s:'S3', k:'K14', tt:['T5'], en:`"infrastructure seems presently to be bursting at the seams"`, es:`"la infraestructura parece estar reventando por las costuras"`, fn:'Diagnóstico', co:`Empírica y analíticamente.`, a:'infrastructure seems presently to be bursting at the seams'},
- {id:'C14', p:'6', s:'S3', k:'K15', tt:['T5'], en:`"this conceptual–empirical proliferation and divergence is just what makes infrastructure so exciting at the present moment"`, es:`"esta proliferación y divergencia conceptual-empírica es justamente lo que hace tan apasionante a la infraestructura en este momento"`, fn:'Valoración', co:`La divergencia como virtud.`, a:'is just what makes infrastructure so exciting at the present moment'},
- {id:'C15', p:'7', s:'S3', k:'K16', tt:['T5'], en:`"anything can indeed be called into being as an infrastructure"`, es:`"cualquier cosa puede, en efecto, ser convocada como infraestructura"`, fn:'Concesión de Bear', co:`Seguida de la defensa política del concepto.`, a:'anything can indeed be called into being as an infrastructure'},
- {id:'C16', p:'7', s:'S4', k:'K17', tt:['T6'], en:`"Who are the 'we' telling stories of progress at the level of humanity in general?"`, es:`"¿Quiénes son el 'nosotros' que cuenta historias de progreso en nombre de la humanidad?"`, fn:'Crítica del progreso', co:`Eco de la narrativa maestra de Star (1999).`, a:'telling stories of progress at the level of humanity'},
- {id:'C17', p:'7', s:'S4', k:'K18', tt:['T6'], en:`"They also traced geometries of power across a landscape that was sentient rather than natural."`, es:`"También trazaban geometrías de poder sobre un paisaje que era sensible antes que natural."`, fn:'Caso inka', co:`Proximidad con el giro ontológico.`, a:'They also traced geometries of power across a landscape that was sentient'},
- {id:'C18', p:'8', s:'S4', k:'K19', tt:['T6'], en:`"It can never just go home and lock the door."`, es:`"Nunca puede simplemente irse a casa y cerrar la puerta."`, fn:'Babuinos', co:`La imagen que explica lo complejo.`, a:'It can never just go home and lock the door'},
- {id:'C19', p:'8', s:'S4', k:'K19', tt:['T6','T11'], en:`"Infrastructural formations always to some degree remain out of synch with each other"`, es:`"Las formaciones infraestructurales siempre quedan en alguna medida desfasadas unas de otras"`, fn:'Complicación', co:`Núcleo del concepto de complicación.`, a:'Infrastructural formations always to some degree remain out of synch'},
- {id:'C20', p:'8', s:'S4', k:'K20', tt:['T6'], en:`"the notion that infrastructural development is generically progressive evaporates alongside the melting glaciers"`, es:`"la idea de que el desarrollo infraestructural es genéricamente progresivo se evapora junto con los glaciares que se derriten"`, fn:'Nieve técnica', co:`Cierre del caso alpino.`, a:'evaporates alongside the melting glaciers'},
- {id:'C21', p:'8', s:'S4', k:'K21', tt:['T6','T7'], en:`"different infrastructures turn out only to be good for some people, some of the time"`, es:`"las distintas infraestructuras resultan ser buenas solo para algunas personas, algunas veces"`, fn:'Crisis', co:`Contra la idea de bien público sin reservas.`, a:'turn out only to be good for some people, some of the time'},
- {id:'C22', p:'9', s:'S4', k:'K23', tt:['T7'], en:`"splintering is also generative of new relations"`, es:`"el astillamiento también genera relaciones nuevas"`, fn:'Giro generativo', co:`Introduce la gente como infraestructura.`, a:'splintering is also generative of new relations'},
- {id:'C23', p:'9', s:'S4', k:'K24', tt:['T7'], en:`"the line between the natural and the engineered becomes progressively harder to draw"`, es:`"la línea entre lo natural y lo diseñado se vuelve cada vez más difícil de trazar"`, fn:'Naturaleza', co:`Cierre del argumento ambiental.`, a:'the line between the natural and the engineered becomes progressively harder to draw'},
- {id:'C24', p:'10', s:'S4', k:'', tt:['T8'], en:`"they may overestimate the extent to which those in power are themselves able to foresee, not to say control, infrastructural transformations"`, es:`"pueden sobrestimar en qué medida quienes tienen el poder son capaces de prever, y menos aún de controlar, las transformaciones infraestructurales"`, fn:'Tesis política', co:`La afirmación más discutible del texto.`, a:'they may overestimate the extent to which those in power'},
- {id:'C25', p:'10', s:'S4', k:'', tt:['T8','T0'], en:`"exceedingly unlikely that they will function according to the plans of anyone in particular"`, es:`"sumamente improbable que funcionen según los planes de nadie en particular"`, fn:'Emergencia', co:`Eco de "nobody is really in charge" (Star 1999).`, a:'exceedingly unlikely that they will function according to the plans of'},
- {id:'C26', p:'10', s:'S4', k:'K25', tt:['T8'], en:`"one millionth responsible"`, es:`"responsable en una millonésima parte"`, fn:'Challenger', co:`Fórmula que Star juzga sin sentido pero reveladora.`, a:'one millionth responsible'},
- {id:'C27', p:'10-11', s:'S4', k:'K26', tt:['T8'], en:`"where lines of causality become too complicated to disentangle, a different ethic of care and/or concern is required"`, es:`"donde las líneas de causalidad se vuelven demasiado complicadas para desenredarlas, hace falta otra ética del cuidado o de la preocupación"`, fn:'Ética', co:`Lleva a Haraway y Mol.`, a:'a different ethic of care and'},
- {id:'C28', p:'11', s:'S4', k:'K27', tt:['T9'], en:`"all that is required to destroy it is a push"`, es:`"para destruirlo basta un empujón"`, fn:'Fragilidad', co:`El jarrón de Serres.`, a:'all that is required to destroy it is a push'},
- {id:'C29', p:'11', s:'S4', k:'K27', tt:['T9'], en:`"what makes (some) infrastructures function against the odds"`, es:`"qué hace que (algunas) infraestructuras funcionen contra todo pronóstico"`, fn:'Programa', co:`Desplaza la crítica de la falla al funcionamiento.`, a:'what makes (some) infrastructures function against the odds'},
- {id:'C30', p:'11', s:'S5', k:'K28', tt:['T10','T11'], en:`"to enter the machine rooms in which the standards by which people live are made"`, es:`"entrar en las salas de máquinas donde se fabrican los estándares con los que vive la gente"`, fn:'Herencia de Bowker y Star', co:`Elogio de <i>Sorting Things Out</i>.`, a:'to enter the machine rooms in which the standards'},
- {id:'C31', p:'12', s:'S5', k:'K29', tt:['T10'], en:`"forms of infrastructure generate effects that loop back upon society, organizations, and people, re-shaping them in turn"`, es:`"las formas de infraestructura generan efectos que vuelven sobre la sociedad, las organizaciones y las personas, y a su vez las remodelan"`, fn:'Recursividad', co:`Definición del bucle.`, a:'forms of infrastructure generate effects that loop back upon society'},
- {id:'C32', p:'12', s:'S5', k:'K31', tt:['T10'], en:`"the politics and economics of oil co-emerged with oil infrastructures in a contingent process"`, es:`"la política y la economía del petróleo coemergieron con sus infraestructuras en un proceso contingente"`, fn:'Coemergencia', co:`Mitchell.`, a:'co-emerged with oil infrastructures in a contingent process'},
- {id:'C33', p:'12', s:'S5', k:'', tt:['T11'], en:`"no matter how extended, no infrastructure encompasses everything"`, es:`"por extensa que sea, ninguna infraestructura lo abarca todo"`, fn:'Límite del orden', co:`Con Serres: todo orden produce su desorden.`, a:'no matter how extended, no infrastructure encompasses everything'},
- {id:'C34', p:'13', s:'S5', k:'K33', tt:['T11'], en:`"every new connection also creates new gaps"`, es:`"cada conexión nueva crea también huecos nuevos"`, fn:'Huecos', co:`Contra la imagen del flujo sin fisuras.`, a:'every new connection also creates new gaps'},
- {id:'C35', p:'13', s:'S5', k:'', tt:['T11'], en:`"the order is fractal, since relations and gaps multiply simultaneously rather than canceling each other out"`, es:`"el orden es fractal, porque relaciones y huecos se multiplican a la vez en lugar de anularse"`, fn:'Orden fractal', co:`Strathern; Jensen.`, a:'the order is fractal, since relations and gaps multiply simultaneously'},
- {id:'C36', p:'13', s:'S5', k:'K35', tt:['T11'], en:`"say that infrastructures work only by breaking down"`, es:`"[digamos] que las infraestructuras solo funcionan averiándose"`, fn:'Imagen', co:`Paráfrasis cautelosa del Anti-Edipo.`, a:'say that infrastructures work only by breaking down'},
- {id:'C37', p:'13', s:'S5', k:'', tt:['T11','T0'], en:`"Infrastructural studies might begin with gaps, interstices, and zones of opacity as infrastructural facts"`, es:`"Los estudios de infraestructura podrían empezar por los huecos, los intersticios y las zonas de opacidad como hechos infraestructurales"`, fn:'Propuesta de método', co:`El desplazamiento más fuerte respecto de Star.`, a:'Infrastructural studies might begin with gaps'},
- {id:'C38', p:'15', s:'S6', k:'K39', tt:['T12'], en:`"a state with significant sight impediments, supported by some rather strange infrastructural prostheses"`, es:`"un Estado con serios impedimentos de visión, sostenido por prótesis infraestructurales bastante extrañas"`, fn:'Crítica a Scott', co:`La visión estatal como prótesis.`, a:'a state with significant sight impediments'},
- {id:'C39', p:'15', s:'S6', k:'K40', tt:['T12'], en:`"capable of gaining very fine-grained views but only of very specific things"`, es:`"capaz de obtener visiones muy finas, pero solo de cosas muy específicas"`, fn:'Oligóptico', co:`Definición del oligóptico.`, a:'capable of gaining very fine-grained views but only of very specific things'},
- {id:'C40', p:'15', s:'S6', k:'K42', tt:['T12'], en:`"Even in the age of big data, information is never exact and overviews never total."`, es:`"Incluso en la época de los datos masivos, la información nunca es exacta ni las visiones de conjunto totales."`, fn:'Datos masivos', co:`Contra la imagen del ojo de Sauron.`, a:'information is never exact and overviews never total'},
- {id:'C41', p:'16', s:'S6', k:'K43', tt:['T12','T11'], en:`"Surveillance infrastructure, too, it seems, is a machine that works only by continuously breaking down."`, es:`"También la infraestructura de vigilancia, al parecer, es una máquina que solo funciona averiándose continuamente."`, fn:'Vigilancia', co:`Une los desplazamientos 4 y 5.`, a:'Surveillance infrastructure, too, it seems, is a machine'},
- {id:'C42', p:'16', s:'S6', k:'', tt:['T13'], en:`"it is not so much that infrastructures have a scale, but rather that scales are generated through the work of configuring, extending, maintaining, or disrupting infrastructures"`, es:`"no es tanto que las infraestructuras tengan una escala, sino que las escalas se generan con el trabajo de configurar, extender, mantener o perturbar infraestructuras"`, fn:'Escala', co:`Jensen (2007); Harvey.`, a:'scales are generated through the work of configuring'},
- {id:'C43', p:'17', s:'S6', k:'K46', tt:['T13'], en:`"whereas Darwin is 'small' in Australia, it has become 'large' in the Pacific region"`, es:`"mientras Darwin es 'pequeña' en Australia, se ha vuelto 'grande' en la región del Pacífico"`, fn:'Caso Darwin', co:`Imagen fractal de centros y márgenes.`, a:'whereas Darwin is'},
- {id:'C44', p:'17', s:'S7', k:'', tt:['T9','T0'], en:`"a commitment to the tension between the fragility and the obduracy of the infrastructural foundations"`, es:`"un compromiso con la tensión entre la fragilidad y la obstinación de los cimientos infraestructurales"`, fn:'Cierre', co:`Fórmula final del programa.`, a:'the tension between the fragility and the obduracy'}
-];
-
-const D = [
- {id:'D1', t:'Inversión infraestructural', def:`Cambio de figura y fondo que entra por la materialidad, contra la lectura de las infraestructuras como reflejo cultural.`, o:'Bowker (1995)', fn:'Herencia que se desplaza.', p:'3', tt:['T2']},
- {id:'D2', t:'Inversiones que ocurren por sí solas', def:`Revelaciones de la infraestructura producidas en el campo por ruptura, urgencia o ausencia, antes del análisis.`, o:'Harvey, Jensen y Morita', fn:'Desplazamiento 1.', p:'4-5', tt:['T3']},
- {id:'D3', t:'Espectro de visibilidades', def:`De la opacidad al espectáculo.`, o:'Larkin (2013)', fn:'Objeción a la invisibilidad.', p:'4', tt:['T2']},
- {id:'D4', t:'Exhibición frente a operación', def:`La visibilidad de la exhibición pública no es la invisibilidad de la operación cotidiana; configuran objetos distintos.`, o:'Harvey, Jensen y Morita', fn:'Respuesta a Larkin.', p:'4', tt:['T2']},
- {id:'D5', t:'Lo conceptual y lo empírico', def:`Distinción que la inversión presupone y que las inversiones del campo desdibujan.`, o:'Jensen (2014)', fn:'Fundamento epistemológico.', p:'4-6', tt:['T3','T5']},
- {id:'D6', t:'Ensamblajes materiales extendidos', def:`Formas dinámicas, mediadas tecnológicamente, que producen y transforman relaciones sociotécnicas.`, o:'Harvey, Jensen y Morita', fn:'Definición mínima.', p:'5', tt:['T4']},
- {id:'D7', t:'Diseñado / no diseñado', def:`Actividades planificadas frente a emergentes; un sistema diseñado que falla sigue produciendo efectos.`, o:'Harvey, Jensen y Morita', fn:'Definición.', p:'5', tt:['T4','T7']},
- {id:'D8', t:'Doble relacionalidad', def:`Multiplicidad interna y capacidad de conexión hacia afuera.`, o:'Harvey (2017)', fn:'Definición.', p:'5', tt:['T4']},
- {id:'D9', t:'Falla interna y falla relacional', def:`Una infraestructura falla por perturbación interna o por ruptura con la actividad que sostiene.`, o:'Harvey, Jensen y Morita', fn:'Definición.', p:'5', tt:['T4']},
- {id:'D10', t:'Experimentación', def:`La pregunta por la infraestructura se experimenta en lo conceptual y lo empírico; las infraestructuras son experimentos ontológicos.`, o:'Jensen y Morita (2015)', fn:'Desplazamiento 2.', p:'5-6, 10', tt:['T5','T8','T10']},
- {id:'D11', t:'Movimientos laterales', def:`La conversación sobre infraestructura arrastra actores y materiales cada vez más variados.`, o:'Harvey, Jensen y Morita', fn:'Virtud de la divergencia.', p:'6', tt:['T5']},
- {id:'D12', t:'Complejo / complicado', def:`Lo complejo es intrínsecamente inestable; lo complicado pliega entidades heterogéneas en redes extensibles que simplifican localmente.`, o:'Strum y Latour (1987)', fn:'Concepto central del título.', p:'7-8', tt:['T6']},
- {id:'D13', t:'Desfase entre redes', def:`Las formaciones infraestructurales nunca se alinean del todo: corren en paralelo o se contradicen.`, o:'Harvey, Jensen y Morita', fn:'Consecuencia de la complicación.', p:'8', tt:['T6','T11']},
- {id:'D14', t:'Urbanismo astillado', def:`Fragmentación de sistemas públicos en regímenes de propiedad y acceso diferenciados.`, o:'Graham y Marvin (2001)', fn:'Diagnóstico neoliberal.', p:'9', tt:['T7']},
- {id:'D15', t:'La gente como infraestructura', def:`Relaciones sociales que adquieren propiedades infraestructurales donde la técnica falla.`, o:'Simone (2004); Elyachar; Chalfin', fn:'Astillamiento generativo.', p:'9', tt:['T7']},
- {id:'D16', t:'Naturaleza como infraestructura', def:`Ríos, deltas y cuencas reclutados para trabajos de infraestructura.`, o:'Carse (2012); Verran; Morita; Blok, Nakazora y Winthereik', fn:'Astillamiento generativo.', p:'9', tt:['T7']},
- {id:'D17', t:'Emergencia', def:`Las características de la infraestructura surgen de interacciones distribuidas de múltiples agentes durante largo tiempo.`, o:'Latour (Aramis)', fn:'Base de la tesis política.', p:'10', tt:['T8','T0']},
- {id:'D18', t:'Responsabilidad distribuida', def:`Dificultad de atribuir responsabilidad en proyectos masivos ("one millionth responsible").`, o:'Star (1995); Arendt; Vaughan', fn:'Problema político.', p:'10', tt:['T8']},
- {id:'D19', t:'Respons-habilidad', def:`Capacidad de responder: reconocer el sufrimiento de otros y que algunos modos de vida dependen de él.`, o:'Haraway (1997)', fn:'Ética alternativa.', p:'11', tt:['T8']},
- {id:'D20', t:'Lógica del cuidado', def:`Contrapunto a la ética de la elección en ensamblajes de humanos y no humanos.`, o:'Mol (2008)', fn:'Ética alternativa.', p:'11', tt:['T8']},
- {id:'D21', t:'Fragilidad y obstinación', def:`Las infraestructuras son logros frágiles y, a la vez, cimientos obstinados.`, o:'Serres; Edwards', fn:'Tensión de cierre.', p:'11, 17', tt:['T9']},
- {id:'D22', t:'Recursividad', def:`Bucle por el que las infraestructuras producen efectos que remodelan a la sociedad que las produce.`, o:'Harvey, Jensen y Morita; Jensen y Winthereik', fn:'Desplazamiento 4.', p:'11-12', tt:['T10']},
- {id:'D23', t:'Coemergencia', def:`Política, economía e infraestructura surgen juntas en procesos contingentes.`, o:'Mitchell (2013)', fn:'Contra el determinismo.', p:'12', tt:['T10']},
- {id:'D24', t:'Órdenes y sus otros', def:`Todo orden genera su desorden correlativo y sus zonas de opacidad.`, o:'Serres (1991); Berg y Timmermans (2000)', fn:'Base de los huecos.', p:'12', tt:['T11']},
- {id:'D25', t:'Intersticios', def:`Huecos que la organización estandarizada produce y devuelve a los individuos.`, o:'Star (1991); Kockelman; Rottenburg', fn:'Objeto propuesto.', p:'12-13', tt:['T11']},
- {id:'D26', t:'Orden fractal', def:`Relaciones y huecos se multiplican a la vez sin anularse.`, o:'Strathern (1991); Jensen (2007)', fn:'Forma del orden.', p:'13', tt:['T11','T13']},
- {id:'D27', t:'Funcionar averiándose', def:`Las disfunciones son parte de la capacidad de funcionar, empíricamente a veces.`, o:'Deleuze y Guattari (1983)', fn:'Imagen heurística.', p:'13', tt:['T11']},
- {id:'D28', t:'Máquina de Rube Goldberg', def:`Dispositivo extraordinariamente complicado para tareas simples.`, o:'Morita (2014); Gad', fn:'Imagen de la irracionalidad aparente.', p:'13', tt:['T11']},
- {id:'D29', t:'Preguntas de composición', def:`Qué actores, materiales, estándares e imágenes se pliegan en la infraestructura y cuáles quedan como sus otros.`, o:'Harvey, Jensen y Morita', fn:'Reformulación política.', p:'13-14', tt:['T11']},
- {id:'D30', t:'Oligóptico', def:`Visión muy precisa de cosas muy específicas, incapaz de una visión de conjunto.`, o:'Latour y Hermant; Gad y Lauritsen', fn:'Desplazamiento 5.', p:'15', tt:['T12']},
- {id:'D31', t:'Rastros infraestructurales', def:`Dispositivos de monitoreo y medición distribuidos que permiten saber mucho de muy poco.`, o:'Latour y Hermant; Jensen (2016)', fn:'Base del oligóptico.', p:'15', tt:['T12']},
- {id:'D32', t:'Prótesis de visión', def:`Los estándares y clasificaciones con los que un Estado o una empresa ve ("garbage in, garbage out").`, o:'Scott (1998), leído críticamente', fn:'Crítica a Scott.', p:'15', tt:['T12']},
- {id:'D33', t:'Escala como efecto', def:`Las escalas se producen al configurar, extender, mantener o perturbar infraestructuras.`, o:'Jensen (2007); Harvey; Callon y Latour; Tsing', fn:'Desplazamiento 6.', p:'16-17', tt:['T13']},
- {id:'D34', t:'Abandono biopolítico', def:`Desatención marcada por la ausencia o escasez de infraestructuras.`, o:'de la Cadena; Lea; Reeves', fn:'Contrapeso a la responsabilidad distribuida.', p:'10', tt:['T8']}
-];
-
-const A = [
- {a:`AbdouMaliq Simone (2004; GDAT 2015)`, q:`"Leverage the future"; la gente como infraestructura en Johannesburgo.`, m:'adhesión', p:'1, 3, 9', tt:['T1','T7']},
- {a:`Geoffrey Bowker (1995); Bowker y Star (1999); Lampland y Star (2009)`, q:`Inversión infraestructural; clasificación y estándares; salas de máquinas.`, m:'herencia, desplazamiento', p:'3, 11', tt:['T2','T10']},
- {a:`Star y Ruhleder (1996); Star (1991, 1995)`, q:`Invisibilidad y el "cuándo"; las cebollas; "one millionth responsible".`, m:'herencia, desplazamiento', p:'3, 10, 12', tt:['T2','T8','T11']},
- {a:`Brian Larkin (2013); Barker; Sneath; de Boeck`, q:`Espectro de visibilidades; infraestructuras como espectáculo.`, m:'objeción discutida', p:'4', tt:['T2']},
- {a:`Lea y Pholeros (2010); Boyer (2015); Harvey y Knox (2015); Jensen y Winthereik (2013)`, q:`Tuberías aborígenes; electricidad; carreteras; bases de datos.`, m:'apoyo', p:'4', tt:['T2']},
- {a:`Blok; Fennell (2011); Nakazora; Anand (2012); Howe (2014); von Schnitzler (2008)`, q:`Inversiones del campo, ajustes y sabotajes.`, m:'apoyo', p:'4', tt:['T3']},
- {a:`Atsuro Morita (2014, 2016)`, q:`El arroz como infraestructura; máquinas de Rube Goldberg.`, m:'caso propio', p:'5, 9, 13', tt:['T3','T7','T11']},
- {a:`Casper Bruun Jensen (2007, 2014, 2015, 2016); Jensen y Morita (2015)`, q:`Fractales; variaciones continuas; experimentos ontológicos; alcantarillado de Phnom Penh.`, m:'caso propio', p:'3-5, 10, 13', tt:['T3','T5','T10','T13']},
- {a:`Penny Harvey (2005, 2012, 2016, 2017)`, q:`Carretera andina; topología; residuos en el sur del Perú; doble relacionalidad.`, m:'caso propio', p:'3, 5, 8, 16', tt:['T4','T13']},
- {a:`Laura Bear (GDAT 2015)`, q:`Infraestructura y lo político; sitios de gobierno.`, m:'interlocución', p:'6-7', tt:['T5']},
- {a:`Shirley Strum y Bruno Latour (1987)`, q:`Complejo y complicado: babuinos y humanos.`, m:'concepto central', p:'7-8', tt:['T6']},
- {a:`John Hyslop (1984)`, q:`Caminos inka.`, m:'caso', p:'7', tt:['T6']},
- {a:`Herta Nöbauer (nota 5)`, q:`Nieve técnica en los Alpes.`, m:'caso', p:'8', tt:['T6']},
- {a:`Graham y Marvin (2001); Simpson (nota 6)`, q:`Urbanismo astillado; incoherencia regulatoria.`, m:'apoyo', p:'9', tt:['T7']},
- {a:`Elyachar (2010); Chalfin (2016); Verran (2011); Carse (2012)`, q:`Trabajo fático; residuos en Ghana; mercados ambientales; cuenca de Panamá.`, m:'apoyo', p:'9', tt:['T7']},
- {a:`Bruno Latour, <i>Aramis</i> (1996)`, q:`Nada funciona según el plan de nadie.`, m:'apoyo', p:'10', tt:['T8']},
- {a:`Hannah Arendt (1963); Diane Vaughan (1996)`, q:`Banalidad del mal; decisión del Challenger.`, m:'apoyo', p:'10', tt:['T8']},
- {a:`Marisol de la Cadena (2015)`, q:`Seres-tierra; abandono biopolítico.`, m:'apoyo', p:'2, 10', tt:['T8','T7']},
- {a:`Donna Haraway (1989, 1997); Annemarie Mol (2008)`, q:`Respons-habilidad; visiones situadas; lógica del cuidado.`, m:'ética alternativa', p:'11, 15', tt:['T8','T12']},
- {a:`Michel Serres (1991; con Latour, 1995)`, q:`Todo orden produce su desorden; el jarrón.`, m:'imagen filosófica', p:'11, 12', tt:['T9','T11']},
- {a:`Paul Edwards (2010)`, q:`Infraestructuras como logros frágiles (modelos climáticos).`, m:'apoyo', p:'7, 11', tt:['T9']},
- {a:`Beniger (1986); Schivelbusch (1977); Fisch (2013); Riles (2000)`, q:`Ferrocarril, percepción, suicidios en Tokio; ONG en red.`, m:'apoyo', p:'11-12, 16', tt:['T10']},
- {a:`Timothy Mitchell, <i>Carbon Democracy</i> (2013)`, q:`Coemergencia del petróleo y la política moderna.`, m:'caso', p:'12, 17', tt:['T10','T13']},
- {a:`Douglas (1966); Kristeva (1984)`, q:`Categorización social, pureza y abyección.`, m:'antecedente', p:'11', tt:['T10']},
- {a:`Berg y Timmermans (2000); Kockelman (2010); Rottenburg (2009)`, q:`Órdenes y sus otros; huecos de toda infraestructura.`, m:'apoyo', p:'12-13', tt:['T11']},
- {a:`Marilyn Strathern (1991)`, q:`Conexiones parciales; orden fractal.`, m:'apoyo', p:'13', tt:['T11']},
- {a:`Deleuze y Guattari, <i>Anti-Edipo</i> (1983)`, q:`La máquina social funciona averiándose.`, m:'imagen con cautela', p:'13', tt:['T11']},
- {a:`Thomas Hughes (1983); Langdon Winner (1986)`, q:`Complejidad técnica y expertos.`, m:'contexto', p:'14', tt:['T12']},
- {a:`Foucault (panóptico); Orwell; Snowden`, q:`Imágenes de la vigilancia total.`, m:'contraste', p:'14', tt:['T12']},
- {a:`James Scott, <i>Seeing Like a State</i> (1998)`, q:`Visión estatal estandarizadora.`, m:'crítica', p:'15', tt:['T12']},
- {a:`Latour y Hermant; Gad y Lauritsen (2009); Carroll (2006)`, q:`Oligóptico; inspección pesquera; aritmética política de Petty.`, m:'concepto central', p:'15', tt:['T12']},
- {a:`Ruppert et al. (2015); Galison (2005)`, q:`Datos masivos frente a estadística nacional; conocimiento retirado.`, m:'apoyo', p:'16', tt:['T12']},
- {a:`Callon y Latour (1981); Tsing (2005); Tess Lea (2014)`, q:`Macroestructuración; fricción; Darwin.`, m:'apoyo', p:'17', tt:['T13']}
-];
-
-const E = [
- {id:'E1', d:'Respuesta a Larkin', f:`Distinguir exhibición y operación salva la inversión sin depender de que las cosas funcionen (K8, K9).`, x:`La distinción puede volver a privilegiar la operación invisible como "verdad" de la infraestructura y relegar el espectáculo a superficie.`, q:`¿Es el espectáculo parte de la operación de una infraestructura?`, tt:['T2']},
- {id:'E2', d:'Inversión fuera del escritorio', f:`El movimiento más fuerte del texto: la inversión la hacen ingenieros, usuarios y activistas, y produce conceptos (K12).`, x:`Si toda inversión puede ser empírica, queda por precisar qué aporta específicamente el análisis.`, q:`¿Qué distingue la inversión del analista de la de un hidrólogo?`, tt:['T3']},
- {id:'E3', d:'Amplitud del concepto', f:`La apertura permite incorporar arroz, espíritus, gente y datos.`, x:`Si cualquier cosa puede ser infraestructura (K16), el concepto pierde capacidad de discriminación; la respuesta de Bear desplaza más que resuelve.`, q:`¿Qué no es infraestructura para este texto?`, tt:['T5','T4']},
- {id:'E4', d:'Política', f:`Corrige una crítica que atribuye todo a la intención de los poderosos, y propone una ética del cuidado.`, x:`No da criterios para distinguir cuándo una causalidad es inextricable y cuándo la complicación es producida por quienes se benefician de la opacidad.`, q:`¿La complicación despolitiza o repolitiza?`, tt:['T8']},
- {id:'E5', d:'Método', f:`Mapa del campo de gran alcance y referencias útiles.`, x:`Como introducción, su fuerza depende de estudios que el lector no tiene delante; muchos casos son solo nombrados.`, q:`¿Qué tesis quedarían en pie solo con los casos desarrollados?`, tt:['T0']},
- {id:'E6', d:'Complicación', f:`La distinción complejo/complicado da un fundamento preciso al giro hacia los huecos (K19).`, x:`Riesgo de naturalizar la falla: si todo funciona averiándose, la avería deja de ser un problema político.`, q:`¿Cómo distinguir la falla constitutiva de la falla producida?`, tt:['T6','T11','T9']},
- {id:'E7', d:'Visión oligóptica', f:`Corrige la imagen del panóptico total y la lectura de Scott (K39, K40).`, x:`Puede subestimar la eficacia real de la vigilancia: una visión parcial puede bastar para reprimir (K44).`, q:`¿Cuánto ver hace falta para gobernar?`, tt:['T12']},
- {id:'E8', d:'Lugar del Sur', f:`Integra casos de Perú, Tailandia, Sudáfrica, Ghana, Camboya, Australia.`, x:`El componente peruano que sostiene parte del marco no se explicita; queda la pregunta de si un concepto nacido en laboratorios estadounidenses se transforma al pensarse desde el Sur.`, q:`¿Empezar por los huecos es la inversión de la inversión, o la misma operación de Star donde el hueco es la norma?`, tt:['T0','T13']}
-];
-
-const X = [
- {t:'Definición', e:'Ensamblajes doblemente relacionales; diseñado y no diseñado.', s:'Relación, no cosa; infraestructura como contexto.', h:'Propiedad relacional; nueve propiedades.', tt:['T4']},
- {t:'Inversión', e:'Se multiplica: inversiones del campo (K12).', s:'"Substrate becomes substance" (Bowker).', h:'Llevar al frente lo que está tras bambalinas.', tt:['T2','T3']},
- {t:'Visibilidad', e:'Exhibición frente a operación; responde a Larkin.', s:'Implícita en la ruptura.', h:'Propiedad 8: visible en la ruptura.', tt:['T2']},
- {t:'Aparato', e:'Complejo/complicado; huecos; orden fractal; oligóptico.', s:'Niveles de Bateson; doble vínculo.', h:'Propiedades; trucos del oficio.', tt:['T6','T11']},
- {t:'Huecos', e:'Punto de partida del análisis (C37).', s:'Problemas de "enchufe" letales por crónicos.', h:'Trabajo de articulación que completa huecos; cebollas.', tt:['T11']},
- {t:'Control y responsabilidad', e:'Nadie controla; responsabilidad distribuida; cuidado.', s:'Ningún bando tiene la culpa.', h:'"Nobody is really in charge of infrastructure."', tt:['T8']},
- {t:'Visión', e:'Oligóptico; datos masivos; opacidad privada.', s:'—', h:'Estatus de los indicadores; precisión y validez.', tt:['T12']},
- {t:'Escala', e:'La escala como efecto (K46).', s:'De un laboratorio a la National Information Infrastructure.', h:'Etnografía de miles.', tt:['T13']},
- {t:'Política', e:'Astillamiento, abandono biopolítico, cuidado.', s:'Política del refuerzo; equidad.', h:'Puentes y barreras; censo.', tt:['T7','T8']},
- {t:'Lugar del etnógrafo', e:'Experimentador conceptual y empírico.', s:'Mediador en equipos de desarrollo.', h:'Lector de documentos y diseños.', tt:['T5']}
-];
-
-/* desplazamientos de un vistazo */
-const PROPS = [['1 · De la inversión del analista a las del campo','D2','K12'],['2 · De la definición a la experimentación','D10','K16'],['3 · De la complejidad a la complicación','D12','K19'],['4 · Del flujo a los huecos','D25','K33'],['5 · Del panóptico al oligóptico','D30','K40'],['6 · De la escala dada a la producida','D33','K46']];
-document.getElementById('props').innerHTML = PROPS.map(([n, d, k]) => `<div data-refs="${D.find(x=>x.id===d).tt.join(' ')}"><b>${n}</b>${D.find(x=>x.id===d).def} <span style="display:block;margin-top:6px"><button class="chip d" data-go="${d}">${d}</button> <button class="chip k" data-go="${k}">${k}</button></span></div>`).join('');
-
-/* ===================== UTILIDADES ===================== */
-const $ = s => document.querySelector(s);
-const byId = {}; [...T, ...K, ...C, ...S, ...D, ...E].forEach(x => byId[x.id] = x);
-const lectorURL = (p, ancla) => 'lector.html?f=' + encodeURIComponent(LECTURA) + (p ? '&p=' + p : '') + (ancla ? '&q=' + encodeURIComponent(ancla) : '');
-function pages(p){ return String(p).replace(/\d+/g, n => `<a class="pgl" href="${lectorURL(n)}" target="lector" title="Abrir el texto en la p. ${n}">${n}</a>`); }
-function chip(id, withLabel){
-  const x = byId[id]; if (!x) return '';
-  const cls = id[0] === 'T' ? 't' : id[0] === 'C' ? 'c' : id[0] === 'K' ? 'k' : id[0] === 'S' ? 's' : id[0] === 'D' ? 'd' : 'e';
-  const lb = id[0] === 'T' ? x.c : id[0] === 'K' ? x.t : id[0] === 'S' ? x.t : id[0] === 'D' ? x.t : id[0] === 'E' ? x.d : (x.es || '').slice(0, 60);
-  return `<button class="chip ${cls}" data-go="${id}" title="${lb.replace(/"/g,'&quot;').replace(/<[^>]+>/g,'')}">${id}${withLabel ? `<span class="lb">${lb}</span>` : ''}</button>`;
-}
-const chips = (ids, wl) => (ids || []).map(i => chip(i, wl)).join(' ');
-const pl = (n, a, b) => n + ' ' + (n === 1 ? a : b);
-const tag = (txt, cls) => `<span class="tag ${cls || ''}">${txt}</span>`;
-const casesOf = t => K.filter(k => k.tt.includes(t));
-const quotesOf = t => C.filter(c => c.tt.includes(t));
-const conceptsOf = t => D.filter(d => d.tt.includes(t));
-const evalOf = t => E.filter(e => e.tt.includes(t));
-const flowOf = t => FLOW.map((f, i) => ({f, i})).filter(o => o.f.t.includes(t));
-function refsOf(item, extra){ return [...new Set([...(item.tt || []), ...(extra || [])])].join(' '); }
-
-function table(el, heads, rows){
-  el.innerHTML = '<thead><tr>' + heads.map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>' + rows.join('') + '</tbody>';
-}
-
-/* ===================== RENDER ===================== */
-function renderGrid(){
-  let h = '<thead><tr><th></th>' + S.map(s => `<th title="${s.t}">${s.id}</th>`).join('') + '<th>total</th></tr></thead><tbody>';
-  for (const t of T){
-    h += `<tr data-refs="${t.id}"><th class="row"><button class="chip t" data-foco="${t.id}">${t.id}</button> ${t.c}</th>`;
-    let tot = 0;
-    for (const s of S){
-      const n = K.filter(k => k.s === s.id && k.tt.includes(t.id)).length + C.filter(c => c.s === s.id && c.tt.includes(t.id)).length;
-      tot += n;
-      const v = n === 0 ? 0 : n >= 4 ? 4 : n;
-      const arg = t.s.includes(s.id);
-      h += `<td class="v${v}${arg ? ' arg' : ''}" data-foco="${t.id}" title="${t.id} en ${s.id} (${s.t}): ${n} apoyos${arg ? ' · se argumenta aquí' : ''}">${n || (arg ? '◆' : '·')}</td>`;
-    }
-    h += `<td class="v0" style="color:var(--ink);background:#fff;font-weight:600">${tot}</td></tr>`;
-  }
-  $('#grid').innerHTML = h + '</tbody>';
-}
-
-function renderHilos(){
-  $('#hilosBox').innerHTML = T.map(t => {
-    const ks = casesOf(t.id), cs = quotesOf(t.id), ds = conceptsOf(t.id), es = evalOf(t.id), fs = flowOf(t.id);
-    return `<details class="hilo" id="hilo-${t.id}" data-refs="${t.id}">
-      <summary><span class="tid">${t.id}</span><span class="tt">${t.c}</span><span class="tc">${pl(ks.length,'caso','casos')} · ${pl(cs.length,'cita','citas')} · ${pl(ds.length,'concepto','conceptos')}</span></summary>
-      <div class="hb">
-        <div class="form">${t.f}</div>
-        <div class="row"><b>Estatus</b><div>${tag(t.est, t.est.startsWith('inferida') ? 't2' : '')} · páginas ${pages(t.p)}</div></div>
-        <div class="row"><b>Cómo se sostiene</b><div>${t.sus}</div></div>
-        <div class="row"><b>Dónde se argumenta</b><div>${chips(t.s, true)}</div></div>
-        <div class="row"><b>Paso del argumento</b><div>${fs.map(o => `<div>${o.i + 1}. <b>${o.f.mv}</b> ${o.f.d}</div>`).join('') || '—'}</div></div>
-        <div class="row"><b>Conceptos</b><div>${chips(ds.map(d => d.id), true)}</div></div>
-        <div class="row"><b>Casos</b><div><ul>${ks.map(k => `<li>${chip(k.id)} <b>${k.t}</b> (p. ${pages(k.p)}): ${k.d}</li>`).join('') || '<li>—</li>'}</ul></div></div>
-        <div class="row"><b>Citas</b><div>${cs.map(c => `<div class="q">${chip(c.id)} ${c.en} <span class="tr">${c.es} · p. ${pages(c.p)} · <a class="ver" href="${lectorURL(c.p.split('-')[0], c.a)}" target="lector">ver en el texto</a></span></div>`).join('') || '—'}</div></div>
-        <div class="row"><b>Tensión crítica</b><div>${es.map(e => `<div class="obj">${chip(e.id)} <b>${e.d}.</b> ${e.x}<br><i>${e.q}</i></div>`).join('') || '—'}</div></div>
-      </div></details>`;
-  }).join('');
-}
-
-function renderFlow(){
-  $('#flow').innerHTML = FLOW.map(f => `<li data-refs="${f.t.join(' ')}"><span class="mv">${f.mv}</span> ${f.d} <span class="why">${f.w} · p. ${pages(f.p)} · ${chips(f.t)}</span></li>`).join('');
-}
-
-function renderSecciones(){
-  table($('#tSecciones'), ['ID','Sección','Pág.','Función','Argumento y contenido','Sustento','Tesis','Casos y citas','Transición'],
-    S.map(s => {
-      const ts = T.filter(t => t.s.includes(s.id)).map(t => t.id);
-      const ks = K.filter(k => k.s === s.id).map(k => k.id), cs = C.filter(c => c.s === s.id).map(c => c.id);
-      return `<tr id="${s.id}" data-refs="${[...new Set([...ts, ...K.filter(k=>k.s===s.id).flatMap(k=>k.tt), ...C.filter(c=>c.s===s.id).flatMap(c=>c.tt)])].join(' ')}"><td class="id">${s.id}</td><td class="k">${s.t}</td><td>${pages(s.p)}</td><td>${s.fn}</td><td>${s.arg}</td><td>${s.sus}</td><td>${chips(ts)}</td><td>${chips(ks)} ${chips(cs)}</td><td>${s.tr}</td></tr>`;
-    }));
-}
-
-function renderCasos(){
-  table($('#tCasos'), ['ID','Caso','Actores','Qué ocurre','Qué demuestra',NIVEL_COL,'Sostiene','Citas','Sección','Pág.'],
-    K.map(k => {
-      const cs = C.filter(c => c.k === k.id).map(c => c.id);
-      return `<tr id="${k.id}" data-refs="${refsOf(k)}"><td class="id">${k.id}</td><td class="k">${k.t}</td><td>${k.a}</td><td>${k.q}</td><td>${k.d}</td><td>${tag(k.n, k.n === '3' ? 't3' : /^(doble|nombrado|enumerado)/.test(k.n) ? 't2' : '')}</td><td>${chips(k.tt, true)}</td><td>${chips(cs) || '—'}</td><td>${chip(k.s)}</td><td>${pages(k.p)}</td></tr>`;
-    }));
-}
-
-function renderCitas(){
-  table($('#tCitas'), ['ID','Original','Traducción','Pág.','Función','Sostiene','Caso','Comentario'],
-    C.map(c => `<tr id="${c.id}" data-refs="${refsOf(c)}"><td class="id">${c.id}</td><td class="en">${c.en}<br><a class="ver" href="${lectorURL(c.p.split('-')[0], c.a)}" target="lector">ver en el texto</a></td><td class="es">${c.es}</td><td>${pages(c.p)}</td><td>${c.fn}</td><td>${chips(c.tt, true)}</td><td>${c.k ? chip(c.k, true) : '—'}</td><td>${c.co}</td></tr>`));
-}
-
-function renderConceptos(){
-  table($('#tConceptos'), ['ID','Concepto','Definición o uso','Origen','Función','Tesis','Pág.'],
-    D.map(d => `<tr id="${d.id}" data-refs="${refsOf(d)}"><td class="id">${d.id}</td><td class="k">${d.t}</td><td>${d.def}</td><td>${d.o}</td><td>${d.fn}</td><td>${chips(d.tt)}</td><td>${pages(d.p)}</td></tr>`));
-}
-
-function renderAutores(){
-  table($('#tAutores'), ['Autor y obra','Qué toma el texto','Modo','Tesis','Pág.'],
-    A.map(a => `<tr data-refs="${refsOf(a)}"><td class="k">${a.a}</td><td>${a.q}</td><td>${a.m.split(', ').map(m => tag(m, m === 'crítica' ? 't3' : /refer|contexto|fuente|indirecto/.test(m) ? 't2' : '')).join(' ')}</td><td>${chips(a.tt)}</td><td>${pages(a.p)}</td></tr>`));
-}
-
-function renderEval(){
-  table($('#tEval'), ['ID','Dimensión','Fortaleza','Tensión o límite','Pregunta abierta','Afecta a'],
-    E.map(e => `<tr id="${e.id}" data-refs="${refsOf(e)}"><td class="id">${e.id}</td><td class="k">${e.d}</td><td>${e.f}</td><td>${e.x.replace(/\b(K\d+)\b/g, m => chip(m))}</td><td>${e.q}</td><td>${chips(e.tt, true)}</td></tr>`));
-}
-
-function renderConex(){
-  table($('#tConex'), CONEX_COLS,
-    X.map(x => `<tr data-refs="${refsOf(x)}"><td class="k">${x.t}</td><td>${x.e.replace(/\b(K\d+)\b/g, m => chip(m))}</td><td>${x.s}</td><td>${x.h}</td><td>${chips(x.tt)}</td></tr>`));
-}
-
-/* ===================== INTERACCIÓN ===================== */
-let foco = null;
-function setFoco(id){
-  foco = id;
-  document.body.classList.toggle('foco', !!id);
-  document.querySelectorAll('[data-refs]').forEach(el => el.classList.toggle('on', !!id && el.dataset.refs.split(' ').includes(id)));
-  if (id){
-    const t = byId[id];
-    $('#focoT').textContent = id + ' · ' + t.c;
-    $('#focoC').textContent = pl(casesOf(id).length,'caso','casos') + ' · ' + pl(quotesOf(id).length,'cita','citas') + ' · ' + pl(conceptsOf(id).length,'concepto','conceptos') + ' · ' + pl(t.s.length,'sección','secciones');
-    try { history.replaceState(null, '', '#hilo=' + id); } catch(e){}
-  } else {
-    try { history.replaceState(null, '', location.pathname + location.search); } catch(e){}
-  }
-}
-function flash(el){ el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
-function goTo(id){
-  if (id[0] === 'T'){ setFoco(id); return; }
-  const el = document.getElementById(id); if (!el) return;
-  if (el.classList.contains('hidden-row')){ $('#q').value = ''; filtrar(); }
-  el.scrollIntoView({behavior:'smooth', block:'center'}); flash(el);
-}
-document.addEventListener('click', e => {
-  const g = e.target.closest('[data-go]'); if (g){ e.preventDefault(); goTo(g.dataset.go); return; }
-  const f = e.target.closest('[data-foco]'); if (f){ e.preventDefault(); setFoco(f.dataset.foco); }
-});
-$('#focoX').addEventListener('click', () => { $('#focoSolo').checked = false; document.body.classList.remove('solo'); setFoco(null); });
-$('#focoSolo').addEventListener('change', e => document.body.classList.toggle('solo', e.target.checked));
-$('#focoDossier').addEventListener('click', () => { const d = document.getElementById('hilo-' + foco); if (!d) return; d.open = true; d.scrollIntoView({behavior:'smooth', block:'start'}); flash(d); });
-
-/* búsqueda */
-const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-function filtrar(){
-  const q = norm($('#q').value.trim());
-  const rows = [...document.querySelectorAll('main tbody tr')].filter(r => !r.closest('#grid'));
-  if (!q){ rows.forEach(r => r.classList.remove('hidden-row')); $('#count').textContent = ''; return; }
-  let n = 0;
-  rows.forEach(r => { const hit = norm(r.textContent).includes(q); r.classList.toggle('hidden-row', !hit); if (hit) n++; });
-  $('#count').textContent = n + (n === 1 ? ' fila coincide' : ' filas coinciden');
-}
-$('#q').addEventListener('input', filtrar);
-
-/* vista tabla / fichas, tamaño de letra, menú */
-const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} } };
-function setFichas(on){ document.body.classList.toggle('fichas', on); $('#vista').textContent = on ? 'vista: fichas' : 'vista: tabla'; $('#vista').classList.toggle('on', on); }
-$('#vista').addEventListener('click', () => { const on = !document.body.classList.contains('fichas'); setFichas(on); store.set('adinf-matriz-fichas', on ? '1' : '0'); });
-(function(){ const v = store.get('adinf-matriz-fichas'); setFichas(v != null ? v === '1' : matchMedia('(max-width:1100px)').matches); })();
-function setFs(px){ px = Math.max(14, Math.min(22, px)); document.documentElement.style.setProperty('--fs', px + 'px'); store.set('adinf-matriz-fs', px); }
-$('#fmas').addEventListener('click', () => setFs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs')) + 1));
-$('#fmenos').addEventListener('click', () => setFs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs')) - 1));
-(function(){ const v = parseFloat(store.get('adinf-matriz-fs')); if (v) setFs(v); })();
-$('#navToggle').addEventListener('click', () => { const o = $('#side').classList.toggle('open'); $('#navToggle').setAttribute('aria-expanded', o); });
-$('#nav').addEventListener('click', e => { if (e.target.closest('a') && matchMedia('(max-width:1100px)').matches) $('#side').classList.remove('open'); });
-$('#leer').href = lectorURL(null); $('#leer').target = 'lector';
-
-function etiquetar(){ document.querySelectorAll('table.mx').forEach(t => { const hs = [...t.querySelectorAll('thead th')].map(th => th.textContent); t.querySelectorAll('tbody tr').forEach(tr => [...tr.children].forEach((td, i) => td.dataset.label = hs[i] || '')); }); }
-
-renderGrid(); renderHilos(); renderFlow(); renderSecciones(); renderCasos(); renderCitas(); renderConceptos(); renderAutores(); renderEval(); renderConex(); etiquetar();
-(function(){ const m = location.hash.match(/^#hilo=(T\d+)$/); if (m && byId[m[1]]) setFoco(m[1]); })();
-
-
+(function(){
+  var K='adinf-matriz-fs', r=document.documentElement;
+  function set(v){ r.style.setProperty('--fs', v+'px'); try{localStorage.setItem(K, v);}catch(e){} }
+  var v=17; try{ var g=parseFloat(localStorage.getItem(K)); if(g>=13&&g<=24) v=g; }catch(e){}
+  set(v);
+  var a=document.getElementById('fsMenos'), b=document.getElementById('fsMas');
+  if(a) a.onclick=function(){ v=Math.max(13,v-1); set(v); };
+  if(b) b.onclick=function(){ v=Math.min(24,v+1); set(v); };
+})();
 </script>
 </body>
 </html>

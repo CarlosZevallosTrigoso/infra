@@ -3,717 +3,206 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Matriz · Star y Ruhleder 1994</title>
-<meta name="description" content="Matriz analítica articulada de Star y Ruhleder (1994): tesis, hilos argumentales, casos, citas, secciones, conceptos y evaluación, enlazados entre sí y con el texto.">
+<title>Steps Towards an Ecology of Infrastructure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#ffffff; --ink:#1d1f1b; --muted:#5b6157; --accent:#5a7a3a; --accent-dark:#3f5728;
-  --accent-soft:#eef3e8; --line:#dfe3da; --quote:#f7f8f4; --warn:#8a5a14; --warn-soft:#fbf3e4;
-  --steel:#3f5f78; --steel-soft:#e9eff4; --plum:#6b3f63; --plum-soft:#f3ebf1;
+  --accent-soft:#eef3e8; --line:#dfe3da; --quote:#f7f8f4; --steel:#3f5f78; --steel-soft:#e9eff4;
   --mono:'Fira Code',ui-monospace,Menlo,Consolas,monospace;
   --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
-  --fs:16.5px;
+  --fs:17px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.58}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.62}
 a{color:var(--accent-dark)}
-code{font-family:var(--mono);font-size:.88em}
-button{font-family:var(--mono);cursor:pointer}
-
-/* cabecera */
-header.top{border-bottom:3px solid var(--accent);padding:22px 32px 18px;background:#fff}
-.crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:8px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+header.top{border-bottom:3px solid var(--accent);padding:22px 0 16px}
+.crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .crumbs a{color:var(--accent-dark);text-decoration:none}
-header.top h1{font-size:1.75em;line-height:1.2;margin:0 0 6px}
-header.top .ref{color:var(--muted);font-size:.93em;max-width:1000px}
+h1{font-size:1.7em;line-height:1.2;margin:0 0 8px}
+.ref{color:var(--muted);font-size:.92em}
 .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px}
+.btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px;cursor:pointer}
 .btn:hover{border-color:var(--accent);color:var(--accent-dark)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.primary:hover{background:var(--accent-dark);color:#fff}
-.btn.on{border-color:var(--accent);color:var(--accent-dark);background:var(--accent-soft)}
+nav.secs{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
+nav.secs .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:6px;padding-bottom:6px;scrollbar-width:none}
+nav.secs a{font-family:var(--mono);font-size:12px;white-space:nowrap;text-decoration:none;color:var(--muted);padding:6px 9px;border-radius:4px}
+nav.secs a:hover{background:var(--accent-soft);color:var(--accent-dark)}
+section{padding:30px 0 6px;scroll-margin-top:48px}
+h2{font-size:1.32em;margin:0 0 14px;display:flex;gap:12px;align-items:baseline}
+h2 .n{font-family:var(--mono);font-size:.62em;color:var(--accent);font-weight:500}
+h3{font-size:1.06em;margin:22px 0 8px}
+.intro{color:var(--muted);margin:-4px 0 16px}
+.tesis{font-size:1.08em;border-left:4px solid var(--accent);padding:4px 0 4px 18px;margin:0}
 
-/* disposición */
-.layout{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1560px}
-aside.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:20px 18px 40px 32px;border-right:1px solid var(--line)}
-.label{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
-aside.side nav a{display:block;text-decoration:none;color:var(--ink);font-size:.88em;padding:5px 0 5px 10px;border-left:2px solid transparent}
-aside.side nav a:hover{border-left-color:var(--accent);color:var(--accent-dark)}
-#navToggle{display:none}
-.search input{width:100%;font-family:var(--mono);font-size:13px;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink)}
-.search input:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
-.count{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:6px 0 18px;min-height:1em}
-.other{margin-top:24px}
-.other a{display:block;font-size:.85em;margin:5px 0}
-main{padding:24px 36px 120px;min-width:0}
-section{margin:0 0 56px;scroll-margin-top:12px}
-h2{font-size:1.45em;margin:0 0 6px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-h2 .n{font-family:var(--mono);font-size:.6em;color:var(--accent);margin-right:10px;font-weight:500}
-h3{font-size:1.1em;margin:26px 0 8px}
-p.intro{color:var(--muted);margin:8px 0 14px;max-width:920px}
+/* esquema */
+.esq{margin:4px 0 0}
+.paso{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px}
+.pp{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;padding-top:13px}
+.pp a{color:var(--accent-dark);text-decoration:none}
+.caja{border:1px solid var(--line);border-radius:6px;padding:11px 15px 12px;background:#fff}
+.caja .tit{font-style:italic;font-weight:600}
+.fun{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--accent-dark);background:var(--accent-soft);border-radius:3px;padding:1px 7px;margin-left:8px;font-style:normal;font-weight:400;vertical-align:2px}
+.caja p{margin:6px 0 0}
+.caja ul{margin:8px 0 0;padding-left:20px}
+.caja li{margin:3px 0}
+.caja li .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.trans{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;color:var(--muted);font-size:.86em;font-style:italic}
+.trans span:last-child{padding:5px 0 5px 16px;border-left:2px dashed var(--line);margin-left:14px}
 
-/* tablas */
-.tw{overflow-x:auto;margin:10px 0 18px;border:1px solid var(--line);border-radius:6px;-webkit-overflow-scrolling:touch}
-table{border-collapse:collapse;width:100%;font-size:.88em;line-height:1.5}
-th{font-family:var(--mono);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-dark);background:var(--accent-soft);text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:bottom}
-td{padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top}
-tbody tr:last-child td{border-bottom:none}
-td.k{font-weight:600;min-width:140px}
-td.en{font-style:italic;background:var(--quote);min-width:230px}
-td.es{min-width:230px}
-td.id{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
-.ficha td.k{width:210px}
-.pgl{font-family:var(--mono);font-size:12px;color:var(--accent-dark);white-space:nowrap;text-decoration:none;border-bottom:1px dotted var(--accent)}
-.pgl:hover{color:var(--warn);border-bottom-color:var(--warn)}
-.ver{font-family:var(--mono);font-size:11.5px;white-space:nowrap;text-decoration:none;color:var(--steel);border:1px solid var(--steel-soft);background:var(--steel-soft);padding:2px 7px;border-radius:3px;display:inline-block;margin-top:6px}
-.ver:hover{border-color:var(--steel)}
+/* núcleo */
+.bloque{margin:0 0 8px}
+.fichas{display:grid;gap:10px}
+.ficha{border:1px solid var(--line);border-radius:6px;padding:11px 15px}
+.ficha .cab{font-weight:600}
+.ficha .cab .en{font-weight:400;font-style:italic;color:var(--muted)}
+.ficha .cab .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;margin-left:6px}
+.ficha p{margin:5px 0 0}
+.ficha .ej{color:var(--muted);font-size:.95em}
+.ficha .ej b{color:var(--ink);font-weight:600}
+.ficha ul{margin:6px 0 0;padding-left:20px}
+.ficha li{margin:4px 0}
+.mov{border:1px solid var(--line);border-left:4px solid var(--steel);border-radius:6px;padding:12px 16px;margin:0 0 12px}
+.mov .cab{font-weight:700}
+.mov .cab .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;margin-left:6px}
+.mov dl{margin:8px 0 0;display:grid;grid-template-columns:92px minmax(0,1fr);gap:6px 12px}
+.mov dt{font-family:var(--mono);font-size:11.5px;color:var(--steel);padding-top:3px;text-transform:uppercase;letter-spacing:.04em}
+.mov dd{margin:0}
+.caso{background:var(--quote);border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin:0 0 14px}
+.caso p{margin:6px 0 0}.caso p:first-child{margin-top:0}
+.qi{font-style:italic}
+.qi a,.lk{font-family:var(--mono);font-size:11px;text-decoration:none;font-style:normal;white-space:nowrap}
 
-/* fichas de referencia cruzada */
-.chip{display:inline-block;font-family:var(--mono);font-size:11px;line-height:1.35;padding:2px 7px;margin:2px 3px 2px 0;border:1px solid var(--accent);color:var(--accent-dark);background:#fff;border-radius:3px;white-space:nowrap;cursor:pointer}
-.chip:hover{background:var(--accent-soft)}
-.chip.c{border-color:var(--steel);color:var(--steel)}
-.chip.c:hover{background:var(--steel-soft)}
-.chip.k{border-color:var(--plum);color:var(--plum)}
-.chip.k:hover{background:var(--plum-soft)}
-.chip.s,.chip.d{border-color:#9aa094;color:#4c5148}
-.chip.s:hover,.chip.d:hover{background:#f1f2ee}
-.chip .lb{font-family:var(--serif);font-size:12px;margin-left:5px;color:var(--ink)}
-.tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 6px;margin:1px 2px 1px 0;border:1px solid var(--accent);color:var(--accent-dark);border-radius:3px;white-space:nowrap}
-.tag.t2{border-color:#8a8f84;color:#4c5148}
-.tag.t3{border-color:var(--warn);color:var(--warn)}
+/* argumentos */
+.arg{border:1px solid var(--line);border-radius:6px;padding:14px 18px 6px;margin:0 0 14px}
+.arg h3{margin:0 0 8px;display:flex;gap:10px}
+.arg h3 .n{font-family:var(--mono);font-size:.78em;color:var(--accent);font-weight:500;padding-top:2px}
+.arg ol{margin:4px 0 8px;padding-left:22px}
+.arg li{margin:4px 0}
+.arg .ev{margin:6px 0 10px}
+.arg .ev b{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-right:6px}
 
-/* modo hilo */
-body.foco [data-refs]:not(.on){opacity:.28}
-body.foco.solo [data-refs]:not(.on){display:none}
-body.foco [data-refs].on{box-shadow:inset 4px 0 0 var(--accent)}
-body.foco tr[data-refs].on td{background:#fafcf7}
-#focoBar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;background:#fff;border:1px solid var(--accent);border-radius:8px;box-shadow:0 6px 24px #0002;padding:10px 14px;display:none;align-items:center;gap:10px;flex-wrap:wrap;max-width:min(940px,calc(100vw - 24px));font-size:.88em}
-body.foco #focoBar{display:flex}
-#focoBar .ft{font-weight:600}
-#focoBar .fc{font-family:var(--mono);font-size:12px;color:var(--muted)}
-#focoBar label{font-family:var(--mono);font-size:12px;display:flex;gap:6px;align-items:center;cursor:pointer}
-.flash{animation:flash 1.6s ease-out}
-@keyframes flash{0%{background:#fff3c4}100%{background:transparent}}
-tr.flash td{animation:flash 1.6s ease-out}
+/* citas */
+blockquote.q{margin:0 0 12px;padding:10px 16px;background:var(--quote);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+blockquote.q .en{font-style:italic}
+blockquote.q .es{color:var(--muted);margin-top:4px;font-size:.95em}
+blockquote.q .meta{font-family:var(--mono);font-size:11.5px;margin-top:6px;color:var(--muted)}
+blockquote.q .meta a{text-decoration:none}
+blockquote.q .co{font-size:.92em;margin-top:4px}
+.arg blockquote.q{margin-bottom:12px}
 
-/* mapa de sustento */
-.grid{border-collapse:separate;border-spacing:3px;font-size:12px;width:auto}
-.grid th{background:none;border:none;padding:4px 2px;text-align:center;font-size:11px;color:var(--muted)}
-.grid th.row{text-align:left;white-space:nowrap;color:var(--ink);font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:13px;padding-right:10px}
-.grid td{border:none;padding:0;text-align:center;vertical-align:middle;width:58px;height:38px;border-radius:4px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--ink)}
-.grid td.v0{background:#f6f7f4;color:#c3c7bd}
-.grid td.v1{background:#e3ecd8}
-.grid td.v2{background:#c9dbb5}
-.grid td.v3{background:#a9c58f}
-.grid td.v4{background:#86ab66;color:#fff}
-.grid td.arg{outline:2px solid var(--accent-dark);outline-offset:-2px}
-.legend{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
-.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+/* síntesis */
+.sint{border-top:1px solid var(--line);padding-top:6px}
+.sint h4{font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-dark);margin:26px 0 8px;font-weight:500}
+.sint p{margin:0 0 12px}
+.sint ol,.sint ul{padding-left:22px}
+.sint .ref0{color:var(--muted);font-size:.92em}
 
-/* hilos argumentales */
-details.hilo{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;margin:0 0 12px;background:#fff}
-details.hilo>summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
-details.hilo>summary::-webkit-details-marker{display:none}
-details.hilo>summary .tid{font-family:var(--mono);color:#fff;background:var(--accent);border-radius:3px;padding:1px 7px;font-size:12px}
-details.hilo>summary .tt{font-weight:600;flex:1;min-width:220px}
-details.hilo>summary .tc{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
-details.hilo[open]>summary{border-bottom:1px solid var(--line)}
-.hb{padding:12px 18px 16px}
-.hb .form{font-size:1.02em;border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:6px 0 12px}
-.hb .row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px dashed var(--line)}
-.hb .row>b{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500;padding-top:2px}
-.hb ul{margin:0;padding-left:1.1em}
-.hb li{margin:4px 0}
-.hb .q{font-style:italic;background:var(--quote);padding:6px 10px;border-radius:4px;margin:6px 0}
-.hb .q .tr{font-style:normal;display:block;color:var(--muted);margin-top:3px}
-.hb .obj{border-left:3px solid var(--warn);background:var(--warn-soft);padding:6px 10px;border-radius:4px;margin:6px 0}
+/* índice */
+.textos{display:grid;gap:14px;margin-top:6px}
+.texto{border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.texto .ano{font-family:var(--mono);font-size:12px;color:var(--accent-dark)}
+.texto h3{margin:4px 0 4px;font-size:1.12em}
+.texto p{margin:6px 0}
+.texto .tools{margin-top:10px}
+table.dia{width:100%;border-collapse:collapse;font-size:.93em}
+table.dia th,table.dia td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
+table.dia th{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--muted);background:var(--quote)}
+table.dia td:first-child{font-weight:600;width:16%}
 
-/* progresión */
-.flow{list-style:none;margin:16px 0;padding:0;counter-reset:f}
-.flow li{position:relative;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 16px 12px 52px;margin:0 0 28px;background:#fff;counter-increment:f}
-.flow li::before{content:counter(f);position:absolute;left:14px;top:12px;font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px}
-.flow li:not(:last-child)::after{content:"↓";position:absolute;left:50%;bottom:-25px;font-family:var(--mono);color:var(--accent);font-size:17px}
-.flow .mv{font-weight:700}
-.flow .why{display:block;color:var(--muted);font-size:.92em;margin-top:4px}
-.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
-.levels div{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:12px 14px;font-size:.9em}
-.levels div b{display:block;font-family:var(--mono);font-size:12px;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.box{border:1px solid var(--line);background:var(--quote);padding:14px 18px;border-radius:6px;margin:12px 0}
-.hidden-row{display:none !important}
-footer{border-top:1px solid var(--line);padding:18px 32px;color:var(--muted);font-size:13px;font-family:var(--mono)}
+footer{color:var(--muted);font-family:var(--mono);font-size:11.5px;padding:34px 0 40px;border-top:1px solid var(--line);margin-top:30px}
 
-/* vista de fichas (tablet vertical, móvil o elegida) */
-body.fichas table.mx thead{display:none}
-body.fichas table.mx,body.fichas table.mx tbody{display:block;width:100%}
-body.fichas table.mx tr{display:block;border:1px solid var(--line);border-radius:6px;margin:0 0 12px;padding:6px 4px;background:#fff}
-body.fichas table.mx td{display:block;border:none;padding:6px 10px;min-width:0 !important}
-body.fichas table.mx td::before{content:attr(data-label);display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;font-style:normal}
-body.fichas table.mx td.en{border-radius:4px}
-body.fichas .tw{border:none;overflow:visible}
-body.fichas table.ficha td.k{width:auto}
-body.fichas table.ficha td::before{display:none}
-
-/* tablet y pantallas estrechas */
-@media (max-width:1100px){
-  .layout{grid-template-columns:1fr}
-  aside.side{position:sticky;top:0;z-index:40;background:#fff;max-height:none;border-right:none;border-bottom:1px solid var(--line);padding:10px 16px}
-  #navToggle{display:inline-flex}
-  aside.side .collapsible{display:none;padding-top:12px;max-height:70vh;overflow:auto}
-  aside.side.open .collapsible{display:block}
-  .sidebar-head{display:flex;gap:8px;align-items:center}
-  .sidebar-head .search{flex:1}
-  .sidebar-head .count{display:none}
-  main{padding:20px 20px 120px}
-  header.top{padding:18px 20px}
-  .levels{grid-template-columns:1fr}
-  .hb .row{grid-template-columns:1fr}
-  footer{padding:16px 20px}
+@media (max-width:640px){
+  .paso,.trans{grid-template-columns:1fr;gap:4px}
+  .pp{text-align:left;padding-top:0}
+  .trans span:first-child{display:none}
+  .trans span:last-child{margin-left:10px}
+  .mov dl{grid-template-columns:1fr}
+  table.dia, table.dia tbody, table.dia tr, table.dia td, table.dia th{display:block;width:auto}
+  table.dia thead{display:none}
+  table.dia td{border-top:none}
+  table.dia td:first-child{width:auto;border-top:1px solid var(--line);background:var(--quote)}
+  table.dia td[data-t]::before{content:attr(data-t) " · ";font-family:var(--mono);font-size:11px;color:var(--muted)}
 }
-@media (min-width:1101px){ .sidebar-head .count{display:block} }
-@media (max-width:600px){ main{padding:16px 16px 120px} header.top{padding:16px} :root{--fs:16px} }
-@media (pointer:coarse){
-  .chip{padding:5px 9px;font-size:12px;margin:3px 4px 3px 0}
-  aside.side nav a{padding:9px 0 9px 10px}
-  .pgl{padding:2px 0}
-}
-@media print{
-  aside.side,#focoBar,.tools{display:none !important}
-  .layout{display:block}
-  main{padding:0}
-  .tw{overflow:visible;border:none}
-  tr{break-inside:avoid}
-  details.hilo{break-inside:avoid}
-  body{font-size:11pt}
-}
+@media print{nav.secs,.tools{display:none}}
 </style>
 </head>
 <body>
-
-<header class="top">
-  <div class="crumbs"><a href="index.html">← matrices · antropología de las infraestructuras</a><span>1 de 3</span></div>
-  <h1>Star y Ruhleder (1994). Pasos hacia una ecología de la infraestructura</h1>
-  <div class="ref">Star, Susan Leigh y Karen Ruhleder (1994). "Steps Towards an Ecology of Infrastructure: Complex Problems in Design and Access for Large-Scale Collaborative Systems". <i>CSCW 94. Proceedings of the 1994 ACM Conference on Computer Supported Cooperative Work</i>, Chapel Hill, octubre de 1994. Páginas: las del PDF de la ponencia (12 pp.), que son también las del lector.</div>
+<header class="top"><div class="wrap">
+  <div class="crumbs"><a href="index.html">← índice</a><span>Círculo de lecturas · antropología de las infraestructuras</span></div>
+  <h1>Steps Towards an Ecology of Infrastructure</h1>
+  <div class="ref">Star, Susan Leigh y Karen Ruhleder (1994). «Steps Towards an Ecology of Infrastructure: Complex Problems in Design and Access for Large-Scale Collaborative Systems». Ponencia en CSCW 94, Chapel Hill. Páginas del PDF (1-12).</div>
   <div class="tools">
-    <a class="btn primary" id="leer" href="#">leer el texto</a>
-    <button class="btn" id="vista" title="Alternar entre tablas y fichas">vista: tabla</button>
-    <button class="btn" id="fmenos" title="Reducir la letra">A−</button>
-    <button class="btn" id="fmas" title="Aumentar la letra">A+</button>
+    <a class="btn primary" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md">leer el texto ↗</a>
+    <button class="btn" id="fsMenos" title="Letra más pequeña">A−</button>
+    <button class="btn" id="fsMas" title="Letra más grande">A+</button>
   </div>
-</header>
-
-<div class="layout">
-<aside class="side" id="side">
-  <div class="sidebar-head">
-    <button class="btn" id="navToggle" aria-expanded="false">☰ contenido</button>
-    <div class="search">
-      <input id="q" type="search" placeholder="buscar en las matrices: UNIX, Gazette, doble vínculo…" aria-label="Buscar en las matrices">
-      <div class="count" id="count"></div>
-    </div>
-  </div>
-  <div class="collapsible">
-    <p class="label">Contenido</p>
-    <nav id="nav">
-      <a href="#ficha">1. Ficha</a>
-      <a href="#mapa">2. Mapa de sustento</a>
-      <a href="#hilos">3. Hilos argumentales</a>
-      <a href="#progresion">4. Progresión lógica</a>
-      <a href="#secciones">5. Matriz por secciones</a>
-      <a href="#casos">6. Matriz de casos</a>
-      <a href="#citas">7. Citas clave</a>
-      <a href="#conceptos">8. Conceptos</a>
-      <a href="#autores">9. Autores citados</a>
-      <a href="#evaluacion">10. Evaluación crítica</a>
-      <a href="#conexiones">11. Conexiones</a>
-      <a href="#fuentes">12. Nota sobre fuentes</a>
-    </nav>
-    <div class="other">
-      <p class="label">Otras matrices</p>
-      <a href="index.html">Índice y matriz comparativa</a>
-      <a href="star-1999.html">Star (1999)</a>
-      <a href="harvey-jensen-morita-2016.html">Harvey, Jensen y Morita (2016)</a>
-    </div>
-  </div>
-</aside>
-
-<main>
-
-<section id="ficha">
-<h2><span class="n">01</span>Ficha</h2>
-<p class="intro">Cómo está hecha esta matriz: cada tesis tiene un código (T0-T11), cada caso uno (K1-K36), cada cita uno (C1-C33), cada sección uno (S1-S10) y cada concepto uno (D1-D26). Todos los elementos llevan fichas que remiten a los demás. Al pulsar una ficha de tesis se activa el <b>modo hilo</b>: se resalta todo lo que sostiene esa tesis en todas las matrices. Las páginas y las citas abren el texto en el lector, en el pasaje exacto.</p>
-<div class="tw"><table class="ficha mx">
-<thead><tr><th>Campo</th><th>Contenido</th></tr></thead>
-<tbody>
-<tr><td class="k">Autoras</td><td><b>Susan Leigh Star</b> (1954-2010). Socióloga formada en el interaccionismo simbólico con Anselm Strauss, en cuya escuela hizo su doctorado (Universidad de California en San Francisco). Ya era conocida por el concepto de <i>objeto frontera</i>, formulado con James Griesemer en 1989. En 1994 firmaba desde el Community Systems Lab del Departamento de Sociología de la Universidad de Illinois en Urbana-Champaign y desde el Institute for Research on Learning. En 1999 publicaría con Geoffrey Bowker <i>Sorting Things Out</i>.<br><br><b>Karen Ruhleder</b>. Investigadora en sistemas de información y trabajo cooperativo. En 1994 firmaba desde el Departamento de Gestión del Worcester Polytechnic Institute. El texto cita su trabajo con John L. King sobre soporte computacional al trabajo distribuido (1991). Más tarde fue docente en la escuela de bibliotecología y ciencias de la información de la Universidad de Illinois.</td></tr>
-<tr><td class="k">Foro y audiencia</td><td>Conferencia CSCW 94 de la Association for Computing Machinery, Chapel Hill, octubre de 1994. Su público son diseñadores de sistemas, informáticos e investigadores de organizaciones. El texto debe convencer a ingenieros de que el fracaso de adopción no es un problema de interfaz.</td></tr>
-<tr><td class="k">Género</td><td>Ponencia empírico-teórica: etnografía aplicada al desarrollo de sistemas, con un aparato conceptual tomado de la cibernética y la teoría de la comunicación de Gregory Bateson.</td></tr>
-<tr><td class="k">Objeto empírico</td><td>El <b>Worm Community System</b> (WCS), sistema hecho a medida para la comunidad de biólogos que estudian <i>Caenorhabditis elegans</i>. Financiado por la National Science Foundation (subvención IRI-9015407); investigadores principales Bruce Schatz y Sam Ward; desarrolladores Terry Friedman y Ed Grossman.</td></tr>
-<tr><td class="k">Trabajo de campo</td><td>Entrevistas semiestructuradas y observación en <b>25 laboratorios</b>, con <b>más de 100 biólogos</b>, durante <b>tres años</b>. Las observaciones se devolvían al equipo de desarrollo. Los nombres de los entrevistados son seudónimos (p. 2, nota 2).</td></tr>
-<tr><td class="k">Convenciones</td><td>Los testimonios llevan un código de entrevista (por ejemplo <code>1:9:3</code>) y un rol: PI = investigador principal, PD = posdoctorando, GS = estudiante de posgrado. El texto no explica PS ni RS; RS probablemente significa <i>research scientist</i>.</td></tr>
-<tr><td class="k">Versiones</td><td>Versión previa presentada en 1993 en la Conference on Computing in the Social Sciences. Versión ampliada y más citada: <i>Information Systems Research</i> 7(1), 1996, pp. 111-134, que contiene la lista de <b>ocho dimensiones</b> de la infraestructura, <b>ausente aquí</b>.</td></tr>
-<tr><td class="k">Estructura</td><td>Diez secciones (S1-S10): resumen; etnografía en el diseño de sistemas; el WCS; firmar y conectarse; niveles de comunicación; problemas de primer, segundo y tercer nivel; dobles vínculos; propuesta. Treinta y cuatro referencias.</td></tr>
-<tr><td class="k">Lugar en la genealogía</td><td>Texto fundacional de la definición relacional de infraestructura. Retoma la inversión infraestructural de Bowker (1994) y la noción de relación de Jewett y Kling (1991). Su versión de 1996 será la referencia de Star (1999), Larkin (2013) y Harvey, Jensen y Morita (2016).</td></tr>
-</tbody></table></div>
-</section>
-
-<section id="mapa">
-<h2><span class="n">02</span>Mapa de sustento</h2>
-<p class="intro">Dónde y con qué se sostiene cada tesis. Filas: tesis. Columnas: secciones del texto. Cada celda cuenta los casos y las citas de esa sección que apoyan la tesis; el borde oscuro indica las secciones donde la tesis se formula o argumenta. Pulsa una fila o una celda para seguir el hilo.</p>
-<div class="legend"><span><i style="background:#f6f7f4"></i>sin apoyo</span><span><i style="background:#e3ecd8"></i>1</span><span><i style="background:#c9dbb5"></i>2</span><span><i style="background:#a9c58f"></i>3</span><span><i style="background:#86ab66"></i>4 o más</span><span><i style="background:#fff;outline:2px solid #3f5728;outline-offset:-2px"></i>sección donde se argumenta</span></div>
-<div class="tw" style="border:none"><table class="grid" id="grid"></table></div>
-</section>
-
-<section id="hilos">
-<h2><span class="n">03</span>Hilos argumentales</h2>
-<p class="intro">Cada tesis reconstruida con todo lo que la sostiene: dónde se argumenta, qué paso del razonamiento ocupa, qué conceptos usa, qué casos la prueban, qué citas la condensan y qué tensión crítica la afecta. Es la vista que mejor reemplaza la lectura secuencial.</p>
-<div id="hilosBox"></div>
-</section>
-
-<section id="progresion">
-<h2><span class="n">04</span>Progresión lógica del argumento</h2>
-<p class="intro">El texto avanza de una paradoja empírica a una reconceptualización, la valida nivel por nivel y termina en una teoría de la falla y una propuesta.</p>
-<ol class="flow" id="flow"></ol>
-<h3>Los tres niveles, de un vistazo</h3>
-<div class="levels">
-<div><b>Nivel uno · recursos</b>Problemas que se resuelven redistribuyendo o aumentando recursos existentes, incluida la información. "¿Cuál es la dirección del WCS?" Los enfoques racionalistas rara vez pasan de aquí.</div>
-<div><b>Nivel dos · contexto</b>Efectos contextuales imprevistos, a menudo por la colisión de dos problemas de nivel uno. "¿Qué implica elegir Sun si mi departamento usa Mac?"</div>
-<div><b>Nivel tres · política</b>Problemas "inherently political (broadly speaking)", en disputa permanente y dependientes de normas sociales. "¿Pesa más la competencia o la cooperación en la privacidad?"</div>
-</div>
-</section>
-
-<section id="secciones">
-<h2><span class="n">05</span>Matriz por secciones</h2>
-<p class="intro">Recorrido sección por sección, con las tesis que cada una sostiene y los casos y citas que contiene.</p>
-<div class="tw"><table class="mx" id="tSecciones"></table></div>
-</section>
-
-<section id="casos">
-<h2><span class="n">06</span>Matriz de casos</h2>
-<p class="intro">Todos los casos y viñetas etnográficas: actores (seudónimos y roles), qué ocurre, qué demuestra, en qué nivel se ubica, qué tesis sostiene y qué citas lo condensan.</p>
-<div class="tw"><table class="mx" id="tCasos"></table></div>
-</section>
-
-<section id="citas">
-<h2><span class="n">07</span>Citas clave</h2>
-<p class="intro">Fragmentos breves en el original con traducción propia. Cada cita indica la tesis que sostiene y el caso del que proviene; "ver en el texto" abre el lector y resalta el pasaje.</p>
-<div class="tw"><table class="mx" id="tCitas"></table></div>
-</section>
-
-<section id="conceptos">
-<h2><span class="n">08</span>Matriz de conceptos</h2>
-<p class="intro">Conceptos que el texto define, toma prestados o pone a trabajar, con su origen, su función y las tesis en las que intervienen.</p>
-<div class="tw"><table class="mx" id="tConceptos"></table></div>
-</section>
-
-<section id="autores">
-<h2><span class="n">09</span>Autores citados y modo de uso</h2>
-<p class="intro">Interlocutores del texto: qué toma de cada uno, en qué modo y para qué tesis. Los números entre corchetes remiten a la bibliografía de la ponencia.</p>
-<div class="tw"><table class="mx" id="tAutores"></table></div>
-</section>
-
-<section id="evaluacion">
-<h2><span class="n">10</span>Evaluación crítica</h2>
-<p class="intro">Fortalezas, tensiones y preguntas abiertas, con las tesis que cada tensión afecta.</p>
-<div class="tw"><table class="mx" id="tEval"></table></div>
-</section>
-
-<section id="conexiones">
-<h2><span class="n">11</span>Conexiones con los otros textos</h2>
-<p class="intro">Qué se hereda, transforma o discute en Star (1999) y en Harvey, Jensen y Morita (2016).</p>
-<div class="tw"><table class="mx" id="tConex"></table></div>
-</section>
-
-<section id="fuentes">
-<h2><span class="n">12</span>Nota sobre fuentes</h2>
-<div class="box">
-<p><b>Fuente principal.</b> PDF de la ponencia (12 pp.) y su conversión a Markdown, que es la que abre el lector. El texto ocupa las pp. 1-11 y la bibliografía las pp. 11-12. Algunas grafías del Markdown conservan errores de reconocimiento de caracteres ("collaborator", "ckzssijes"); las citas de esta matriz los corrigen.</p>
-<p><b>Datos verificados externamente.</b> Que la versión de <i>Information Systems Research</i> (1996) contiene la lista de ocho dimensiones. Que la hipótesis del doble vínculo como causa de la esquizofrenia fue desconfirmada por la investigación posterior.</p>
-<p><b>Contexto no tomado del texto.</b> Fechas y formación de Star y el concepto de objeto frontera son conocimiento consolidado. La trayectoria posterior de Ruhleder en Illinois no se verificó con fuente primaria.</p>
-<p><b>Traducciones.</b> Propias.</p>
-</div>
-</section>
+</div></header>
+<nav class="secs" aria-label="Secciones"><div class="wrap"><a href="#tesis">Tesis</a><a href="#esquema">Esquema</a><a href="#nucleo">Hallazgos</a><a href="#argumentos">Argumentos</a><a href="#citas">Citas</a><a href="#limites">Límites</a><a href="#sintesis">Síntesis</a></div></nav>
+<main class="wrap">
+<section id="tesis"><h2><span class="n">01</span>Tesis central</h2><p class="tesis">Un sistema bien diseñado y bien valorado puede no usarse, porque la infraestructura no es un sustrato sino <b>una relación con prácticas organizadas</b>. Los problemas de adopción no son de la interfaz ni de «resistencia del usuario»: son <b>discontinuidades entre contextos</b>, que las autoras ordenan en tres niveles siguiendo a Bateson. Cuando diseñadores y usuarios, o distintos grupos de usuarios, hablan en niveles distintos, se produce un <b>doble vínculo</b> que bloquea el trabajo aunque cada parte crea estar diciendo algo simple.</p></section>
+<section id="esquema"><h2><span class="n">02</span>Esquema del texto</h2><p class="intro">Cómo está organizada la ponencia. Cada página abre el lector en ese punto.</p><div class="esq"><div class="paso"><div class="pp"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=1" title="Abrir en el lector">p. 1</a></div><div class="caja"><span class="tit">Abstract</span><span class="fun">anuncia</span><p>Presenta el estudio del Worm Community System: usuarios muy satisfechos y, aun así, dificultades para conectarse y usarlo, desde la falta de recursos hasta dilemas organizativos e intelectuales. Anuncia el uso de los niveles de aprendizaje de Bateson.</p></div></div><div class="trans"><span></span><span>↓ del anuncio a la posición teórica</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=1" title="Abrir en el lector">p. 1</a></div><div class="caja"><span class="tit">Ethnography in Systems Design</span><span class="fun">redefine</span><p>Infraestructura como relación, nunca como cosa (Bateson, Jewett y Kling). Crítica a las metodologías racionalistas de desarrollo de sistemas y a la idea de «resistencia del usuario». Inversión infraestructural de Bowker: «el sustrato se vuelve sustancia».</p></div></div><div class="trans"><span></span><span>↓ de la crítica al caso</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=2" title="Abrir en el lector">p. 2</a></div><div class="caja"><span class="tit">The Worm Community System (WCS)</span><span class="fun">presenta el caso</span><p>Qué era el sistema, para qué comunidad y cómo lo estudiaron. La paradoja: a los usuarios les gustaba y casi nadie se conectó.</p></div></div><div class="trans"><span></span><span>↓ la paradoja desplaza el problema</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=3" title="Abrir en el lector">p. 3</a></div><div class="caja"><span class="tit">Signing On and Hooking Up</span><span class="fun">fija el problema</span><p>El problema no está en el uso sino antes: enterarse del sistema, comprar la máquina, instalar, encontrar la dirección.</p></div></div><div class="trans"><span></span><span>↓ para ordenar los problemas hace falta teoría</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=3" title="Abrir en el lector">p. 3</a></div><div class="caja"><span class="tit">Levels of Communication and Discontinuities in Hierarchies of Information</span><span class="fun">da la teoría</span><p>Bateson y los tipos lógicos: mensaje, mensaje sobre el mensaje, contexto. De ahí, tres niveles de problemas de infraestructura.</p></div></div><div class="trans"><span></span><span>↓ de la teoría a los datos de campo</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=4" title="Abrir en el lector">p. 4</a></div><div class="caja"><span class="tit">First, Second and Third Level Issues</span><span class="fun">ordena la evidencia</span><p>Los hallazgos del trabajo de campo, nivel por nivel:</p><ul><li><i>First Level Issues</i> <a class="pg" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=4">p. 4</a> · recursos e información</li><li><i>Second Level Issues</i> <a class="pg" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=5">p. 5</a> · choques de contexto</li><li><i>Third Level Issues</i> <a class="pg" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=6">p. 6</a> · política en sentido amplio</li></ul></div></div><div class="trans"><span></span><span>↓ los niveles explican la falla cuando chocan</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=8" title="Abrir en el lector">p. 8</a></div><div class="caja"><span class="tit">Double Binds: The Electronic Transcontextual Syndrome</span><span class="fun">explica la falla</span><p>El doble vínculo de Bateson aplicado a la infraestructura: cuatro versiones, de «solo levanta X Windows» a la disputa Mac/UNIX.</p></div></div><div class="trans"><span></span><span>↓ del diagnóstico a la propuesta</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=11" title="Abrir en el lector">p. 11</a></div><div class="caja"><span class="tit">Addressing Double Binds and the Role of Multi-Disciplinary Development Teams</span><span class="fun">propone</span><p>La culpa no está en diseñadores ni usuarios sino en no ver los niveles del mensaje. Equipos multidisciplinarios con el etnógrafo como traductor de niveles.</p></div></div></div></section>
+<section id="nucleo"><h2><span class="n">03</span>Hallazgos</h2><p class="intro">Es un estudio de caso, y lo que importa son sus hallazgos. Aquí van en el orden en que las autoras los presentan: el caso, la paradoja, los hallazgos por nivel y lo que explica la falla.</p><div class="caso"><p><b>El caso en breve.</b> El Worm Community System (WCS) era una «hiperbiblioteca» distribuida para la comunidad que estudia el gusano <i>C. elegans</i>, financiada por la NSF y dirigida por Bruce Schatz y Sam Ward. Integraba gráficos del organismo, mapa genético, el boletín <i>Worm Breeder's Gazette</i>, directorios y la base de datos acedb, enlazados por hipertexto. La comunidad sumaba unos 1400 científicos en más de 100 laboratorios. <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=2">p. 2 ↗</a></p><p><b>Método.</b> Las autoras trabajaron como etnógrafas dentro del equipo de desarrollo: entrevistas semiestructuradas y observación en 25 laboratorios, con más de 100 biólogos, durante tres años.</p></div><h3>El hallazgo que organiza todo: la paradoja</h3><div class="fichas"><div class="ficha"><p>A los usuarios les gustaba el sistema, elogiaban su facilidad de uso y su comprensión del dominio, y aun así la mayoría nunca se conectó; muchos prefirieron Gopher y utilidades más simples. <span class="qi">«Most respondents liked the system […] On the other hand, most have not signed on»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=2&amp;q=Most%20respondents%20liked%20the%20system" title="p. 2">p. 2 ↗</a></p><p class="ej"><b>Consecuencia:</b> el problema de investigación pasa de la interfaz a «firmar y conectarse» (<i>signing on, hooking up</i>).</p></div></div><h3>Hallazgos por nivel</h3><p class="intro">Subir de nivel no es idealizar ni ampliar la escala: es cambiar de contexto. <span class="qi">«The discontinuities are not between system and person, or technology and organization, but rather between contexts.»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=4&amp;q=The%20discontinuities%20are%20not%20between%20system%20and%20person" title="p. 4">p. 4 ↗</a></p><div class="fichas"><div class="ficha"><div class="cab">Nivel uno · recursos e información<span class="pg"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=4">pp. 4-5 ↗</a></span></div><p>Problemas que se resuelven redistribuyendo o aumentando recursos existentes, incluida la información. Los enfoques racionalistas rara vez pasan de aquí.</p><ul><li>Acceso y acuerdos: el sistema vivía en el servidor de otro grupo y solo se podía usar de noche: <span class="qi">«We can only use it evenings, weekends.»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=4&amp;q=We%20can%20only%20use%20it%20evenings%2C%20weekends" title="p. 4">p. 4 ↗</a>.</li><li>Espacio físico: máquinas en salas ruidosas, rincones de salas de descanso u otro piso; un laboratorio sin sitio ni para su equipo científico.</li><li>Competencias: un investigador principal que creía que «una Mac» era «un UNIX»; alguien que tardó tres meses en lograr imprimir. El sistema era fácil; la plataforma, no.</li><li><b>Hallazgo:</b> la competencia técnica es un problema de acceso, igual que el espacio.</li></ul></div><div class="ficha"><div class="cab">Nivel dos · choques de contexto<span class="pg"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=5">pp. 5-6 ↗</a></span></div><p>Efectos imprevistos, a menudo porque chocan dos problemas de nivel uno.</p><ul><li>Culturas de plataforma: <span class="qi">«Biologists are Mac people, and UNIX is an evil word.»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=5&amp;q=Biologists%20are%20Mac%20people%2C%20and%20UNIX%20is%20an%20evil%20word" title="p. 5">p. 5 ↗</a>.</li><li>La paradoja de la infraestructura: un laboratorio pobre, con PC obsoletas, usaba el sistema; el laboratorio rico no podía operarlo por enredos burocráticos: <span class="qi">«There is a one year wait for Ethernet connections.»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=5&amp;q=There%20is%20a%20one%20year%20wait%20for%20Ethernet%20connections" title="p. 5">p. 5 ↗</a>.</li><li>Quién es dueño del problema: los centros de cómputo no se interesaban en aplicaciones de biología: <span class="qi">«find a UNIX guy, buy him some pizza … Biology has no infrastructure»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=6&amp;q=find%20a%20UNIX%20guy%2C%20buy%20him%20some%20pizza" title="p. 6">p. 6 ↗</a>.</li><li>Desigualdad percibida: el sistema era «un cohete» cuando hacía falta <span class="qi">«a Model-T»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=6&amp;q=we%20need%20a%20Model-T" title="p. 6">p. 6 ↗</a>.</li><li>El plazo del boletín: actualizarlo de forma continua chocaba con quienes usaban la fecha de cierre para ordenar su trabajo; <span class="qi">«The deadline, in ethnomethodological terms, was both constraint and resource.»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=6&amp;q=The%20deadline%2C%20in%20ethnomethodological%20terms%2C%20was%20both%20constraint%20and%20resource" title="p. 6">p. 6 ↗</a>.</li></ul></div><div class="ficha"><div class="cab">Nivel tres · política en sentido amplio<span class="pg"><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=6">pp. 6-8 ↗</a></span></div><p>Problemas en disputa permanente, que dependen de normas sociales: qué privilegia el sistema, competencia o cooperación, potencia o facilidad.</p><ul><li>Qué es el objeto: los «gusaneros» que estudian el organismo frente a quienes lo usan como modelo, con necesidades distintas.</li><li>Significados múltiples: un directorio de «quién trabaja en qué» es una amenaza para un posdoctorando que teme que otro se adelante; <span class="qi">«So even a simple directory can be a signal, a revelation, or a flag»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=7&amp;q=even%20a%20simple%20directory%20can%20be%20a%20signal%2C%20a%20revelation%2C%20or%20a%20flag" title="p. 7">p. 7 ↗</a>. Anotar en el sistema es comprometerse ante los colegas.</li><li>Externalidades de red: cuanto más central el sistema, más pierde quien no se conecta; sobre el mapa genético: <span class="qi">«There used to be a dialogue, now there&#x27;s a monologue.»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=8&amp;q=There%20used%20to%20be%20a%20dialogue%2C%20now%20there%27s%20a%20monologue" title="p. 8">p. 8 ↗</a>.</li><li>Recompensas: construir herramientas no da crédito: <span class="qi">«there are a hundred things that are useful, but you don&#x27;t get a Ph.D. for it»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=8&amp;q=there%20are%20a%20hundred%20things%20that%20are%20useful" title="p. 8">p. 8 ↗</a>.</li></ul></div></div><h3>Lo que explica la falla: cuatro dobles vínculos <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=9">pp. 8-11 ↗</a></h3><p class="intro">Un doble vínculo ocurre cuando se exige una respuesta en un nivel y se la niega en otro, como el padre que dice «ve por tu abrigo» mientras bloquea el armario.</p><div class="fichas"><div class="ficha"><div class="cab">Entre diseñadores y usuarios</div><p>«Solo levanta X Windows y baja el archivo por ftp» es, para quien lo dice, un mensaje de nivel uno; para el biólogo es una puerta cerrada que se descompone en preguntas de nivel dos. <span class="qi">«If you don&#x27;t know already, it&#x27;s hard to know how to find out»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=9&amp;q=If%20you%20don%27t%20know%20already%2C%20it%27s%20hard%20to%20know%20how%20to%20find%20out" title="p. 9">p. 9 ↗</a></p></div><div class="ficha"><div class="cab">Dentro de la comunidad</div><p>Las discusiones técnicas (ftp, Gopher, plataformas) se abren a cuestiones de nivel tres: acceso entre laboratorios, mantenimiento, confiabilidad de los datos, el gusano como fin o como modelo.</p></div><div class="ficha"><div class="cab">Entre rutinas e infraestructura en crecimiento</div><p>Adoptar el sistema potente supone una gran incomodidad en otro nivel: hábitos, compras, soporte. <span class="qi">«To take on board the custom-designed, massively convenient and powerful WCS is to suffer a massive inconvenience at another level»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=10&amp;q=is%20to%20suffer%20a%20massive%20inconvenience%20at%20another%20level" title="p. 10">p. 10 ↗</a></p></div><div class="ficha"><div class="cab">Entre lenguajes de diseño y de uso</div><p>El diseño habla de capacidad técnica; el uso, de eficacia. La disputa Mac/UNIX es, en un nivel, sobre sistemas operativos y, en otro, sobre la relación entre herramienta, trabajo y usuario.</p></div></div><h3>Hallazgo de método</h3><div class="fichas"><div class="ficha"><p>Todos estaban «a punto de» conectarse. Una de las autoras pasó casi una semana en una ciudad buscando usuarios: cada persona remitía a otra y nadie usaba el sistema. <span class="qi">«No one she talked with was using it, but each person knew of someone else in another lab who supposedly was.»</span> <a class="lk" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=10&amp;q=No%20one%20she%20talked%20with%20was%20using%20it" title="p. 10">p. 10 ↗</a> No era mentira sino descuento de problemas de «enchufe» que, por crónicos y ubicuos, resultaban letales. Una encuesta de uso no capta esto.</p></div></div></section>
+<section id="argumentos"><h2><span class="n">04</span>Argumentos clave</h2><p class="intro">Cada argumento con su desarrollo, el caso que lo sostiene y una cita.</p><div class="arg"><h3><span class="n">01</span><span>La infraestructura es una relación, no un sustrato</span></h3><ol><li>Parten del epígrafe de Bateson: lo que se estudia es siempre una relación, nunca una «cosa».</li><li>Rechazan la metáfora de las vías sobre las que corren los vagones.</li><li>Con Jewett y Kling, la infraestructura solo existe respecto de prácticas organizadas.</li><li>La inversión infraestructural de Bowker cambia figura y fondo: lo que era soporte pasa a ser objeto.</li></ol><p class="ev"><b>Caso y evidencia</b>La inversión de Bowker aplicada a ferrocarriles, horarios y burocracias: el cambio no se explica por cosas o personas aisladas sino por sus relaciones (p. 1).</p><blockquote class="q"><div class="en">&quot;Substrate becomes substance.&quot;</div><div class="es">&quot;El sustrato se vuelve sustancia.&quot;</div><div class="meta">p. 1 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=1&amp;q=Substrate%20becomes%20substance">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">02</span><span>El fracaso no es del usuario ni del sistema</span></h3><ol><li>Las metodologías racionalistas (cascada, ciclo de vida) suponen tareas estructuradas, requisitos fijables y usuarios que solo informan y reciben.</li><li>En ese esquema el fracaso solo puede atribuirse a malos promotores o a usuarios que «resisten».</li><li>Las autoras llaman «mitologías» a esos métodos y se alinean con el diseño participativo y la crítica empírica de los setenta.</li><li>Proponen mirar las relaciones; una nota compara la «resistencia del usuario» con la «adherencia del paciente», que oculta la política de la propia institución médica.</li></ol><p class="ev"><b>Caso y evidencia</b>La paradoja del WCS: un sistema bien diseñado, con diseño participativo, que casi nadie usaba (pp. 1-3).</p><blockquote class="q"><div class="en">&quot;witness the many pages MIS textbooks devote to techniques for overcoming &#x27;user resistance.&#x27;&quot;</div><div class="es">&quot;basta ver las muchas páginas que los manuales de sistemas de información dedican a técnicas para vencer la &#x27;resistencia del usuario&#x27;.&quot;</div><div class="meta">p. 1 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=1&amp;q=MIS%20textbooks%20devote%20to%20techniques%20for%20overcoming">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">03</span><span>El problema está antes del uso: conectarse</span></h3><ol><li>Los usuarios elogiaban el sistema y no se conectaban.</li><li>Por eso el foco pasa de la interfaz a «firmar y conectarse».</li><li>Conectarse exige enterarse, comprar una máquina, instalar X Windows, manejar telnet y ftp, encontrar la dirección en el número correcto del boletín.</li><li>Cada paso depende de recursos, saberes y acuerdos locales desiguales.</li></ol><p class="ev"><b>Caso y evidencia</b>El laboratorio que solo podía usarlo de noche; el investigador que tardó tres meses en imprimir (pp. 3-5).</p><blockquote class="q"><div class="en">&quot;This is not an idealization process … nor even essentially one of scope … but rather questions of context.&quot;</div><div class="es">&quot;No es un proceso de idealización… ni siquiera, en esencia, de escala… sino cuestiones de contexto.&quot;</div><div class="meta">p. 3-4 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=3&amp;q=This%20is%20not%20an%20idealization%20process">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">04</span><span>Las discontinuidades están entre contextos</span></h3><ol><li>Con Bateson y la teoría de los tipos lógicos, el contexto clasifica el mensaje pero nunca lo encuentra en igualdad de condiciones.</li><li>De ahí tres niveles de problemas: recursos, contexto, política.</li><li>Subir de nivel no es idealizar ni ampliar la escala: es cambiar de contexto.</li><li>La infraestructura es el contexto mismo de la comunicación y el aprendizaje, no algo «externo» a ellos.</li></ol><p class="ev"><b>Caso y evidencia</b>La distinción entre niveles ordena todo el material de campo (pp. 4-8).</p><blockquote class="q"><div class="en">&quot;Information infrastructure is not a substrate which carries information on it, or in it, in a kind of mind-body dichotomy.&quot;</div><div class="es">&quot;La infraestructura de información no es un sustrato que lleve información encima o adentro, en una especie de dicotomía mente-cuerpo.&quot;</div><div class="meta">p. 4 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=4&amp;q=Information%20infrastructure%20is%20not%20a%20substrate%20which%20carries%20information">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">05</span><span>La falla es un doble vínculo</span></h3><ol><li>Un doble vínculo exige una respuesta en un nivel y la niega en otro.</li><li>Una instrucción simple para el diseñador («baja el archivo por ftp») se vuelve una cadena de preguntas para el biólogo.</li><li>No hay manual que enseñe desde cero: la salida es cambiar de contexto, trabajar junto a los diseñadores.</li><li>El síndrome aparece en cuatro versiones: diseño y uso, dentro de la comunidad, rutinas y crecimiento, lenguajes de diseño y de uso.</li></ol><p class="ev"><b>Caso y evidencia</b>«Just throw up X Windows and ftp the file down» (p. 9); todos «a punto de» conectarse (p. 10).</p><blockquote class="q"><div class="en">&quot;these issues turn out to be lethal as they become both chronic and ubiquitous&quot;</div><div class="es">&quot;estos problemas resultan letales cuando se vuelven crónicos y ubicuos&quot;</div><div class="meta">p. 10 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=10&amp;q=these%20issues%20turn%20out%20to%20be%20lethal">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">06</span><span>La responsabilidad está en no ver los niveles</span></h3><ol><li>Los dobles vínculos son difíciles de reconocer desde dentro.</li><li>Los diseñadores yerran al creer que todo requisito es codificable; los usuarios, al esperar «balas mágicas».</li><li>La culpa no está en ningún bando sino en la incomprensión de los niveles del mensaje.</li><li>Proponen equipos multidisciplinarios donde el etnógrafo ayude a ubicar cada mensaje en su nivel.</li></ol><p class="ev"><b>Caso y evidencia</b>«Puedes bajarlo por ftp» se convertiría en «te doy la dirección, pero esos datos no tendrán el detalle que necesitas» (p. 11).</p><blockquote class="q"><div class="en">&quot;The &#x27;fault&#x27; really lies in neither camp, but in the general misunderstanding of the nature of miscommunication&quot;</div><div class="es">&quot;La &#x27;culpa&#x27; no está realmente en ningún bando, sino en la incomprensión general de la naturaleza del malentendido&quot;</div><div class="meta">p. 11 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=11&amp;q=really%20lies%20in%20neither%20camp">leer en el texto ↗</a></div></blockquote></div></section>
+<section id="citas"><h2><span class="n">05</span>Citas clave</h2><p class="intro">En inglés, con traducción.</p><blockquote class="q"><div class="en">&quot;What can be studied is always a relationship or an infinite regress of relationships. Never a &#x27;thing.&#x27;&quot; (Bateson)</div><div class="es">&quot;Lo que puede estudiarse es siempre una relación o una regresión infinita de relaciones. Nunca una &#x27;cosa&#x27;.&quot;</div><div class="co">El epígrafe de Bateson que abre el texto.</div><div class="meta">p. 1 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=1&amp;q=What%20can%20be%20studied%20is%20always%20a%20relationship">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;we hold that infrastructure is fundamentally and always a relation, never a thing.&quot;</div><div class="es">&quot;sostenemos que la infraestructura es fundamentalmente y siempre una relación, nunca una cosa.&quot;</div><div class="co">La definición en una línea.</div><div class="meta">p. 1 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=1&amp;q=we%20hold%20that%20infrastructure%20is%20fundamentally%20and%20always%20a%20relation%2C%20never%20a%20thing">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;Such a metaphor is neither useful nor accurate.&quot;</div><div class="es">&quot;Tal metáfora no es útil ni exacta.&quot;</div><div class="co">Contra la metáfora del sustrato.</div><div class="meta">p. 1 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=1&amp;q=Such%20a%20metaphor%20is%20neither%20useful%20nor%20accurate">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;no artifact, computer-based or otherwise, is a discrete entity, a standalone thing.&quot;</div><div class="es">&quot;ningún artefacto, computacional o no, es una entidad discreta, una cosa independiente.&quot;</div><div class="co">Ningún artefacto es una cosa aislada.</div><div class="meta">p. 2 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=2&amp;q=no%20artifact%2C%20computer-based%20or%20otherwise%2C%20is%20a%20discrete%20entity">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;Level Three issues are inherently political (broadly speaking)&quot;</div><div class="es">&quot;Los problemas de nivel tres son inherentemente políticos (en sentido amplio)&quot;</div><div class="co">El tercer nivel.</div><div class="meta">p. 4 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=4&amp;q=issues%20are%20inherently%20political">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;UNIX will never cut it as a general operating system. Biologists won&#x27;t use it, it&#x27;s for engineers.&quot;</div><div class="es">&quot;UNIX nunca va a servir como sistema operativo general. Los biólogos no lo van a usar, es para ingenieros.&quot;</div><div class="co">Folclore de plataforma, nivel dos.</div><div class="meta">p. 5 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=5&amp;q=UNIX%20will%20never%20cut%20it%20as%20a%20general%20operating%20system">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;half a system for everyone is better than a really great system for just a few labs&quot;</div><div class="es">&quot;medio sistema para todos es mejor que un sistema excelente para unos pocos laboratorios&quot;</div><div class="co">La desigualdad como argumento de diseño.</div><div class="meta">p. 6 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=6&amp;q=half%20a%20system%20for%20everyone%20is%20better%20than%20a%20really%20great%20system">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;If there is infinity there is never a time to review things.&quot;</div><div class="es">&quot;Si hay infinito, nunca hay un momento para revisar las cosas.&quot;</div><div class="co">El plazo como estructura del trabajo.</div><div class="meta">p. 6 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=6&amp;q=If%20there%20is%20infinity%20there%20is%20never%20a%20time%20to%20review%20things">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;The people who really need to know already know.&quot;</div><div class="es">&quot;Los que de verdad necesitan saber ya saben.&quot;</div><div class="co">Externalidades de red: quien ya sabe no necesita el sistema.</div><div class="meta">p. 8 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=8&amp;q=The%20people%20who%20really%20need%20to%20know%20already%20know">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;Just throw up X Windows and ftp the file down.&quot;</div><div class="es">&quot;Solo levanta X Windows y baja el archivo por ftp.&quot;</div><div class="co">El mensaje de nivel uno que bloquea.</div><div class="meta">p. 9 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=9&amp;q=Just%20throw%20up%20X%20Windows%20and%20ftp%20the%20file%20down">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;users are often equally at fault for expecting &#x27;magic bullets&#x27;&quot;</div><div class="es">&quot;los usuarios suelen tener igual responsabilidad al esperar &#x27;balas mágicas&#x27;&quot;</div><div class="co">Usuarios que esperan soluciones técnicas a problemas sociales.</div><div class="meta">p. 11 · <a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md&amp;p=11&amp;q=users%20are%20often%20equally%20at%20fault%20for%20expecting">leer en el texto ↗</a></div></blockquote></section>
+<section id="limites"><h2><span class="n">06</span>Límites y tensiones</h2><p>La jerarquía de niveles separa lo que se resuelve con recursos de lo político, y con ello amenaza con reponer la división técnico/social que el texto combate: los cables que nadie tendía en el laboratorio rico parecen un problema de nivel uno y dependían de quién era dueño del problema. El doble vínculo viene de una teoría de la esquizofrenia que la investigación posterior abandonó, aunque aquí funciona como modelo formal de comunicación. Y la propuesta final pone al etnógrafo de mediador sin preguntarse qué dobles vínculos produce él mismo y sin tocar la estructura de recursos que explicaba buena parte de los casos.</p>
+<p>Dato genealógico: esta versión no tiene la lista de propiedades de la infraestructura. La lista aparece en la versión de 1996 (ocho dimensiones) y Star la retoma en 1999 con nueve.</p></section>
+<section id="sintesis"><h2><span class="n">07</span>Síntesis</h2><div class="sint"><p class="ref0">Star, Susan Leigh y Karen Ruhleder (1994). "Steps Towards an Ecology of Infrastructure: Complex Problems in Design and Access for Large-Scale Collaborative Systems". Ponencia en CSCW 94, Chapel Hill, octubre de 1994\. Las páginas citadas remiten al PDF (12 pp.).</p><h4>1. TESIS CENTRAL</h4>
+<p>La infraestructura no es un sustrato sobre el que corre la actividad, sino una relación que <strong>solo existe respecto de prácticas organizadas.</strong> Los fracasos de adopción de un sistema técnico no se explican por &quot;resistencia del usuario&quot; ni por &quot;éxito o fracaso del sistema&quot;, sino por discontinuidades entre niveles de contexto que Gregory Bateson permite describir. Cuando diseñadores y usuarios, o distintos grupos de usuarios, abordan un mismo problema en niveles lógicos inconmensurables, se produce un doble vínculo que vuelve el trabajo imposible aunque cada parte crea estar diciendo algo simple (p. 1-2, 8-9).</p>
+<h4>2. EL PROBLEMA Y SU CASO</h4>
+<p>El objeto es el Worm Community System (WCS), un sistema hecho a medida para la comunidad de biólogos que estudian C. elegans, financiado por la NSF y dirigido por Bruce Schatz y Sam Ward. Las autoras trabajaron como etnógrafas dentro del equipo de desarrollo durante tres años, con entrevistas y observación en 25 laboratorios y más de 100 biólogos (p. 2).</p>
+<p>El WCS era una &quot;hiperbiblioteca&quot; distribuida que integraba gráficos del organismo, mapa genético, anotaciones, el boletín trimestral Worm Breeder&#39;s Gazette, directorios, un tesauro y la base de datos <strong>acedb</strong>, enlazados por hipertexto. Corría en estaciones Sun, en remoto desde Mac vía NSFnet o, con menos funciones, desde PC. La comunidad sumaba unos 1400 científicos en más de 100 laboratorios, muy unida, y acababa de ver a <em>C. elegans</em> elegido organismo modelo de la Iniciativa Genoma Humano. Los biólogos de mayor rango esperaban que el sistema preservara la intimidad de la comunidad ante ese crecimiento (p. 2).</p>
+<p><strong>La paradoja que organiza el texto:</strong> los usuarios elogiaban el sistema, su facilidad de uso y su comprensión del dominio, y aun así la mayoría nunca se conectó; muchos prefirieron Gopher y otras utilidades más simples (p. 2-3). El problema de investigación se desplaza entonces del diseño de la interfaz al acto de &quot;firmar y conectarse&quot; (signing on, hooking up): enterarse del sistema, comprarle una máquina, instalar X Windows, manejar telnet y ftp, encontrar la dirección remota en el número correcto de la Gazette (p. 3).</p>
+<p>Dos datos del caso sostienen el argumento posterior. El trabajo de estos biólogos es un &quot;rompecabezas en cuatro dimensiones&quot; que exige triangular datos heterogéneos entre campos, y el propio gusano circula entre laboratorios congelado por correo, lo que vuelve el rastreo de cepas parte del trabajo de información (p. 2). La infraestructura de información no está separada de la práctica científica; es una de sus dimensiones.</p>
+<h4>3. PRIMER MOVIMIENTO: LA INFRAESTRUCTURA COMO RELACIÓN</h4>
+<p>Desde el epígrafe de Bateson (&quot;lo que puede estudiarse es siempre una relación... nunca una cosa&quot;), las autoras rechazan la metáfora del sustrato, la de las vías sobre las que corren los vagones. Siguiendo a Jewett y Kling, la infraestructura es &quot;siempre una relación, nunca una cosa&quot;. El acceso metodológico es la inversión infraestructural de Bowker: un cambio de figura y fondo que resta protagonismo a cosas y personas como causas del cambio y enfoca las relaciones entre ferrocarriles, horarios y burocracias. La fórmula del texto lo resume: <strong>el sustrato se vuelve sustancia</strong> (p. 1).</p>
+<p>Este movimiento tiene un blanco preciso: las metodologías racionalistas de desarrollo de sistemas (el modelo en cascada o de ciclo de vida), que suponen tareas bien estructuradas, requisitos fijables a priori y usuarios que primero informan y luego reciben. En ese esquema el fracaso solo puede atribuirse a malos promotores o a usuarios que no cumplen. Las autoras llaman &quot;mitologías&quot; a estos métodos y se alinean con la crítica empírica iniciada a fines de los setenta, el diseño participativo y la hermenéutica organizacional (p. 1-2). Una nota sugiere la analogía con la &quot;adherencia del paciente&quot; en medicina, que oculta los rasgos infraestructurales y políticos de la propia institución médica (p. 1).</p>
+<h4>4. SEGUNDO MOVIMIENTO: LOS TRES NIVELES DE PROBLEMAS</h4>
+<p>El aparato analítico central viene de <strong>Bateson</strong>, que sigue la teoría de los tipos lógicos de Russell y Whitehead. Entre un mensaje (&quot;el gato está sobre la alfombra&quot;), un mensaje sobre ese mensaje (&quot;mentía cuando dije...&quot;) y el contexto que da modo a ambos (humor, metáfora) hay saltos discontinuos: el contexto clasifica el mensaje pero nunca lo encuentra en igualdad de condiciones. Bateson extiende la jerarquía al aprendizaje: aprender, aprender a aprender, aprender a cambiar el sistema de alternativas (p. 3, 9).</p>
+<p>Las autoras traducen esto en tres niveles de problemas de infraestructura (p. 4):</p>
+<p><strong>Nivel uno:</strong> problemas resolubles redistribuyendo o aumentando recursos existentes, incluida la información. Ejemplos: cuál es la dirección del sistema, cómo se conecta una SPARC a la red del campus. Los enfoques racionalistas rara vez pasan de aquí.</p>
+<p><strong>Nivel dos:</strong> efectos contextuales imprevistos, a menudo por la colisión de dos problemas de nivel uno. Ejemplo: qué implica elegir Sun en un departamento que usa Mac, o qué se deja de aprender si se invierte en este sistema.</p>
+<p><strong>Nivel tres:</strong> problemas políticos en sentido amplio, en disputa permanente y dependientes de normas sociales: qué aspectos de la genética privilegian los gráficos, si en privacidad pesa más la competencia o la cooperación, si importa más la potencia o la facilidad de uso.</p>
+<p>Dos precisiones evitan una lectura simplista. Subir de nivel no es idealizar (lo superior no es más &quot;mental&quot;) ni ampliar la escala (hay problemas masivos que siguen siendo de nivel uno); es cambiar de contexto. Y, con Bateson, la separación entre contextos &quot;externos&quot; y aprendizajes &quot;internos&quot; es un artificio: <strong>la infraestructura es el contexto mismo de la comunicación y el aprendizaje</strong>, y las discontinuidades relevantes no están entre persona y sistema, ni entre tecnología y organización, sino entre contextos (p. 4). Aquí el texto se suma explícitamente al rechazo de la &quot;gran división&quot; entre técnica y sociedad.</p>
+<h4>5. LOS CASOS, ORDENADOS POR NIVEL</h4>
+<p>Nivel uno (p. 4-5). Información y acuerdos: en un laboratorio importante, el sistema vivía en un servidor de &quot;la gente de plantas&quot; del piso de arriba, utilizable solo de noche y fines de semana (&quot;la gente simplemente no lo usa&quot;). Acceso físico: salas ruidosas, rincones de salas de descanso, otro piso; un laboratorio urbano en un edificio alto sin espacio ni para su equipo científico. Competencias: un investigador senior que ignoraba las bases de datos sin campos fijos, un investigador principal que equiparaba &quot;una Mac&quot; con &quot;un UNIX&quot;, alguien que tardó tres meses en lograr imprimir. El sistema era fácil (&quot;lo prendí y apreté botones&quot;); la plataforma, no. La formación dependía de la suerte y la amistad. La conclusión analítica: la competencia es un problema de acceso, igual que el espacio.</p>
+<p>Nivel dos (p. 5-6). El choque de culturas Mac/UNIX (&quot;los biólogos son gente de Mac, UNIX es una mala palabra&quot;), con su folclore de &quot;dos tipos de científicos&quot; y &quot;afinidad natural&quot;. La paradoja de la infraestructura, el caso más elocuente del texto: un laboratorio pobre, con IBM PC-XT obsoletos, usaba el sistema y tenía el mejor registro de intercambio de cepas de la comunidad gracias a un investigador principal aficionado a la radio de galena; el laboratorio más rico, con una beca del Genoma Humano para cablear el campus, no podía operar el sistema por enredos burocráticos, enfrentaba un año de espera para Ethernet y terminó tendiendo sus propios cables. Los centros de cómputo, poco interesados en aplicaciones de dominio (&quot;busca a alguien que sepa UNIX y cómprale una pizza&quot;; &quot;biología no tiene infraestructura&quot;), revelan que quién es dueño de un problema se decide localmente. La percepción de desigualdad: el sistema es &quot;del estrato superior&quot;, &quot;un cohete cuando necesitamos un Ford T&quot;. Por último, la Gazette: la propuesta de actualización continua chocó con quienes defendían los plazos como forma de estructurar el trabajo; el plazo era, en términos etnometodológicos, restricción y recurso a la vez.</p>
+<p>Nivel tres (p. 6-8). La definición de los objetos: investigadores que vienen de ranas, mamíferos o proteínas; &quot;gusaneros&quot; organísmicos frente a quienes usan el gusano como modelo; necesidades distintas (una &quot;lista de partes&quot; neuronal, subconjuntos de secuencias). Los significados múltiples: un directorio de &quot;quién trabaja en qué&quot; es una señal riesgosa para posdoctorandos que temen que otro se adelante; en el boletín &quot;puedes equivocarte sin estigma&quot;, en el sistema no; anotar es comprometerse ante los colegas; la propuesta de anotaciones privadas enfurece a quien defiende el sistema como bien común. Las externalidades de red: cuanto más central el sistema, más pierde quien no se conecta, según la &quot;política del refuerzo&quot;; el mapa físico pasó &quot;del diálogo al monólogo&quot; (&quot;ya no le avisan a Cambridge&quot;), dos tablones electrónicos murieron en dos semanas, y &quot;los que necesitan saber ya saben&quot;. La estructura de recompensas: construir herramientas no da crédito (&quot;no te dan un doctorado por eso&quot;).</p>
+<h4>6. TERCER MOVIMIENTO: LOS DOBLES VÍNCULOS</h4>
+<p>El doble vínculo batesoniano ocurre cuando un mensaje se emite en dos niveles a la vez, o cuando se exige una respuesta en un nivel y se la niega en otro. El ejemplo canónico es el del padre que dice &quot;ve a buscar tu abrigo&quot; mientras bloquea la puerta del guardarropa y niega la contradicción. Bateson lo llamó síndrome transcontextual (p. 8-9). Las autoras identifican cuatro versiones infraestructurales (p. 9-10):</p>
+<p>1) Entre diseñadores y usuarios. &quot;Solo levanta X Windows y baja el archivo por ftp&quot; es, para quien lo dice, un mensaje de nivel uno; para el biólogo es la puerta bloqueada. Una instrucción simple se descompone en preguntas de nivel dos, y no hay manual que enseñe desde cero: la única salida es cambiar de contexto y trabajar junto a los diseñadores, lo que explica la fuerza del diseño participativo y su difícil exportación fuera de Escandinavia.</p>
+<p>2) Dentro de la comunidad. Las discusiones técnicas de nivel dos (ftp, Gopher, plataformas) se abren a cuestiones de nivel tres (acceso entre laboratorios, mantenimiento, confiabilidad de datos, composición de la comunidad, gusano como fin o como modelo).</p>
+<p>3) Entre rutinas e infraestructura en crecimiento. Adoptar el sistema potente supone una gran incomodidad en otro nivel: hábitos, recursos, compras, soporte. Gopher corría en terminales del campus con soporte institucional; el WCS exigía estaciones propias y personal del laboratorio. Además, la ciencia es integradora y los cuadernos de laboratorio son abiertos, mientras el WCS integraba de manera personalizada. El indicador etnográfico más fino del texto pertenece aquí: todos estaban &quot;a punto de&quot; conectarse. Una de las autoras pasó casi una semana en una gran ciudad buscando usuarios reales; cada persona remitía a otra y nadie usaba el sistema. No era mentira, sino descuento de problemas de &quot;enchufe&quot; que, crónicos y ubicuos, resultaban letales. Las encuestas de uso no captan esto.</p>
+<p>4) Entre lenguajes de diseño y de uso. El diseño habla de capacidad técnica; el uso, de eficacia. Con Robinson, Gasser y Star y Gerson, las autoras muestran que solo funcionan los sistemas que sirven a la vez al nivel formal y al informal. La disputa Mac/UNIX es, en un nivel, sobre sistemas operativos; en otro, entre dos visiones de la relación entre herramienta, trabajo y usuario.</p>
+<h4>7. PROPUESTA</h4>
+<p>Los dobles vínculos son difíciles de reconocer desde dentro y difíciles de formular para que la otra parte los acepte. Las autoras reparten la responsabilidad: los diseñadores yerran al creer que todo requisito es codificable; los usuarios, al esperar &quot;balas mágicas&quot; para problemas sociales. La culpa no está en ningún bando, sino en la incomprensión de los niveles del mensaje. La salida que proponen son equipos multidisciplinarios en los que el etnógrafo ayuda a identificar a qué nivel pertenece cada mensaje: &quot;puedes bajarlo por ftp&quot; se convertiría en &quot;te doy la dirección, pero esos datos no tendrán el detalle que necesitas&quot; (p. 11).</p>
+<h4>8. CONCEPTOS CLAVE</h4>
+<p><strong>Infraestructura como relación:</strong> algo es infraestructura respecto de una práctica, no en sí mismo.<br><strong>Inversión infraestructural (Bowker):</strong> llevar al primer plano lo que funciona como fondo.<br><strong>Firmar y conectarse:</strong> el conjunto de tareas, saberes y recursos previos al uso, donde se juega la adopción.<br><strong>Niveles uno, dos y tres:</strong> recursos, contexto y política, distinguidos por salto de contexto y no por materialidad ni escala.<br><strong>Doble vínculo o síndrome transcontextual:</strong> emisión o exigencia contradictoria en niveles lógicos distintos.<br><strong>Externalidad de red:</strong> el valor de estar conectado crece con los conectados, y con él el costo de no estarlo.<br><strong>Restricción como recurso:</strong> lo que el diseño quiere eliminar puede estructurar la práctica.</p>
+<h4>9. EVALUACIÓN CRÍTICA</h4>
+<p>El texto vale sobre todo por haber transformado una pregunta técnica (por qué no se usa un sistema) en una pregunta sobre relaciones, contextos y desigualdad, con material de campo de una densidad inusual en un foro de ingeniería. Tres reservas.</p>
+<p>Primera: la jerarquía batesoniana separa lo resoluble con recursos de lo político y con ello amenaza con reintroducir la división técnico/social que el texto combate. Los propios casos la desmienten: los cables que nadie tendía en el laboratorio rico eran, en apariencia, un problema de nivel uno, pero dependían de la distribución local de la propiedad de los problemas.</p>
+<p>Segunda: la analogía con la génesis de la esquizofrenia descansa en una teoría etiológica que la investigación posterior desconfirmó. Las autoras usan el doble vínculo como modelo formal de comunicación y no como teoría clínica, pero el préstamo carga hoy un peso que el texto no podía anticipar.</p>
+<p>Tercera: la propuesta final sitúa al etnógrafo como mediador sin preguntarse qué doble vínculo podría producir él mismo, y deja intacta la estructura de recursos que explicaba buena parte de los casos.</p>
+<p>Dato genealógico: esta versión no contiene la célebre lista de propiedades de la infraestructura. La lista aparece en la versión publicada en Information Systems Research (1996), con ocho dimensiones, y Star la retoma en 1999 añadiendo una novena. El paso de los niveles de Bateson a la lista ganó claridad y circulación; queda la pregunta de si perdió la capacidad, propia de esta primera versión, de pensar la infraestructura como un problema de comunicación entre niveles.</p>
+</div></section>
 
 </main>
-</div>
-
-<div id="focoBar" role="status">
-  <span class="ft" id="focoT"></span>
-  <span class="fc" id="focoC"></span>
-  <button class="btn" id="focoDossier">ver hilo</button>
-  <label><input type="checkbox" id="focoSolo"> solo este hilo</label>
-  <button class="btn" id="focoX" title="Salir del modo hilo">✕ salir</button>
-</div>
-
-<footer>Matriz analítica · Star y Ruhleder (1994) · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026</footer>
-
+<div class="wrap"><footer>Matriz · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026 · Traducciones propias. Los enlaces «↗» abren el pasaje en el lector.</footer></div>
 <script>
-/* ===================== DATOS ===================== */
-const LECTURA = 'star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md';
-
-const S = [
- {id:'S1', t:'Abstract', p:'1', fn:'Anuncio', arg:`Presenta las fases iniciales de un gran desarrollo de software para genetistas dispersos. Pese a la satisfacción de los usuarios, hay dificultades para conectarse, desde la falta de recursos hasta compromisos organizacionales e intelectuales. Anuncia que los caracterizará como niveles de complejidad infraestructural con los niveles de aprendizaje de Bateson.`, sus:`Síntesis anticipada.`, tr:`Abre la definición.`},
- {id:'S2', t:'Ethnography in Systems Design', p:'1-2', fn:'Redefinición y posicionamiento', arg:`Epígrafe de Bateson. Rechazo de la metáfora del sustrato. La infraestructura como relación (Jewett y Kling). Inversión infraestructural de Bowker. Crítica de las metodologías racionalistas y de la "resistencia del usuario". Relevo: estudios empíricos desde fines de los setenta, diseño participativo, hermenéutica. Anuncio de Bateson y del doble vínculo.`, sus:`Autoridades teóricas; crítica de manuales; nota 1 sobre la adherencia del paciente.`, tr:`Pasa al caso para mostrar la relación en acto.`},
- {id:'S3', t:'The Worm Community System', p:'2-3', fn:'Caso y paradoja', arg:`Qué es el sistema, la comunidad (unos 1400 científicos), la elección de <i>C. elegans</i> como organismo modelo, el trabajo como rompecabezas en cuatro dimensiones, el gusano que viaja congelado, el cómputo desigual, el método. La paradoja: satisfacción alta, conexión baja.`, sus:`Descripción etnográfica y datos del proyecto.`, tr:`Relocaliza la paradoja en el acto de conectarse.`},
- {id:'S4', t:'Signing On and Hooking Up', p:'3', fn:'Unidad de análisis', arg:`La tipología de Ellis et al. no sirve para la implementación (Schmidt y Bannon). Inventario de tareas: plataformas, interfaz de ventanas, telnet y ftp, dirección publicada en la Gazette. Conflictos institucionales. Implicaciones para la National Information Infrastructure.`, sus:`Descripción técnica y ejemplos típicos.`, tr:`Necesita un criterio para ordenar los problemas: Bateson.`},
- {id:'S5', t:'Levels of Communication and Discontinuities in Hierarchies of Information', p:'3-4', fn:'Aparato teórico', arg:`Tipos lógicos; el gato sobre la alfombra; el abismo entre contexto y mensaje; niveles de aprendizaje (nota 3). Tres niveles de problemas y su criterio. La infraestructura como contexto. Discontinuidades entre contextos. Analogía con la esquizofrenogénesis.`, sus:`Citas de Bateson (pp. 249, 251); alineamiento con la sociología de la ciencia.`, tr:`Aplica los niveles al material, del más simple al más complejo.`},
- {id:'S6', t:'First Level Issues', p:'4-5', fn:'Evidencia, nivel uno', arg:`<i>Informational Issues</i>: compras, acuerdos, el servidor de "la gente de plantas". <i>Physical Access</i>: salas ruidosas, otro edificio, laboratorio sin espacio. <i>Baseline Skills</i>: competencias desiguales, UNIX como barrera, formación azarosa.`, sus:`Testimonios con seudónimo y observación.`, tr:`El choque entre problemas simples produce efectos de contexto.`},
- {id:'S7', t:'Second Level Issues', p:'5-6', fn:'Evidencia, nivel dos', arg:`<i>Clash of Cultures</i>: Mac contra UNIX. <i>Paradoxes of Infrastructure</i>: el laboratorio pobre que usa el sistema y el rico que no puede; centros de cómputo y propiedad local de los problemas; el WCS como herramienta de laboratorios ricos. <i>Constraints as Resources</i>: la Gazette continua.`, sus:`Contraste de casos; testimonios en tensión.`, tr:`Las decisiones de nivel dos abren disputas de fondo.`},
- {id:'S8', t:'Third Level Issues', p:'6-8', fn:'Evidencia, nivel tres', arg:`<i>Definition of Objects</i>: orígenes disciplinares y necesidades distintas. <i>Multiple Meanings</i>: directorio, anotaciones, confianza. <i>Network Externalities</i>: política del refuerzo, mapa físico y mapa genético. <i>Tool Building and Reward Structure</i>: falta de crédito.`, sus:`Testimonios extensos; conceptos de economía y sociología de la ciencia.`, tr:`Con los tres niveles probados, explica cómo fallan juntos.`},
- {id:'S9', t:'Double Binds: The Electronic Transcontextual Syndrome', p:'8-11', fn:'Teoría de la falla', arg:`Epígrafe de Bateson. La paradoja lógica en el tiempo de la conducta. Niveles de aprendizaje 0-III como teoría organizacional. El doble vínculo (abrigo y guardarropa). Cuatro brechas: diseñadores y usuarios; dentro de la comunidad; rutinas e infraestructura en crecimiento; lenguajes de diseño y de uso.`, sus:`Analogía teórica, casos ya presentados y una observación nueva (la semana en la ciudad).`, tr:`Si el problema es de niveles, la solución es reconocerlos.`},
- {id:'S10', t:'Addressing Double Binds and the Role of Multi-Disciplinary Development Teams', p:'11', fn:'Propuesta', arg:`Doble dificultad: reconocer el doble vínculo y formularlo de modo aceptable. Reparto de responsabilidades. La culpa no está en ningún bando. Equipos multidisciplinarios con etnógrafos.`, sus:`Analogía del niño y el padre (nota 6); reformulación de la instrucción sobre ftp.`, tr:`Cierre.`}
-];
-
-const T = [
- {id:'T0', c:'tesis central', p:'1-2, 8-11', s:['S1','S2','S5','S9','S10'], est:'explícita', f:`La infraestructura es una relación, no una cosa. Los fracasos de adopción no se explican por "resistencia del usuario" ni por "éxito o fracaso del sistema", sino por discontinuidades entre niveles de contexto: cuando grupos distintos abordan un mismo asunto en niveles lógicos inconmensurables, se produce un doble vínculo que vuelve imposible el trabajo.`, sus:`Aparato de Bateson (niveles, doble vínculo) más evidencia etnográfica ordenada por niveles.`},
- {id:'T1', c:'relación, no sustrato', p:'1', s:['S2'], est:'explícita', f:`La metáfora del sustrato es inexacta e inútil. La infraestructura es "fundamentally and always a relation", y la inversión infraestructural permite verla: el sustrato se vuelve sustancia.`, sus:`Autoridad (Bateson, Jewett y Kling, Bowker) y descripción del trabajo científico como trabajo de información.`},
- {id:'T2', c:'contra el racionalismo', p:'1-2', s:['S2'], est:'explícita', f:`Las metodologías racionalistas de desarrollo (cascada, ciclo de vida) son "mitologías". Atribuir el fracaso a la resistencia del usuario oculta las relaciones infraestructurales y políticas.`, sus:`Crítica de supuestos, literatura empírica desde fines de los setenta, analogía con la adherencia del paciente. El caso muestra un diseño ejemplar que igual fracasa.`},
- {id:'T3', c:'firmar y conectarse', p:'3-5', s:['S4','S6'], est:'explícita', f:`El problema no es la interfaz sino "firmar y conectarse": enterarse, comprar, instalar, configurar y aprender. Para alguien formado en biología, cada paso exige saberes tácitos que los desarrolladores dan por supuestos.`, sus:`Inventario de tareas y testimonios sobre UNIX, ftp y formación.`},
- {id:'T4', c:'tres niveles', p:'3-8', s:['S5','S6','S7','S8'], est:'explícita', f:`Los problemas de conexión se ordenan en tres niveles (recursos, efectos contextuales, política), que se distinguen por salto de contexto, no por materialidad ni por escala.`, sus:`Traslado analógico de Bateson y validación empírica nivel por nivel.`},
- {id:'T5', c:'infraestructura como contexto', p:'4', s:['S5'], est:'explícita', f:`La infraestructura es contexto para la comunicación y el aprendizaje. Las discontinuidades no están entre sistema y persona, ni entre tecnología y organización, sino entre contextos.`, sus:`Cita de Bateson (p. 251) y rechazo de la "gran división".`},
- {id:'T6', c:'los recursos no determinan el uso', p:'5-6', s:['S7'], est:'inferida del caso', f:`Un laboratorio pobre puede usar el sistema y uno rico no lograrlo. La infraestructura depende de pericias, configuraciones locales y de quién es "dueño" de un problema.`, sus:`Contraste de los dos laboratorios y testimonios sobre los centros de cómputo.`},
- {id:'T7', c:'restricción como recurso', p:'6', s:['S7'], est:'explícita', f:`Lo que el diseño trata como restricción superable puede ser un recurso que estructura la práctica.`, sus:`Debate sobre la actualización continua de la Gazette; lectura etnometodológica del plazo.`},
- {id:'T8', c:'valor comunitario y externalidades', p:'6-8', s:['S8'], est:'explícita', f:`El valor y la legitimidad del sistema dependen de la participación comunitaria en el mantenimiento de los datos, y las externalidades de red pueden aumentar la desigualdad. Cada comunicación tiene significados múltiples según quién, cuándo y por qué canal.`, sus:`Externalidad, política del refuerzo (Kraemer y King), testimonios sobre directorio, anotaciones, mapas y recompensas.`},
- {id:'T9', c:'el "just about to"', p:'10', s:['S9'], est:'explícita', f:`El no-uso declarado como uso inminente es una respuesta a un doble vínculo, no una mentira. Los problemas de "enchufe", triviales vistos de lejos, se vuelven letales cuando son crónicos y ubicuos.`, sus:`Observación etnográfica (la semana en la ciudad) e implicación metodológica para las encuestas.`},
- {id:'T10', c:'ningún bando tiene la culpa', p:'11', s:['S10'], est:'explícita', f:`La culpa no está en diseñadores ni en usuarios, sino en la incomprensión de los niveles del mensaje. Los equipos multidisciplinarios, con etnógrafos como mediadores, pueden ayudar a identificar y resolver dobles vínculos.`, sus:`Argumento normativo derivado del análisis; reformulación del ejemplo de ftp.`},
- {id:'T11', c:'equidad y justicia', p:'3, 6-8', s:['S4','S8'], est:'explícita, poco desarrollada', f:`En sistemas de escala muy grande, como la National Information Infrastructure, estos problemas son cuestiones de equidad y justicia, no solo de eficiencia.`, sus:`Afirmación breve que prolonga los hallazgos sobre la desigualdad entre laboratorios.`}
-];
-
-const FLOW = [
- {mv:'Paradoja de partida.', d:`Usuarios satisfechos que no se conectan y prefieren Gopher.`, w:`Obliga a buscar la explicación fuera de la interfaz.`, t:['T0'], p:'2-3'},
- {mv:'Redefinición.', d:`La infraestructura no es sustrato sino relación; la inversión de Bowker pone el fondo en primer plano.`, w:`Si es relación, el fracaso hay que buscarlo en relaciones.`, t:['T1'], p:'1'},
- {mv:'Crítica del adversario.', d:`Las metodologías racionalistas solo pueden ver éxito, fracaso o resistencia.`, w:`Delimita contra qué se construye la propuesta.`, t:['T2'], p:'1-2'},
- {mv:'Presentación del caso.', d:`El WCS, la comunidad de <i>C. elegans</i>, su trabajo de información y la desigualdad de cómputo.`, w:`Establece el material empírico.`, t:['T1','T6'], p:'2'},
- {mv:'Relocalización del problema.', d:`De "usar el sistema" a "firmar y conectarse".`, w:`Define la unidad de análisis.`, t:['T3'], p:'3'},
- {mv:'Aparato teórico.', d:`Tipos lógicos, niveles de comunicación y de aprendizaje, tres niveles de problemas; la infraestructura como contexto.`, w:`Da un criterio para ordenar la evidencia.`, t:['T4','T5'], p:'3-4'},
- {mv:'Validación por niveles.', d:`Primer nivel (información, acceso, competencias), segundo (culturas, paradojas, plazos), tercero (objetos, significados, externalidades, recompensas).`, w:`Muestra que cada nivel existe y que se entrelazan.`, t:['T4','T6','T7','T8'], p:'4-8'},
- {mv:'Teoría de la falla.', d:`Doble vínculo y síndrome transcontextual, en cuatro brechas.`, w:`Explica el no-uso como efecto sistemático.`, t:['T0','T9'], p:'8-11'},
- {mv:'Propuesta.', d:`Nadie tiene la culpa; equipos multidisciplinarios con etnógrafos.`, w:`Recomendación práctica para el público de CSCW.`, t:['T10'], p:'11'}
-];
-
-const K = [
- {id:'K1', t:'El sistema', s:'S3', p:'2', n:'—', a:`Equipo del WCS; biólogos que participaron en el diseño`, q:`"Hiperbiblioteca" distribuida del género de los colaboratorios: gráficos del organismo, mapa genético, anotaciones, el boletín <i>Worm Breeder's Gazette</i>, directorios, tesauro y base de datos acedb, enlazados por hipertexto. Desarrollado durante años con participación de biólogos.`, d:`Es un sistema ejemplar según el diseño participativo: su fracaso no puede atribuirse al mal diseño.`, tt:['T2','T0']},
- {id:'K2', t:'Plataforma', s:'S3', p:'3', n:'1', a:`Equipo del WCS`, q:`Corre en estaciones Sun, en remoto desde Mac vía NSFnet o, con menos funciones, desde PC. Versión autónoma para Mac en preparación.`, d:`La dependencia de UNIX será el centro de los problemas de nivel uno y dos.`, tt:['T3']},
- {id:'K3', t:'La comunidad', s:'S3', p:'2', n:'3', a:`Unos 1400 científicos en más de 100 laboratorios; biólogos senior`, q:`Comunidad unida, mayoritariamente discípulos de primera o segunda generación de los fundadores. <i>C. elegans</i> acaba de ser elegido organismo modelo de la Iniciativa Genoma Humano; los biólogos senior esperan que el sistema preserve la intimidad comunitaria ante el crecimiento.`, d:`El sistema no es neutral: se le pide gestionar una transformación social.`, tt:['T8','T0']},
- {id:'K4', t:'El trabajo como rompecabezas', s:'S3', p:'2', n:'—', a:`Laboratorios que trabajan un mismo problema`, q:`"Rompecabezas en cuatro dimensiones": un trastorno de conducta ligado a un gen debe triangularse con fragmentos de ADN clonado. Laboratorios que estudian la producción de esperma se comunican por teléfono, fax, congresos y correo.`, d:`La infraestructura de información es una dimensión del trabajo científico, no un servicio externo.`, tt:['T1']},
- {id:'K5', t:'El gusano', s:'S3', p:'2', n:'—', a:`Laboratorios; Centro de Stock`, q:`Microscópico, transparente y resistente: se congela, se envía por UPS y se descongela vivo. Un Centro de Stock distribuye cepas con mutaciones.`, d:`El organismo circula por una infraestructura; rastrear cepas es trabajo de información.`, tt:['T1']},
- {id:'K6', t:'El cómputo en los laboratorios', s:'S3', p:'2', n:'1', a:`"Persona de computación", a menudo un estudiante`, q:`Uso muy desigual: en los laboratorios más activos, uno o dos usuarios rutinarios; en muchos, solo correo, procesador de texto y diapositivas.`, d:`Anticipa la dependencia de individuos y la desigualdad de competencias.`, tt:['T6','T3']},
- {id:'K7', t:'La paradoja', s:'S3', p:'2-3', n:'—', a:`La mayoría de los entrevistados`, q:`Elogian la facilidad de uso y la comprensión del dominio, pero la mayoría no se ha conectado; muchos prefieren Gopher.`, d:`Es el motor del argumento.`, tt:['T0','T2']},
- {id:'K8', t:'SPARC en un campus DOS', s:'S4', p:'3', n:'1→2', a:`Laboratorio típico; centro de cómputo`, q:`Comprar una estación SPARC en un campus estandarizado en DOS enfrenta al laboratorio con el centro de cómputo, que limita los equipos a los que da servicio.`, d:`Una decisión de compra se vuelve conflicto institucional.`, tt:['T3','T4']},
- {id:'K9', t:'Máquina sí, capacitación no', s:'S4', p:'3', n:'1→2', a:`Laboratorios en general`, q:`Hay fondos para el equipo pero no para formar a todo el personal; a largo plazo, eso crea desigualdades de uso y de acceso a los datos.`, d:`La infraestructura incluye la formación, no solo el equipo.`, tt:['T3','T11']},
- {id:'K10', t:'El servidor de "la gente de plantas"', s:'S6', p:'4', n:'1', a:`Brad Thomas (PD); Eliot Red (PD)`, q:`La "gente del gusano" tiene el sistema en un servidor del proyecto de genoma vegetal del piso de arriba y solo puede usarlo de noche y fines de semana. "People just won't use it."`, d:`Los acuerdos de recursos compartidos condicionan el uso real.`, tt:['T4','T3']},
- {id:'K11', t:'El VAX de UCLA', s:'S6', p:'4', n:'1', a:`Brad Thomas (PD)`, q:`Recuerda que en su doctorado había un solo VAX y había que caminar a otro edificio para usarlo.`, d:`El acceso físico es una dimensión del acceso.`, tt:['T4']},
- {id:'K12', t:'El laboratorio sin espacio', s:'S6', p:'4', n:'1', a:`Laboratorio en un edificio alto urbano`, q:`Ante la idea de reemplazar los cuadernos por computadoras de mano, responden que no hay dónde poner otra computadora: ni siquiera caben todos sus equipos.`, d:`El espacio físico limita la infraestructura.`, tt:['T4']},
- {id:'K13', t:'Competencias desactualizadas', s:'S6', p:'4-5', n:'1', a:`Investigador senior; un PI`, q:`Uno ignora que existen bases de datos sin campos de longitud fija; otro equipara "una Mac" con "un UNIX". Los PI creen que la formación eleva el nivel; la observación no lo confirma.`, d:`La competencia es desigual y no sigue la jerarquía académica.`, tt:['T3','T4']},
- {id:'K14', t:'"Lo prendí y apreté botones"', s:'S6', p:'5', n:'1', a:`Ben Tunis (PS)`, q:`El sistema mismo es fácil e intuitivo para quien conoce el dominio.`, d:`La dificultad no está en la interfaz sino en la plataforma.`, tt:['T3']},
- {id:'K15', t:'Tres meses para imprimir', s:'S6', p:'5', n:'1', a:`Bob Gates (GS)`, q:`UNIX "es para ingenieros"; alguien del laboratorio tardó tres meses en lograr imprimir.`, d:`La plataforma, no el programa, es la barrera.`, tt:['T3']},
- {id:'K16', t:'Formación por amistad', s:'S6', p:'5', n:'1', a:`Jeff Pascal (PD); Carolyn Little`, q:`Aprendió gracias a su amistad con el administrador de sistemas; ningún laboratorio ofrece formación; se aprende "exactly enough".`, d:`La formación depende de la suerte y de lazos personales.`, tt:['T3','T6']},
- {id:'K17', t:'Mac contra UNIX', s:'S7', p:'5', n:'2', a:`Cinco entrevistados; Joe White (PI); Harry Jackson (GS); Jeff Pascal; Eliot Red`, q:`Cinco personas mencionan su rechazo a UNIX por iniciativa propia. Joe White aprendió solo a operar una SPARC. Teoría de los "dos tipos de científicos" y de la "afinidad natural".`, d:`La elección técnica es un marcador cultural; UNIX es la lengua de quienes sostienen la computación universitaria.`, tt:['T4','T5']},
- {id:'K18', t:'Los dos laboratorios', s:'S7', p:'5-6', n:'2', a:`Laboratorio pobre y su PI aficionado a la radio de galena; laboratorio rico: Steve Grenier (GS), Linda Smith (PI)`, q:`El pobre, con IBM PC-XT obsoletos, usa el sistema y tiene el mejor registro de intercambio de cepas de la comunidad. El rico, con una beca del Genoma Humano para cablear el campus, no puede operarlo: un año de espera para Ethernet, cables tendidos por ellos mismos, estaciones por llegar.`, d:`"Paradojas de la infraestructura": la pericia y la configuración local pesan más que los recursos.`, tt:['T6']},
- {id:'K19', t:'"Cómprale una pizza"', s:'S7', p:'6', n:'2', a:`Bob Gates (GS); centros de cómputo`, q:`Solo un laboratorio elogia su centro. Al pedir ayuda le dicen que busque a alguien que sepa UNIX y le compre una pizza; sin hardware ni software soportados no hay ayuda. "Biology has no infrastructure."`, d:`La propiedad del problema se decide localmente.`, tt:['T6','T11']},
- {id:'K20', t:'Cohete o Ford T', s:'S7', p:'6', n:'2', a:`Harry Markson (GS); Marc Moreau (GS); Jay Emery (PD)`, q:`"Most of the upper tier has the WCS." Dos estudiantes trabajaron tres semanas sin poder cargarlo y hubo que contratar a un especialista. Propuesta de un sistema modular con partes en Mac.`, d:`El sistema refuerza la estratificación entre laboratorios.`, tt:['T6','T11','T8']},
- {id:'K21', t:'La Gazette continua', s:'S7', p:'6', n:'2', a:`Las autoras; Brad Thomas (PD); John Wong (GS); Gordon Jackson (PI)`, q:`Las autoras proponen la actualización continua. Thomas la apoya por la competencia; Wong y Jackson la rechazan porque el plazo ordena la escritura y la lectura.`, d:`El plazo es restricción y recurso a la vez.`, tt:['T7']},
- {id:'K22', t:'Orígenes disciplinares', s:'S8', p:'6', n:'3', a:`Brad Thomas (venía de ranas); Harry Markson; Jane Sanchez (PD/RS)`, q:`Muchos llegan desde otras áreas (mamíferos, proteínas). "I am more of a wormy person." Colaboraciones con inmunólogos.`, d:`La comunidad es heterogénea y define sus objetos de maneras distintas.`, tt:['T4']},
- {id:'K23', t:'Necesidades divergentes', s:'S8', p:'7', n:'3', a:`Harry Markson (GS); Brad Thomas (PD)`, q:`Los neurobiólogos quieren "a parts list, a list of cells"; otros, trabajar con subconjuntos de secuencias.`, d:`Si el sistema se asocia a una línea de trabajo, surgen barreras de uso.`, tt:['T4']},
- {id:'K24', t:'El directorio "quién trabaja en qué"', s:'S8', p:'7', n:'3', a:`Las autoras; Mike Jones (GS)`, q:`La propuesta preocupa a posdoctorandos y estudiantes: riesgo de que otro se adelante, reivindicación de prioridad en la Gazette, laboratorios que intentan acaparar.`, d:`El momento de la divulgación importa; la información nunca es neutra.`, tt:['T8','T4']},
- {id:'K25', t:'El miedo a anotar', s:'S8', p:'7', n:'3', a:`Un estudiante; Joe White (PI); Brad Thomas (PD); otro PI`, q:`Anotar es comprometerse ante los colegas. La propuesta de anotaciones privadas y públicas enoja a un PI que defiende el sistema como bien común.`, d:`Los canales tienen significados distintos; el diseño toca normas comunitarias.`, tt:['T8']},
- {id:'K26', t:'Confianza y citas', s:'S8', p:'7', n:'3', a:`Brad Thomas (PD)`, q:`"There is no right or wrong… which labs you trust more." Sugiere una advertencia sobre citas al iniciar el sistema.`, d:`Las convenciones de calidad de datos del medio impreso aún no existen en el electrónico.`, tt:['T8']},
- {id:'K27', t:'Nueva York y Champaign', s:'S8', p:'7-8', n:'3', a:`Ejemplo de las autoras`, q:`Las externalidades culturales de Nueva York superan a las de Champaign; el teléfono a comienzos del siglo XX y el correo electrónico en la academia se volvieron externalidades negativas para quien no los tenía.`, d:`Explica la noción de externalidad de red.`, tt:['T8','T11']},
- {id:'K28', t:'Del diálogo al monólogo', s:'S8', p:'8', n:'3', a:`Brad Thomas (PD); Ben Tunis (PS)`, q:`Cuando el mapa físico estaba fragmentado, la gente enviaba clones; completo, "they don't bother telling Cambridge". Con el mapa genético el diálogo sigue.`, d:`La participación decae cuando el recurso se completa.`, tt:['T8']},
- {id:'K29', t:'Tablones muertos y laboratorios que callan', s:'S8', p:'8', n:'3', a:`Bob Gates (GS); Sara Wu (PD); Kyle Jordan (PD)`, q:`Dos tablones electrónicos murieron en dos semanas. Anotar "is not of immediate profit". Laboratorios muy conocidos no envían notas cuando están cerca de un gen.`, d:`Competencia y costo de tiempo frenan la participación.`, tt:['T8']},
- {id:'K30', t:'Constructores de herramientas', s:'S8', p:'8', n:'3', a:`Colaborador temprano de acedb; autor de listas anotadas; biólogo que trabaja con un informático; Jay Emery (PD)`, q:`Errores y sugerencias enviados, listas anotadas hechas a medio tiempo durante un año, desarrollo de visualización sin crédito disciplinar.`, d:`La estructura de recompensas no reconoce el trabajo infraestructural.`, tt:['T8']},
- {id:'K31', t:'"Solo levanta X Windows"', s:'S9', p:'9', n:'doble vínculo 1', a:`Diseñadores del WCS; usuarios`, q:`Instrucción en tono de nivel uno que, para el usuario, equivale a la puerta bloqueada. Incluso los usuarios con experiencia necesitan saber qué contraseña usar, porque varían.`, d:`Lo simple para unos no lo es para otros; el saber tácito produce una regresión infinita.`, tt:['T0','T3']},
- {id:'K32', t:'Diseño participativo escandinavo', s:'S9', p:'9', n:'doble vínculo 1', a:`Tradición escandinava`, q:`El trabajo conjunto crea un contexto compartido, lo que explica su fuerza y la dificultad de exportarlo a contextos laborales distintos.`, d:`La solución también depende de contexto.`, tt:['T10']},
- {id:'K33', t:'Miembros antiguos de una comunidad nueva', s:'S9', p:'9-10', n:'doble vínculo 2', a:`Biólogos senior`, q:`Perciben que las decisiones técnicas de nivel dos afectan las de nivel tres: llegada de recién llegados, interpretación de datos, el gusano como fin o como modelo.`, d:`Las brechas también están dentro de la comunidad.`, tt:['T0','T4']},
- {id:'K34', t:'Gopher contra WCS', s:'S9', p:'10', n:'doble vínculo 3', a:`Usuarios en general`, q:`Gopher corre en terminales del campus con soporte institucional; el WCS exige estaciones propias y personal del laboratorio. Los cuadernos de laboratorio son abiertos e integradores; el WCS integra de manera personalizada.`, d:`Lo conveniente en un nivel es inconveniente en otro.`, tt:['T9','T0']},
- {id:'K35', t:'La semana en la gran ciudad', s:'S9', p:'10', n:'doble vínculo 3', a:`Una de las autoras`, q:`Casi una semana buscando usuarios reales en una ciudad con varios laboratorios registrados. Nadie lo usaba; cada persona conocía a alguien que supuestamente sí; todos lo esperaban "any day now".`, d:`El "just about to" no es mentira sino descuento de dificultades; las encuestas no lo captan.`, tt:['T9']},
- {id:'K36', t:'Reclamos de seguros', s:'S9', p:'10', n:'doble vínculo 4', a:`Star y Gerson (1986); Gasser (1986)`, q:`El diseñador piensa en registros y eficiencia; el usuario, en mediar entre médicos y representantes de clientes, y desarrolla procedimientos informales.`, d:`Lenguaje de diseño frente a lenguaje de uso.`, tt:['T5','T0']}
-];
-
-const C = [
- {id:'C1', p:'1', s:'S2', k:'', tt:['T1'], en:`"What can be studied is always a relationship or an infinite regress of relationships. Never a 'thing.'" (Bateson)`, es:`"Lo que puede estudiarse es siempre una relación o una regresión infinita de relaciones. Nunca una 'cosa'."`, fn:'Epígrafe y premisa', co:`Star lo repetirá como epígrafe de la definición en 1999.`, a:'What can be studied is always a relationship'},
- {id:'C2', p:'1', s:'S2', k:'', tt:['T1'], en:`"Such a metaphor is neither useful nor accurate."`, es:`"Tal metáfora no es útil ni exacta."`, fn:'Rechazo del sustrato', co:`Gesto polémico breve que abre el campo.`, a:'Such a metaphor is neither useful nor accurate'},
- {id:'C3', p:'1', s:'S2', k:'', tt:['T1','T0'], en:`"we hold that infrastructure is fundamentally and always a relation, never a thing."`, es:`"sostenemos que la infraestructura es fundamentalmente y siempre una relación, nunca una cosa."`, fn:'Tesis definicional', co:`La fórmula más citada del texto.`, a:'we hold that infrastructure is fundamentally and always a relation, never a thing'},
- {id:'C4', p:'1', s:'S2', k:'', tt:['T1'], en:`"Substrate becomes substance."`, es:`"El sustrato se vuelve sustancia."`, fn:'Condensación de la inversión', co:`Lo que era fondo pasa a ser objeto.`, a:'Substrate becomes substance'},
- {id:'C5', p:'1', s:'S2', k:'', tt:['T2'], en:`"witness the many pages MIS textbooks devote to techniques for overcoming 'user resistance.'"`, es:`"basta ver las muchas páginas que los manuales de sistemas de información dedican a técnicas para vencer la 'resistencia del usuario'."`, fn:'Crítica del adversario', co:`Ironía dirigida al público de la conferencia.`, a:'MIS textbooks devote to techniques for overcoming'},
- {id:'C6', p:'2', s:'S2', k:'', tt:['T1','T2'], en:`"no artifact, computer-based or otherwise, is a discrete entity, a standalone thing."`, es:`"ningún artefacto, computacional o no, es una entidad discreta, una cosa independiente."`, fn:'Fundamento relacional', co:`Generaliza la tesis más allá de la computación.`, a:'no artifact, computer-based or otherwise, is a discrete entity'},
- {id:'C7', p:'2', s:'S3', k:'K7', tt:['T0'], en:`"Most respondents liked the system, praising its ease of use and its understanding of the problem domain. On the other hand, most have not signed on"`, es:`"A la mayoría de los entrevistados les gustaba el sistema; elogiaban su facilidad de uso y su comprensión del dominio. Por otro lado, la mayoría no se ha conectado"`, fn:'Paradoja', co:`El motor empírico del texto.`, a:'Most respondents liked the system'},
- {id:'C8', p:'3', s:'S5', k:'', tt:['T4','T5'], en:`"context classifies the message, but can never meet it on equal terms." (Bateson)`, es:`"el contexto clasifica el mensaje, pero nunca puede encontrarlo en igualdad de condiciones."`, fn:'Teoría de los niveles', co:`El marco no es un mensaje más: clave de la discontinuidad.`, a:'but can never meet it on equal terms'},
- {id:'C9', p:'3-4', s:'S5', k:'', tt:['T4'], en:`"This is not an idealization process … nor even essentially one of scope … but rather questions of context."`, es:`"No es un proceso de idealización… ni siquiera, en esencia, de escala… sino cuestiones de contexto."`, fn:'Criterio de los niveles', co:`Evita leer los niveles como paso de lo material a lo mental.`, a:'This is not an idealization process'},
- {id:'C10', p:'4', s:'S5', k:'', tt:['T4','T11'], en:`"Level Three issues are inherently political (broadly speaking)"`, es:`"Los problemas de nivel tres son inherentemente políticos (en sentido amplio)"`, fn:'Definición del nivel tres', co:`Lo político queda en la cima de la jerarquía (ver E2).`, a:'issues are inherently political'},
- {id:'C11', p:'4', s:'S5', k:'', tt:['T5','T1'], en:`"Information infrastructure is not a substrate which carries information on it, or in it, in a kind of mind-body dichotomy."`, es:`"La infraestructura de información no es un sustrato que lleve información encima o adentro, en una especie de dicotomía mente-cuerpo."`, fn:'Tesis teórica', co:`Une el rechazo del sustrato con el de los dualismos.`, a:'Information infrastructure is not a substrate which carries information'},
- {id:'C12', p:'4', s:'S5', k:'', tt:['T5','T0'], en:`"The discontinuities are not between system and person, or technology and organization, but rather between contexts."`, es:`"Las discontinuidades no están entre sistema y persona, o entre tecnología y organización, sino entre contextos."`, fn:'Relocalización del problema', co:`Quizá la frase teóricamente más ambiciosa.`, a:'The discontinuities are not between system and person'},
- {id:'C13', p:'4', s:'S6', k:'K10', tt:['T4','T3'], en:`"We can only use it evenings, weekends."`, es:`"Solo podemos usarla de noche y los fines de semana."`, fn:'Evidencia de nivel uno', co:`Brad Thomas, sobre el servidor de "la gente de plantas".`, a:'We can only use it evenings, weekends'},
- {id:'C14', p:'5', s:'S6', k:'K15', tt:['T3'], en:`"UNIX will never cut it as a general operating system. Biologists won't use it, it's for engineers."`, es:`"UNIX nunca va a servir como sistema operativo general. Los biólogos no lo van a usar, es para ingenieros."`, fn:'Competencias', co:`Bob Gates (GS).`, a:'UNIX will never cut it as a general operating system'},
- {id:'C15', p:'5', s:'S7', k:'K17', tt:['T4','T5'], en:`"Biologists are Mac people, and UNIX is an evil word."`, es:`"Los biólogos son gente de Mac, y UNIX es una mala palabra."`, fn:'Choque de culturas', co:`Harry Jackson (GS). La técnica como identidad.`, a:'Biologists are Mac people, and UNIX is an evil word'},
- {id:'C16', p:'5', s:'S7', k:'K18', tt:['T6'], en:`"There is a one year wait for Ethernet connections."`, es:`"Hay un año de espera para las conexiones Ethernet."`, fn:'Paradoja de la infraestructura', co:`Steve Grenier (GS), en el laboratorio rico.`, a:'There is a one year wait for Ethernet connections'},
- {id:'C17', p:'6', s:'S7', k:'K19', tt:['T6','T11'], en:`"find a UNIX guy, buy him some pizza … Biology has no infrastructure."`, es:`"busca a alguien que sepa UNIX, cómprale una pizza… Biología no tiene infraestructura."`, fn:'Propiedad del problema', co:`Bob Gates (GS). La frase final es una definición nativa de infraestructura.`, a:'find a UNIX guy, buy him some pizza'},
- {id:'C18', p:'6', s:'S7', k:'K20', tt:['T6','T11'], en:`"a rocket" when "we need a Model-T"`, es:`"un cohete" cuando "necesitamos un Ford T"`, fn:'Desigualdad', co:`Marc Moreau (GS).`, a:'we need a Model-T'},
- {id:'C19', p:'6', s:'S7', k:'K20', tt:['T11','T6'], en:`"half a system for everyone is better than a really great system for just a few labs"`, es:`"medio sistema para todos es mejor que un sistema excelente para unos pocos laboratorios"`, fn:'Crítica nativa del diseño', co:`Posdoctorando que planea abrir su laboratorio.`, a:'half a system for everyone is better than a really great system'},
- {id:'C20', p:'6', s:'S7', k:'K21', tt:['T7'], en:`"If there is infinity there is never a time to review things."`, es:`"Si hay infinito, nunca hay un momento para revisar las cosas."`, fn:'Restricción como recurso', co:`John Wong (GS).`, a:'If there is infinity there is never a time to review things'},
- {id:'C21', p:'6', s:'S7', k:'K21', tt:['T7'], en:`"The deadline, in ethnomethodological terms, was both constraint and resource."`, es:`"El plazo, en términos etnometodológicos, era a la vez restricción y recurso."`, fn:'Conclusión analítica', co:`Idea con larga vida en los estudios de infraestructura.`, a:'The deadline, in ethnomethodological terms, was both constraint and resource'},
- {id:'C22', p:'7', s:'S8', k:'K24', tt:['T8'], en:`"So even a simple directory can be a signal, a revelation, or a flag"`, es:`"Así, incluso un simple directorio puede ser una señal, una revelación o una bandera"`, fn:'Significados múltiples', co:`La información nunca es solo información.`, a:'even a simple directory can be a signal, a revelation, or a flag'},
- {id:'C23', p:'7', s:'S8', k:'K25', tt:['T8'], en:`"You can be wrong with no stigma"`, es:`"Puedes equivocarte sin estigma"`, fn:'Significado de los canales', co:`Sobre el boletín, frente a la difusión por el sistema.`, a:'You can be wrong'},
- {id:'C24', p:'8', s:'S8', k:'K28', tt:['T8'], en:`"There used to be a dialogue, now there's a monologue."`, es:`"Antes había un diálogo, ahora hay un monólogo."`, fn:'Participación', co:`Ben Tunis (PS), sobre el mapa físico.`, a:"There used to be a dialogue, now there's a monologue"},
- {id:'C25', p:'8', s:'S8', k:'K29', tt:['T8'], en:`"The people who really need to know already know."`, es:`"Los que de verdad necesitan saber ya saben."`, fn:'Norma nativa de circulación', co:`Bob Gates (GS). Un sistema abierto choca con circuitos de confianza.`, a:'The people who really need to know already know'},
- {id:'C26', p:'8', s:'S8', k:'K30', tt:['T8'], en:`"there are a hundred things that are useful, but you don't get a Ph.D. for it"`, es:`"hay cien cosas que son útiles, pero no te dan un doctorado por eso"`, fn:'Estructura de recompensas', co:`Jay Emery (PD). Anticipa el trabajo invisible de Star (1999).`, a:'there are a hundred things that are useful'},
- {id:'C27', p:'9', s:'S9', k:'K31', tt:['T0','T3'], en:`"Just throw up X Windows and ftp the file down."`, es:`"Solo levanta X Windows y baja el archivo por ftp."`, fn:'Doble vínculo 1', co:`Mensaje de nivel uno que encubre un problema de nivel dos.`, a:'Just throw up X Windows and ftp the file down'},
- {id:'C28', p:'9', s:'S9', k:'K31', tt:['T0','T3'], en:`"If you don't know already, it's hard to know how to find out"`, es:`"Si no lo sabes ya, es difícil saber cómo averiguarlo"`, fn:'Regresión infinita', co:`La trampa del saber tácito.`, a:"If you don't know already, it's hard to know how to find out"},
- {id:'C29', p:'10', s:'S9', k:'K34', tt:['T9','T0'], en:`"To take on board the custom-designed, massively convenient and powerful WCS is to suffer a massive inconvenience at another level"`, es:`"Adoptar el WCS, hecho a medida, enormemente conveniente y potente, es sufrir una enorme inconveniencia en otro nivel"`, fn:'Doble vínculo 3', co:`Explica la paradoja de partida.`, a:'is to suffer a massive inconvenience at another level'},
- {id:'C30', p:'10', s:'S9', k:'K35', tt:['T9'], en:`"No one she talked with was using it, but each person knew of someone else in another lab who supposedly was."`, es:`"Nadie con quien habló lo usaba, pero cada persona conocía a alguien en otro laboratorio que supuestamente sí."`, fn:'Evidencia etnográfica', co:`La viñeta más citada del texto.`, a:'No one she talked with was using it'},
- {id:'C31', p:'10', s:'S9', k:'K35', tt:['T9'], en:`"these issues turn out to be lethal as they become both chronic and ubiquitous"`, es:`"estos problemas resultan letales cuando se vuelven crónicos y ubicuos"`, fn:'Escala de lo trivial', co:`Lo pequeño se vuelve decisivo por acumulación.`, a:'these issues turn out to be lethal'},
- {id:'C32', p:'11', s:'S10', k:'', tt:['T10'], en:`"users are often equally at fault for expecting 'magic bullets'"`, es:`"los usuarios suelen tener igual responsabilidad al esperar 'balas mágicas'"`, fn:'Reparto de responsabilidad', co:`Contrapeso a la crítica de los diseñadores.`, a:'users are often equally at fault for expecting'},
- {id:'C33', p:'11', s:'S10', k:'', tt:['T10'], en:`"The 'fault' really lies in neither camp, but in the general misunderstanding of the nature of miscommunication"`, es:`"La 'culpa' no está realmente en ningún bando, sino en la incomprensión general de la naturaleza del malentendido"`, fn:'Conclusión', co:`Desplaza la culpa de personas a niveles de comunicación.`, a:'really lies in neither camp'}
-];
-
-const D = [
- {id:'D1', t:'Infraestructura como relación', def:`"Fundamentally and always a relation, never a thing". Su desarrollo y uso se definen por relaciones complejas.`, o:'Bateson; Jewett y Kling (1991)', fn:'Fundamento del texto.', p:'1-2', tt:['T1','T0']},
- {id:'D2', t:'Metáfora del sustrato', def:`Imagen de la infraestructura como algo sobre lo que otra cosa "corre", que se hunde en un fondo invisible.`, o:'Sentido común técnico', fn:'Adversario conceptual.', p:'1', tt:['T1']},
- {id:'D3', t:'Inversión infraestructural', def:`Cambio de figura y fondo que resta peso a cosas y personas como causas únicas y enfoca relaciones. "Substrate becomes substance."`, o:'Bowker (1994); T. P. Hughes', fn:'Método para ver el fondo.', p:'1', tt:['T1']},
- {id:'D4', t:'Metodologías racionalistas', def:`Suponen tareas bien estructuradas y requisitos fijables a priori; atribuyen el fracaso a promotores o usuarios. Cascada y ciclo de vida.`, o:'Ingeniería de software', fn:'Posición criticada ("mitologías").', p:'1', tt:['T2']},
- {id:'D5', t:'Resistencia del usuario', def:`Categoría de los manuales para explicar el no-uso; análoga a la "adherencia del paciente".`, o:'Literatura de gestión; nota 1', fn:'Explicación que oculta la relación.', p:'1', tt:['T2']},
- {id:'D6', t:'Firmar y conectarse', def:`Tareas de enterarse, instalar y aprender un sistema, con compras, configuraciones y protocolos.`, o:'Expresiones nativas (signing on, hooking up)', fn:'Unidad de análisis que reemplaza al "uso".', p:'3', tt:['T3']},
- {id:'D7', t:'Trabajo de articulación', def:`Trabajo en tiempo real que coordina tareas; las tipologías CSCW no lo capturan.`, o:'Schmidt y Bannon (1992), tradición de Strauss', fn:'Mencionado; central en Star (1999).', p:'3', tt:['T3']},
- {id:'D8', t:'Tipos lógicos', def:`Distinción entre una clase y sus miembros; confundirlos produce paradoja.`, o:'Russell y Whitehead', fn:'Base formal de los niveles.', p:'3, 9', tt:['T4']},
- {id:'D9', t:'Niveles de comunicación', def:`Enunciado, enunciado sobre el enunciado, metamensaje que da modo. El contexto clasifica el mensaje sin encontrarlo en igualdad de condiciones.`, o:'Bateson, p. 249', fn:'Modelo de discontinuidad.', p:'3', tt:['T4','T5']},
- {id:'D10', t:'Niveles de aprendizaje 0-III', def:`Cero: respuesta fija. I: cambio de respuesta en un contexto repetible. II: aprender a aprender. III: cambio en el sistema de alternativas, "contexts of contexts".`, o:'Bateson, pp. 279-308', fn:'Base de la tipología de problemas.', p:'3, 9', tt:['T4','T0']},
- {id:'D11', t:'Problemas de nivel 1, 2 y 3', def:`Recursos; efectos contextuales; disputas políticas. El ascenso es cambio de contexto, no idealización ni escala.`, o:'Traslado de Bateson por las autoras', fn:'Matriz para ordenar el material.', p:'4', tt:['T4']},
- {id:'D12', t:'Infraestructura como contexto', def:`Contexto de la comunicación y el aprendizaje dentro de la "web of computing"; no un sustrato en dicotomía mente-cuerpo.`, o:'Bateson; Kling y Scacchi', fn:'Conecta relación y niveles.', p:'4', tt:['T5']},
- {id:'D13', t:'Gran división', def:`Separación entre naturaleza y artificio, humano y no humano, tecnología y sociedad.`, o:'Sociología de la ciencia y la tecnología', fn:'Alineamiento teórico.', p:'4', tt:['T5']},
- {id:'D14', t:'Paradojas de la infraestructura', def:`Efectos contextuales de la pericia y de las configuraciones locales en laboratorios ricos y pobres.`, o:'Las autoras', fn:'Los recursos no determinan el uso.', p:'5', tt:['T6']},
- {id:'D15', t:'Propiedad del problema', def:`Quién es "dueño" de un problema se decide localmente y define quién recibe ayuda.`, o:'Las autoras', fn:'Vincula competencia y organización.', p:'6', tt:['T6']},
- {id:'D16', t:'Restricción como recurso', def:`El plazo del boletín, superable técnicamente, estructura la escritura y la lectura.`, o:'Etnometodología', fn:'Límites de la optimización técnica.', p:'6', tt:['T7']},
- {id:'D17', t:'Triangulación y definición de objetos', def:`Líneas de trabajo distintas convergen y definen el organismo de maneras distintas.`, o:'Sociología de la ciencia', fn:'Problema de nivel tres.', p:'6-7', tt:['T4']},
- {id:'D18', t:'Significados múltiples', def:`Directorio, anotación o cita significan cosas distintas según quién, cuándo y por qué canal.`, o:'Las autoras', fn:'La información no es neutra.', p:'7', tt:['T8']},
- {id:'D19', t:'Externalidades de red', def:`Cuantos más participan, más recursos emergentes para cada uno; negativas para quien queda fuera.`, o:'Economía y planificación urbana', fn:'Un sistema democratizador puede aumentar la desigualdad.', p:'7-8', tt:['T8','T11']},
- {id:'D20', t:'Masa crítica', def:`Número de usuarios a partir del cual el uso se vuelve viable; distinta de la externalidad (nota 4).`, o:'Literatura sobre adopción', fn:'Precisión conceptual.', p:'7', tt:['T8']},
- {id:'D21', t:'Política del refuerzo', def:`Los laboratorios ricos se enriquecen a medida que la red se densifica.`, o:'Kraemer y King (1977)', fn:'Dimensión política de las externalidades.', p:'8', tt:['T8','T11']},
- {id:'D22', t:'Estructura de recompensas', def:`Construir y mantener herramientas no da crédito disciplinar.`, o:'Ruhleder y King (1991)', fn:'Explica la escasa contribución.', p:'8', tt:['T8']},
- {id:'D23', t:'Doble vínculo', def:`Mensaje emitido en dos niveles a la vez, o respuesta exigida en un nivel y negada en otro ("ve a buscar tu abrigo" con la puerta bloqueada).`, o:'Bateson', fn:'Teoría de la falla.', p:'9', tt:['T0','T9']},
- {id:'D24', t:'Síndrome transcontextual', def:`Respuesta a las rupturas del tejido del contexto; puede derivar en patología o en creatividad.`, o:'Bateson, p. 276', fn:'Nombre de los cuatro dobles vínculos.', p:'8-9', tt:['T0','T9']},
- {id:'D25', t:'Lenguajes de doble nivel y rodeos', def:`Solo funcionan las aplicaciones que sirven a la vez al nivel formal y al informal; los usuarios inventan rodeos (<i>workarounds</i>).`, o:'Robinson (1991); Gasser (1986); Star y Gerson (1986)', fn:'Cuarta brecha.', p:'10', tt:['T5','T0']},
- {id:'D26', t:'Equipos multidisciplinarios', def:`Equipos de desarrollo con etnógrafos que ayudan a cruzar la brecha contextual.`, o:'Las autoras', fn:'Solución normativa.', p:'11', tt:['T10']}
-];
-
-const A = [
- {a:`Gregory Bateson, <i>Steps to an Ecology of Mind</i> (1972) [1]`, q:`Epígrafe relacional; niveles de comunicación y aprendizaje; contexto como artificio; doble vínculo; síndrome transcontextual.`, m:'adhesión, desplazamiento', p:'1, 3-4, 8-11', tt:['T0','T4','T5','T9']},
- {a:`Bertrand Russell y Alfred North Whitehead`, q:`Teoría de los tipos lógicos, por mediación de Bateson.`, m:'uso indirecto', p:'3, 9', tt:['T4']},
- {a:`Tom Jewett y Rob Kling (1991) [19]`, q:`La infraestructura como relación.`, m:'adhesión', p:'1', tt:['T1']},
- {a:`Geoffrey Bowker (1994) [4]`, q:`Inversión infraestructural.`, m:'adhesión', p:'1', tt:['T1']},
- {a:`Thomas P. Hughes (1983, 1989) [17, 18]`, q:`Historia de los grandes sistemas técnicos.`, m:'contexto', p:'1', tt:['T1']},
- {a:`Rob Kling y Walt Scacchi (1982) [21]`, q:`La "web of computing"; las tareas simples solo se entienden en contextos complejos.`, m:'adhesión', p:'2, 4', tt:['T2','T5']},
- {a:`Les Gasser (1986) [11]`, q:`Rodeos ante la rigidez de un sistema de transacciones.`, m:'adhesión', p:'2, 10', tt:['T2','T0']},
- {a:`Greenbaum y Kyng, <i>Design at Work</i> (1991) [14]`, q:`Diseño participativo: uso incrustado e histórico.`, m:'adhesión, límite señalado', p:'2, 9', tt:['T2','T10']},
- {a:`Boland y Day (1989) [3]`, q:`Hermenéutica del diseño.`, m:'referencia', p:'2', tt:['T2']},
- {a:`Suchman y Trigg; Gorry et al.; Hughes, Randall y Shapiro; Heath y Luff; Forsythe; Goguen y Linde; Jirotka [33, 13, 16, 15, 9, 10, 12, 20]`, q:`Etnografía en el diseño y elicitación de requisitos.`, m:'referencia acumulada', p:'2', tt:['T2']},
- {a:`Eveland y Bikson; Feldman; Sproull y Kiesler; Rice; Yates y Orlikowski [7, 8, 31, 26, 34]`, q:`Impactos del correo electrónico y la comunicación organizacional.`, m:'referencia acumulada', p:'2', tt:['T2']},
- {a:`Ellis, Gibbs y Rein (1991) [6]`, q:`Tipología clásica de CSCW.`, m:'crítica', p:'3', tt:['T3']},
- {a:`Kjeld Schmidt y Liam Bannon (1992) [30]`, q:`Crítica de la tipología; trabajo de articulación.`, m:'adhesión', p:'3', tt:['T3']},
- {a:`Bruce Schatz (1991) [29]; R. Pool (1993) [25]`, q:`Descripción técnica del WCS y su presentación en <i>Science</i>.`, m:'fuente del caso', p:'2, 7', tt:['T1']},
- {a:`Kraemer y King (1977) [22]`, q:`Política del refuerzo.`, m:'adhesión', p:'8', tt:['T8','T11']},
- {a:`Ruhleder y King (1991) [28]`, q:`Tensión entre trabajo tradicional y construcción de herramientas.`, m:'adhesión', p:'8', tt:['T8']},
- {a:`Brown y Duguid (1990) [5]`, q:`Trabajo, aprendizaje e innovación; respalda la adaptación de los niveles.`, m:'adhesión', p:'9', tt:['T4']},
- {a:`Mishra y Cameron (1991) [23]`, q:`Dobles vínculos de mandos medios en la industria automotriz.`, m:'adhesión', p:'9', tt:['T0']},
- {a:`Mike Robinson (1991) [27]`, q:`Lenguajes de doble nivel.`, m:'adhesión', p:'10', tt:['T5','T0']},
- {a:`Star y Gerson (1986) [32]`, q:`Procedimientos informales en reclamos de seguros.`, m:'adhesión', p:'10', tt:['T0']},
- {a:`Orlikowski (1990) [24]; Beath y Orlikowski [2]`, q:`Metodologías como lenguajes; participación superficial.`, m:'adhesión', p:'10', tt:['T0','T10']}
-];
-
-const E = [
- {id:'E1', d:'Definición', f:`Convierte una pregunta técnica (por qué no se usa un sistema) en una pregunta sobre relaciones, contextos y desigualdad.`, x:`La definición relacional es un principio más que un criterio operativo: no dice cómo identificar qué cuenta como infraestructura.`, q:`¿Puede una definición relacional producir criterios de delimitación sin volverse inventario?`, tt:['T1']},
- {id:'E2', d:'Aparato batesoniano', f:`Explica por qué lo simple para unos es imposible para otros, y por qué el problema es de niveles y no de voluntad.`, x:`La jerarquía separa lo resoluble con recursos de lo político y reintroduce la división técnico/social que el texto combate. Los casos la desmienten: los cables del laboratorio rico (K18) eran nivel uno pero dependían de la propiedad política de los problemas.`, q:`¿Conviene conservar los niveles como heurística y no como clasificación?`, tt:['T4','T5','T11']},
- {id:'E3', d:'Doble vínculo', f:`Modelo formal de la comunicación contradictoria entre niveles, con potencia explicativa para el no-uso.`, x:`La analogía con la génesis de la esquizofrenia descansa en una hipótesis etiológica desconfirmada. Las autoras la usan como modelo comunicacional, pero el préstamo carga hoy un peso inesperado.`, q:`¿Qué conserva el doble vínculo separado de su uso clínico?`, tt:['T0','T9']},
- {id:'E4', d:'Material empírico', f:`Densidad etnográfica rara en un foro de ingeniería; viñetas memorables (K18, K19, K35).`, x:`Los testimonios ilustran más que prueban: no hay proporciones ni distribución sistemática por tipo de laboratorio. La comunidad aparece con dos tamaños (1400 y 600-700) sin explicación.`, q:`¿Cómo cambiaría el análisis con una muestra comparativa explícita?`, tt:['T6','T4','T9']},
- {id:'E5', d:'Política y desigualdad', f:`Anticipa la justicia infraestructural: externalidades, política del refuerzo, National Information Infrastructure.`, x:`Lo político se trata como un nivel superior y no como una dimensión que atraviesa los tres.`, q:`¿Qué cambia si la desigualdad es propiedad de la relación misma?`, tt:['T11','T8']},
- {id:'E6', d:'Propuesta', f:`Reparte la responsabilidad y la desplaza de las personas a las estructuras de comunicación.`, x:`Sitúa al etnógrafo como mediador sin preguntarse qué doble vínculo produce él mismo, y deja intacta la estructura de recursos.`, q:`¿La mediación etnográfica es una solución o una nueva capa de infraestructura?`, tt:['T10']},
- {id:'E7', d:'Genealogía', f:`Primera formulación pública del programa de 1996 y 1999.`, x:`Al pasar a la lista de dimensiones (1996), el texto gana claridad pero pierde la idea de infraestructura como problema de comunicación entre niveles.`, q:`¿Qué se ganaría recuperando el aparato batesoniano para estudiar plataformas?`, tt:['T1','T4']},
- {id:'E8', d:'Crítica del racionalismo', f:`Desmonta la noción de "resistencia del usuario" con un caso en que el diseño era ejemplar.`, x:`El adversario está algo simplificado: en 1994 el diseño participativo ya cuestionaba la cascada, como el propio texto reconoce.`, q:`¿Contra quién escribe realmente el texto: contra los manuales o contra su propio campo?`, tt:['T2']}
-];
-
-const X = [
- {t:'Definición', e:'Relación, no cosa; infraestructura como contexto.', s:'Se conserva y se precisa (ingeniero ferroviario, silla de ruedas); lista de nueve propiedades.', h:'Doble relacionalidad (interna y externa); lo diseñado y lo no diseñado.', tt:['T1','T5']},
- {t:'Inversión', e:'Herramienta del analista (Bowker).', s:'Igual: llevar al frente lo que está tras bambalinas.', h:'Se multiplica: inversiones que ocurren por sí solas en el campo.', tt:['T1']},
- {t:'Visibilidad', e:'Implícita: el sistema que no se encuentra revela la infraestructura (K35).', s:'Propiedad explícita: visible en la ruptura.', h:'Discusión con Larkin: espectáculo frente a operación.', tt:['T9']},
- {t:'Aparato teórico', e:'Bateson: niveles y doble vínculo.', s:'Bateson queda como epígrafe; aparecen la lista y los trucos del oficio.', h:'Strum y Latour, Serres, Strathern, Deleuze y Guattari.', tt:['T0','T4']},
- {t:'Trabajo invisible', e:'Anticipado: construir herramientas no da crédito (K30); trabajo de articulación.', s:'Central: secretarias, enfermeras.', h:'Responsabilidad distribuida y ética del cuidado.', tt:['T8','T3']},
- {t:'Restricción como recurso', e:'El plazo de la Gazette (K21).', s:'Vínculo con convenciones de práctica.', h:'Las infraestructuras funcionan a través de sus huecos.', tt:['T7']},
- {t:'Desigualdad', e:'Laboratorios ricos y pobres; política del refuerzo.', s:'Puentes y barreras: Moses, computadoras donadas, censo.', h:'Urbanismo astillado, abandono biopolítico.', tt:['T6','T11']},
- {t:'Escala', e:'De un laboratorio a una comunidad mundial; National Information Infrastructure.', s:'Problema metodológico: etnografía de miles.', h:'Problema ontológico: la escala como efecto.', tt:['T11']},
- {t:'Lugar del etnógrafo', e:'Mediador en equipos de desarrollo.', s:'Lector de documentos y diseños; informante de informáticos.', h:'Experimentador conceptual y empírico.', tt:['T10']}
-];
-
-const NIVEL_COL = 'Nivel';
-const CONEX_COLS = ['Tema','En este texto','Star (1999)','Harvey, Jensen y Morita (2016)','Tesis'];
-
-/* ===================== UTILIDADES ===================== */
-const $ = s => document.querySelector(s);
-const byId = {}; [...T, ...K, ...C, ...S, ...D, ...E].forEach(x => byId[x.id] = x);
-const lectorURL = (p, ancla) => 'lector.html?f=' + encodeURIComponent(LECTURA) + (p ? '&p=' + p : '') + (ancla ? '&q=' + encodeURIComponent(ancla) : '');
-function pages(p){ return String(p).replace(/\d+/g, n => `<a class="pgl" href="${lectorURL(n)}" target="lector" title="Abrir el texto en la p. ${n}">${n}</a>`); }
-function chip(id, withLabel){
-  const x = byId[id]; if (!x) return '';
-  const cls = id[0] === 'T' ? 't' : id[0] === 'C' ? 'c' : id[0] === 'K' ? 'k' : id[0] === 'S' ? 's' : id[0] === 'D' ? 'd' : 'e';
-  const lb = id[0] === 'T' ? x.c : id[0] === 'K' ? x.t : id[0] === 'S' ? x.t : id[0] === 'D' ? x.t : id[0] === 'E' ? x.d : (x.es || '').slice(0, 60);
-  return `<button class="chip ${cls}" data-go="${id}" title="${lb.replace(/"/g,'&quot;').replace(/<[^>]+>/g,'')}">${id}${withLabel ? `<span class="lb">${lb}</span>` : ''}</button>`;
-}
-const chips = (ids, wl) => (ids || []).map(i => chip(i, wl)).join(' ');
-const pl = (n, a, b) => n + ' ' + (n === 1 ? a : b);
-const tag = (txt, cls) => `<span class="tag ${cls || ''}">${txt}</span>`;
-const casesOf = t => K.filter(k => k.tt.includes(t));
-const quotesOf = t => C.filter(c => c.tt.includes(t));
-const conceptsOf = t => D.filter(d => d.tt.includes(t));
-const evalOf = t => E.filter(e => e.tt.includes(t));
-const flowOf = t => FLOW.map((f, i) => ({f, i})).filter(o => o.f.t.includes(t));
-function refsOf(item, extra){ return [...new Set([...(item.tt || []), ...(extra || [])])].join(' '); }
-
-function table(el, heads, rows){
-  el.innerHTML = '<thead><tr>' + heads.map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>' + rows.join('') + '</tbody>';
-}
-
-/* ===================== RENDER ===================== */
-function renderGrid(){
-  let h = '<thead><tr><th></th>' + S.map(s => `<th title="${s.t}">${s.id}</th>`).join('') + '<th>total</th></tr></thead><tbody>';
-  for (const t of T){
-    h += `<tr data-refs="${t.id}"><th class="row"><button class="chip t" data-foco="${t.id}">${t.id}</button> ${t.c}</th>`;
-    let tot = 0;
-    for (const s of S){
-      const n = K.filter(k => k.s === s.id && k.tt.includes(t.id)).length + C.filter(c => c.s === s.id && c.tt.includes(t.id)).length;
-      tot += n;
-      const v = n === 0 ? 0 : n >= 4 ? 4 : n;
-      const arg = t.s.includes(s.id);
-      h += `<td class="v${v}${arg ? ' arg' : ''}" data-foco="${t.id}" title="${t.id} en ${s.id} (${s.t}): ${n} apoyos${arg ? ' · se argumenta aquí' : ''}">${n || (arg ? '◆' : '·')}</td>`;
-    }
-    h += `<td class="v0" style="color:var(--ink);background:#fff;font-weight:600">${tot}</td></tr>`;
-  }
-  $('#grid').innerHTML = h + '</tbody>';
-}
-
-function renderHilos(){
-  $('#hilosBox').innerHTML = T.map(t => {
-    const ks = casesOf(t.id), cs = quotesOf(t.id), ds = conceptsOf(t.id), es = evalOf(t.id), fs = flowOf(t.id);
-    return `<details class="hilo" id="hilo-${t.id}" data-refs="${t.id}">
-      <summary><span class="tid">${t.id}</span><span class="tt">${t.c}</span><span class="tc">${pl(ks.length,'caso','casos')} · ${pl(cs.length,'cita','citas')} · ${pl(ds.length,'concepto','conceptos')}</span></summary>
-      <div class="hb">
-        <div class="form">${t.f}</div>
-        <div class="row"><b>Estatus</b><div>${tag(t.est, t.est.startsWith('inferida') ? 't2' : '')} · páginas ${pages(t.p)}</div></div>
-        <div class="row"><b>Cómo se sostiene</b><div>${t.sus}</div></div>
-        <div class="row"><b>Dónde se argumenta</b><div>${chips(t.s, true)}</div></div>
-        <div class="row"><b>Paso del argumento</b><div>${fs.map(o => `<div>${o.i + 1}. <b>${o.f.mv}</b> ${o.f.d}</div>`).join('') || '—'}</div></div>
-        <div class="row"><b>Conceptos</b><div>${chips(ds.map(d => d.id), true)}</div></div>
-        <div class="row"><b>Casos</b><div><ul>${ks.map(k => `<li>${chip(k.id)} <b>${k.t}</b> (p. ${pages(k.p)}): ${k.d}</li>`).join('') || '<li>—</li>'}</ul></div></div>
-        <div class="row"><b>Citas</b><div>${cs.map(c => `<div class="q">${chip(c.id)} ${c.en} <span class="tr">${c.es} · p. ${pages(c.p)} · <a class="ver" href="${lectorURL(c.p.split('-')[0], c.a)}" target="lector">ver en el texto</a></span></div>`).join('') || '—'}</div></div>
-        <div class="row"><b>Tensión crítica</b><div>${es.map(e => `<div class="obj">${chip(e.id)} <b>${e.d}.</b> ${e.x}<br><i>${e.q}</i></div>`).join('') || '—'}</div></div>
-      </div></details>`;
-  }).join('');
-}
-
-function renderFlow(){
-  $('#flow').innerHTML = FLOW.map(f => `<li data-refs="${f.t.join(' ')}"><span class="mv">${f.mv}</span> ${f.d} <span class="why">${f.w} · p. ${pages(f.p)} · ${chips(f.t)}</span></li>`).join('');
-}
-
-function renderSecciones(){
-  table($('#tSecciones'), ['ID','Sección','Pág.','Función','Argumento y contenido','Sustento','Tesis','Casos y citas','Transición'],
-    S.map(s => {
-      const ts = T.filter(t => t.s.includes(s.id)).map(t => t.id);
-      const ks = K.filter(k => k.s === s.id).map(k => k.id), cs = C.filter(c => c.s === s.id).map(c => c.id);
-      return `<tr id="${s.id}" data-refs="${[...new Set([...ts, ...K.filter(k=>k.s===s.id).flatMap(k=>k.tt), ...C.filter(c=>c.s===s.id).flatMap(c=>c.tt)])].join(' ')}"><td class="id">${s.id}</td><td class="k">${s.t}</td><td>${pages(s.p)}</td><td>${s.fn}</td><td>${s.arg}</td><td>${s.sus}</td><td>${chips(ts)}</td><td>${chips(ks)} ${chips(cs)}</td><td>${s.tr}</td></tr>`;
-    }));
-}
-
-function renderCasos(){
-  table($('#tCasos'), ['ID','Caso','Actores','Qué ocurre','Qué demuestra',NIVEL_COL,'Sostiene','Citas','Sección','Pág.'],
-    K.map(k => {
-      const cs = C.filter(c => c.k === k.id).map(c => c.id);
-      return `<tr id="${k.id}" data-refs="${refsOf(k)}"><td class="id">${k.id}</td><td class="k">${k.t}</td><td>${k.a}</td><td>${k.q}</td><td>${k.d}</td><td>${tag(k.n, k.n === '3' ? 't3' : /^(doble|nombrado|enumerado)/.test(k.n) ? 't2' : '')}</td><td>${chips(k.tt, true)}</td><td>${chips(cs) || '—'}</td><td>${chip(k.s)}</td><td>${pages(k.p)}</td></tr>`;
-    }));
-}
-
-function renderCitas(){
-  table($('#tCitas'), ['ID','Original','Traducción','Pág.','Función','Sostiene','Caso','Comentario'],
-    C.map(c => `<tr id="${c.id}" data-refs="${refsOf(c)}"><td class="id">${c.id}</td><td class="en">${c.en}<br><a class="ver" href="${lectorURL(c.p.split('-')[0], c.a)}" target="lector">ver en el texto</a></td><td class="es">${c.es}</td><td>${pages(c.p)}</td><td>${c.fn}</td><td>${chips(c.tt, true)}</td><td>${c.k ? chip(c.k, true) : '—'}</td><td>${c.co}</td></tr>`));
-}
-
-function renderConceptos(){
-  table($('#tConceptos'), ['ID','Concepto','Definición o uso','Origen','Función','Tesis','Pág.'],
-    D.map(d => `<tr id="${d.id}" data-refs="${refsOf(d)}"><td class="id">${d.id}</td><td class="k">${d.t}</td><td>${d.def}</td><td>${d.o}</td><td>${d.fn}</td><td>${chips(d.tt)}</td><td>${pages(d.p)}</td></tr>`));
-}
-
-function renderAutores(){
-  table($('#tAutores'), ['Autor y obra','Qué toma el texto','Modo','Tesis','Pág.'],
-    A.map(a => `<tr data-refs="${refsOf(a)}"><td class="k">${a.a}</td><td>${a.q}</td><td>${a.m.split(', ').map(m => tag(m, m === 'crítica' ? 't3' : /refer|contexto|fuente|indirecto/.test(m) ? 't2' : '')).join(' ')}</td><td>${chips(a.tt)}</td><td>${pages(a.p)}</td></tr>`));
-}
-
-function renderEval(){
-  table($('#tEval'), ['ID','Dimensión','Fortaleza','Tensión o límite','Pregunta abierta','Afecta a'],
-    E.map(e => `<tr id="${e.id}" data-refs="${refsOf(e)}"><td class="id">${e.id}</td><td class="k">${e.d}</td><td>${e.f}</td><td>${e.x.replace(/\b(K\d+)\b/g, m => chip(m))}</td><td>${e.q}</td><td>${chips(e.tt, true)}</td></tr>`));
-}
-
-function renderConex(){
-  table($('#tConex'), CONEX_COLS,
-    X.map(x => `<tr data-refs="${refsOf(x)}"><td class="k">${x.t}</td><td>${x.e.replace(/\b(K\d+)\b/g, m => chip(m))}</td><td>${x.s}</td><td>${x.h}</td><td>${chips(x.tt)}</td></tr>`));
-}
-
-/* ===================== INTERACCIÓN ===================== */
-let foco = null;
-function setFoco(id){
-  foco = id;
-  document.body.classList.toggle('foco', !!id);
-  document.querySelectorAll('[data-refs]').forEach(el => el.classList.toggle('on', !!id && el.dataset.refs.split(' ').includes(id)));
-  if (id){
-    const t = byId[id];
-    $('#focoT').textContent = id + ' · ' + t.c;
-    $('#focoC').textContent = pl(casesOf(id).length,'caso','casos') + ' · ' + pl(quotesOf(id).length,'cita','citas') + ' · ' + pl(conceptsOf(id).length,'concepto','conceptos') + ' · ' + pl(t.s.length,'sección','secciones');
-    try { history.replaceState(null, '', '#hilo=' + id); } catch(e){}
-  } else {
-    try { history.replaceState(null, '', location.pathname + location.search); } catch(e){}
-  }
-}
-function flash(el){ el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
-function goTo(id){
-  if (id[0] === 'T'){ setFoco(id); return; }
-  const el = document.getElementById(id); if (!el) return;
-  if (el.classList.contains('hidden-row')){ $('#q').value = ''; filtrar(); }
-  el.scrollIntoView({behavior:'smooth', block:'center'}); flash(el);
-}
-document.addEventListener('click', e => {
-  const g = e.target.closest('[data-go]'); if (g){ e.preventDefault(); goTo(g.dataset.go); return; }
-  const f = e.target.closest('[data-foco]'); if (f){ e.preventDefault(); setFoco(f.dataset.foco); }
-});
-$('#focoX').addEventListener('click', () => { $('#focoSolo').checked = false; document.body.classList.remove('solo'); setFoco(null); });
-$('#focoSolo').addEventListener('change', e => document.body.classList.toggle('solo', e.target.checked));
-$('#focoDossier').addEventListener('click', () => { const d = document.getElementById('hilo-' + foco); if (!d) return; d.open = true; d.scrollIntoView({behavior:'smooth', block:'start'}); flash(d); });
-
-/* búsqueda */
-const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-function filtrar(){
-  const q = norm($('#q').value.trim());
-  const rows = [...document.querySelectorAll('main tbody tr')].filter(r => !r.closest('#grid'));
-  if (!q){ rows.forEach(r => r.classList.remove('hidden-row')); $('#count').textContent = ''; return; }
-  let n = 0;
-  rows.forEach(r => { const hit = norm(r.textContent).includes(q); r.classList.toggle('hidden-row', !hit); if (hit) n++; });
-  $('#count').textContent = n + (n === 1 ? ' fila coincide' : ' filas coinciden');
-}
-$('#q').addEventListener('input', filtrar);
-
-/* vista tabla / fichas, tamaño de letra, menú */
-const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} } };
-function setFichas(on){ document.body.classList.toggle('fichas', on); $('#vista').textContent = on ? 'vista: fichas' : 'vista: tabla'; $('#vista').classList.toggle('on', on); }
-$('#vista').addEventListener('click', () => { const on = !document.body.classList.contains('fichas'); setFichas(on); store.set('adinf-matriz-fichas', on ? '1' : '0'); });
-(function(){ const v = store.get('adinf-matriz-fichas'); setFichas(v != null ? v === '1' : matchMedia('(max-width:1100px)').matches); })();
-function setFs(px){ px = Math.max(14, Math.min(22, px)); document.documentElement.style.setProperty('--fs', px + 'px'); store.set('adinf-matriz-fs', px); }
-$('#fmas').addEventListener('click', () => setFs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs')) + 1));
-$('#fmenos').addEventListener('click', () => setFs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs')) - 1));
-(function(){ const v = parseFloat(store.get('adinf-matriz-fs')); if (v) setFs(v); })();
-$('#navToggle').addEventListener('click', () => { const o = $('#side').classList.toggle('open'); $('#navToggle').setAttribute('aria-expanded', o); });
-$('#nav').addEventListener('click', e => { if (e.target.closest('a') && matchMedia('(max-width:1100px)').matches) $('#side').classList.remove('open'); });
-$('#leer').href = lectorURL(null); $('#leer').target = 'lector';
-
-function etiquetar(){ document.querySelectorAll('table.mx').forEach(t => { const hs = [...t.querySelectorAll('thead th')].map(th => th.textContent); t.querySelectorAll('tbody tr').forEach(tr => [...tr.children].forEach((td, i) => td.dataset.label = hs[i] || '')); }); }
-
-renderGrid(); renderHilos(); renderFlow(); renderSecciones(); renderCasos(); renderCitas(); renderConceptos(); renderAutores(); renderEval(); renderConex(); etiquetar();
-(function(){ const m = location.hash.match(/^#hilo=(T\d+)$/); if (m && byId[m[1]]) setFoco(m[1]); })();
+(function(){
+  var K='adinf-matriz-fs', r=document.documentElement;
+  function set(v){ r.style.setProperty('--fs', v+'px'); try{localStorage.setItem(K, v);}catch(e){} }
+  var v=17; try{ var g=parseFloat(localStorage.getItem(K)); if(g>=13&&g<=24) v=g; }catch(e){}
+  set(v);
+  var a=document.getElementById('fsMenos'), b=document.getElementById('fsMas');
+  if(a) a.onclick=function(){ v=Math.max(13,v-1); set(v); };
+  if(b) b.onclick=function(){ v=Math.min(24,v+1); set(v); };
+})();
 </script>
 </body>
 </html>

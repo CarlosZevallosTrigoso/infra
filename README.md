@@ -4,8 +4,8 @@ Sitio estático para GitHub Pages: matrices analíticas de las lecturas del cír
 
 ## Estructura
 
-- `index.html` — índice: los tres textos, genealogía, matriz comparativa y conceptos que viajan.
-- `star-ruhleder-1994.html`, `star-1999.html`, `harvey-jensen-morita-2016.html` — matrices analíticas (con modo hilo, mapa de sustento y enlaces al lector).
+- `index.html` — índice: los tres textos y un cuadro de cómo dialogan.
+- `star-ruhleder-1994.html`, `star-1999.html`, `harvey-jensen-morita-2016.html` — una matriz por texto, para leer de arriba abajo: tesis, esquema del texto, núcleo (hallazgos en 1994, principios en 1999, movimientos en 2016), argumentos clave, citas, límites y síntesis. Las páginas y las citas abren el pasaje en el lector.
 - `lector.html` — lector y anotador de Markdown. Se abre con `lector.html?f=<archivo.md>`; acepta `&p=<página>` para saltar a una página y `&q=<texto>` para ir a una cita y resaltarla. Sin parámetros, muestra la lista de lecturas.
 - `marked.umd.js` — conversor Markdown→HTML local (sin CDN).
 - `lecturas/` — los `.md` de los textos, con sus nombres originales.

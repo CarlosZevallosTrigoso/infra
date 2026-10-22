@@ -3,744 +3,206 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Matriz · Star 1999</title>
-<meta name="description" content="Matriz analítica articulada de Star (1999), The Ethnography of Infrastructure: tesis, hilos argumentales, propiedades, trucos del oficio, casos, citas, conceptos y evaluación, enlazados entre sí y con el texto.">
+<title>The Ethnography of Infrastructure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#ffffff; --ink:#1d1f1b; --muted:#5b6157; --accent:#5a7a3a; --accent-dark:#3f5728;
-  --accent-soft:#eef3e8; --line:#dfe3da; --quote:#f7f8f4; --warn:#8a5a14; --warn-soft:#fbf3e4;
-  --steel:#3f5f78; --steel-soft:#e9eff4; --plum:#6b3f63; --plum-soft:#f3ebf1;
+  --accent-soft:#eef3e8; --line:#dfe3da; --quote:#f7f8f4; --steel:#3f5f78; --steel-soft:#e9eff4;
   --mono:'Fira Code',ui-monospace,Menlo,Consolas,monospace;
   --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
-  --fs:16.5px;
+  --fs:17px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.58}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.62}
 a{color:var(--accent-dark)}
-code{font-family:var(--mono);font-size:.88em}
-button{font-family:var(--mono);cursor:pointer}
-
-/* cabecera */
-header.top{border-bottom:3px solid var(--accent);padding:22px 32px 18px;background:#fff}
-.crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:8px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px}
+header.top{border-bottom:3px solid var(--accent);padding:22px 0 16px}
+.crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .crumbs a{color:var(--accent-dark);text-decoration:none}
-header.top h1{font-size:1.75em;line-height:1.2;margin:0 0 6px}
-header.top .ref{color:var(--muted);font-size:.93em;max-width:1000px}
+h1{font-size:1.7em;line-height:1.2;margin:0 0 8px}
+.ref{color:var(--muted);font-size:.92em}
 .tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px}
+.btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px;cursor:pointer}
 .btn:hover{border-color:var(--accent);color:var(--accent-dark)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.primary:hover{background:var(--accent-dark);color:#fff}
-.btn.on{border-color:var(--accent);color:var(--accent-dark);background:var(--accent-soft)}
+nav.secs{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
+nav.secs .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:6px;padding-bottom:6px;scrollbar-width:none}
+nav.secs a{font-family:var(--mono);font-size:12px;white-space:nowrap;text-decoration:none;color:var(--muted);padding:6px 9px;border-radius:4px}
+nav.secs a:hover{background:var(--accent-soft);color:var(--accent-dark)}
+section{padding:30px 0 6px;scroll-margin-top:48px}
+h2{font-size:1.32em;margin:0 0 14px;display:flex;gap:12px;align-items:baseline}
+h2 .n{font-family:var(--mono);font-size:.62em;color:var(--accent);font-weight:500}
+h3{font-size:1.06em;margin:22px 0 8px}
+.intro{color:var(--muted);margin:-4px 0 16px}
+.tesis{font-size:1.08em;border-left:4px solid var(--accent);padding:4px 0 4px 18px;margin:0}
 
-/* disposición */
-.layout{display:grid;grid-template-columns:260px minmax(0,1fr);max-width:1560px}
-aside.side{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:20px 18px 40px 32px;border-right:1px solid var(--line)}
-.label{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
-aside.side nav a{display:block;text-decoration:none;color:var(--ink);font-size:.88em;padding:5px 0 5px 10px;border-left:2px solid transparent}
-aside.side nav a:hover{border-left-color:var(--accent);color:var(--accent-dark)}
-#navToggle{display:none}
-.search input{width:100%;font-family:var(--mono);font-size:13px;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink)}
-.search input:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
-.count{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:6px 0 18px;min-height:1em}
-.other{margin-top:24px}
-.other a{display:block;font-size:.85em;margin:5px 0}
-main{padding:24px 36px 120px;min-width:0}
-section{margin:0 0 56px;scroll-margin-top:12px}
-h2{font-size:1.45em;margin:0 0 6px;padding-bottom:6px;border-bottom:1px solid var(--line)}
-h2 .n{font-family:var(--mono);font-size:.6em;color:var(--accent);margin-right:10px;font-weight:500}
-h3{font-size:1.1em;margin:26px 0 8px}
-p.intro{color:var(--muted);margin:8px 0 14px;max-width:920px}
+/* esquema */
+.esq{margin:4px 0 0}
+.paso{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px}
+.pp{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;padding-top:13px}
+.pp a{color:var(--accent-dark);text-decoration:none}
+.caja{border:1px solid var(--line);border-radius:6px;padding:11px 15px 12px;background:#fff}
+.caja .tit{font-style:italic;font-weight:600}
+.fun{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--accent-dark);background:var(--accent-soft);border-radius:3px;padding:1px 7px;margin-left:8px;font-style:normal;font-weight:400;vertical-align:2px}
+.caja p{margin:6px 0 0}
+.caja ul{margin:8px 0 0;padding-left:20px}
+.caja li{margin:3px 0}
+.caja li .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.trans{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;color:var(--muted);font-size:.86em;font-style:italic}
+.trans span:last-child{padding:5px 0 5px 16px;border-left:2px dashed var(--line);margin-left:14px}
 
-/* tablas */
-.tw{overflow-x:auto;margin:10px 0 18px;border:1px solid var(--line);border-radius:6px;-webkit-overflow-scrolling:touch}
-table{border-collapse:collapse;width:100%;font-size:.88em;line-height:1.5}
-th{font-family:var(--mono);font-weight:500;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--accent-dark);background:var(--accent-soft);text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:bottom}
-td{padding:10px 11px;border-bottom:1px solid var(--line);vertical-align:top}
-tbody tr:last-child td{border-bottom:none}
-td.k{font-weight:600;min-width:140px}
-td.en{font-style:italic;background:var(--quote);min-width:230px}
-td.es{min-width:230px}
-td.id{font-family:var(--mono);font-size:12px;color:var(--muted);white-space:nowrap}
-.ficha td.k{width:210px}
-.pgl{font-family:var(--mono);font-size:12px;color:var(--accent-dark);white-space:nowrap;text-decoration:none;border-bottom:1px dotted var(--accent)}
-.pgl:hover{color:var(--warn);border-bottom-color:var(--warn)}
-.ver{font-family:var(--mono);font-size:11.5px;white-space:nowrap;text-decoration:none;color:var(--steel);border:1px solid var(--steel-soft);background:var(--steel-soft);padding:2px 7px;border-radius:3px;display:inline-block;margin-top:6px}
-.ver:hover{border-color:var(--steel)}
+/* núcleo */
+.bloque{margin:0 0 8px}
+.fichas{display:grid;gap:10px}
+.ficha{border:1px solid var(--line);border-radius:6px;padding:11px 15px}
+.ficha .cab{font-weight:600}
+.ficha .cab .en{font-weight:400;font-style:italic;color:var(--muted)}
+.ficha .cab .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;margin-left:6px}
+.ficha p{margin:5px 0 0}
+.ficha .ej{color:var(--muted);font-size:.95em}
+.ficha .ej b{color:var(--ink);font-weight:600}
+.ficha ul{margin:6px 0 0;padding-left:20px}
+.ficha li{margin:4px 0}
+.mov{border:1px solid var(--line);border-left:4px solid var(--steel);border-radius:6px;padding:12px 16px;margin:0 0 12px}
+.mov .cab{font-weight:700}
+.mov .cab .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;margin-left:6px}
+.mov dl{margin:8px 0 0;display:grid;grid-template-columns:92px minmax(0,1fr);gap:6px 12px}
+.mov dt{font-family:var(--mono);font-size:11.5px;color:var(--steel);padding-top:3px;text-transform:uppercase;letter-spacing:.04em}
+.mov dd{margin:0}
+.caso{background:var(--quote);border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin:0 0 14px}
+.caso p{margin:6px 0 0}.caso p:first-child{margin-top:0}
+.qi{font-style:italic}
+.qi a,.lk{font-family:var(--mono);font-size:11px;text-decoration:none;font-style:normal;white-space:nowrap}
 
-/* fichas de referencia cruzada */
-.chip{display:inline-block;font-family:var(--mono);font-size:11px;line-height:1.35;padding:2px 7px;margin:2px 3px 2px 0;border:1px solid var(--accent);color:var(--accent-dark);background:#fff;border-radius:3px;white-space:nowrap;cursor:pointer}
-.chip:hover{background:var(--accent-soft)}
-.chip.c{border-color:var(--steel);color:var(--steel)}
-.chip.c:hover{background:var(--steel-soft)}
-.chip.k{border-color:var(--plum);color:var(--plum)}
-.chip.k:hover{background:var(--plum-soft)}
-.chip.s,.chip.d{border-color:#9aa094;color:#4c5148}
-.chip.s:hover,.chip.d:hover{background:#f1f2ee}
-.chip .lb{font-family:var(--serif);font-size:12px;margin-left:5px;color:var(--ink)}
-.tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 6px;margin:1px 2px 1px 0;border:1px solid var(--accent);color:var(--accent-dark);border-radius:3px;white-space:nowrap}
-.tag.t2{border-color:#8a8f84;color:#4c5148}
-.tag.t3{border-color:var(--warn);color:var(--warn)}
+/* argumentos */
+.arg{border:1px solid var(--line);border-radius:6px;padding:14px 18px 6px;margin:0 0 14px}
+.arg h3{margin:0 0 8px;display:flex;gap:10px}
+.arg h3 .n{font-family:var(--mono);font-size:.78em;color:var(--accent);font-weight:500;padding-top:2px}
+.arg ol{margin:4px 0 8px;padding-left:22px}
+.arg li{margin:4px 0}
+.arg .ev{margin:6px 0 10px}
+.arg .ev b{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-right:6px}
 
-/* modo hilo */
-body.foco [data-refs]:not(.on){opacity:.28}
-body.foco.solo [data-refs]:not(.on){display:none}
-body.foco [data-refs].on{box-shadow:inset 4px 0 0 var(--accent)}
-body.foco tr[data-refs].on td{background:#fafcf7}
-#focoBar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:50;background:#fff;border:1px solid var(--accent);border-radius:8px;box-shadow:0 6px 24px #0002;padding:10px 14px;display:none;align-items:center;gap:10px;flex-wrap:wrap;max-width:min(940px,calc(100vw - 24px));font-size:.88em}
-body.foco #focoBar{display:flex}
-#focoBar .ft{font-weight:600}
-#focoBar .fc{font-family:var(--mono);font-size:12px;color:var(--muted)}
-#focoBar label{font-family:var(--mono);font-size:12px;display:flex;gap:6px;align-items:center;cursor:pointer}
-.flash{animation:flash 1.6s ease-out}
-@keyframes flash{0%{background:#fff3c4}100%{background:transparent}}
-tr.flash td{animation:flash 1.6s ease-out}
+/* citas */
+blockquote.q{margin:0 0 12px;padding:10px 16px;background:var(--quote);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+blockquote.q .en{font-style:italic}
+blockquote.q .es{color:var(--muted);margin-top:4px;font-size:.95em}
+blockquote.q .meta{font-family:var(--mono);font-size:11.5px;margin-top:6px;color:var(--muted)}
+blockquote.q .meta a{text-decoration:none}
+blockquote.q .co{font-size:.92em;margin-top:4px}
+.arg blockquote.q{margin-bottom:12px}
 
-/* mapa de sustento */
-.grid{border-collapse:separate;border-spacing:3px;font-size:12px;width:auto}
-.grid th{background:none;border:none;padding:4px 2px;text-align:center;font-size:11px;color:var(--muted)}
-.grid th.row{text-align:left;white-space:nowrap;color:var(--ink);font-family:var(--serif);text-transform:none;letter-spacing:0;font-size:13px;padding-right:10px}
-.grid td{border:none;padding:0;text-align:center;vertical-align:middle;width:58px;height:38px;border-radius:4px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--ink)}
-.grid td.v0{background:#f6f7f4;color:#c3c7bd}
-.grid td.v1{background:#e3ecd8}
-.grid td.v2{background:#c9dbb5}
-.grid td.v3{background:#a9c58f}
-.grid td.v4{background:#86ab66;color:#fff}
-.grid td.arg{outline:2px solid var(--accent-dark);outline-offset:-2px}
-.legend{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;margin:6px 0 12px}
-.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+/* síntesis */
+.sint{border-top:1px solid var(--line);padding-top:6px}
+.sint h4{font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-dark);margin:26px 0 8px;font-weight:500}
+.sint p{margin:0 0 12px}
+.sint ol,.sint ul{padding-left:22px}
+.sint .ref0{color:var(--muted);font-size:.92em}
 
-/* hilos argumentales */
-details.hilo{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;margin:0 0 12px;background:#fff}
-details.hilo>summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
-details.hilo>summary::-webkit-details-marker{display:none}
-details.hilo>summary .tid{font-family:var(--mono);color:#fff;background:var(--accent);border-radius:3px;padding:1px 7px;font-size:12px}
-details.hilo>summary .tt{font-weight:600;flex:1;min-width:220px}
-details.hilo>summary .tc{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
-details.hilo[open]>summary{border-bottom:1px solid var(--line)}
-.hb{padding:12px 18px 16px}
-.hb .form{font-size:1.02em;border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:6px 0 12px}
-.hb .row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding:8px 0;border-top:1px dashed var(--line)}
-.hb .row>b{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:500;padding-top:2px}
-.hb ul{margin:0;padding-left:1.1em}
-.hb li{margin:4px 0}
-.hb .q{font-style:italic;background:var(--quote);padding:6px 10px;border-radius:4px;margin:6px 0}
-.hb .q .tr{font-style:normal;display:block;color:var(--muted);margin-top:3px}
-.hb .obj{border-left:3px solid var(--warn);background:var(--warn-soft);padding:6px 10px;border-radius:4px;margin:6px 0}
+/* índice */
+.textos{display:grid;gap:14px;margin-top:6px}
+.texto{border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.texto .ano{font-family:var(--mono);font-size:12px;color:var(--accent-dark)}
+.texto h3{margin:4px 0 4px;font-size:1.12em}
+.texto p{margin:6px 0}
+.texto .tools{margin-top:10px}
+table.dia{width:100%;border-collapse:collapse;font-size:.93em}
+table.dia th,table.dia td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
+table.dia th{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--muted);background:var(--quote)}
+table.dia td:first-child{font-weight:600;width:16%}
 
-/* progresión */
-.flow{list-style:none;margin:16px 0;padding:0;counter-reset:f}
-.flow li{position:relative;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:12px 16px 12px 52px;margin:0 0 28px;background:#fff;counter-increment:f}
-.flow li::before{content:counter(f);position:absolute;left:14px;top:12px;font-family:var(--mono);font-size:14px;color:#fff;background:var(--accent);width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px}
-.flow li:not(:last-child)::after{content:"↓";position:absolute;left:50%;bottom:-25px;font-family:var(--mono);color:var(--accent);font-size:17px}
-.flow .mv{font-weight:700}
-.flow .why{display:block;color:var(--muted);font-size:.92em;margin-top:4px}
-.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
-.levels div{border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:6px;padding:12px 14px;font-size:.9em}
-.levels div b{display:block;font-family:var(--mono);font-size:12px;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.box{border:1px solid var(--line);background:var(--quote);padding:14px 18px;border-radius:6px;margin:12px 0}
-.hidden-row{display:none !important}
-footer{border-top:1px solid var(--line);padding:18px 32px;color:var(--muted);font-size:13px;font-family:var(--mono)}
+footer{color:var(--muted);font-family:var(--mono);font-size:11.5px;padding:34px 0 40px;border-top:1px solid var(--line);margin-top:30px}
 
-/* vista de fichas (tablet vertical, móvil o elegida) */
-body.fichas table.mx thead{display:none}
-body.fichas table.mx,body.fichas table.mx tbody{display:block;width:100%}
-body.fichas table.mx tr{display:block;border:1px solid var(--line);border-radius:6px;margin:0 0 12px;padding:6px 4px;background:#fff}
-body.fichas table.mx td{display:block;border:none;padding:6px 10px;min-width:0 !important}
-body.fichas table.mx td::before{content:attr(data-label);display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;font-style:normal}
-body.fichas table.mx td.en{border-radius:4px}
-body.fichas .tw{border:none;overflow:visible}
-body.fichas table.ficha td.k{width:auto}
-body.fichas table.ficha td::before{display:none}
-
-/* tablet y pantallas estrechas */
-@media (max-width:1100px){
-  .layout{grid-template-columns:1fr}
-  aside.side{position:sticky;top:0;z-index:40;background:#fff;max-height:none;border-right:none;border-bottom:1px solid var(--line);padding:10px 16px}
-  #navToggle{display:inline-flex}
-  aside.side .collapsible{display:none;padding-top:12px;max-height:70vh;overflow:auto}
-  aside.side.open .collapsible{display:block}
-  .sidebar-head{display:flex;gap:8px;align-items:center}
-  .sidebar-head .search{flex:1}
-  .sidebar-head .count{display:none}
-  main{padding:20px 20px 120px}
-  header.top{padding:18px 20px}
-  .levels{grid-template-columns:1fr}
-  .hb .row{grid-template-columns:1fr}
-  footer{padding:16px 20px}
+@media (max-width:640px){
+  .paso,.trans{grid-template-columns:1fr;gap:4px}
+  .pp{text-align:left;padding-top:0}
+  .trans span:first-child{display:none}
+  .trans span:last-child{margin-left:10px}
+  .mov dl{grid-template-columns:1fr}
+  table.dia, table.dia tbody, table.dia tr, table.dia td, table.dia th{display:block;width:auto}
+  table.dia thead{display:none}
+  table.dia td{border-top:none}
+  table.dia td:first-child{width:auto;border-top:1px solid var(--line);background:var(--quote)}
+  table.dia td[data-t]::before{content:attr(data-t) " · ";font-family:var(--mono);font-size:11px;color:var(--muted)}
 }
-@media (min-width:1101px){ .sidebar-head .count{display:block} }
-@media (max-width:600px){ main{padding:16px 16px 120px} header.top{padding:16px} :root{--fs:16px} }
-@media (pointer:coarse){
-  .chip{padding:5px 9px;font-size:12px;margin:3px 4px 3px 0}
-  aside.side nav a{padding:9px 0 9px 10px}
-  .pgl{padding:2px 0}
-}
-@media print{
-  aside.side,#focoBar,.tools{display:none !important}
-  .layout{display:block}
-  main{padding:0}
-  .tw{overflow:visible;border:none}
-  tr{break-inside:avoid}
-  details.hilo{break-inside:avoid}
-  body{font-size:11pt}
-}
+@media print{nav.secs,.tools{display:none}}
 </style>
 </head>
 <body>
-
-<header class="top">
-  <div class="crumbs"><a href="index.html">← matrices · antropología de las infraestructuras</a><span>2 de 3</span></div>
-  <h1>Star (1999). La etnografía de la infraestructura</h1>
-  <div class="ref">Star, Susan Leigh (1999). "The Ethnography of Infrastructure". <i>American Behavioral Scientist</i> 43(3): 377-391. Páginas: las de la revista, que son también las del lector.</div>
+<header class="top"><div class="wrap">
+  <div class="crumbs"><a href="index.html">← índice</a><span>Círculo de lecturas · antropología de las infraestructuras</span></div>
+  <h1>The Ethnography of Infrastructure</h1>
+  <div class="ref">Star, Susan Leigh (1999). «The Ethnography of Infrastructure». <i>American Behavioral Scientist</i> 43(3): 377-391. Páginas de la revista.</div>
   <div class="tools">
-    <a class="btn primary" id="leer" href="#">leer el texto</a>
-    <button class="btn" id="vista" title="Alternar entre tablas y fichas">vista: tabla</button>
-    <button class="btn" id="fmenos" title="Reducir la letra">A−</button>
-    <button class="btn" id="fmas" title="Aumentar la letra">A+</button>
+    <a class="btn primary" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md">leer el texto ↗</a>
+    <button class="btn" id="fsMenos" title="Letra más pequeña">A−</button>
+    <button class="btn" id="fsMas" title="Letra más grande">A+</button>
   </div>
-</header>
-
-<div class="layout">
-<aside class="side" id="side">
-  <div class="sidebar-head">
-    <button class="btn" id="navToggle" aria-expanded="false">☰ contenido</button>
-    <div class="search">
-      <input id="q" type="search" placeholder="buscar en las matrices: guía telefónica, DSM, enfermeras…" aria-label="Buscar en las matrices">
-      <div class="count" id="count"></div>
-    </div>
-  </div>
-  <div class="collapsible">
-    <p class="label">Contenido</p>
-    <nav id="nav">
-      <a href="#ficha">1. Ficha</a>
-      <a href="#mapa">2. Mapa de sustento</a>
-      <a href="#hilos">3. Hilos argumentales</a>
-      <a href="#progresion">4. Progresión lógica</a>
-      <a href="#secciones">5. Matriz por secciones</a>
-      <a href="#casos">6. Matriz de casos</a>
-      <a href="#citas">7. Citas clave</a>
-      <a href="#conceptos">8. Conceptos</a>
-      <a href="#autores">9. Autores citados</a>
-      <a href="#evaluacion">10. Evaluación crítica</a>
-      <a href="#conexiones">11. Conexiones</a>
-      <a href="#fuentes">12. Nota sobre fuentes</a>
-    </nav>
-    <div class="other">
-      <p class="label">Otras matrices</p>
-      <a href="index.html">Índice y matriz comparativa</a>
-      <a href="star-ruhleder-1994.html">Star y Ruhleder (1994)</a>
-      <a href="harvey-jensen-morita-2016.html">Harvey, Jensen y Morita (2016)</a>
-    </div>
-  </div>
-</aside>
-
-<main>
-
-<section id="ficha">
-<h2><span class="n">01</span>Ficha</h2>
-<p class="intro">Cómo está hecha esta matriz: tesis (T0-T12), casos (K1-K44), citas (C1-C40), secciones (S1-S10), conceptos (D1-D30) y tensiones críticas (E1-E8) se remiten entre sí. Al pulsar una ficha de tesis se activa el <b>modo hilo</b>: se resalta todo lo que la sostiene. Las páginas y las citas abren el texto en el lector, en el pasaje exacto.</p>
-<div class="tw"><table class="ficha mx">
-<thead><tr><th>Campo</th><th>Contenido</th></tr></thead>
-<tbody>
-<tr><td class="k">Autora</td><td><b>Susan Leigh Star</b> (1954-2010). Socióloga del interaccionismo simbólico, discípula de Anselm Strauss. En 1999 firmaba desde la Universidad de California en San Diego. Es el año de <i>Sorting Things Out</i>, con Geoffrey Bowker, que el artículo cita "en prensa" y del que toma varios casos. Cinco años antes había escrito con Karen Ruhleder la ponencia sobre el Worm Community System, que aquí vuelve a contar como origen de su definición.</td></tr>
-<tr><td class="k">Foro y audiencia</td><td><i>American Behavioral Scientist</i>, número de noviembre-diciembre de 1999, dentro de un dossier sobre métodos para estudiar la vida en línea. Su público son científicos sociales, en particular etnógrafos de Internet, no diseñadores de sistemas.</td></tr>
-<tr><td class="k">Género</td><td>Artículo metodológico con tono de manifiesto: un "llamado a estudiar cosas aburridas" que combina definición, reflexión sobre el método y un repertorio de "trucos del oficio".</td></tr>
-<tr><td class="k">Material empírico</td><td>No hay un caso único. Star recorre su propio trabajo: el Worm Community System (tres años, más de cien biólogos), la clasificación del trabajo de enfermería (con Bowker y Timmermans), la historia de la Clasificación Internacional de Enfermedades, la reclasificación racial bajo el apartheid, la investigación sobre neurofisiólogos del siglo XIX y la evaluación de la Biblioteca Digital de Illinois. A esto suma ejemplos tomados de otros (Latour, Winner, Kirk y Kutchins).</td></tr>
-<tr><td class="k">Epígrafes</td><td>Louis Bucciarelli, <i>Designing Engineers</i> (1994): la infraestructura como "a dense interwoven fabric that is, at the same time, dynamic, thoroughly ecological, even fragile". Percy Bysshe Shelley, <i>Ozymandias</i> (1817): el escultor supo leer las pasiones que sobreviven "stamped on these lifeless things".</td></tr>
-<tr><td class="k">Dedicatoria</td><td>A los demás miembros de la Sociedad de Personas Interesadas en Cosas Aburridas, en especial a su cofundadora, la lingüista Charlotte Linde. Agradece comentarios de Howard Becker, Geoffrey Bowker, Jay Lemke, Nina Wakeford y Barry Wellman.</td></tr>
-<tr><td class="k">Estructura</td><td>Resumen y epígrafes; "General Methodological Problems"; "Defining Infrastructure" (con las nueve propiedades); "Infrastructure and Methods"; "Tricks of the Trade" (cuatro trucos); "Bridges and Barriers"; tres notas; referencias.</td></tr>
-<tr><td class="k">Relación con 1994 y 1996</td><td>Retoma la definición relacional de Star y Ruhleder en su versión de 1996 (cita la p. 113 de <i>Information Systems Research</i>). Reproduce su lista de propiedades y añade una novena, "fixed in modular increments", que agradece a Kevin Powell (nota 1). El aparato batesoniano de 1994 desaparece; Bateson queda solo como epígrafe de la definición.</td></tr>
-<tr><td class="k">Lugar en la genealogía</td><td>Es el texto más citado del campo y el que fija la agenda de la "etnografía de la infraestructura": legitima lo aburrido como objeto, difunde las propiedades y propone un método de lectura de documentos, estándares y diseños. Larkin (2013) y Harvey, Jensen y Morita (2016) discuten sobre todo su premisa de la invisibilidad.</td></tr>
-</tbody></table></div>
-</section>
-
-<section id="mapa">
-<h2><span class="n">02</span>Mapa de sustento</h2>
-<p class="intro">Dónde y con qué se sostiene cada tesis. Filas: tesis. Columnas: secciones. Cada celda cuenta los casos y las citas de esa sección que apoyan la tesis; el borde oscuro marca dónde se formula o argumenta. Pulsa una fila o una celda para seguir el hilo.</p>
-<div class="legend"><span><i style="background:#f6f7f4"></i>sin apoyo</span><span><i style="background:#e3ecd8"></i>1</span><span><i style="background:#c9dbb5"></i>2</span><span><i style="background:#a9c58f"></i>3</span><span><i style="background:#86ab66"></i>4 o más</span><span><i style="background:#fff;outline:2px solid #3f5728;outline-offset:-2px"></i>sección donde se argumenta</span></div>
-<div class="tw" style="border:none"><table class="grid" id="grid"></table></div>
-</section>
-
-<section id="hilos">
-<h2><span class="n">03</span>Hilos argumentales</h2>
-<p class="intro">Cada tesis reconstruida con todo lo que la sostiene: dónde se argumenta, qué paso del razonamiento ocupa, qué conceptos usa, qué casos la prueban, qué citas la condensan y qué tensión crítica la afecta.</p>
-<div id="hilosBox"></div>
-</section>
-
-<section id="progresion">
-<h2><span class="n">04</span>Progresión lógica del argumento</h2>
-<p class="intro">El artículo va del llamado a lo aburrido a una definición relacional, de la definición al método y del método a un repertorio de operaciones de lectura. Cierra con la política de los diseños y con la confesión de que el método está menos desarrollado que los hallazgos.</p>
-<ol class="flow" id="flow"></ol>
-<h3>Las nueve propiedades, de un vistazo</h3>
-<div class="levels" id="props"></div>
-</section>
-
-<section id="secciones">
-<h2><span class="n">05</span>Matriz por secciones</h2>
-<p class="intro">Recorrido sección por sección, con las tesis que cada una sostiene y los casos y citas que contiene.</p>
-<div class="tw"><table class="mx" id="tSecciones"></table></div>
-</section>
-
-<section id="casos">
-<h2><span class="n">06</span>Matriz de casos</h2>
-<p class="intro">Todos los casos y ejemplos del artículo, propios o ajenos: actores, qué ocurre, qué demuestra, qué lugar ocupa en el aparato (propiedad, truco del oficio, problema de método), qué tesis sostiene y qué citas lo condensan.</p>
-<div class="tw"><table class="mx" id="tCasos"></table></div>
-</section>
-
-<section id="citas">
-<h2><span class="n">07</span>Citas clave</h2>
-<p class="intro">Fragmentos breves en el original con traducción propia. Cada cita indica la tesis que sostiene y el caso del que proviene; "ver en el texto" abre el lector y resalta el pasaje.</p>
-<div class="tw"><table class="mx" id="tCitas"></table></div>
-</section>
-
-<section id="conceptos">
-<h2><span class="n">08</span>Matriz de conceptos</h2>
-<p class="intro">Conceptos que el artículo define o pone a trabajar, incluidas las nueve propiedades de la infraestructura, con su origen, su función y las tesis en las que intervienen.</p>
-<div class="tw"><table class="mx" id="tConceptos"></table></div>
-</section>
-
-<section id="autores">
-<h2><span class="n">09</span>Autores citados y modo de uso</h2>
-<p class="intro">Interlocutores del artículo: qué toma de cada uno, en qué modo y para qué tesis.</p>
-<div class="tw"><table class="mx" id="tAutores"></table></div>
-</section>
-
-<section id="evaluacion">
-<h2><span class="n">10</span>Evaluación crítica</h2>
-<p class="intro">Fortalezas, tensiones y preguntas abiertas, con las tesis que cada tensión afecta.</p>
-<div class="tw"><table class="mx" id="tEval"></table></div>
-</section>
-
-<section id="conexiones">
-<h2><span class="n">11</span>Conexiones con los otros textos</h2>
-<p class="intro">Qué hereda este artículo de Star y Ruhleder (1994) y qué discuten de él Harvey, Jensen y Morita (2016).</p>
-<div class="tw"><table class="mx" id="tConex"></table></div>
-</section>
-
-<section id="fuentes">
-<h2><span class="n">12</span>Nota sobre fuentes</h2>
-<div class="box">
-<p><b>Fuente principal.</b> El artículo en <i>American Behavioral Scientist</i> (pp. 377-391) y su conversión a Markdown, que es la que abre el lector con la paginación de la revista.</p>
-<p><b>Datos verificados externamente.</b> Que la versión de 1996 de Star y Ruhleder tenía ocho dimensiones y que la novena se añade aquí. Que en 1999 Bernward Joerges publicó en <i>Social Studies of Science</i> "Do Politics Have Artefacts?", que discute el ejemplo de Moses (Star dice solo que el ejemplo "has been a controversial one").</p>
-<p><b>Inferencias señaladas.</b> Que el término <i>heteroglosia</i> remite a Mijaíl Bajtín no lo dice el artículo. Que las reuniones de enfermeras correspondan a la Clasificación de Intervenciones de Enfermería de Iowa se infiere de <i>Sorting Things Out</i>; no se verificó en línea.</p>
-<p><b>Traducciones.</b> Propias.</p>
-</div>
-</section>
+</div></header>
+<nav class="secs" aria-label="Secciones"><div class="wrap"><a href="#tesis">Tesis</a><a href="#esquema">Esquema</a><a href="#nucleo">Principios</a><a href="#argumentos">Argumentos</a><a href="#citas">Citas</a><a href="#limites">Límites</a><a href="#sintesis">Síntesis</a></div></nav>
+<main class="wrap">
+<section id="tesis"><h2><span class="n">01</span>Tesis central</h2><p class="tesis">La infraestructura, que parece lo más aburrido del mundo (listas, estándares, enchufes, formularios), es un objeto etnográfico legítimo y necesario. Es <b>relacional</b>, porque algo es infraestructura solo para alguien y respecto de una práctica, y <b>ecológica</b>, porque no se separa de la acción, las herramientas y el entorno construido. Estudiarla obliga a convertir el trabajo de campo en lectura de inscripciones y a usar unos «trucos del oficio» para leer los valores, conflictos y exclusiones que el diseño deja inscritos. El problema que queda abierto es la escala.</p></section>
+<section id="esquema"><h2><span class="n">02</span>Esquema del texto</h2><p class="intro">Cómo está organizado el artículo. Cada página abre el lector en ese punto.</p><div class="esq"><div class="paso"><div class="pp"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=377" title="Abrir en el lector">p. 377</a></div><div class="caja"><span class="tit">Resumen y epígrafes</span><span class="fun">anuncia</span><p>Fija el tono y las tesis. Los epígrafes marcan el programa: Bucciarelli (la infraestructura como tejido denso, ecológico y frágil) y Shelley (las pasiones que sobreviven «estampadas» en cosas sin vida).</p></div></div><div class="trans"><span></span><span>↓ del anuncio a la defensa del objeto</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=377" title="Abrir en el lector">p. 377</a></div><div class="caja"><span class="tit">General Methodological Problems</span><span class="fun">legitima el objeto</span><p>«Un llamado a estudiar cosas aburridas». La CIE leída como una guía telefónica. Diagnóstico del campo: la etnografía de lo digital estudia identidad y comunidad, casi nunca estándares, clasificaciones o protocolos. Genealogía en Strauss: «estudiar lo no estudiado».</p></div></div><div class="trans"><span></span><span>↓ si el objeto vale, hay que decir qué es</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=379" title="Abrir en el lector">p. 379</a></div><div class="caja"><span class="tit">Defining Infrastructure</span><span class="fun">define</span><p>La infraestructura como propiedad relacional, una definición que nace del fracaso del Worm Community System. Las nueve propiedades, cada una con un ejemplo del caso.</p></div></div><div class="trans"><span></span><span>↓ de la definición a sus consecuencias para el método</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=382" title="Abrir en el lector">p. 382</a></div><div class="caja"><span class="tit">Infrastructure and Methods</span><span class="fun">deriva el método</span><p>Qué se estudia (codificación, estandarización, ajustes cotidianos) y cómo (historia, análisis literario, entrevista, análisis de sistemas). Queda abierto el problema de la escala y de los registros de transacciones.</p></div></div><div class="trans"><span></span><span>↓ como el método no está hecho, ofrece herramientas de lectura</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=384" title="Abrir en el lector">p. 384</a></div><div class="caja"><span class="tit">Tricks of the Trade</span><span class="fun">da herramientas</span><p>Cuatro trucos, cada uno en su apartado:</p><ul><li><i>Identifying Master Narratives and "Others"</i> <a class="pg" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=384">p. 384</a> · voces únicas y quienes quedan sin nombre</li><li><i>Surfacing Invisible Work</i> <a class="pg" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=385">p. 385</a> · el trabajo que el sistema no representa</li><li><i>Paradoxes of Infrastructure</i> <a class="pg" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=386">p. 386</a> · por qué un botón más hace abandonar un sistema</li><li><i>The Thorny Problem of Indicators</i> <a class="pg" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=387">p. 387</a> · qué tipo de dato es la infraestructura</li></ul></div></div><div class="trans"><span></span><span>↓ de leer el diseño a su política</span></div><div class="paso"><div class="pp"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=388" title="Abrir en el lector">p. 388</a></div><div class="caja"><span class="tit">Bridges and Barriers</span><span class="fun">politiza y cierra</span><p>Los puentes de Moses como imagen: el diseño inscribe exclusiones. Unas se reprograman; otras solo cambian con movimientos sociales (censo de 2000). Cierre: el campo tiene más hallazgos que método.</p></div></div></div></section>
+<section id="nucleo"><h2><span class="n">03</span>Principios</h2><p class="intro">El artículo no presenta un caso: presenta un programa. Se lee en tres capas de principios: los de partida (por qué y cómo mirar), las nueve propiedades (qué es una infraestructura) y los trucos del oficio (cómo leerla).</p><h3>Principios de partida</h3><div class="fichas"><div class="ficha"><div class="cab">Lo aburrido es objeto<span class="pg">pp. 377-379</span></div><p>Detrás de listas y formularios hay dramas de diseño; el trabajo consiste en <span class="qi">«restore narrative to what appears to be dead lists»</span> <a class="lk" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=377&amp;q=restore%20narrative%20to%20what%20appears%20to%20be%20dead%20lists" title="p. 377">p. 377 ↗</a>. La guía telefónica es el modelo: se lee como inventario y como sedimento de luchas.</p></div><div class="ficha"><div class="cab">Relacionalidad<span class="pg">p. 380</span></div><p>Algo es infraestructura para alguien y en una práctica. Para el ingeniero ferroviario los rieles son tema; para quien va en silla de ruedas, la escalera es barrera. <span class="qi">«One person&#x27;s infrastructure is another&#x27;s topic, or difficulty.»</span> <a class="lk" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=380&amp;q=One%20person%27s%20infrastructure%20is%20another%27s%20topic%2C%20or%20difficulty" title="p. 380">p. 380 ↗</a></p></div><div class="ficha"><div class="cab">Ecología<span class="pg">pp. 377, 379</span></div><p>La infraestructura forma parte del equilibrio entre acción, herramientas y entorno construido, y no se estudia aislada. Quien estudia una ciudad sin sus cloacas pierde la justicia distributiva y el poder de planificación.</p></div></div><h3>Las nueve propiedades <a class="lk" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=381&amp;q=Embeddedness.%20Infrastructure%20is%20sunk%20into">pp. 381-382 ↗</a></h3><div class="fichas"><div class="ficha"><div class="cab">1 · Incrustación <span class="en">Embeddedness</span></div><p>Está hundida dentro de otras estructuras, arreglos sociales y tecnologías; la gente no distingue sus partes.</p><p class="ej"><b>En el caso:</b> los biólogos no distinguían programas ni componentes: estaban simplemente «dentro» del sistema.</p></div><div class="ficha"><div class="cab">2 · Transparencia <span class="en">Transparency</span></div><p>No hay que reinventarla ni ensamblarla en cada uso: sostiene las tareas de modo invisible.</p><p class="ej"><b>En el caso:</b> bajar el sistema por ftp era rutina para un informático y una tarea nueva y difícil para un biólogo.</p></div><div class="ficha"><div class="cab">3 · Alcance <span class="en">Reach or scope</span></div><p>Llega más allá de un evento o de una práctica situada, en el espacio o en el tiempo.</p><p class="ej"><b>En el caso:</b> escanear el boletín trimestral para emular en línea uno de los ritmos largos de la comunidad.</p></div><div class="ficha"><div class="cab">4 · Se aprende como pertenencia <span class="en">Learned as part of membership</span></div><p>Darla por sentada es condición de pertenencia; los extraños la encuentran como algo que hay que aprender.</p><p class="ej"><b>En el caso:</b> las etnógrafas vencieron la extrañeza de la biología, pero no vieron sus propias prácticas naturalizadas de búsqueda en red.</p></div><div class="ficha"><div class="cab">5 · Vínculo con convenciones de práctica <span class="en">Links with conventions of practice</span></div><p>Moldea y es moldeada por las convenciones de una comunidad de práctica.</p><p class="ej"><b>En el caso:</b> el teclado QWERTY y sus límites heredados; el rechazo a la actualización continua del boletín.</p></div><div class="ficha"><div class="cab">6 · Encarnación de estándares <span class="en">Embodiment of standards</span></div><p>Se vuelve transparente al enchufarse de modo estandarizado a otras infraestructuras y herramientas.</p><p class="ej"><b>En el caso:</b> nombres y mapas de cepas, fotografías; se les escaparon los programas de fotografía de la Mac.</p></div><div class="ficha"><div class="cab">7 · Construida sobre una base instalada <span class="en">Built on an installed base</span></div><p>No crece de la nada: hereda la inercia, las fuerzas y los límites de lo ya instalado.</p><p class="ej"><b>En el caso:</b> la fibra óptica tendida sobre viejas vías férreas; subestimaron el atrincheramiento de la Mac.</p></div><div class="ficha"><div class="cab">8 · Visible en la ruptura <span class="en">Becomes visible upon breakdown</span></div><p>Lo normalmente invisible se ve cuando falla: el servidor caído, el puente arrasado, el apagón.</p><p class="ej"><b>En el caso:</b> usuarios que decían usar el sistema sin problemas y, en la visita, no sabían dónde estaba en su máquina.</p></div><div class="ficha"><div class="cab">9 · Se arregla en incrementos modulares <span class="en">Is fixed in modular increments</span></div><p>Por grande, estratificada y local, nunca se cambia desde arriba ni de golpe; nadie está realmente a cargo.</p><p class="ej"><b>En el caso:</b> choques con el cómputo del campus, del hospital y los sistemas heredados: «no había varita mágica».</p></div></div><p class="intro" style="margin-top:10px">La novena propiedad es nueva: la versión de 1996 con Ruhleder tenía ocho. Star la atribuye a Kevin Powell (nota 1).</p><h3>Los trucos del oficio como principios de método</h3><div class="fichas"><div class="ficha"><div class="cab">Identificar narrativas maestras y sus «otros»<span class="pg"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=384">pp. 384-385 ↗</a></span></div><p>Buscar la voz única que habla desde el supuesto centro y preguntar a quién deja sin nombre. Reconocer sus recursos: actores globales («la ciencia busca una cura»), voz pasiva, borrado de las incertidumbres de un hecho.</p><p class="ej"><b>Casos:</b> el formulario médico con «apellido de soltera» y «nombre del esposo»; Aramis y sus vagones para la familia nuclear; vendas «color piel»; el comité de la CIE que discute cuándo un bebé está vivo.</p></div><div class="ficha"><div class="cab">Hacer aflorar el trabajo invisible<span class="pg"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=385">pp. 385-386 ↗</a></span></div><p>Rastrear dónde el sistema representa el trabajo, dónde lo obstruye «como una roca en un arroyo» y dónde deja huecos que alguien llena; ir tras bambalinas (Goffman).</p><p class="ej"><b>Casos:</b> el secreto del periodo posdoctoral; las secretarias excluidas del diseño como «no personas»; las enfermeras entre la invisibilidad y la contabilidad de costos.</p></div><div class="ficha"><div class="cab">Leer las paradojas<span class="pg"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=386">pp. 386-387 ↗</a></span></div><p>Cuando un obstáculo mínimo produce abandono, no explicarlo por rigidez humana sino buscar el trabajo de articulación que interrumpe.</p><p class="ej"><b>Casos:</b> en la Biblioteca Digital de Illinois, un botón o un enlace más bastaba para dejar el sistema; <span class="qi">«An extra keyboard stroke might as well be an extra 10 pushups.»</span> <a class="lk" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=386&amp;q=An%20extra%20keyboard%20stroke%20might%20as%20well%20be%20an%20extra%2010%20pushups" title="p. 386">p. 386 ↗</a>.</p></div><div class="ficha"><div class="cab">Precisar el estatus de los indicadores<span class="pg"><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=387">pp. 387-388 ↗</a></span></div><p>Decidir si la infraestructura se lee como artefacto, como huella o como representación verídica del mundo, y no mezclar esos niveles. Vigilar la sustitución de la validez por la precisión.</p><p class="ej"><b>Casos:</b> la publicidad científica contada, analizada o tomada al pie de la letra; Usenet como notas de campo; el DSM y el control de los códigos de reembolso.</p></div></div></section>
+<section id="argumentos"><h2><span class="n">04</span>Argumentos clave</h2><p class="intro">Cada argumento con su desarrollo, el caso que lo sostiene y una cita.</p><div class="arg"><h3><span class="n">01</span><span>Lo aburrido es un objeto legítimo y político</span></h3><ol><li>Parte de la aridez: listas, estándares y formularios parecen no tener nada que contar.</li><li>Muestra que se pueden leer: la guía telefónica admite lecturas directas, indirectas e históricas.</li><li>Lo inscribe en la escuela de Strauss, que convirtió lo no estudiado en una agenda de justicia social.</li><li>Concluye que ignorar la infraestructura es perder la justicia distributiva; propone pensar las computadoras como «cloacas simbólicas» y no como autopistas.</li></ol><p class="ev"><b>Caso y evidencia</b>La guía de Santa Cruz: Alcohólicos y Narcóticos Anónimos pasan de «rehabilitación» a servicios de emergencia; el Desfile del Orgullo figura junto al Festival del Ajo, y detrás de esa línea hay décadas de activismo (p. 378).</p><blockquote class="q"><div class="en">&quot;Study a city and neglect its sewers and power supplies (as many have), and you miss essential aspects of distributional justice and planning power&quot;</div><div class="es">&quot;Estudia una ciudad y descuida sus cloacas y su suministro eléctrico (como muchos han hecho), y perderás aspectos esenciales de la justicia distributiva y del poder de planificación&quot;</div><div class="meta">p. 379 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=379&amp;q=Study%20a%20city%20and%20neglect%20its%20sewers%20and%20power%20supplies">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">02</span><span>La infraestructura es una relación, no una cosa</span></h3><ol><li>La imagen del sustrato invisible (rieles, tuberías, cables) funciona para el grifo cotidiano.</li><li>Falla cuando se miran sistemas en construcción o a quienes no están servidos por ellos.</li><li>Lo que es fondo para unos es tema o barrera para otros.</li><li>Por tanto, la infraestructura solo aparece como propiedad relacional, y la lista de propiedades describe posiciones de uso tanto como rasgos del artefacto.</li></ol><p class="ev"><b>Caso y evidencia</b>El ingeniero ferroviario, la persona en silla de ruedas, la cocinera, el urbanista y el plomero ante el mismo sistema de agua. La definición nace del fracaso del Worm Community System (p. 380).</p><blockquote class="q"><div class="en">&quot;Analytically, infrastructure appears only as a relational property, not as a thing stripped of use&quot;</div><div class="es">&quot;Analíticamente, la infraestructura aparece solo como una propiedad relacional, no como una cosa despojada de uso&quot;</div><div class="meta">p. 380 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=380&amp;q=infrastructure%20appears%20only%20as%20a%20relational%20property">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">03</span><span>Estudiar infraestructura convierte el campo en lectura de inscripciones</span></h3><ol><li>Si la infraestructura incorpora decisiones, los sitios de estudio son la codificación, la estandarización y los ajustes cotidianos.</li><li>El trabajo de campo se mezcla con historia, análisis literario, entrevista, observación y análisis de sistemas.</li><li>La sensibilidad etnográfica se conserva: suponer que las personas producen significados según sus circunstancias y que esos significados quedan inscritos.</li><li>Aparece un límite: la escala. Los registros de transacciones prometen notas de campo completas que nadie ha logrado analizar a su satisfacción.</li></ol><p class="ev"><b>Caso y evidencia</b>Las enfermeras que clasifican su propio trabajo; los archivos de la OMS sobre el certificado de defunción; la reclasificación racial bajo el apartheid (pp. 382-383).</p><blockquote class="q"><div class="en">&quot;people make meanings based on their circumstances, and that these meanings would be inscribed into their judgments about the built information environment&quot;</div><div class="es">&quot;las personas producen significados según sus circunstancias, y esos significados quedarían inscritos en sus juicios sobre el entorno de información construido&quot;</div><div class="meta">p. 383 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=383&amp;q=people%20make%20meanings%20based%20on%20their%20circumstances">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">04</span><span>Los sistemas hablan con una sola voz y esconden trabajo</span></h3><ol><li>Muchos sistemas codifican una narrativa maestra que no problematiza la diversidad.</li><li>Esa voz produce «otros», que solo se ven si uno se identifica primero con lo vuelto otro.</li><li>Además, los sistemas representan el trabajo de forma parcial: lo que dejan fuera reaparece como trabajo de articulación.</li><li>Excluir a las «no personas» produce sistemas que no funcionan, y hacer visible el trabajo tiene costos de control.</li></ol><p class="ev"><b>Caso y evidencia</b>El formulario médico para mujeres; las secretarias que biólogos y desarrolladores no quisieron incluir; las enfermeras: «nos incluyen en el precio de la habitación» (pp. 384-386).</p><blockquote class="q"><div class="en">&quot;leaving out what are locally perceived as &#x27;nonpeople&#x27; can mean a nonworking system&quot;</div><div class="es">&quot;dejar fuera a quienes localmente se perciben como &#x27;no personas&#x27; puede significar un sistema que no funciona&quot;</div><div class="meta">p. 386 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=386&amp;q=can%20mean%20a%20nonworking%20system">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">05</span><span>Las barreras pequeñas son grandes</span></h3><ol><li>En Illinois, un botón, un enlace o tener que levantar la vista de la pantalla bastaba para abandonar el sistema.</li><li>Star rechaza explicarlo por rigidez o pereza de los usuarios.</li><li>Hay dos trabajos simultáneos: el visible de la tarea y el invisible de ensamblar recursos, rutinas y colas de tareas.</li><li>Una perturbación mínima en la articulación, frágil y en tiempo real, se ramifica por todo el flujo de trabajo (Schmidt y Simone).</li></ol><p class="ev"><b>Caso y evidencia</b>La Biblioteca Digital de Illinois: la gente prefería cruzar el campus antes que apretar dos botones (p. 386).</p><blockquote class="q"><div class="en">&quot;Only by describing both the production task and the hidden tasks of articulation, together and recursively, can we come up with a good analysis&quot;</div><div class="es">&quot;Solo describiendo a la vez la tarea de producción y las tareas ocultas de articulación, juntas y recursivamente, podemos lograr un buen análisis&quot;</div><div class="meta">p. 387 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=387&amp;q=Only%20by%20describing%20both%20the%20production%20task">leer en el texto ↗</a></div></blockquote></div><div class="arg"><h3><span class="n">06</span><span>El diseño inscribe política, y cambiarlo cuesta</span></h3><ol><li>Toda variación de práctica, cultura y norma queda inscrita en el diseño.</li><li>Los puentes de Moses, cuya historia Star reconoce discutida, sirven de imagen: las infraestructuras de información tienen millones de puentes pequeños.</li><li>Algunas inscripciones se reprograman con saber, tiempo y recursos; otras, como un conjunto cerrado de categorías, solo cambian con movimientos sociales.</li><li>Y el cambio es ambivalente: lo que repara una exclusión puede borrar la huella estadística de otra.</li></ol><p class="ev"><b>Caso y evidencia</b>Las computadoras donadas a escuelas pobres que chocan con electricidad sucia y disquetes incompatibles; el censo de 2000 que permitió marcar más de una raza (p. 389).</p><blockquote class="q"><div class="en">&quot;This simple infrastructural change took a march on Washington, years of political activism, and will cost billions of dollars.&quot;</div><div class="es">&quot;Este simple cambio infraestructural requirió una marcha sobre Washington, años de activismo político, y costará miles de millones de dólares.&quot;</div><div class="meta">p. 389 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=389&amp;q=This%20simple%20infrastructural%20change%20took%20a%20march%20on%20Washington">leer en el texto ↗</a></div></blockquote></div></section>
+<section id="citas"><h2><span class="n">05</span>Citas clave</h2><p class="intro">En inglés, con traducción.</p><blockquote class="q"><div class="en">&quot;This article is in a way a call to study boring things.&quot;</div><div class="es">&quot;Este artículo es, en cierto modo, un llamado a estudiar cosas aburridas.&quot;</div><div class="co">La frase que define el artículo.</div><div class="meta">p. 377 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=377&amp;q=This%20article%20is%20in%20a%20way%20a%20call%20to%20study%20boring%20things">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;it is an embedded strangeness, a second-order one, that of the forgotten, the background, the frozen in place.&quot;</div><div class="es">&quot;es una extrañeza incrustada, de segundo orden, la de lo olvidado, el fondo, lo congelado en su lugar.&quot;</div><div class="co">Redefine la extrañeza antropológica: no lo exótico sino lo incrustado.</div><div class="meta">p. 379 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=379&amp;q=an%20embedded%20strangeness%2C%20a%20second-order%20one">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;what values and ethical principles do we inscribe in the inner depths of the built information environment&quot;</div><div class="es">&quot;qué valores y principios éticos inscribimos en las profundidades del entorno de información construido&quot;</div><div class="co">La pregunta que Star llama «quizá la más importante».</div><div class="meta">p. 379 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=379&amp;q=what%20values%20and%20ethical%20principles%20do%20we%20inscribe">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;For a railroad engineer, the rails are not infrastructure but topic.&quot;</div><div class="es">&quot;Para un ingeniero ferroviario, los rieles no son infraestructura sino tema.&quot;</div><div class="co">El ejemplo más citado de la definición relacional.</div><div class="meta">p. 380 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=380&amp;q=For%20a%20railroad%20engineer%2C%20the%20rails%20are%20not%20infrastructure%20but%20topic">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;Nobody is really in charge of infrastructure.&quot;</div><div class="es">&quot;Nadie está realmente a cargo de la infraestructura.&quot;</div><div class="co">Base de la novena propiedad.</div><div class="meta">p. 382 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=382&amp;q=Nobody%20is%20really%20in%20charge%20of%20infrastructure">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;has never lent itself to ethnography of thousands&quot;</div><div class="es">&quot;nunca se ha prestado a una etnografía de miles&quot;</div><div class="co">El problema de la escala.</div><div class="meta">p. 383 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=383&amp;q=never%20lent%20itself%20to%20ethnography%20of%20thousands">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;a single voice that does not problematize diversity. This voice speaks unconsciously from the presumed center of things.&quot;</div><div class="es">&quot;una sola voz que no problematiza la diversidad. Esta voz habla inconscientemente desde el supuesto centro de las cosas.&quot;</div><div class="co">Definición de narrativa maestra.</div><div class="meta">p. 384 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=384&amp;q=a%20single%20voice%20that%20does%20not%20problematize%20diversity">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;They may sit in the middle of a work process like a rock in a stream&quot;</div><div class="es">&quot;Pueden quedar en medio de un proceso de trabajo como una roca en un arroyo&quot;</div><div class="co">Cómo un sistema obstruye el trabajo.</div><div class="meta">p. 385 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=385&amp;q=like%20a%20rock%20in%20a%20stream">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;A common example is the substitution of precision for validity&quot;</div><div class="es">&quot;Un ejemplo común es la sustitución de la validez por la precisión&quot;</div><div class="co">La táctica política de los indicadores.</div><div class="meta">p. 388 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=388&amp;q=the%20substitution%20of%20precision%20for%20validity">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;every conceivable form of variation in practice, culture, and norm is inscribed at the deepest levels of design&quot;</div><div class="es">&quot;toda forma concebible de variación en la práctica, la cultura y la norma se inscribe en los niveles más profundos del diseño&quot;</div><div class="co">La tesis de «Bridges and Barriers».</div><div class="meta">p. 389 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=389&amp;q=every%20conceivable%20form%20of%20variation%20in%20practice%2C%20culture%2C%20and%20norm%20is%20inscribed">leer en el texto ↗</a></div></blockquote><blockquote class="q"><div class="en">&quot;The methodological side of the questions posed is underdeveloped by contrast with the power of the findings of this &#x27;invisible college.&#x27;&quot;</div><div class="es">&quot;El lado metodológico de las preguntas planteadas está poco desarrollado en comparación con la fuerza de los hallazgos de este &#x27;colegio invisible&#x27;.&quot;</div><div class="co">El cierre: más hallazgos que método.</div><div class="meta">p. 389 · <a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md&amp;p=389&amp;q=The%20methodological%20side%20of%20the%20questions%20posed%20is%20underdeveloped">leer en el texto ↗</a></div></blockquote></section>
+<section id="limites"><h2><span class="n">06</span>Límites y tensiones</h2><p>La lista de propiedades circuló más que el argumento relacional que la sostiene, y se usa como inventario de rasgos de una cosa, contra la intención del texto. La octava propiedad (visible en la ruptura) presupone infraestructuras que normalmente funcionan, premisa que Larkin y luego Harvey, Jensen y Morita ponen en duda. La escala queda abierta y hoy se agrava: los registros completos que Star veía como promesa irónica son datos de plataformas privadas. Y queda la pregunta de si una etnografía de la infraestructura puede sostenerse leyendo inscripciones o necesita el encuentro con las vidas que esas inscripciones organizan.</p></section>
+<section id="sintesis"><h2><span class="n">07</span>Síntesis</h2><div class="sint"><p class="ref0">Star, Susan Leigh (1999). "The Ethnography of Infrastructure". American Behavioral Scientist 43(3): 377-391. Las páginas citadas son las de la revista.</p><h4>1. TESIS CENTRAL</h4>
+<p>La infraestructura es un objeto etnográfico legítimo y necesario, aunque se presente como lo más aburrido del mundo: listas, estándares, enchufes, formularios. Es relacional (significa cosas distintas para grupos distintos) y ecológica (inseparable de la acción, las herramientas y el entorno construido). Estudiarla exige transformar el trabajo de campo en una combinación de etnografía, historia, análisis literario y análisis de sistemas, y dotarse de un repertorio de &quot;trucos del oficio&quot; para leer los valores, conflictos y exclusiones que quedan inscritos en el diseño. El problema metodológico abierto es la escala (p. 377, 382-384, 391).</p>
+<h4>2. SITUACIÓN DEL TEXTO</h4>
+<p>El artículo aparece en un dossier sobre métodos para estudiar la vida en línea y se dirige a científicos sociales, no a diseñadores. Cinco años después de la ponencia con Ruhleder, Star reescribe la experiencia del Worm Community System como fundamento de un programa metodológico. Su interlocutor implícito es la etnografía de Internet de los noventa, centrada en identidad, comunidad y estatus en MUDs y comunidades virtuales, a la que no descalifica pero cuyo foco quiere desplazar (p. 378-379).</p>
+<p>Los epígrafes condensan el programa. Bucciarelli define la infraestructura como un tejido denso, dinámico, ecológico y frágil, que incluye visiones compartidas, saberes e instituciones de aprendizaje. Los versos de Ozymandias de Shelley dicen que el escultor supo leer las pasiones que sobreviven &quot;estampadas en estas cosas sin vida&quot;: las cosas inertes conservan las pasiones de quienes las hicieron, y pueden leerse (p. 377).</p>
+<h4>3. PRIMER MOVIMIENTO: LEGITIMAR LO ABURRIDO</h4>
+<p>El artículo se declara &quot;un llamado a estudiar cosas aburridas&quot; y está dedicado a la Sociedad de Personas Interesadas en Cosas Aburridas, cofundada con Charlotte Linde. Hace falta cavar para &quot;devolver narrativa a lo que parecen listas muertas&quot; (p. 377).</p>
+<p>Caso: la guía telefónica. Con Bowker (Sorting Things Out, en prensa), Star compara leer la Clasificación Internacional de Enfermedades (CIE) con leer una guía telefónica, y concluye que la CIE es peor. La guía admite lecturas directas (qué negocios hay, cuántos restaurantes de cierta cocina) e indirectas: una guía delgada indica ruralidad; listar a los matrimonios solo con el nombre del marido indica una sociedad sexista y heterosexista. Los cambios históricos son legibles: en la guía de Santa Cruz, Alcohólicos y Narcóticos Anónimos pasaron de &quot;rehabilitación&quot; a servicios de emergencia, lo que expresa la aceptación de su teoría médica de la adicción; el Desfile del Orgullo Gay y Lésbico figura junto al Festival del Ajo, y detrás de esa línea hay décadas de activismo (p. 378). El caso no es un dato, sino un modelo de lectura: tratar un documento de infraestructura como inventario y como sedimento de luchas a la vez.</p>
+<p>Diagnóstico del campo. Abundan estudios sobre identidad en línea y escasean los dedicados a estándares, clasificaciones, diseño de redes o debates sobre nombres de dominio y protocolos, en parte porque esos temas están guardados en espacios semiprivados o en código inaccesible. Su extrañeza no es la antropológica habitual, sino &quot;incrustada, de segundo orden&quot;: la de lo olvidado, el fondo, lo congelado en su lugar (p. 378-379). La pregunta que Star juzga más importante es qué valores y principios éticos se inscriben en las profundidades del entorno de información construido (p. 379).</p>
+<p>Genealogía. El programa se apoya en el aforismo de Anselm Strauss, &quot;estudiar lo no estudiado&quot;, que llevó a su escuela hacia la enfermedad crónica, los conserjes, la muerte, los animales de laboratorio y la taxidermia, y que sostuvo una agenda de justicia social al valorar personas y cosas desatendidas. Estudiar una ciudad sin sus cloacas, como advierten Latour y Hermant, es perder la justicia distributiva y el poder de planificación. La propuesta irónica: pensar las computadoras no como autopistas de la información sino como &quot;cloacas simbólicas&quot; (p. 379).</p>
+<h4>4. SEGUNDO MOVIMIENTO: DEFINIR LA INFRAESTRUCTURA</h4>
+<p>La imagen común de la infraestructura como sustrato invisible (rieles, tuberías, cables) sirve para el grifo cotidiano, pero se complica al estudiar sistemas en construcción o a quienes no están servidos por ellos. Para el ingeniero ferroviario los rieles son tema; para quien usa silla de ruedas, la escalera es barrera; el agua es infraestructura para quien cocina y variable o avería para el urbanista y el plomero. De ahí la fórmula de Star y Ruhleder (1996): la infraestructura aparece solo como propiedad relacional, &quot;no como una cosa despojada de uso&quot; (p. 380).</p>
+<p>El origen de esta definición es el fracaso del Worm Community System, contado ahora en tres líneas: diseño participativo ejemplar y pocos usuarios, porque la dificultad estaba en plataformas incompatibles, centros de cómputo recalcitrantes y recursos estrangulados. Ese fracaso obligó a una definición relacional y a cuestionar el uso convencional de la etnografía en el diseño. La inversión infraestructural de Bowker se inscribe en una historiografía de los grandes sistemas (Hughes, Edwards, Yates, Summerton) para la cual la tecnología deja de ser variable independiente o dependiente y se vuelve proceso trenzado con el pensamiento y el trabajo (p. 380).</p>
+<p>Las nueve propiedades, cada una con su caso (p. 381-382):</p>
+<p>1) Incrustación: los biólogos no distinguían programas ni subcomponentes; estaban &quot;dentro&quot; del sistema.<br>2) Transparencia: ftp era rutina para un informático y barrera para un biólogo, y eso bastaba para volver el sistema poco usable.<br>3) Alcance espacial o temporal: escanear el boletín trimestral para emular en línea uno de los ritmos largos de la comunidad.<br>4) Se aprende como parte de la pertenencia (Lave y Wenger): las etnógrafas vencieron la extrañeza de la biología, pero pasaron por alto sus propias prácticas naturalizadas de búsqueda en red.<br>5) Vínculo con convenciones de práctica: QWERTY heredado por el teclado y el mobiliario (Becker); el rechazo de la actualización continua del boletín.<br>6) Encarnación de estándares: nombres y mapas de cepas, fotografías; pero se les escaparon los programas de fotografía de Mac.<br>7) Construida sobre una base instalada: la fibra óptica sobre viejas vías férreas; el costo de subestimar el atrincheramiento de la Mac.<br>8) Visible en la ruptura: personas que decían usar el sistema sin problemas y, en la visita, no sabían dónde estaba en su máquina.<br>9) Se arregla en incrementos modulares, no globalmente: nadie está a cargo; los intentos de instalación chocaban con el cómputo del campus, del hospital y los sistemas heredados. &quot;No había varita mágica.&quot;</p>
+<p>La novena propiedad es nueva: la versión de 1996 tenía ocho. Star agradece la idea a Kevin Powell y la vincula con las propiedades de los sistemas abiertos de Carl Hewitt (p. 382, nota 1). Analíticamente, la lista mezcla rasgos del artefacto (base instalada, estándares) con posiciones de uso (transparencia, pertenencia). Esa mezcla es su virtud relacional y, a la vez, lo que permite leerla mal, como un inventario de atributos de una cosa.</p>
+<h4>5. TERCER MOVIMIENTO: CONSECUENCIAS METODOLÓGICAS</h4>
+<p>Los sitios de estudio pasan a ser las decisiones de codificación y estandarización, el ajuste cotidiano de los sistemas y la deconstrucción de decisiones inscritas en formas infraestructurales. El trabajo de campo &quot;se transmuta&quot; en historia, análisis literario, entrevista y observación, análisis de sistemas y estudios de usabilidad (p. 382).</p>
+<p>Casos del propio trabajo de Star: observación de reuniones de enfermeras que clasificaban su propio trabajo (con Bowker y Timmermans); archivos de la OMS y sus predecesoras sobre las categorías del certificado de defunción; periódicos y libros de leyes sobre la reclasificación racial bajo el apartheid. En los tres casos, la sensibilidad etnográfica consiste en suponer que las personas producen significados según sus circunstancias y que esos significados se inscriben en el entorno de información (p. 382-383). Con informáticos de inteligencia artificial, Star funcionó como &quot;informante sobre la organización social&quot;: para modelar cómo un sistema decide el cierre de un problema, estudió cómo lo hacían los neurofisiólogos ingleses del siglo XIX que debatían las funciones del cerebro (p. 383).</p>
+<p>El problema de la escala. La etnografía nunca se prestó a &quot;etnografías de miles&quot;, y los escenarios en red involucran a cientos de personas distribuidas en tiempo y espacio (Becker le objetó en nota que hay etnografías de miles en grandes organizaciones; Star precisa que piensa en miles heterogéneos y anónimos). El momento es &quot;irónico y tentador&quot;: los registros de transacciones y los archivos de correo prometen notas de campo completas, pero nadie, dice Star, los ha analizado a su propia satisfacción. Dos experiencias lo ilustran: en el estudio del gusano, escalar el trabajo de campo tradicional significó decenas de laboratorios, más de cien entrevistas y agotamiento; en la Biblioteca Digital de Illinois, el retraso de dos años del banco de pruebas obligó a reemplazar el estudio de procesos comunitarios por entrevistas a usuarios potenciales y etnografía del propio equipo de diseño (p. 383-384).</p>
+<h4>6. CUARTO MOVIMIENTO: LOS TRUCOS DEL OFICIO</h4>
+<p>El título viene de Tricks of the Trade de Becker; la nota celebra el robo como truco clave y cita a Latour: las dos mamas de la ciencia son el peaje y el bricolaje (p. 384, 390).</p>
+<p>Truco 1: identificar narrativas maestras y sus &quot;otros&quot; (p. 384-385). Una narrativa maestra es una sola voz que habla desde el supuesto centro y no problematiza la diversidad. Casos: el formulario de historia clínica femenina con espacios para &quot;apellido de soltera&quot;, &quot;nombre del esposo&quot; y anticonceptivo, sin lugar para otras prácticas ni para otra pareja en una emergencia; Aramis, el metro automatizado de París analizado por Latour, con vagones dimensionados para la familia nuclear; vendas y prótesis de mastectomía &quot;color piel&quot; cercanas a la piel blanca. Escucharla exige identificarse primero con lo vuelto otro. Sus recursos retóricos: actores globales (&quot;Estados Unidos defiende la democracia&quot;), personificación (&quot;la ciencia busca una cura&quot;), voz pasiva (&quot;los datos revelaron&quot;) y borrado de modalidades, por el que un hecho pierde las incertidumbres de su producción. El caso del &quot;momento de la vida&quot;: un comité de estadísticos de la CIE discutió cuándo un bebé está vivo, entre diferencias religiosas de católicos y protestantes y criterios sobre respiraciones logradas, intentadas o fallidas; y los médicos que llenaban certificados de defunción no veían el mundo como los diseñadores. Los espacios en blanco resultan heteropráxicos (prácticas distintas según región y creencias) y heteroglósicos (muchas voces en un formulario monótono).</p>
+<p>Truco 2: hacer aflorar el trabajo invisible (p. 385-386). Los sistemas representan el trabajo, lo obstruyen &quot;como una roca en un arroyo&quot; y obligan a rodeos, o dejan huecos que exigen trabajo de articulación. Hay que buscar sus huellas y, con Goffman, ir tras bambalinas. Casos: el periodo posdoctoral, en que el secreto vale más que la norma de compartir resultados; las secretarias, que Star quiso incluir en el sistema y que biólogos y desarrolladores excluyeron porque &quot;no hacían ciencia&quot;; las enfermeras clasificadoras, atrapadas entre la invisibilidad (&quot;nos incluyen en el precio de la habitación&quot;) y la visibilidad que las expone a la contabilidad de costos, cuya tarea era volverse lo bastante visibles para legitimarse conservando un área de discreción.</p>
+<p>Truco 3: entender las paradojas de la infraestructura (p. 386-387). En Illinois, un botón más, un enlace más o tener que levantar la vista de la pantalla bastaban para abandonar el sistema; la gente prefería cruzar el campus antes que apretar dos botones. En lugar de una teoría de la rigidez humana, Star explica que el obstáculo se magnifica (&quot;una tecla extra equivale a diez flexiones&quot;) porque ocurren dos trabajos a la vez: el visible, de pulsaciones y funciones, y el invisible, de ensamblaje de recursos, rutinas y colas de tareas. Con Schmidt y Simone, producción y articulación son recursivas; una perturbación mínima en la articulación, frágil y en tiempo real, se ramifica por todo el flujo de trabajo.</p>
+<p>Truco 4: precisar el estatus de los indicadores (p. 387-388). Toda lectura de medios confunde niveles de referencia. Con la publicidad científica se puede contar anuncios sin leerlos (indicadores de gasto), analizar su estilística (énfasis, estereotipos, estéticas) o tomarlos como transcripción literal del progreso científico. Generalizado, la infraestructura de información puede leerse como: artefacto material, cuyo contenido de verdad no importa, solo su impacto; huella o registro, a medio camino entre asistente de investigación y artefacto cultural encontrado; o representación verídica del mundo, como cuando los mensajes de Usenet reemplazan las notas de campo. Las películas sobre violación no equivalen a estadísticas policiales ni a fenomenología de la experiencia; el correo electrónico sigue géneros (Yates y Orlikowski). La táctica política típica es sustituir validez por precisión: en el DSM, según Kirk y Kutchins, los psiquiatras biológicos desplazaron al psicoanálisis tomando el control de los indicadores, incluidos los códigos de reembolso ante terceros pagadores, en lugar de discutir la mente y la psicopatología. Star observó tácticas semejantes entre los investigadores del cerebro a comienzos del siglo XX.</p>
+<h4>7. QUINTO MOVIMIENTO: PUENTES Y BARRERAS</h4>
+<p>La pregunta de Winner (&quot;¿tienen política los artefactos?&quot;) se ilustra con los puentes bajos de Robert Moses sobre la Grand Central Parkway, que habrían impedido el paso de autobuses y excluido a los pobres de los suburbios de Long Island &quot;por diseño&quot;. Star reconoce que el caso es controvertido y lo usa como imagen: las infraestructuras de información están llenas de millones de puentes pequeños bajo los que no pasan millones de autobuses (p. 388-389). En el mismo año, Bernward Joerges discutía en Social Studies of Science la base empírica del ejemplo; Winner, por su parte, hablaba en general de las avenidas parque de Long Island.</p>
+<p>Casos: las computadoras donadas a escuelas pobres y países en desarrollo, que funcionan pero chocan con electricidad sucia o ausente, disquetes incompatibles, llamadas locales que no son gratuitas, navegadores voraces y la incompatibilidad con el navegador de solo texto más usado por personas ciegas. Algunas inscripciones son programables si se tienen saber, tiempo y recursos; otras, como un conjunto cerrado de categorías, solo las cambia un movimiento social. El censo estadounidense de 2000 permitió por primera vez marcar más de una raza: el cambio exigió una marcha sobre Washington, años de activismo y miles de millones de dólares, y fue resistido por grupos de justicia social que temían que la multirracialidad borrara la huella estadística de la discriminación (p. 389).</p>
+<p>El cierre califica el desafío de &quot;aterrador y delicioso&quot; y reconoce que este &quot;colegio invisible&quot; de historiadores, sociólogos, antropólogos, filósofos, teóricos literarios e informáticos tiene más hallazgos que método (p. 389).</p>
+<h4>8. CONCEPTOS CLAVE</h4>
+<p>Infraestructura relacional y ecológica: algo es infraestructura para alguien, en una práctica, dentro de un equilibrio de acción, herramientas y entorno.<br>Extrañeza de segundo orden: la de lo incrustado, olvidado y congelado, opuesta al exotismo antropológico.<br>Inversión infraestructural: llevar al frente lo que trabaja tras bambalinas.<br>Narrativa maestra y sus otros: la voz única inscrita en un diseño y quienes quedan sin nombre.<br>Trabajo de articulación: el ajuste invisible y en tiempo real que completa los procesos.<br>Estatus de los indicadores: artefacto, huella o representación verídica.<br>Sustitución de validez por precisión: tomar el control de los indicadores para ganar una disputa epistémica.<br>Heteropraxia y heteroglosia: diversidad de prácticas y de voces dentro de un formulario uniforme.</p>
+<h4>9. EVALUACIÓN CRÍTICA</h4>
+<p>La influencia del artículo descansa en tres gestos: legitimar lo aburrido, ofrecer la lista de propiedades y proponer los trucos como repertorio de lectura. Su valor y sus límites se reparten de modo desigual entre ellos.</p>
+<p>La lista es lo que más ha circulado y lo más vulnerable. Fuera del caso que la produjo, tiende a funcionar como inventario aplicable a cualquier cosa, contra la insistencia relacional del texto. Su octava propiedad presupone infraestructuras que normalmente funcionan, y es precisamente esa premisa la que la antropología posterior pondrá en cuestión: Larkin, al mostrar infraestructuras concebidas como espectáculo, y Harvey, Jensen y Morita, al pensar contextos donde la falla es la norma.</p>
+<p>El problema de la escala queda abierto y hoy se ha agravado: los registros completos que Star veía como promesa irónica son ahora datos de plataformas privadas, en general fuera del alcance de quien investiga.</p>
+<p>Los trucos, en cambio, siguen siendo lo más fértil del texto, quizá porque no pretenden definir nada. Leer un formulario como narrativa, buscar a los otros de una clasificación, distinguir el estatus de un indicador o explicar una barrera mínima por el trabajo de articulación que interrumpe son operaciones transferibles a una guía telefónica, un censo o un archivo digital.</p>
+<p>Queda una tensión de fondo: el artículo amplía el campo hacia documentos, diseños y archivos, y deja sin resolver si una etnografía de la infraestructura puede sostenerse leyendo bien esas inscripciones, o si sigue necesitando el encuentro con las vidas que organizan.</p>
+</div></section>
 
 </main>
-</div>
-
-<div id="focoBar" role="status">
-  <span class="ft" id="focoT"></span>
-  <span class="fc" id="focoC"></span>
-  <button class="btn" id="focoDossier">ver hilo</button>
-  <label><input type="checkbox" id="focoSolo"> solo este hilo</label>
-  <button class="btn" id="focoX" title="Salir del modo hilo">✕ salir</button>
-</div>
-
-<footer>Matriz analítica · Star (1999) · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026</footer>
-
+<div class="wrap"><footer>Matriz · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026 · Traducciones propias. Los enlaces «↗» abren el pasaje en el lector.</footer></div>
 <script>
-/* ===================== DATOS ===================== */
-const LECTURA = 'star-1999---the-ethnography-of-infrastructure.md';
-const NIVEL_COL = 'Lugar en el aparato';
-const CONEX_COLS = ['Tema','En este texto','Star y Ruhleder (1994)','Harvey, Jensen y Morita (2016)','Tesis'];
-
-const S = [
- {id:'S1', t:'Resumen y epígrafes', p:'377', fn:'Anuncio y tono', arg:`El resumen fija las tesis: la infraestructura es relacional y ecológica, y mundana hasta el aburrimiento. Anuncia las dificultades (escala, volumen de datos, relación entre lo que pasa en línea y fuera de línea) y los trucos (estudiar el diseño, las paradojas, el trabajo invisible, el estatus de los indicadores). Epígrafes de Bucciarelli y Shelley.`, sus:`Síntesis anticipada y epígrafes.`, tr:`Abre el "llamado".`},
- {id:'S2', t:'General Methodological Problems', p:'377-379', fn:'Legitimación del objeto y diagnóstico del campo', arg:`"A call to study boring things." La CIE comparada con la guía telefónica; lecturas directas, indirectas e históricas (Santa Cruz). Diagnóstico: abundan los estudios de identidad en línea y escasean los de estándares, clasificaciones y protocolos; extrañeza de segundo orden. Preguntas de método y de ética. Genealogía en Strauss ("study the unstudied"). Ciudades sin cloacas; computadoras como "cloacas simbólicas".`, sus:`Casos de lectura de documentos, autoridad de Strauss, analogía urbana.`, tr:`Si hay que estudiar la infraestructura, hay que definirla.`},
- {id:'S3', t:'Defining Infrastructure', p:'379-382', fn:'Definición', arg:`Epígrafe de Bateson. La imagen del sustrato funciona para el grifo y falla ante sistemas en construcción o ante quienes no están servidos. Infraestructura como propiedad relacional (Star y Ruhleder 1996, p. 113). Origen en el fracaso del WCS. Inversión infraestructural; regímenes infraestructurales. Las nueve propiedades, cada una con su ejemplo del estudio del gusano.`, sus:`Ejemplos cotidianos, cita de 1996, caso WCS, historiografía de los grandes sistemas.`, tr:`Una definición relacional tiene consecuencias de método.`},
- {id:'S4', t:'Infrastructure and Methods', p:'382-384', fn:'Consecuencias metodológicas', arg:`Sitios a examinar: codificación y estandarización, ajuste y adaptación, deconstrucción de decisiones inscritas. El trabajo de campo como mezcla de historia, análisis literario, entrevistas, análisis de sistemas y usabilidad. Casos propios: enfermeras, OMS, apartheid, neurofisiólogos. Alianzas con informáticos. El problema de la escala: etnografía de miles, registros de transacciones, en línea y fuera de línea; WCS e Illinois.`, sus:`Trayectoria de investigación de la autora; nota 2 (Becker).`, tr:`Ante la escala, la autora propone trucos de lectura.`},
- {id:'S5', t:'Tricks of the Trade · Identifying Master Narratives and "Others"', p:'384-385', fn:'Truco 1', arg:`Narrativa maestra: una voz que habla desde el supuesto centro. Formulario médico para mujeres; Aramis; vendas "color piel". Escucharla exige identificarse con lo vuelto otro. Recursos retóricos: actores globales, personificación, voz pasiva, borrado de modalidades. La CIE y el "momento de la vida"; heteropraxia y heteroglosia.`, sus:`Ejemplos ajenos y propios; teoría literaria.`, tr:`Lo que la narrativa maestra borra son voces; el siguiente truco busca el trabajo que borra.`},
- {id:'S6', t:'Surfacing Invisible Work', p:'385-386', fn:'Truco 2', arg:`Los sistemas representan el trabajo, lo obstruyen como "una roca en un arroyo" o dejan huecos que exigen trabajo de articulación. Buscar huellas e ir tras bambalinas (Goffman). Secreto posdoctoral. "No personas": las secretarias excluidas. Las enfermeras entre la invisibilidad y la contabilidad de costos.`, sus:`Casos del WCS y de la clasificación de enfermería; Star y Strauss.`, tr:`El trabajo invisible explica también por qué fallan los usuarios ante obstáculos mínimos.`},
- {id:'S7', t:'Paradoxes of Infrastructure', p:'386-387', fn:'Truco 3', arg:`En Illinois, un botón, un enlace o levantar la vista bastaban para abandonar el sistema. Rechazo de la explicación por rigidez humana. Dos trabajos simultáneos: el visible (pulsaciones) y el ensamblaje invisible. Recursividad entre producción y articulación (Schmidt y Simone). La perturbación de la articulación se magnifica.`, sus:`Hallazgo de Illinois y teoría del trabajo de articulación.`, tr:`Leer bien exige saber qué estatus tienen los datos que se leen.`},
- {id:'S8', t:'The Thorny Problem of Indicators', p:'387-388', fn:'Truco 4', arg:`Niveles de referencia: publicidad científica contada, analizada o leída literalmente. Tres lecturas de la infraestructura de información: artefacto, huella o registro, representación verídica (Usenet como notas de campo). Tesis que confunden niveles; películas sobre violación; géneros del correo. Sustitución de la validez por la precisión: el DSM; los investigadores del cerebro.`, sus:`Ejemplos de medios, experiencia docente, Kirk y Kutchins, Star (1989).`, tr:`Las decisiones sobre indicadores son decisiones políticas: puentes y barreras.`},
- {id:'S9', t:'Bridges and Barriers', p:'388-389', fn:'Política del diseño y cierre', arg:`Winner y los puentes de Moses (con reserva). Millones de pequeños puentes en las infraestructuras de información. Computadoras donadas a escuelas. Variaciones inscritas en el diseño: unas maleables, otras solo cambiables por movimientos sociales. Censo de 2000. Cierre: desafío "terrifying and delightful"; el "colegio invisible" tiene más hallazgos que método.`, sus:`Ejemplo clásico, casos de equidad digital, caso del censo.`, tr:`Cierre.`},
- {id:'S10', t:'Notas', p:'389-390', fn:'Precisiones', arg:`Nota 1: la novena propiedad se debe a Kevin Powell y se parece a los sistemas abiertos de Hewitt. Nota 2: Becker recuerda que hay etnografías de miles en grandes organizaciones. Nota 3: el título viene de Becker; robar es un truco del oficio; Latour: "les deux mamelles de la science sont péage et bricolage".`, sus:`Agradecimientos y matices.`, tr:`—`}
-];
-
-const T = [
- {id:'T0', c:'tesis central', p:'377, 382-384, 389', s:['S1','S2','S4','S9'], est:'explícita', f:`La infraestructura es un objeto etnográfico legítimo y necesario aunque parezca aburrido. Es relacional y ecológica, y estudiarla exige transformar el trabajo de campo y dotarse de trucos para leer los valores, conflictos y exclusiones inscritos en el diseño. La escala sigue siendo un problema abierto.`, sus:`Programa metodológico construido con la trayectoria de la autora y con casos de lectura de documentos y diseños.`},
- {id:'T1', c:'estudiar lo aburrido', p:'377-379', s:['S2'], est:'explícita', f:`Estudiar cosas aburridas, como hizo la escuela de Strauss con lo no estudiado, tiene un efecto ecológico y una agenda de justicia: quien estudia una ciudad sin sus cloacas pierde la justicia distributiva.`, sus:`Guía telefónica, Strauss, Latour y Hermant, analogía de las cloacas.`},
- {id:'T2', c:'extrañeza de segundo orden', p:'378-379', s:['S2'], est:'explícita', f:`La etnografía de lo digital se concentra en identidad y comunidad y descuida estándares, clasificaciones y protocolos, cuya extrañeza es "incrustada, de segundo orden". La pregunta central es qué valores se inscriben en las profundidades del entorno de información construido.`, sus:`Contraste de literaturas y lista de preguntas de método y ética.`},
- {id:'T3', c:'definición relacional', p:'379-380', s:['S3'], est:'explícita', f:`Algo es infraestructura para alguien y respecto de una práctica: lo que para unos es fondo es para otros tema o barrera. La infraestructura aparece solo como propiedad relacional, "not as a thing stripped of use".`, sus:`Grifo, ingeniero ferroviario, silla de ruedas, cocinera y urbanista; cita de 1996.`},
- {id:'T4', c:'nueve propiedades', p:'380-382', s:['S3'], est:'explícita', f:`La infraestructura es parte de la organización humana, tan problemática como cualquier otra, y tiene nueve propiedades: incrustación, transparencia, alcance, aprendizaje como pertenencia, vínculo con convenciones, encarnación de estándares, base instalada, visibilidad en la ruptura y arreglo en incrementos modulares.`, sus:`Inversión infraestructural, historiografía de sistemas y un ejemplo del WCS para cada propiedad.`},
- {id:'T5', c:'método: campo como lectura', p:'382-383', s:['S4'], est:'explícita', f:`Los sitios de estudio son las decisiones de codificación, el ajuste cotidiano y las decisiones inscritas en formas infraestructurales. El trabajo de campo se vuelve combinación de historia, análisis literario, entrevista, observación, análisis de sistemas y usabilidad, con una sensibilidad etnográfica aplicada también a documentos.`, sus:`Enfermeras, archivos de la OMS, apartheid, neurofisiólogos.`},
- {id:'T6', c:'el problema de la escala', p:'383-384', s:['S4'], est:'explícita, sin resolver', f:`La etnografía no se presta a "etnografías de miles". Los registros de transacciones prometen notas de campo completas pero son inmanejables, y queda sin resolver cómo encaja lo que ocurre en línea con la vida fuera de línea.`, sus:`Experiencias del WCS y de Illinois; nota 2.`},
- {id:'T7', c:'narrativas maestras', p:'384-385', s:['S5'], est:'explícita', f:`Muchos sistemas de información hablan con una sola voz desde el supuesto centro y producen "otros". Leerlos exige identificarse primero con lo vuelto otro y reconocer los recursos retóricos que borran la diversidad.`, sus:`Formulario médico, Aramis, vendas, CIE.`},
- {id:'T8', c:'trabajo invisible', p:'385-386', s:['S6'], est:'explícita', f:`Los sistemas codifican, obstruyen o dejan huecos en el trabajo. Dejar fuera a las "no personas" produce sistemas que no funcionan, y la visibilidad del trabajo es un equilibrio delicado entre legitimación y control.`, sus:`Secreto posdoctoral, secretarias, enfermeras.`},
- {id:'T9', c:'paradojas de la infraestructura', p:'386-387', s:['S7'], est:'explícita', f:`Los obstáculos mínimos se vuelven barreras porque perturban el trabajo de articulación invisible, que es frágil y recursivo con la producción.`, sus:`Hallazgo de Illinois; Schmidt y Simone.`},
- {id:'T10', c:'estatus de los indicadores', p:'387-388', s:['S8'], est:'explícita', f:`La infraestructura de información puede leerse como artefacto, como huella o como representación verídica, y el análisis debe saber dónde se sitúa. La táctica política típica es sustituir la validez por la precisión y tomar el control de los indicadores.`, sus:`Publicidad, Usenet, películas, correo, DSM, investigadores del cerebro.`},
- {id:'T11', c:'puentes y barreras', p:'388-389', s:['S9'], est:'explícita', f:`Toda variación de práctica, cultura y norma se inscribe en el diseño. Algunas inscripciones son modificables con saber y recursos; otras, como un conjunto cerrado de categorías, solo cambian por movimientos sociales, y sus efectos son ambivalentes.`, sus:`Moses (con reserva), computadoras donadas, censo de 2000.`},
- {id:'T12', c:'método por detrás de los hallazgos', p:'389-390', s:['S9','S10'], est:'explícita', f:`El "colegio invisible" que estudia la infraestructura tiene hallazgos poderosos y un método poco desarrollado. Los trucos son préstamos y bricolaje, no un método sistemático.`, sus:`Cierre del artículo; nota 3 (Becker, Latour).`}
-];
-
-const FLOW = [
- {mv:'Llamado a lo aburrido.', d:`La infraestructura aparece como listas de números y especificaciones; hay que devolverle narrativa.`, w:`Define el objeto por su falta de atractivo y convierte eso en programa.`, t:['T0','T1'], p:'377'},
- {mv:'Modelo de lectura.', d:`La guía telefónica: lecturas directas, indirectas e históricas (Santa Cruz).`, w:`Muestra que lo aburrido es legible como sedimento de luchas.`, t:['T1','T2'], p:'378'},
- {mv:'Diagnóstico del campo.', d:`La etnografía digital mira identidad y comunidad, no estándares; extrañeza de segundo orden; valores inscritos.`, w:`Identifica el hueco que el artículo quiere llenar.`, t:['T2'], p:'378-379'},
- {mv:'Genealogía.', d:`Strauss y "study the unstudied"; ciudades sin cloacas; cloacas simbólicas.`, w:`Da autoridad y agenda de justicia al programa.`, t:['T1'], p:'379'},
- {mv:'Definición relacional.', d:`El grifo, el ingeniero ferroviario, la silla de ruedas; "not as a thing stripped of use".`, w:`Si la infraestructura es relacional, hay que estudiarla desde posiciones.`, t:['T3'], p:'379-380'},
- {mv:'Origen e inversión.', d:`El fracaso del WCS obligó a una definición relacional; la inversión de Bowker y los regímenes infraestructurales.`, w:`Ancla la definición en experiencia de campo.`, t:['T3','T4'], p:'380'},
- {mv:'Nueve propiedades.', d:`Cada una con su ejemplo del estudio del gusano.`, w:`Vuelve operativa la definición.`, t:['T4'], p:'381-382'},
- {mv:'Consecuencias de método.', d:`Nuevos sitios de estudio, trabajo de campo como lectura, casos propios; el problema de la escala.`, w:`Plantea la dificultad que los trucos intentan resolver.`, t:['T5','T6'], p:'382-384'},
- {mv:'Trucos del oficio.', d:`Narrativas maestras, trabajo invisible, paradojas, indicadores.`, w:`Ofrece operaciones de lectura transferibles.`, t:['T7','T8','T9','T10'], p:'384-388'},
- {mv:'Puentes y barreras.', d:`Moses, computadoras donadas, censo de 2000.`, w:`Devuelve las operaciones a la pregunta política del inicio.`, t:['T11'], p:'388-389'},
- {mv:'Cierre.', d:`El "colegio invisible" tiene más hallazgos que método.`, w:`Reconoce el límite del propio programa.`, t:['T12'], p:'389'}
-];
-
-const K = [
- {id:'K1', t:'La CIE como guía telefónica', s:'S2', p:'378', n:'modelo de lectura', a:`Bowker y Star (<i>Sorting Things Out</i>)`, q:`Leer la Clasificación Internacional de Enfermedades, sistema mundial administrado por la OMS, "es como leer la guía telefónica. De hecho, es peor": las páginas amarillas tienen al menos estructura narrativa (cómo se ven los negocios, cuántos restaurantes de cada cocina). "Most people don't curl up with a good telephone book of a Saturday night."`, d:`Lo más árido puede leerse; la clasificación es todavía más opaca que la guía.`, tt:['T1','T2']},
- {id:'K2', t:'Lecturas indirectas de la guía', s:'S2', p:'378', n:'modelo de lectura', a:`Bowker y Star`, q:`Una guía delgada indica una zona rural; una que lista a los matrimonios solo con el nombre del marido indica una sociedad sexista y heterosexista.`, d:`Los documentos secos revelan estructura social por su forma.`, tt:['T1']},
- {id:'K3', t:'AA y NA en emergencias', s:'S2', p:'378', n:'modelo de lectura', a:`Guía telefónica de Santa Cruz, California`, q:`Alcohólicos Anónimos y Narcóticos Anónimos figuran entre los servicios de emergencia; años antes habrían estado, si acaso, en "rehabilitación". El cambio refleja la confianza en su respuesta a crisis y la aceptación de su teoría de la adicción como condición médica.`, d:`Los cambios de ubicación en una lista registran cambios de categorías sociales.`, tt:['T1','T11']},
- {id:'K4', t:'El Orgullo junto al Festival del Ajo', s:'S2', p:'378', n:'modelo de lectura', a:`Guía de Santa Cruz; activismo gay y lésbico`, q:`En los eventos comunitarios, junto al Festival del Ajo y el aniversario de la ciudad, figura el Desfile del Orgullo Gay y Lésbico. Detrás de esa línea hay décadas de activismo; formar parte de la infraestructura cívica así significa una aceptación casi impensable treinta años antes.`, d:`Una entrada de lista puede ser la huella de una lucha política.`, tt:['T1','T11']},
- {id:'K5', t:'MUDs frente a estándares', s:'S2', p:'378-379', n:'diagnóstico', a:`Etnografía de lo digital de los noventa`, q:`Hay buenos estudios sobre MUDs, identidad a distancia, comunidades del ciberespacio y jerarquías de estatus; muchos menos sobre estandarización, clasificación formal, diseño de redes o debates sobre nombres de dominio, protocolos y lenguajes, guardados en espacios semiprivados o en código inaccesible.`, d:`El campo mira lo exótico y descuida lo incrustado.`, tt:['T2']},
- {id:'K6', t:'La escuela de Strauss', s:'S2', p:'379', n:'genealogía', a:`Anselm Strauss y sus estudiantes`, q:`"Study the unstudied" llevó a investigar enfermedad crónica, trabajadores de bajo estatus como conserjes, muerte y morir, y los materiales de las ciencias de la vida, incluidos animales de experimentación y taxidermia.`, d:`Estudiar lo descuidado abre una comprensión ecológica y una agenda de justicia.`, tt:['T1']},
- {id:'K7', t:'La ciudad sin cloacas', s:'S2', p:'379', n:'analogía', a:`Latour y Hermant, <i>Paris ville invisible</i>`, q:`Estudiar una ciudad descuidando sus cloacas y su suministro eléctrico, "como muchos han hecho", es perder la justicia distributiva y el poder de planificación. Lo mismo con un sistema de información y sus estándares, cables y configuraciones.`, d:`Fundamenta la analogía de las computadoras como "cloacas simbólicas".`, tt:['T1']},
- {id:'K8', t:'El grifo', s:'S3', p:'380', n:'definición', a:`Cualquier usuario de agua`, q:`Al abrir el grifo se usa una vasta infraestructura de plomería y regulación sin pensar en ella: la imagen del sustrato funciona para muchos propósitos.`, d:`Punto de partida que la definición relacional va a complicar.`, tt:['T3']},
- {id:'K9', t:'Ingeniero ferroviario y silla de ruedas', s:'S3', p:'380', n:'definición', a:`Ingeniero ferroviario; persona en silla de ruedas`, q:`Para el ingeniero, los rieles son tema, no infraestructura. Para quien usa silla de ruedas, la escalera y el marco de la puerta no son soporte transparente sino barrera (Star 1991).`, d:`Lo que es fondo para unos es tema o dificultad para otros.`, tt:['T3']},
- {id:'K10', t:'Cocinera, urbanista, plomero', s:'S3', p:'380', n:'definición', a:`Quien cocina; urbanista; plomero`, q:`Para quien cocina, el sistema de agua es infraestructura que funciona; para el urbanista o el plomero, es una variable de planificación o un objeto que reparar.`, d:`Dentro de una misma cultura, la posición define qué es infraestructura.`, tt:['T3']},
- {id:'K11', t:'El WCS contado desde el fracaso', s:'S3', p:'380', n:'origen', a:`Star; Bruce Schatz; comunidad de biólogos`, q:`Tres años de trabajo con biólogos y diseño participativo ejemplar (etnografía, prototipos, retroalimentación, pruebas en laboratorios y congresos); pocos usaron el sistema. La dificultad estaba en plataformas incompatibles, centros de cómputo recalcitrantes y recursos estrangulados.`, d:`El fracaso obligó a una definición relacional y a cuestionar el uso de la etnografía en el diseño.`, tt:['T3','T4']},
- {id:'K12', t:'Biólogos "dentro" del software', s:'S3', p:'381', n:'propiedad 1: incrustación', a:`Biólogos del WCS`, q:`No distinguían programas ni subcomponentes: simplemente estaban "dentro" del sistema.`, d:`La infraestructura se hunde en otras estructuras y no se percibe por partes.`, tt:['T4']},
- {id:'K13', t:'ftp: rutina o barrera', s:'S3', p:'381', n:'propiedad 2: transparencia', a:`Biólogos; informáticos`, q:`Usar ftp para descargar el sistema era nuevo y difícil para los biólogos y rutinario para un informático; ese paso volvía el sistema menos transparente y mucho menos usable.`, d:`La transparencia es relativa a quien usa.`, tt:['T4','T3']},
- {id:'K14', t:'Escanear el boletín', s:'S3', p:'381', n:'propiedad 3: alcance', a:`Equipo del WCS`, q:`Una de las primeras tareas fue escanear el boletín trimestral para emular en línea uno de los ritmos de largo plazo de la comunidad.`, d:`La infraestructura tiene alcance temporal más allá de un evento.`, tt:['T4']},
- {id:'K15', t:'Lo que las etnógrafas tenían naturalizado', s:'S3', p:'381', n:'propiedad 4: pertenencia', a:`Las etnógrafas y los informáticos`, q:`Se esforzaron por vencer la extrañeza de la biología, pero pasaron por alto lo que ellas mismas daban por sentado: las prácticas de búsqueda de información en sistemas en red.`, d:`La infraestructura se naturaliza con la pertenencia; los extraños la ven como objeto que aprender.`, tt:['T4']},
- {id:'K16', t:'Ciclos de trabajo y QWERTY', s:'S3', p:'381', n:'propiedad 5: convenciones', a:`Trabajadores; mecanógrafos; Becker`, q:`Los ciclos de trabajo diurno y nocturno afectan las tarifas eléctricas y son afectados por ellas. El teclado QWERTY se heredó en la computadora y, de ahí, en el mobiliario de oficina.`, d:`La infraestructura moldea las convenciones y es moldeada por ellas.`, tt:['T4']},
- {id:'K17', t:'Rechazo de la actualización continua', s:'S3', p:'381', n:'propiedad 5: convenciones', a:`Biólogos del WCS`, q:`La práctica de informar trimestralmente por el boletín no pudo cambiarse: la propuesta de actualización continua fue "soundly rejected" por interferir con convenciones importantes.`, d:`Retoma el caso de 1994 como ejemplo de convención.`, tt:['T4']},
- {id:'K18', t:'Estándares de la comunidad', s:'S3', p:'381-382', n:'propiedad 6: estándares', a:`Equipo del WCS; biólogos`, q:`El sistema incorporaba nombres y mapas de cepas y fotografías del organismo, pero se les escapó al principio el uso de programas específicos para producir fotografías en Mac.`, d:`La transparencia se logra conectando con estándares; los que se ignoran fallan.`, tt:['T4']},
- {id:'K19', t:'Fibra óptica sobre vías férreas', s:'S3', p:'382', n:'propiedad 7: base instalada', a:`Redes; equipo del WCS; Hanseth y Monteiro`, q:`La fibra óptica corre sobre viejas líneas ferroviarias y los sistemas nuevos buscan compatibilidad hacia atrás. El equipo aprovechó en parte la base instalada (boletín escaneado), pero no entender el atrincheramiento de la Mac "proved expensive".`, d:`La infraestructura hereda fortalezas y límites de lo ya instalado.`, tt:['T4']},
- {id:'K20', t:'El sistema que no se encuentra', s:'S3', p:'382', n:'propiedad 8: ruptura', a:`Usuarios del WCS; las etnógrafas`, q:`Antes de la visita decían usar el sistema sin problemas; durante la visita no podían decir dónde estaba en sus máquinas. Esa ruptura fue la base de una comprensión más detallada de la naturaleza relacional de la infraestructura.`, d:`La infraestructura se vuelve visible cuando falla (retoma la semana sin usuarios de 1994).`, tt:['T4']},
- {id:'K21', t:'Sin varita mágica', s:'S3', p:'382', n:'propiedad 9: incrementos', a:`Equipo del WCS; cómputo de campus y hospitales`, q:`Los intentos de poner en marcha el sistema chocaban con las mil maneras en que la computación de los laboratorios estaba enredada con el cómputo del campus o del hospital y con sistemas heredados. "Nobody is really in charge of infrastructure."`, d:`La infraestructura no se cambia desde arriba ni de una vez.`, tt:['T4']},
- {id:'K22', t:'Enfermeras que clasifican su trabajo', s:'S4', p:'382-383', n:'método', a:`Enfermeras; Star, Bowker y Timmermans`, q:`Star observó reuniones de enfermeras que intentaban clasificar su propio trabajo.`, d:`Observar la construcción de una clasificación revela conflictos invisibles en el producto final (ver K34).`, tt:['T5','T8']},
- {id:'K23', t:'Archivos de la OMS', s:'S4', p:'383', n:'método', a:`OMS y organismos predecesores`, q:`Estudió los archivos de las reuniones en que se discutía cómo establecer y refinar las categorías de los certificados de defunción.`, d:`El archivo de una clasificación es un sitio etnográfico.`, tt:['T5','T7']},
- {id:'K24', t:'Reclasificación racial en el apartheid', s:'S4', p:'383', n:'método', a:`Personas reclasificadas; instancias del apartheid`, q:`Leyó periódicos antiguos y libros de leyes que registraban casos de reclasificación racial en Sudáfrica.`, d:`Las categorías infraestructurales deciden vidas; la lectura de documentos es trabajo de campo.`, tt:['T5','T11']},
- {id:'K25', t:'Neurofisiólogos para la inteligencia artificial', s:'S4', p:'383', n:'método', a:`Informáticos de inteligencia artificial; neurofisiólogos ingleses del siglo XIX`, q:`Como "informante sobre la organización social", investigó cómo un grupo de neurofisiólogos debatía las funciones del cerebro para ayudar a modelar cómo un sistema inteligente decide el cierre de un problema; devolvió modelos formales a los informáticos.`, d:`La etnografía y la historia pueden alimentar el diseño desde los años ochenta.`, tt:['T5']},
- {id:'K26', t:'Escalar el campo en el WCS', s:'S4', p:'384', n:'escala', a:`Star y su compañera de investigación`, q:`Intentó escalar las técnicas tradicionales: decenas de laboratorios, trabajo de entrada en cada uno, más de cien entrevistas, "exhausting myself in the process".`, d:`La etnografía tradicional no escala a comunidades distribuidas.`, tt:['T6']},
- {id:'K27', t:'Biblioteca Digital de Illinois', s:'S4', p:'384', n:'escala', a:`Equipo de evaluación social; equipo de diseño`, q:`El estudio previsto de procesos comunitarios emergentes (trabajo de campo y registros) se convirtió en entrevistas con usuarios potenciales y etnografía del equipo de diseño, porque el banco de pruebas llegó unos dos años tarde.`, d:`Hubo que inventar formas de triangular junto con los desarrolladores.`, tt:['T6','T5']},
- {id:'K28', t:'El formulario médico para mujeres', s:'S5', p:'384', n:'truco 1', a:`Diseñadores de formularios; mujeres pacientes`, q:`Espacios para "maiden name", "husband's name" y método anticonceptivo; ninguno para otras prácticas sexuales con consecuencias médicas ni para llamar a una pareja que no sea el marido en una emergencia.`, d:`Una narrativa maestra codifica la heterosexualidad monógama como única respuesta posible.`, tt:['T7']},
- {id:'K29', t:'Aramis', s:'S5', p:'384-385', n:'truco 1', a:`Latour (1996)`, q:`El metro automatizado que fracasó en París tenía un tamaño de vagón basado en la familia nuclear presunta.`, d:`El supuesto social se vuelve dimensión técnica.`, tt:['T7']},
- {id:'K30', t:'Vendas "color piel"', s:'S5', p:'385', n:'truco 1', a:`Fabricantes; personas no blancas`, q:`Vendas o prótesis de mastectomía etiquetadas "flesh colored" cuyo tono es el más cercano a la piel blanca.`, d:`La norma racial se inscribe en el producto y en su nombre.`, tt:['T7','T11']},
- {id:'K31', t:'El "momento de la vida"', s:'S5', p:'385', n:'truco 1', a:`Comité de estadísticos de la CIE; médicos que llenan certificados`, q:`Para el certificado de nacimiento, cómo saber cuándo un bebé está vivo: se discutieron diferencias religiosas (católicos y protestantes) y el número de respiraciones que el bebé hace, intenta o no logra hacer. En la práctica, las distinciones de los diseñadores no coincidían con cómo veían el mundo los médicos.`, d:`La narrativa maestra en formación se vuelve visible; los formularios son heteropráxicos y heteroglósicos.`, tt:['T7']},
- {id:'K32', t:'Secreto en el período posdoctoral', s:'S6', p:'385-386', n:'truco 2', a:`Posdoctorandos de la comunidad del gusano`, q:`Justo antes de tener laboratorio propio, el secreto y la discreción profesional valen más que la norma de compartir resultados preliminares.`, d:`Los requisitos importantes se descubren tras bambalinas.`, tt:['T8']},
- {id:'K33', t:'Las secretarias excluidas', s:'S6', p:'386', n:'truco 2', a:`Star; biólogos; desarrolladores; secretarias`, q:`Star quiso incluir a las secretarias en el flujo de publicación y comunicación; biólogos y desarrolladores se resistieron con fuerza porque no las veían "doing real science", y la idea se abandonó.`, d:`Dejar fuera a las "no personas" puede producir un sistema que no funciona.`, tt:['T8']},
- {id:'K34', t:'Enfermeras: "el precio de la habitación"', s:'S6', p:'386', n:'truco 2', a:`Clasificadoras de enfermería; hospitales`, q:`Si el trabajo queda tácito, "fades into the wallpaper" ("we are thrown in with the price of the room"); si se vuelve explícito, se convierte en blanco de la contabilidad de costos. Su tarea era hacerlo lo bastante visible para legitimarlo y conservar un área de discreción.`, d:`La visibilidad del trabajo es un equilibrio político.`, tt:['T8']},
- {id:'K35', t:'Un botón más, diez flexiones', s:'S7', p:'386', n:'truco 3', a:`Usuarios de la Biblioteca Digital de Illinois`, q:`Un botón extra, un enlace más para buscar ayuda o levantar la vista de la pantalla bastaban para dejar de usar el sistema; había quien prefería cruzar el campus antes que apretar un par de botones.`, d:`El obstáculo mínimo se magnifica porque interrumpe el ensamblaje invisible.`, tt:['T9']},
- {id:'K36', t:'Publicidad científica en tres niveles', s:'S8', p:'387', n:'truco 4', a:`Ejemplo de la autora`, q:`Se puede contar anuncios sin leerlos (gasto), analizar su estilística (énfasis, estereotipos, estéticas) o tomarlos como transcripción literal del progreso científico.`, d:`Un mismo material tiene niveles de referencia distintos.`, tt:['T10']},
- {id:'K37', t:'Usenet como notas de campo', s:'S8', p:'388', n:'truco 4', a:`Investigadores de comunidades en línea`, q:`Cuando las interacciones de los grupos de Usenet reemplazan por completo las notas de campo, el sistema se toma como espejo completo de las acciones.`, d:`Ejemplo de lectura como "representación verídica".`, tt:['T10','T6']},
- {id:'K38', t:'Tesis y películas sobre violación', s:'S8', p:'388', n:'truco 4', a:`Estudiantes de posgrado asesorados por Star`, q:`Desenredar tesis que confunden funciones de los indicadores es "difficult and painful". Las películas sobre violación dicen mucho sobre la aceptación cultural de la violencia sexual, pero no equivalen a estadísticas policiales ni a la fenomenología de la experiencia.`, d:`Hay que saber dónde se sitúa el análisis.`, tt:['T10']},
- {id:'K39', t:'Géneros del correo electrónico', s:'S8', p:'388', n:'truco 4', a:`Yates y Orlikowski`, q:`La gente envía correos según convenciones y géneros; la relación entre el correo y la actividad vivida no puede presumirse.`, d:`La huella digital no es la vida que registra.`, tt:['T10']},
- {id:'K40', t:'El DSM', s:'S8', p:'388', n:'truco 4', a:`Kirk y Kutchins; psicoanalistas; psiquiatras biológicos`, q:`En lugar de discutir la mente y la psicopatología, los diseñadores del DSM reformularon los indicadores, incluidas las solicitudes de reembolso a terceros, en números que fueron desplazando al psicoanálisis.`, d:`Sustituir la validez por la precisión es una táctica política.`, tt:['T10']},
- {id:'K41', t:'Investigadores del cerebro', s:'S8', p:'388', n:'truco 4', a:`Star (1989)`, q:`Tácticas semejantes entre investigadores del cerebro a comienzos del siglo XX.`, d:`La disputa por indicadores tiene historia.`, tt:['T10']},
- {id:'K42', t:'Los puentes de Moses', s:'S9', p:'388-389', n:'puentes', a:`Winner; Robert Moses; usuarios de autobús`, q:`Moses habría construido bajos los puentes sobre la Grand Central Parkway para impedir el paso de autobuses y excluir a los pobres de los suburbios de Long Island, "not by policy, but by design". Star advierte que el ejemplo es controvertido y lo usa como imagen.`, d:`Hay millones de pequeños puentes en las infraestructuras de información.`, tt:['T11']},
- {id:'K43', t:'Computadoras donadas', s:'S9', p:'389', n:'puentes', a:`Escuelas de barrios pobres; países en desarrollo`, q:`Las computadoras funcionan, pero la electricidad es sucia o falta; los disquetes viejos no entran; las llamadas locales no son gratis; los navegadores nuevos consumen más memoria; uno popular no admite el navegador de solo texto más usado por personas ciegas.`, d:`La exclusión se produce en la cadena de compatibilidades, no en el aparato.`, tt:['T11']},
- {id:'K44', t:'El censo de 2000', s:'S9', p:'389', n:'puentes', a:`Activistas multirraciales; grupos de justicia social`, q:`Por primera vez se puede marcar más de una raza. Hizo falta una marcha sobre Washington, años de activismo y miles de millones de dólares. Muchos grupos progresistas se oponen: los efectos de la discriminación se perderían en el conteo.`, d:`Un conjunto cerrado de categorías solo cambia por movimiento social, y el cambio es ambivalente.`, tt:['T11']}
-];
-
-const C = [
- {id:'C1', p:'377', s:'S1', k:'', tt:['T0'], en:`"Infrastructure in these terms is a dense interwoven fabric that is, at the same time, dynamic, thoroughly ecological, even fragile." (Bucciarelli)`, es:`"La infraestructura, en estos términos, es un tejido denso que es a la vez dinámico, plenamente ecológico e incluso frágil."`, fn:'Epígrafe', co:`Anticipa la fragilidad que Harvey, Jensen y Morita pondrán en el centro.`, a:'Infrastructure in these terms is a dense interwoven fabric'},
- {id:'C2', p:'377', s:'S2', k:'', tt:['T0','T1'], en:`"This article is in a way a call to study boring things."`, es:`"Este artículo es, en cierto modo, un llamado a estudiar cosas aburridas."`, fn:'Programa', co:`La frase que define el artículo.`, a:'This article is in a way a call to study boring things'},
- {id:'C3', p:'377', s:'S2', k:'', tt:['T1'], en:`"It takes some digging to unearth the dramas inherent in system design creating, to restore narrative to what appears to be dead lists."`, es:`"Hace falta cavar para desenterrar los dramas inherentes al diseño de sistemas, para devolver narrativa a lo que parecen listas muertas."`, fn:'Método implícito', co:`El análisis como restitución de narrativa.`, a:'restore narrative to what appears to be dead lists'},
- {id:'C4', p:'378', s:'S2', k:'K1', tt:['T1','T2'], en:`"Reading the ICD is a lot like reading the telephone book. In fact, it is worse."`, es:`"Leer la CIE se parece mucho a leer la guía telefónica. De hecho, es peor."`, fn:'Modelo de lectura', co:`Humor que convierte la aridez en objeto.`, a:'Reading the ICD is a lot like reading the telephone book'},
- {id:'C5', p:'378', s:'S2', k:'K4', tt:['T1','T11'], en:`"becoming part of the civic infrastructure in this way betokens a kind of public acceptance almost unthinkable 30 years ago"`, es:`"formar parte de la infraestructura cívica de este modo significa una aceptación pública casi impensable treinta años antes"`, fn:'Lectura histórica', co:`La infraestructura como sedimento de luchas.`, a:'betokens a kind of public acceptance almost unthinkable'},
- {id:'C6', p:'379', s:'S2', k:'K5', tt:['T2'], en:`"it is an embedded strangeness, a second-order one, that of the forgotten, the background, the frozen in place."`, es:`"es una extrañeza incrustada, de segundo orden, la de lo olvidado, el fondo, lo congelado en su lugar."`, fn:'Concepto', co:`Redefine la extrañeza antropológica.`, a:'an embedded strangeness, a second-order one'},
- {id:'C7', p:'379', s:'S2', k:'', tt:['T2','T11'], en:`"what values and ethical principles do we inscribe in the inner depths of the built information environment"`, es:`"qué valores y principios éticos inscribimos en las profundidades del entorno de información construido"`, fn:'Pregunta central', co:`Star la llama "perhaps most important of all".`, a:'what values and ethical principles do we inscribe'},
- {id:'C8', p:'379', s:'S2', k:'', tt:['T0','T2'], en:`"let us also attend ethnographically to the plugs, settings, sizes, and other profoundly mundane aspects of cyberspace"`, es:`"atendamos también etnográficamente a los enchufes, las configuraciones, los tamaños y otros aspectos profundamente mundanos del ciberespacio"`, fn:'Programa', co:`Desplaza el foco sin descartar los estudios de identidad.`, a:'attend ethnographically to the plugs, settings, sizes'},
- {id:'C9', p:'379', s:'S2', k:'K6', tt:['T1'], en:`"study the unstudied"`, es:`"estudiar lo no estudiado"`, fn:'Genealogía', co:`Aforismo de Strauss.`, a:'study the unstudied'},
- {id:'C10', p:'379', s:'S2', k:'K7', tt:['T1'], en:`"Study a city and neglect its sewers and power supplies (as many have), and you miss essential aspects of distributional justice and planning power"`, es:`"Estudia una ciudad y descuida sus cloacas y su suministro eléctrico (como muchos han hecho), y perderás aspectos esenciales de la justicia distributiva y del poder de planificación"`, fn:'Analogía', co:`Une lo aburrido con la justicia.`, a:'Study a city and neglect its sewers and power supplies'},
- {id:'C11', p:'379', s:'S2', k:'K7', tt:['T1'], en:`"think of them more modestly as symbolic sewers"`, es:`"pensarlas, con más modestia, como cloacas simbólicas"`, fn:'Ironía programática', co:`Contra la retórica de las "autopistas de la información".`, a:'symbolic sewers'},
- {id:'C12', p:'380', s:'S3', k:'K9', tt:['T3'], en:`"For a railroad engineer, the rails are not infrastructure but topic."`, es:`"Para un ingeniero ferroviario, los rieles no son infraestructura sino tema."`, fn:'Definición', co:`El ejemplo más citado de la relacionalidad.`, a:'For a railroad engineer, the rails are not infrastructure but topic'},
- {id:'C13', p:'380', s:'S3', k:'K9', tt:['T3'], en:`"One person's infrastructure is another's topic, or difficulty."`, es:`"La infraestructura de una persona es el tema, o la dificultad, de otra."`, fn:'Definición', co:`Fórmula condensada de la relacionalidad.`, a:"One person's infrastructure is another's topic, or difficulty"},
- {id:'C14', p:'380', s:'S3', k:'', tt:['T3'], en:`"Analytically, infrastructure appears only as a relational property, not as a thing stripped of use"`, es:`"Analíticamente, la infraestructura aparece solo como una propiedad relacional, no como una cosa despojada de uso"`, fn:'Definición', co:`Cita de Star y Ruhleder (1996, p. 113).`, a:'infrastructure appears only as a relational property'},
- {id:'C15', p:'380', s:'S3', k:'K11', tt:['T4'], en:`"We began to see infrastructure as part of human organization, and as problematic as any other."`, es:`"Empezamos a ver la infraestructura como parte de la organización humana, y tan problemática como cualquier otra."`, fn:'Giro', co:`El fracaso del WCS como origen teórico.`, a:'We began to see infrastructure as part of human organization'},
- {id:'C16', p:'380', s:'S3', k:'', tt:['T4','T3'], en:`"we see and name things differently under different infrastructural regimes"`, es:`"vemos y nombramos las cosas de manera distinta bajo regímenes infraestructurales distintos"`, fn:'Concepto', co:`La única mención de "régimen infraestructural": puente directo con la visualidad.`, a:'we see and name things differently under different infrastructural regimes'},
- {id:'C17', p:'382', s:'S3', k:'K20', tt:['T4'], en:`"they were unable even to tell us where the system was on their local machines"`, es:`"ni siquiera podían decirnos dónde estaba el sistema en sus máquinas"`, fn:'Propiedad 8', co:`La ruptura como método.`, a:'unable even to tell us where the system was on their local machines'},
- {id:'C18', p:'382', s:'S3', k:'K21', tt:['T4'], en:`"Nobody is really in charge of infrastructure."`, es:`"Nadie está realmente a cargo de la infraestructura."`, fn:'Propiedad 9', co:`Anticipa la complicación de Harvey, Jensen y Morita.`, a:'Nobody is really in charge of infrastructure'},
- {id:'C19', p:'382', s:'S3', k:'K21', tt:['T4'], en:`"There simply was no magic wand to be waved over the development effort."`, es:`"Simplemente no había una varita mágica que agitar sobre el desarrollo."`, fn:'Propiedad 9', co:`Eco de las "balas mágicas" de 1994.`, a:'There simply was no magic wand'},
- {id:'C20', p:'383', s:'S4', k:'K24', tt:['T5'], en:`"people make meanings based on their circumstances, and that these meanings would be inscribed into their judgments about the built information environment"`, es:`"las personas producen significados según sus circunstancias, y esos significados quedarían inscritos en sus juicios sobre el entorno de información construido"`, fn:'Sensibilidad etnográfica', co:`Definición de la etnografía aplicada a documentos.`, a:'people make meanings based on their circumstances'},
- {id:'C21', p:'383', s:'S4', k:'', tt:['T6'], en:`"has never lent itself to ethnography of thousands"`, es:`"nunca se ha prestado a una etnografía de miles"`, fn:'Escala', co:`Matizado por Becker en la nota 2.`, a:'never lent itself to ethnography of thousands'},
- {id:'C22', p:'384', s:'S4', k:'', tt:['T6'], en:`"we have the promise of a complete transcript of interactions, almost ready-made 'fieldnotes' in the form of transaction logs"`, es:`"tenemos la promesa de una transcripción completa de las interacciones, 'notas de campo' casi listas en forma de registros de transacciones"`, fn:'Escala', co:`El "momento irónico y tentador", hoy agravado.`, a:'ready-made'},
- {id:'C23', p:'384', s:'S4', k:'', tt:['T6'], en:`"I know of no one who has analyzed transaction logs to their own satisfaction"`, es:`"no conozco a nadie que haya analizado registros de transacciones a su propia satisfacción"`, fn:'Límite', co:`Confesión metodológica.`, a:'I know of no one who has analyzed transaction logs'},
- {id:'C24', p:'384', s:'S5', k:'K28', tt:['T7'], en:`"a single voice that does not problematize diversity. This voice speaks unconsciously from the presumed center of things."`, es:`"una sola voz que no problematiza la diversidad. Esta voz habla inconscientemente desde el supuesto centro de las cosas."`, fn:'Definición del truco 1', co:`Narrativa maestra.`, a:'a single voice that does not problematize diversity'},
- {id:'C25', p:'385', s:'S5', k:'', tt:['T7'], en:`"Listening for the master narrative and identifying it as such means identifying first with that which has been made other, or unnamed."`, es:`"Escuchar la narrativa maestra e identificarla como tal supone identificarse primero con lo que ha sido vuelto otro, o dejado sin nombre."`, fn:'Método del truco 1', co:`Postura epistemológica explícita.`, a:'Listening for the master narrative and identifying it as such'},
- {id:'C26', p:'385', s:'S5', k:'K31', tt:['T7'], en:`"the blanks on the forms were both heteropraxial … and heteroglossial"`, es:`"los espacios en blanco de los formularios eran a la vez heteropráxicos… y heteroglósicos"`, fn:'Concepto', co:`Heteroglosia remite a Bajtín (no lo dice el texto).`, a:'heteropraxial'},
- {id:'C27', p:'385', s:'S6', k:'', tt:['T8'], en:`"They may sit in the middle of a work process like a rock in a stream"`, es:`"Pueden quedar en medio de un proceso de trabajo como una roca en un arroyo"`, fn:'Imagen del truco 2', co:`Los sistemas obligan a rodeos.`, a:'like a rock in a stream'},
- {id:'C28', p:'386', s:'S6', k:'K33', tt:['T8'], en:`"leaving out what are locally perceived as 'nonpeople' can mean a nonworking system"`, es:`"dejar fuera a quienes localmente se perciben como 'no personas' puede significar un sistema que no funciona"`, fn:'Truco 2', co:`Une justicia y funcionamiento.`, a:'can mean a nonworking system'},
- {id:'C29', p:'386', s:'S6', k:'K34', tt:['T8'], en:`"we are thrown in with the price of the room"`, es:`"nos incluyen en el precio de la habitación"`, fn:'Testimonio', co:`Una enfermera, sobre la invisibilidad de su trabajo.`, a:'we are thrown in with the price of the room'},
- {id:'C30', p:'386', s:'S6', k:'K34', tt:['T8'], en:`"Make it explicit, and it will become a target for hospital cost accounting."`, es:`"Hazlo explícito y se volverá blanco de la contabilidad de costos del hospital."`, fn:'Dilema', co:`La visibilidad no es emancipación automática.`, a:'Make it explicit, and it will become a target for hospital cost accounting'},
- {id:'C31', p:'386', s:'S7', k:'K35', tt:['T9'], en:`"An extra keyboard stroke might as well be an extra 10 pushups."`, es:`"Una tecla extra bien puede equivaler a diez flexiones de brazos."`, fn:'Fenomenología del obstáculo', co:`La imagen más recordada del truco 3.`, a:'An extra keyboard stroke might as well be an extra 10 pushups'},
- {id:'C32', p:'386', s:'S7', k:'', tt:['T9'], en:`"two processes of work are occurring simultaneously"`, es:`"ocurren simultáneamente dos procesos de trabajo"`, fn:'Explicación', co:`Producción visible y ensamblaje invisible.`, a:'two processes of work are occurring simultaneously'},
- {id:'C33', p:'387', s:'S7', k:'', tt:['T9'], en:`"Only by describing both the production task and the hidden tasks of articulation, together and recursively, can we come up with a good analysis"`, es:`"Solo describiendo a la vez la tarea de producción y las tareas ocultas de articulación, juntas y recursivamente, podemos lograr un buen análisis"`, fn:'Conclusión del truco 3', co:`Con Schmidt y Simone.`, a:'Only by describing both the production task'},
- {id:'C34', p:'388', s:'S8', k:'K39', tt:['T10'], en:`"The relationship between e-mail and the larger sphere of lived activity cannot be presumed, but must be investigated."`, es:`"La relación entre el correo electrónico y la esfera más amplia de la actividad vivida no puede presumirse; debe investigarse."`, fn:'Truco 4', co:`Advertencia para toda etnografía digital.`, a:'The relationship between e-mail and the larger sphere of lived activity cannot be presumed'},
- {id:'C35', p:'388', s:'S8', k:'K40', tt:['T10'], en:`"A common example is the substitution of precision for validity"`, es:`"Un ejemplo común es la sustitución de la validez por la precisión"`, fn:'Concepto', co:`Clave para leer métricas y algoritmos.`, a:'the substitution of precision for validity'},
- {id:'C36', p:'388', s:'S8', k:'K40', tt:['T10'], en:`"one political tactic is to focus away from the larger question, and instead to seize control of the indicators"`, es:`"una táctica política es apartar la atención de la cuestión de fondo y tomar, en cambio, el control de los indicadores"`, fn:'Táctica', co:`El caso del DSM.`, a:'seize control of the indicators'},
- {id:'C37', p:'389', s:'S9', k:'K42', tt:['T11'], en:`"There are millions of tiny bridges built into large-scale information infrastructures"`, es:`"Hay millones de pequeños puentes construidos en las grandes infraestructuras de información"`, fn:'Generalización', co:`Moses como imagen, no como prueba.`, a:'There are millions of tiny bridges built into large-scale information infrastructures'},
- {id:'C38', p:'389', s:'S9', k:'', tt:['T11'], en:`"every conceivable form of variation in practice, culture, and norm is inscribed at the deepest levels of design"`, es:`"toda forma concebible de variación en la práctica, la cultura y la norma se inscribe en los niveles más profundos del diseño"`, fn:'Tesis', co:`La política del diseño en una frase.`, a:'every conceivable form of variation in practice, culture, and norm is inscribed'},
- {id:'C39', p:'389', s:'S9', k:'K44', tt:['T11'], en:`"This simple infrastructural change took a march on Washington, years of political activism, and will cost billions of dollars."`, es:`"Este simple cambio infraestructural requirió una marcha sobre Washington, años de activismo político, y costará miles de millones de dólares."`, fn:'Caso', co:`Lo "simple" de una casilla.`, a:'This simple infrastructural change took a march on Washington'},
- {id:'C40', p:'389', s:'S9', k:'', tt:['T12'], en:`"The methodological side of the questions posed is underdeveloped by contrast with the power of the findings of this 'invisible college.'"`, es:`"El lado metodológico de las preguntas planteadas está poco desarrollado en comparación con la fuerza de los hallazgos de este 'colegio invisible'."`, fn:'Cierre', co:`Autocrítica del programa.`, a:'The methodological side of the questions posed is underdeveloped'}
-];
-
-const D = [
- {id:'D1', t:'Infraestructura relacional', def:`Algo es infraestructura respecto de una práctica y una posición; aparece "only as a relational property".`, o:'Star y Ruhleder (1996); Jewett y Kling', fn:'Definición base.', p:'377, 380', tt:['T3','T0']},
- {id:'D2', t:'Infraestructura ecológica', def:`Parte del equilibrio entre acción, herramientas y entorno construido, inseparable de ellos.`, o:'Bucciarelli; tradición ecológica de Strauss y Bateson', fn:'Segunda dimensión de la definición.', p:'377, 379', tt:['T0','T1']},
- {id:'D3', t:'Estudiar lo aburrido / lo no estudiado', def:`Programa que convierte lo árido en objeto y valoriza personas y cosas desatendidas.`, o:'Strauss; Sociedad de Personas Interesadas en Cosas Aburridas', fn:'Legitimación del objeto.', p:'377, 379', tt:['T1']},
- {id:'D4', t:'Extrañeza de segundo orden', def:`Extrañeza "incrustada", la de lo olvidado, el fondo y lo congelado, opuesta al exotismo antropológico.`, o:'Star', fn:'Diagnóstico del campo.', p:'379', tt:['T2']},
- {id:'D5', t:'Cloacas simbólicas', def:`Las computadoras pensadas con modestia como drenaje y no como "autopistas de la información".`, o:'Star, a partir de Latour y Hermant', fn:'Ironía programática.', p:'379', tt:['T1']},
- {id:'D6', t:'Inversión infraestructural', def:`Llevar al primer plano los elementos verdaderamente tras bambalinas de la práctica.`, o:'Bowker (1994)', fn:'Método de visibilización.', p:'380', tt:['T4']},
- {id:'D7', t:'Régimen infraestructural', def:`Bajo regímenes infraestructurales distintos se ven y se nombran las cosas de manera distinta.`, o:'Star (mención única)', fn:'Vincula infraestructura y percepción; puente con la visualidad.', p:'380', tt:['T4','T3']},
- {id:'D8', t:'Propiedad 1 · Incrustación', def:`Hundida en otras estructuras, arreglos sociales y tecnologías; no se distinguen sus partes.`, o:'Star y Ruhleder', fn:'Propiedad.', p:'381', tt:['T4']},
- {id:'D9', t:'Propiedad 2 · Transparencia', def:`No se reinventa para cada tarea; sostiene las tareas de modo invisible. Relativa a quien usa.`, o:'Star y Ruhleder', fn:'Propiedad.', p:'381', tt:['T4']},
- {id:'D10', t:'Propiedad 3 · Alcance', def:`Espacial o temporal, más allá de un evento o un sitio.`, o:'Star y Ruhleder', fn:'Propiedad.', p:'381', tt:['T4']},
- {id:'D11', t:'Propiedad 4 · Aprendida como pertenencia', def:`Darla por sentada es condición de pertenencia a una comunidad de práctica; el extraño la aprende como objeto.`, o:'Lave y Wenger; Bowker y Star', fn:'Propiedad.', p:'381', tt:['T4']},
- {id:'D12', t:'Propiedad 5 · Vínculo con convenciones', def:`Moldea las convenciones de una comunidad y es moldeada por ellas.`, o:'Becker (Art Worlds)', fn:'Propiedad.', p:'381', tt:['T4']},
- {id:'D13', t:'Propiedad 6 · Encarnación de estándares', def:`Logra transparencia conectándose con otras infraestructuras de manera estandarizada.`, o:'Star y Ruhleder', fn:'Propiedad.', p:'381-382', tt:['T4']},
- {id:'D14', t:'Propiedad 7 · Base instalada', def:`No crece de cero; forcejea con la inercia de lo instalado y hereda sus límites.`, o:'Hanseth y Monteiro', fn:'Propiedad.', p:'382', tt:['T4']},
- {id:'D15', t:'Propiedad 8 · Visible en la ruptura', def:`Su invisibilidad habitual desaparece cuando falla; los respaldos también la delatan.`, o:'Star y Ruhleder', fn:'Propiedad discutida por Larkin y por Harvey et al.', p:'382', tt:['T4']},
- {id:'D16', t:'Propiedad 9 · Incrementos modulares', def:`Grande, estratificada y local; nunca se cambia desde arriba; "nobody is really in charge".`, o:'Kevin Powell; Hewitt (sistemas abiertos)', fn:'Propiedad nueva en 1999.', p:'382', tt:['T4']},
- {id:'D17', t:'Sensibilidad etnográfica', def:`Suponer que las personas producen significados según sus circunstancias y que se inscriben en sus juicios sobre el entorno construido.`, o:'Interaccionismo simbólico', fn:'Permite hacer etnografía de documentos.', p:'383', tt:['T5']},
- {id:'D18', t:'Etnografía de miles', def:`Límite de escala de una artesanía intensiva y de investigador individual, ante grupos distribuidos y anónimos.`, o:'Star; Becker (nota 2)', fn:'Problema abierto.', p:'383', tt:['T6']},
- {id:'D19', t:'Narrativa maestra', def:`Voz única que habla desde el supuesto centro y no problematiza la diversidad.`, o:'Teoría literaria', fn:'Truco 1.', p:'384', tt:['T7']},
- {id:'D20', t:'Recursos de la narrativa maestra', def:`Actores globales, personificación, voz pasiva, borrado de modalidades.`, o:'Teoría literaria; sociología de la ciencia', fn:'Herramientas de detección.', p:'385', tt:['T7']},
- {id:'D21', t:'Heteropraxia y heteroglosia', def:`Prácticas distintas según región y creencias, y voces distintas inscritas en un formulario aparentemente monótono.`, o:'Bowker y Star; heteroglosia de Bajtín (no citado)', fn:'Resultado del truco 1.', p:'385', tt:['T7']},
- {id:'D22', t:'Trabajo invisible', def:`Trabajo que los sistemas no representan, obstruyen o dejan sin hacer.`, o:'Star y Strauss (1999)', fn:'Truco 2.', p:'385-386', tt:['T8']},
- {id:'D23', t:'Trabajo de articulación', def:`Ajustes en tiempo real que completan los procesos que el sistema deja con huecos.`, o:'Strauss; Schmidt y Simone', fn:'Truco 2 y 3.', p:'385-387', tt:['T8','T9']},
- {id:'D24', t:'Tras bambalinas', def:`Ir a la trastienda para recuperar el desorden que oculta la uniformidad de la información.`, o:'Goffman (1959)', fn:'Técnica del truco 2.', p:'385', tt:['T8']},
- {id:'D25', t:'No personas', def:`Quienes localmente no cuentan como parte del trabajo (personal de limpieza, secretarias, a menudo padres).`, o:'Star', fn:'Lo que los sistemas excluyen.', p:'386', tt:['T8']},
- {id:'D26', t:'Ensamblaje', def:`Tejido de recursos del escritorio, rutinas, colas de tareas y articulación invisible que el usuario mantiene.`, o:'Star; Schmidt y Simone', fn:'Explica la magnificación de obstáculos.', p:'386-387', tt:['T9']},
- {id:'D27', t:'Tres estatus de los indicadores', def:`Artefacto (importa el impacto), huella o registro (importa la información), representación verídica (espejo tácito).`, o:'Star', fn:'Truco 4.', p:'387-388', tt:['T10']},
- {id:'D28', t:'Sustitución de la validez por la precisión', def:`Tomar el control de los indicadores para desplazar la cuestión de fondo.`, o:'Kirk y Kutchins; Star (1989)', fn:'Táctica política.', p:'388', tt:['T10']},
- {id:'D29', t:'Puentes y barreras', def:`Valores inscritos en sistemas técnicos que dejan pasar a unos y no a otros, maleables o solo cambiables por movimientos sociales.`, o:'Winner (1986)', fn:'Política del diseño.', p:'388-389', tt:['T11']},
- {id:'D30', t:'Colegio invisible', def:`Red interdisciplinaria (historia, sociología, antropología, filosofía, teoría literaria, informática) que estudia la infraestructura.`, o:'Sociología de la ciencia', fn:'Autodiagnóstico del campo.', p:'389', tt:['T12']}
-];
-
-const A = [
- {a:`Louis Bucciarelli, <i>Designing Engineers</i> (1994)`, q:`Epígrafe: infraestructura densa, dinámica, ecológica y frágil.`, m:'adhesión', p:'377', tt:['T0']},
- {a:`Percy Bysshe Shelley, <i>Ozymandias</i> (1817)`, q:`Epígrafe: las pasiones estampadas en cosas sin vida.`, m:'epígrafe', p:'377', tt:['T1']},
- {a:`Geoffrey Bowker y Susan Leigh Star, <i>Sorting Things Out</i> (en prensa, 1999)`, q:`La CIE y la guía telefónica; Santa Cruz; casos de clasificación; trabajo de enfermería; apartheid.`, m:'fuente propia', p:'378, 381, 382-385', tt:['T1','T5','T7']},
- {a:`Neumann y Star (1996)`, q:`Las luchas con la infraestructura están tejidas en el trabajo técnico; Biblioteca Digital de Illinois.`, m:'fuente propia', p:'378, 384', tt:['T2','T6']},
- {a:`Goguen (1997); Hanseth y Monteiro (1996); Hanseth, Monteiro y Hatling (1996)`, q:`Valores inscritos en estándares e infraestructuras; tensión estandarización-flexibilidad; base instalada.`, m:'adhesión', p:'379, 382', tt:['T2','T4']},
- {a:`Anselm Strauss (1979); Clarke y Fujimura (1992)`, q:`"Study the unstudied": enfermedad crónica, materiales de las ciencias de la vida.`, m:'genealogía', p:'379', tt:['T1']},
- {a:`Bruno Latour y Emilie Hermant, <i>Paris ville invisible</i> (1998)`, q:`La ciudad y sus cloacas.`, m:'adhesión', p:'379', tt:['T1']},
- {a:`Gregory Bateson (1978)`, q:`Epígrafe de la definición: estudiar relaciones, no cosas.`, m:'epígrafe', p:'379', tt:['T3']},
- {a:`Star y Ruhleder (1996); Jewett y Kling (1991)`, q:`Definición relacional (p. 113) y propiedades.`, m:'fuente propia', p:'380-381', tt:['T3','T4']},
- {a:`Bruce Schatz (1991)`, q:`El sistema del WCS.`, m:'fuente del caso', p:'380', tt:['T3']},
- {a:`Bowker (1994); Edwards (1996); Hughes (1983, 1989); Summerton (1994); Yates (1989)`, q:`Inversión infraestructural e historiografía de los grandes sistemas.`, m:'adhesión', p:'380', tt:['T4']},
- {a:`Lave y Wenger (1991)`, q:`Comunidades de práctica y pertenencia.`, m:'adhesión', p:'381', tt:['T4']},
- {a:`Howard Becker, <i>Art Worlds</i> (1982); <i>Tricks of the Trade</i> (1998); Becker, Geer y Hughes (1968)`, q:`QWERTY y mobiliario; título de los trucos; etnografías de miles (nota 2).`, m:'adhesión, préstamo', p:'381, 383, 384, 390', tt:['T4','T6','T12']},
- {a:`Kevin Powell; Carl Hewitt (1986)`, q:`La novena propiedad; sistemas abiertos.`, m:'agradecimiento', p:'382, 389', tt:['T4']},
- {a:`Gasser (1986); Trigg y Bødker (1994)`, q:`Ajuste y adaptación de sistemas como sitio de estudio.`, m:'adhesión', p:'382', tt:['T5']},
- {a:`Bowker, Timmermans y Star (1995)`, q:`Clasificación del trabajo de enfermería.`, m:'fuente propia', p:'382-383, 386', tt:['T5','T8']},
- {a:`Star, <i>Regions of the Mind</i> (1989)`, q:`Neurofisiólogos del siglo XIX; investigadores del cerebro.`, m:'fuente propia', p:'383, 388', tt:['T5','T10']},
- {a:`Bowker, Star, Turner y Gasser (1997)`, q:`Alianzas entre etnógrafos y desarrolladores en CSCW.`, m:'contexto', p:'383', tt:['T5']},
- {a:`Spasser (1998); Bishop et al. (en prensa)`, q:`Problemas de los registros de transacciones; Biblioteca Digital de Illinois.`, m:'referencia', p:'384, 386', tt:['T6','T9']},
- {a:`Bruno Latour, <i>Aramis</i> (1996); <i>Science in Action</i> (1987)`, q:`Narrativa inscrita en el metro; "péage et bricolage" (nota 3).`, m:'adhesión', p:'384, 390', tt:['T7','T12']},
- {a:`Star y Strauss (1999)`, q:`Capas de silencio y arenas de voz: trabajo visible e invisible.`, m:'fuente propia', p:'385', tt:['T8']},
- {a:`Erving Goffman (1959)`, q:`Tras bambalinas.`, m:'adhesión', p:'385', tt:['T8']},
- {a:`Kjeld Schmidt y Carla Simone (1996)`, q:`Recursividad entre producción y articulación.`, m:'adhesión', p:'387', tt:['T9']},
- {a:`Yates y Orlikowski (1992)`, q:`Géneros de la comunicación organizacional.`, m:'adhesión', p:'388', tt:['T10']},
- {a:`Kirk y Kutchins, <i>The Selling of the DSM</i> (1992)`, q:`Tácticas en la construcción del DSM.`, m:'adhesión', p:'388', tt:['T10']},
- {a:`Langdon Winner, "Do Artifacts Have Politics?" (1986)`, q:`Los puentes de Moses.`, m:'adhesión con reserva', p:'388-389', tt:['T11']}
-];
-
-const E = [
- {id:'E1', d:'Programa', f:`Legitima lo aburrido como objeto y le da una agenda de justicia; el artículo fundó un campo.`, x:`Es más un manifiesto que un método: la propia autora reconoce que el lado metodológico está "underdeveloped".`, q:`¿Qué haría falta para que los trucos se volvieran método?`, tt:['T0','T12']},
- {id:'E2', d:'La lista de propiedades', f:`Vuelve operativa la definición relacional y circula como herramienta.`, x:`Mezcla rasgos del artefacto (base instalada, estándares) con posiciones de uso (transparencia, pertenencia); fuera de su caso tiende a leerse como inventario de atributos de una cosa, contra la insistencia relacional.`, q:`¿Puede usarse la lista sin convertir la relación en sustancia?`, tt:['T4','T3']},
- {id:'E3', d:'La premisa de la invisibilidad', f:`Explica bien infraestructuras que funcionan (K20).`, x:`La propiedad 8 presupone infraestructuras que normalmente funcionan. Larkin (espectáculo) y Harvey, Jensen y Morita (falla como norma) la discuten.`, q:`¿Qué queda de la etnografía de la infraestructura donde todo es visible o todo falla?`, tt:['T4','T3']},
- {id:'E4', d:'Escala', f:`Formula con lucidez el "momento irónico" de los registros completos (K26, K27).`, x:`Queda sin resolver, y hoy se agrava: los registros son datos de plataformas privadas, fuera del alcance de quien investiga.`, q:`¿Cómo sería hoy una etnografía de miles con datos que no controlamos?`, tt:['T6']},
- {id:'E5', d:'Los trucos del oficio', f:`Lo más fértil del texto: operaciones transferibles a guías, censos, archivos y algoritmos.`, x:`Son heterogéneos (dos de lectura, uno de explicación, uno de epistemología) y no se articulan entre sí.`, q:`¿Hay un principio común a los cuatro trucos?`, tt:['T7','T8','T9','T10']},
- {id:'E6', d:'Etnografía sin campo', f:`Amplía el campo a documentos, archivos y diseños con una "sensibilidad etnográfica".`, x:`Deja abierto si leer bien las inscripciones basta para conocer las vidas que organizan.`, q:`¿Dónde termina la etnografía y empieza la crítica documental?`, tt:['T5','T0']},
- {id:'E7', d:'El ejemplo de Moses', f:`Usa el caso como imagen y advierte su carácter controvertido.`, x:`Joerges discutía ese mismo año su base empírica; la fuerza retórica del ejemplo excede su prueba.`, q:`¿Cuánto descansa el argumento de los "puentes" en un caso dudoso?`, tt:['T11']},
- {id:'E8', d:'Política', f:`Conecta diseño, valores y justicia, y reconoce la ambivalencia (K44).`, x:`No hay una teoría explícita del poder: la justicia aparece como horizonte, no como análisis de quién decide.`, q:`¿Qué aportaría aquí una analítica del poder de corte foucaultiano?`, tt:['T11','T1']}
-];
-
-const X = [
- {t:'Definición', e:'Relacional y ecológica; "not as a thing stripped of use".', s:'Relación, no cosa; infraestructura como contexto (Bateson).', h:'Doble relacionalidad; lo diseñado y lo no diseñado.', tt:['T3']},
- {t:'Aparato', e:'Nueve propiedades y cuatro trucos del oficio.', s:'Niveles de Bateson y doble vínculo; no hay lista.', h:'Complejo y complicado; huecos; orden fractal.', tt:['T4','T0']},
- {t:'Inversión', e:'Operación del analista (Bowker).', s:'La misma, como cambio de figura y fondo.', h:'Inversiones que ocurren por sí solas en el campo.', tt:['T4']},
- {t:'Visibilidad', e:'Propiedad 8: visible en la ruptura (K20).', s:'El sistema que nadie usaba (semana en la ciudad).', h:'Espectáculo frente a operación (Larkin); empezar por los huecos.', tt:['T4']},
- {t:'Trabajo invisible', e:'Truco 2: secretarias, enfermeras (K33, K34).', s:'Construir herramientas no da crédito.', h:'Responsabilidad distribuida, ética del cuidado.', tt:['T8']},
- {t:'Indicadores y visión', e:'Artefacto, huella, representación; validez y precisión.', s:'—', h:'Oligóptico; datos masivos; opacidad de los datos privados.', tt:['T10']},
- {t:'Política', e:'Puentes y barreras; censo de 2000.', s:'Política del refuerzo; equidad y justicia.', h:'Astillamiento; la crítica al neoliberalismo sobrestima el control.', tt:['T11']},
- {t:'Escala', e:'Problema metodológico: etnografía de miles.', s:'De un laboratorio a la National Information Infrastructure.', h:'La escala como efecto (Darwin).', tt:['T6']},
- {t:'Control', e:'"Nobody is really in charge of infrastructure."', s:'Ningún bando tiene la culpa.', h:'Nadie puede imponer un desarrollo lineal.', tt:['T4']}
-];
-
-/* propiedades de un vistazo */
-const PROPS = [['1 · Incrustación','D8','K12'],['2 · Transparencia','D9','K13'],['3 · Alcance','D10','K14'],['4 · Pertenencia','D11','K15'],['5 · Convenciones','D12','K16'],['6 · Estándares','D13','K18'],['7 · Base instalada','D14','K19'],['8 · Visible en la ruptura','D15','K20'],['9 · Incrementos modulares','D16','K21']];
-document.getElementById('props').innerHTML = PROPS.map(([n, d, k]) => `<div data-refs="T4"><b>${n}</b>${D.find(x=>x.id===d).def} <span style="display:block;margin-top:6px"><button class="chip d" data-go="${d}">${d}</button> <button class="chip k" data-go="${k}">${k}</button></span></div>`).join('');
-
-/* ===================== UTILIDADES ===================== */
-const $ = s => document.querySelector(s);
-const byId = {}; [...T, ...K, ...C, ...S, ...D, ...E].forEach(x => byId[x.id] = x);
-const lectorURL = (p, ancla) => 'lector.html?f=' + encodeURIComponent(LECTURA) + (p ? '&p=' + p : '') + (ancla ? '&q=' + encodeURIComponent(ancla) : '');
-function pages(p){ return String(p).replace(/\d+/g, n => `<a class="pgl" href="${lectorURL(n)}" target="lector" title="Abrir el texto en la p. ${n}">${n}</a>`); }
-function chip(id, withLabel){
-  const x = byId[id]; if (!x) return '';
-  const cls = id[0] === 'T' ? 't' : id[0] === 'C' ? 'c' : id[0] === 'K' ? 'k' : id[0] === 'S' ? 's' : id[0] === 'D' ? 'd' : 'e';
-  const lb = id[0] === 'T' ? x.c : id[0] === 'K' ? x.t : id[0] === 'S' ? x.t : id[0] === 'D' ? x.t : id[0] === 'E' ? x.d : (x.es || '').slice(0, 60);
-  return `<button class="chip ${cls}" data-go="${id}" title="${lb.replace(/"/g,'&quot;').replace(/<[^>]+>/g,'')}">${id}${withLabel ? `<span class="lb">${lb}</span>` : ''}</button>`;
-}
-const chips = (ids, wl) => (ids || []).map(i => chip(i, wl)).join(' ');
-const pl = (n, a, b) => n + ' ' + (n === 1 ? a : b);
-const tag = (txt, cls) => `<span class="tag ${cls || ''}">${txt}</span>`;
-const casesOf = t => K.filter(k => k.tt.includes(t));
-const quotesOf = t => C.filter(c => c.tt.includes(t));
-const conceptsOf = t => D.filter(d => d.tt.includes(t));
-const evalOf = t => E.filter(e => e.tt.includes(t));
-const flowOf = t => FLOW.map((f, i) => ({f, i})).filter(o => o.f.t.includes(t));
-function refsOf(item, extra){ return [...new Set([...(item.tt || []), ...(extra || [])])].join(' '); }
-
-function table(el, heads, rows){
-  el.innerHTML = '<thead><tr>' + heads.map(h => `<th>${h}</th>`).join('') + '</tr></thead><tbody>' + rows.join('') + '</tbody>';
-}
-
-/* ===================== RENDER ===================== */
-function renderGrid(){
-  let h = '<thead><tr><th></th>' + S.map(s => `<th title="${s.t}">${s.id}</th>`).join('') + '<th>total</th></tr></thead><tbody>';
-  for (const t of T){
-    h += `<tr data-refs="${t.id}"><th class="row"><button class="chip t" data-foco="${t.id}">${t.id}</button> ${t.c}</th>`;
-    let tot = 0;
-    for (const s of S){
-      const n = K.filter(k => k.s === s.id && k.tt.includes(t.id)).length + C.filter(c => c.s === s.id && c.tt.includes(t.id)).length;
-      tot += n;
-      const v = n === 0 ? 0 : n >= 4 ? 4 : n;
-      const arg = t.s.includes(s.id);
-      h += `<td class="v${v}${arg ? ' arg' : ''}" data-foco="${t.id}" title="${t.id} en ${s.id} (${s.t}): ${n} apoyos${arg ? ' · se argumenta aquí' : ''}">${n || (arg ? '◆' : '·')}</td>`;
-    }
-    h += `<td class="v0" style="color:var(--ink);background:#fff;font-weight:600">${tot}</td></tr>`;
-  }
-  $('#grid').innerHTML = h + '</tbody>';
-}
-
-function renderHilos(){
-  $('#hilosBox').innerHTML = T.map(t => {
-    const ks = casesOf(t.id), cs = quotesOf(t.id), ds = conceptsOf(t.id), es = evalOf(t.id), fs = flowOf(t.id);
-    return `<details class="hilo" id="hilo-${t.id}" data-refs="${t.id}">
-      <summary><span class="tid">${t.id}</span><span class="tt">${t.c}</span><span class="tc">${pl(ks.length,'caso','casos')} · ${pl(cs.length,'cita','citas')} · ${pl(ds.length,'concepto','conceptos')}</span></summary>
-      <div class="hb">
-        <div class="form">${t.f}</div>
-        <div class="row"><b>Estatus</b><div>${tag(t.est, t.est.startsWith('inferida') ? 't2' : '')} · páginas ${pages(t.p)}</div></div>
-        <div class="row"><b>Cómo se sostiene</b><div>${t.sus}</div></div>
-        <div class="row"><b>Dónde se argumenta</b><div>${chips(t.s, true)}</div></div>
-        <div class="row"><b>Paso del argumento</b><div>${fs.map(o => `<div>${o.i + 1}. <b>${o.f.mv}</b> ${o.f.d}</div>`).join('') || '—'}</div></div>
-        <div class="row"><b>Conceptos</b><div>${chips(ds.map(d => d.id), true)}</div></div>
-        <div class="row"><b>Casos</b><div><ul>${ks.map(k => `<li>${chip(k.id)} <b>${k.t}</b> (p. ${pages(k.p)}): ${k.d}</li>`).join('') || '<li>—</li>'}</ul></div></div>
-        <div class="row"><b>Citas</b><div>${cs.map(c => `<div class="q">${chip(c.id)} ${c.en} <span class="tr">${c.es} · p. ${pages(c.p)} · <a class="ver" href="${lectorURL(c.p.split('-')[0], c.a)}" target="lector">ver en el texto</a></span></div>`).join('') || '—'}</div></div>
-        <div class="row"><b>Tensión crítica</b><div>${es.map(e => `<div class="obj">${chip(e.id)} <b>${e.d}.</b> ${e.x}<br><i>${e.q}</i></div>`).join('') || '—'}</div></div>
-      </div></details>`;
-  }).join('');
-}
-
-function renderFlow(){
-  $('#flow').innerHTML = FLOW.map(f => `<li data-refs="${f.t.join(' ')}"><span class="mv">${f.mv}</span> ${f.d} <span class="why">${f.w} · p. ${pages(f.p)} · ${chips(f.t)}</span></li>`).join('');
-}
-
-function renderSecciones(){
-  table($('#tSecciones'), ['ID','Sección','Pág.','Función','Argumento y contenido','Sustento','Tesis','Casos y citas','Transición'],
-    S.map(s => {
-      const ts = T.filter(t => t.s.includes(s.id)).map(t => t.id);
-      const ks = K.filter(k => k.s === s.id).map(k => k.id), cs = C.filter(c => c.s === s.id).map(c => c.id);
-      return `<tr id="${s.id}" data-refs="${[...new Set([...ts, ...K.filter(k=>k.s===s.id).flatMap(k=>k.tt), ...C.filter(c=>c.s===s.id).flatMap(c=>c.tt)])].join(' ')}"><td class="id">${s.id}</td><td class="k">${s.t}</td><td>${pages(s.p)}</td><td>${s.fn}</td><td>${s.arg}</td><td>${s.sus}</td><td>${chips(ts)}</td><td>${chips(ks)} ${chips(cs)}</td><td>${s.tr}</td></tr>`;
-    }));
-}
-
-function renderCasos(){
-  table($('#tCasos'), ['ID','Caso','Actores','Qué ocurre','Qué demuestra',NIVEL_COL,'Sostiene','Citas','Sección','Pág.'],
-    K.map(k => {
-      const cs = C.filter(c => c.k === k.id).map(c => c.id);
-      return `<tr id="${k.id}" data-refs="${refsOf(k)}"><td class="id">${k.id}</td><td class="k">${k.t}</td><td>${k.a}</td><td>${k.q}</td><td>${k.d}</td><td>${tag(k.n, k.n === '3' ? 't3' : /^(doble|nombrado|enumerado)/.test(k.n) ? 't2' : '')}</td><td>${chips(k.tt, true)}</td><td>${chips(cs) || '—'}</td><td>${chip(k.s)}</td><td>${pages(k.p)}</td></tr>`;
-    }));
-}
-
-function renderCitas(){
-  table($('#tCitas'), ['ID','Original','Traducción','Pág.','Función','Sostiene','Caso','Comentario'],
-    C.map(c => `<tr id="${c.id}" data-refs="${refsOf(c)}"><td class="id">${c.id}</td><td class="en">${c.en}<br><a class="ver" href="${lectorURL(c.p.split('-')[0], c.a)}" target="lector">ver en el texto</a></td><td class="es">${c.es}</td><td>${pages(c.p)}</td><td>${c.fn}</td><td>${chips(c.tt, true)}</td><td>${c.k ? chip(c.k, true) : '—'}</td><td>${c.co}</td></tr>`));
-}
-
-function renderConceptos(){
-  table($('#tConceptos'), ['ID','Concepto','Definición o uso','Origen','Función','Tesis','Pág.'],
-    D.map(d => `<tr id="${d.id}" data-refs="${refsOf(d)}"><td class="id">${d.id}</td><td class="k">${d.t}</td><td>${d.def}</td><td>${d.o}</td><td>${d.fn}</td><td>${chips(d.tt)}</td><td>${pages(d.p)}</td></tr>`));
-}
-
-function renderAutores(){
-  table($('#tAutores'), ['Autor y obra','Qué toma el texto','Modo','Tesis','Pág.'],
-    A.map(a => `<tr data-refs="${refsOf(a)}"><td class="k">${a.a}</td><td>${a.q}</td><td>${a.m.split(', ').map(m => tag(m, m === 'crítica' ? 't3' : /refer|contexto|fuente|indirecto/.test(m) ? 't2' : '')).join(' ')}</td><td>${chips(a.tt)}</td><td>${pages(a.p)}</td></tr>`));
-}
-
-function renderEval(){
-  table($('#tEval'), ['ID','Dimensión','Fortaleza','Tensión o límite','Pregunta abierta','Afecta a'],
-    E.map(e => `<tr id="${e.id}" data-refs="${refsOf(e)}"><td class="id">${e.id}</td><td class="k">${e.d}</td><td>${e.f}</td><td>${e.x.replace(/\b(K\d+)\b/g, m => chip(m))}</td><td>${e.q}</td><td>${chips(e.tt, true)}</td></tr>`));
-}
-
-function renderConex(){
-  table($('#tConex'), CONEX_COLS,
-    X.map(x => `<tr data-refs="${refsOf(x)}"><td class="k">${x.t}</td><td>${x.e.replace(/\b(K\d+)\b/g, m => chip(m))}</td><td>${x.s}</td><td>${x.h}</td><td>${chips(x.tt)}</td></tr>`));
-}
-
-/* ===================== INTERACCIÓN ===================== */
-let foco = null;
-function setFoco(id){
-  foco = id;
-  document.body.classList.toggle('foco', !!id);
-  document.querySelectorAll('[data-refs]').forEach(el => el.classList.toggle('on', !!id && el.dataset.refs.split(' ').includes(id)));
-  if (id){
-    const t = byId[id];
-    $('#focoT').textContent = id + ' · ' + t.c;
-    $('#focoC').textContent = pl(casesOf(id).length,'caso','casos') + ' · ' + pl(quotesOf(id).length,'cita','citas') + ' · ' + pl(conceptsOf(id).length,'concepto','conceptos') + ' · ' + pl(t.s.length,'sección','secciones');
-    try { history.replaceState(null, '', '#hilo=' + id); } catch(e){}
-  } else {
-    try { history.replaceState(null, '', location.pathname + location.search); } catch(e){}
-  }
-}
-function flash(el){ el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
-function goTo(id){
-  if (id[0] === 'T'){ setFoco(id); return; }
-  const el = document.getElementById(id); if (!el) return;
-  if (el.classList.contains('hidden-row')){ $('#q').value = ''; filtrar(); }
-  el.scrollIntoView({behavior:'smooth', block:'center'}); flash(el);
-}
-document.addEventListener('click', e => {
-  const g = e.target.closest('[data-go]'); if (g){ e.preventDefault(); goTo(g.dataset.go); return; }
-  const f = e.target.closest('[data-foco]'); if (f){ e.preventDefault(); setFoco(f.dataset.foco); }
-});
-$('#focoX').addEventListener('click', () => { $('#focoSolo').checked = false; document.body.classList.remove('solo'); setFoco(null); });
-$('#focoSolo').addEventListener('change', e => document.body.classList.toggle('solo', e.target.checked));
-$('#focoDossier').addEventListener('click', () => { const d = document.getElementById('hilo-' + foco); if (!d) return; d.open = true; d.scrollIntoView({behavior:'smooth', block:'start'}); flash(d); });
-
-/* búsqueda */
-const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-function filtrar(){
-  const q = norm($('#q').value.trim());
-  const rows = [...document.querySelectorAll('main tbody tr')].filter(r => !r.closest('#grid'));
-  if (!q){ rows.forEach(r => r.classList.remove('hidden-row')); $('#count').textContent = ''; return; }
-  let n = 0;
-  rows.forEach(r => { const hit = norm(r.textContent).includes(q); r.classList.toggle('hidden-row', !hit); if (hit) n++; });
-  $('#count').textContent = n + (n === 1 ? ' fila coincide' : ' filas coinciden');
-}
-$('#q').addEventListener('input', filtrar);
-
-/* vista tabla / fichas, tamaño de letra, menú */
-const store = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} } };
-function setFichas(on){ document.body.classList.toggle('fichas', on); $('#vista').textContent = on ? 'vista: fichas' : 'vista: tabla'; $('#vista').classList.toggle('on', on); }
-$('#vista').addEventListener('click', () => { const on = !document.body.classList.contains('fichas'); setFichas(on); store.set('adinf-matriz-fichas', on ? '1' : '0'); });
-(function(){ const v = store.get('adinf-matriz-fichas'); setFichas(v != null ? v === '1' : matchMedia('(max-width:1100px)').matches); })();
-function setFs(px){ px = Math.max(14, Math.min(22, px)); document.documentElement.style.setProperty('--fs', px + 'px'); store.set('adinf-matriz-fs', px); }
-$('#fmas').addEventListener('click', () => setFs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs')) + 1));
-$('#fmenos').addEventListener('click', () => setFs(parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fs')) - 1));
-(function(){ const v = parseFloat(store.get('adinf-matriz-fs')); if (v) setFs(v); })();
-$('#navToggle').addEventListener('click', () => { const o = $('#side').classList.toggle('open'); $('#navToggle').setAttribute('aria-expanded', o); });
-$('#nav').addEventListener('click', e => { if (e.target.closest('a') && matchMedia('(max-width:1100px)').matches) $('#side').classList.remove('open'); });
-$('#leer').href = lectorURL(null); $('#leer').target = 'lector';
-
-function etiquetar(){ document.querySelectorAll('table.mx').forEach(t => { const hs = [...t.querySelectorAll('thead th')].map(th => th.textContent); t.querySelectorAll('tbody tr').forEach(tr => [...tr.children].forEach((td, i) => td.dataset.label = hs[i] || '')); }); }
-
-renderGrid(); renderHilos(); renderFlow(); renderSecciones(); renderCasos(); renderCitas(); renderConceptos(); renderAutores(); renderEval(); renderConex(); etiquetar();
-(function(){ const m = location.hash.match(/^#hilo=(T\d+)$/); if (m && byId[m[1]]) setFoco(m[1]); })();
-
+(function(){
+  var K='adinf-matriz-fs', r=document.documentElement;
+  function set(v){ r.style.setProperty('--fs', v+'px'); try{localStorage.setItem(K, v);}catch(e){} }
+  var v=17; try{ var g=parseFloat(localStorage.getItem(K)); if(g>=13&&g<=24) v=g; }catch(e){}
+  set(v);
+  var a=document.getElementById('fsMenos'), b=document.getElementById('fsMas');
+  if(a) a.onclick=function(){ v=Math.max(13,v-1); set(v); };
+  if(b) b.onclick=function(){ v=Math.min(24,v+1); set(v); };
+})();
 </script>
 </body>
 </html>
