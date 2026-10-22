@@ -433,6 +433,16 @@
   .nota.fija .etq{font-family:var(--mono); font-size:9.5px; letter-spacing:.08em; text-transform:uppercase; color:#3f6fa8; margin-bottom:4px}
   .nota.fija .coment{border-left-color:#c7d6e8}
   body.sin-fijas .nota.fija{display:none}
+  /* edición en el lugar */
+  #barraEdicion{position:sticky; top:0; z-index:20; display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    margin:-8px auto 18px; max-width:90ch; padding:8px 12px; background:#fff8e6; border:1px solid #e6c97a; border-radius:4px; font-size:11px; color:var(--ink)}
+  #barraEdicion .msg{flex:1; min-width:200px}
+  #barraEdicion #guardarTexto{background:var(--moss); border-color:var(--moss); color:#fff}
+  body.editando-texto #doc [contenteditable="true"]{outline:1px dashed #d9cfa8; outline-offset:3px; border-radius:2px; cursor:text}
+  body.editando-texto #doc [contenteditable="true"]:focus{outline:2px solid var(--moss); background:#fffdf5}
+  body.editando-texto #doc .editado{background:#fff6d6}
+  body.editando-texto #fab{display:none !important}
+  #editar.activo{border-color:var(--moss); color:var(--moss)}
   #avisoCita{position:fixed; left:50%; top:70px; transform:translateX(-50%); z-index:80; background:var(--panel); border:1px solid var(--moss); border-radius:4px; padding:6px 12px; font-size:11px; color:var(--ink); box-shadow:0 4px 14px #0002; display:none}
   /* tablet vertical y pantallas estrechas: índice y anotaciones como cajones sobre el texto */
   @media (max-width:1100px){
@@ -487,6 +497,12 @@
     </nav>
     <section id="read">
       <div id="empty"><p id="urlEstado">Cargando…</p><div id="elegir"></div></div>
+      <div id="barraEdicion" class="hide">
+        <span class="msg"><b>Editando sobre el texto.</b> Al guardar, los cambios pasan al .md; luego «exportar .md».</span>
+        <button id="guardarTexto">guardar cambios</button>
+        <button id="descartarTexto">descartar</button>
+        <button id="editarCodigo" title="Abrir el Markdown completo (para cambios que no se pueden hacer sobre el texto)">editar código</button>
+      </div>
       <article id="doc"></article>
       <textarea id="editor" class="hide" spellcheck="false"></textarea>
     </section>
@@ -554,6 +570,8 @@
   let pending = null;    // captura de la selección en curso
   let activeId = null;
   let editando = false;
+  let editandoTexto = false;                 // edición en el lugar, sobre el texto leído
+  let mdServidor = null, mdExportado = null; // para avisar de cambios sin exportar
   let docUrl = '';       // URL de origen si el documento se cargó por red; '' si vino de archivo o pegado
   const revs = Object.create(null); // última revisión _rN exportada por nombre base: nunca se repite en la sesión
 
@@ -621,7 +639,7 @@
       const texto = await res.text();
       setGlosario(null, null, null);
       render(texto, ARCH);
-      docUrl = DOC; updateChrome();
+      docUrl = DOC; mdServidor = texto; updateChrome();
       cargarGuardadas();
       await cargarFijas();
       listo = true;
@@ -1297,7 +1315,7 @@
       alert(r.ok + ' re-ancladas, ' + r.huerf + ' sin anclar (huérfanas): su pasaje cambió o desapareció. Siguen en la lista y se re-anclan solas si el texto reaparece.');
   }
 
-  $('editar').addEventListener('click', ()=>{
+  function alternarCodigo(){
     if (!rawMd) return;
     if (!editando){
       editor.value = rawMd;
@@ -1308,8 +1326,178 @@
       if (nuevo === rawMd){ setEdicion(false); return; }
       aplicarEdicion(nuevo);
     }
+  }
+  $('editar').addEventListener('click', ()=>{
+    if (!rawMd) return;
+    if (editando) return alternarCodigo();          // salir del editor de código
+    if (editandoTexto) return guardarTexto();       // segundo clic: guardar
+    entrarTexto();
   });
-  document.addEventListener('keydown', e=>{ if (e.key === 'Escape' && editando){ e.preventDefault(); $('editar').click(); } });
+  document.addEventListener('keydown', e=>{
+    if (e.key !== 'Escape') return;
+    if (editando){ e.preventDefault(); alternarCodigo(); }
+    else if (editandoTexto){ e.preventDefault(); descartarTexto(); }
+  });
+
+  // ===== edición en el lugar: se escribe sobre el texto leído y los cambios se trasladan al .md =====
+  // Cada bloque (párrafo, título, ítem) se vuelve editable. Al guardar, se compara palabra por palabra el
+  // texto anterior y el nuevo, y cada cambio se busca en el .md por su contexto (palabras vecinas), tolerando
+  // marcas de Markdown, llamadas a notas y saltos. Los cambios que no se pueden ubicar sin ambigüedad no se
+  // aplican y se informan, para hacerlos en «editar código».
+  const originales = new Map();
+  const NOEDIT = 'sup.fn, a.fn-back, .fn-n, .pg';
+  function bloquesEditables(){
+    return [...docEl.querySelectorAll('p, h1, h2, h3, h4, h5, h6, li')].filter(el => {
+      const anc = el.parentElement && el.parentElement.closest('p, h1, h2, h3, h4, h5, h6, li');
+      return !(anc && docEl.contains(anc)) && el.textContent.trim();
+    });
+  }
+  function textoDe(el){
+    const c = el.cloneNode(true);
+    c.querySelectorAll(NOEDIT).forEach(x => x.remove());
+    c.querySelectorAll('li').forEach(x => x.remove());
+    return c.textContent.replace(/\s+/g, ' ').trim();
+  }
+  function entrarTexto(){
+    if (!rawMd || editando) return;
+    editandoTexto = true; originales.clear();
+    document.body.classList.add('editando-texto');
+    hideFab(); setAnotar(false); pending = null;
+    for (const el of bloquesEditables()){
+      originales.set(el, textoDe(el));
+      el.contentEditable = 'true'; el.spellcheck = true;
+      el.querySelectorAll(NOEDIT).forEach(x => x.contentEditable = 'false');
+    }
+    $('barraEdicion').classList.remove('hide');
+    $('editar').textContent = 'guardar'; $('editar').classList.add('activo');
+    updateChrome();
+  }
+  function salirTexto(){
+    editandoTexto = false;
+    document.body.classList.remove('editando-texto');
+    docEl.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+    docEl.querySelectorAll('.editado').forEach(el => el.classList.remove('editado'));
+    $('barraEdicion').classList.add('hide');
+    $('editar').textContent = 'editar'; $('editar').classList.remove('activo');
+    originales.clear();
+    updateChrome();
+  }
+  function hayCambios(){ for (const [el, v] of originales) if (textoDe(el) !== v) return true; return false; }
+  function descartarTexto(){
+    if (hayCambios() && !confirm('¿Descartar los cambios hechos sobre el texto?')) return;
+    const y = read.scrollTop;
+    salirTexto();
+    const prev = annos; render(rawMd, docName); annos = prev; reanclar(); annos.sort(cmpAnnos);
+    docUrl = DOC; refreshHighlights(); renderList(); updateChrome(); read.scrollTop = y;
+  }
+  docEl.addEventListener('input', e => { const b = e.target.closest && e.target.closest('[contenteditable="true"]'); if (b) b.classList.add('editado'); });
+  docEl.addEventListener('paste', e => {
+    if (!editandoTexto) return;
+    e.preventDefault();
+    const t = (e.clipboardData || window.clipboardData).getData('text/plain').replace(/\s+/g, ' ');
+    document.execCommand('insertText', false, t);
+  });
+  docEl.addEventListener('keydown', e => { if (editandoTexto && e.key === 'Enter') e.preventDefault(); });
+  docEl.addEventListener('drop', e => { if (editandoTexto) e.preventDefault(); });
+
+  // diferencia por palabras (subsecuencia común más larga) → tramos cambiados
+  function tramos(a, b){
+    const n = a.length, m = b.length, W = m + 1, L = new Uint32Array((n + 1) * W);
+    for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--)
+      L[i*W + j] = a[i] === b[j] ? L[(i+1)*W + j + 1] + 1 : Math.max(L[(i+1)*W + j], L[i*W + j + 1]);
+    const out = []; let i = 0, j = 0, cur = null;
+    while (i < n || j < m){
+      if (i < n && j < m && a[i] === b[j]){ if (cur){ out.push(cur); cur = null; } i++; j++; }
+      else {
+        if (!cur) cur = { a0:i, a1:i, b0:j, b1:j };
+        if (j < m && (i >= n || L[i*W + j + 1] >= L[(i+1)*W + j])){ j++; cur.b1 = j; }
+        else { i++; cur.a1 = i; }
+      }
+    }
+    if (cur) out.push(cur);
+    return out;
+  }
+  const escRe = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // separador entre palabras en el .md: espacios, énfasis, llamadas a notas, comentarios y marcas de página
+  const SEP = '(?:\\s|[*_]|<sup>[^<]*</sup>|\\[\\^?[\\w-]+\\](?:\\(#[^)]*\\))?|<!--[^>]*-->|\\{\\d+\\}-+)+';
+  function patTok(t){
+    const m = t.match(/^([^A-Za-z0-9À-ÿ]*)(.*?)([^A-Za-z0-9À-ÿ]*)$/);
+    if (!m || !m[2]) return escRe(t);
+    return escRe(m[1]) + '[*_]{0,2}' + escRe(m[2]) + '[*_]{0,2}' + escRe(m[3]);
+  }
+  const patSeq = ts => ts.map(patTok).join(SEP);
+  function aplicarTramo(md, a, b, h){
+    const viejo = a.slice(h.a0, h.a1), nuevo = b.slice(h.b0, h.b1).join(' ');
+    const intentar = k => {
+      const izq = a.slice(Math.max(0, h.a0 - k), h.a0), der = a.slice(h.a1, h.a1 + k);
+      if (!viejo.length && !izq.length && !der.length) return { n:0 };
+      let re;
+      if (viejo.length){
+        re = new RegExp('(' + (izq.length ? patSeq(izq) + SEP : '') + ')(' + patSeq(viejo) + ')(' + (der.length ? SEP + patSeq(der) : '') + ')', 'g');
+      } else {
+        re = new RegExp('(' + patSeq(izq) + ')(' + (izq.length && der.length ? SEP : '') + ')(' + patSeq(der) + ')', 'g');
+      }
+      const ms = [...md.matchAll(re)];
+      if (ms.length !== 1) return { n: ms.length };
+      const m = ms[0];
+      let rep;
+      if (viejo.length){
+        if (nuevo) rep = m[1] + nuevo + m[3];
+        else rep = m[1].length ? m[1].replace(/\s+$/, '') + m[3] : m[3].replace(/^\s+/, '');
+      } else {
+        if (izq.length && der.length) rep = m[1] + m[2] + nuevo + ' ' + m[3];
+        else if (izq.length) rep = m[1] + ' ' + nuevo;
+        else rep = nuevo + ' ' + m[3];
+      }
+      return { n:1, md: md.slice(0, m.index) + rep + md.slice(m.index + m[0].length) };
+    };
+    let r = intentar(2);
+    for (const k of [3, 4, 6, 9]) { if (r.n <= 1) break; r = intentar(k); }
+    if (r.n === 0){ for (const k of [1, 0]) { r = intentar(k); if (r.n === 1) break; } }
+    return r.n === 1 ? { ok:true, md:r.md } : { ok:false, motivo: r.n === 0 ? 'no se encontró en el .md' : 'aparece más de una vez' };
+  }
+  function guardarTexto(){
+    if (!editandoTexto) return;
+    let md = rawMd, ok = 0; const fallos = [];
+    for (const [el, viejoTxt] of originales){
+      const nuevoTxt = textoDe(el);
+      if (nuevoTxt === viejoTxt) continue;
+      const a = viejoTxt.split(' '), b = nuevoTxt.split(' ');
+      for (const h of tramos(a, b)){
+        const r = aplicarTramo(md, a, b, h);
+        if (r.ok){ md = r.md; ok++; }
+        else fallos.push('«' + a.slice(h.a0, h.a1).join(' ') + '» → «' + b.slice(h.b0, h.b1).join(' ') + '» (' + r.motivo + ')');
+      }
+    }
+    const y = read.scrollTop;
+    salirTexto();
+    if (md !== rawMd){
+      const r = aplicarNuevoTexto(md, docName);
+      docUrl = DOC; updateChrome();
+      avisoDoc(ok + (ok === 1 ? ' cambio aplicado' : ' cambios aplicados') + (r.huerf ? ' · ' + r.huerf + ' anotación(es) sin anclar' : ''));
+    } else {
+      const prev = annos; render(rawMd, docName); annos = prev; reanclar(); annos.sort(cmpAnnos);
+      docUrl = DOC; refreshHighlights(); renderList(); updateChrome();
+      if (!fallos.length) avisoDoc('sin cambios');
+    }
+    read.scrollTop = y;
+    if (fallos.length)
+      alert('No pude trasladar ' + fallos.length + (fallos.length === 1 ? ' cambio' : ' cambios') + ' al .md sin riesgo de equivocarme de lugar:\n\n' + fallos.join('\n') + '\n\nPuedes hacerlos en «editar código».');
+  }
+  $('guardarTexto').addEventListener('click', guardarTexto);
+  $('descartarTexto').addEventListener('click', descartarTexto);
+  $('editarCodigo').addEventListener('click', ()=>{
+    if (editandoTexto){
+      if (hayCambios() && !confirm('Los cambios hechos sobre el texto se guardarán antes de abrir el código. ¿Continuar?')) return;
+      guardarTexto();
+    }
+    alternarCodigo();
+  });
+
+  // aviso de cambios sin exportar
+  window.addEventListener('beforeunload', e => {
+    if (mdServidor != null && rawMd && rawMd !== mdServidor && rawMd !== mdExportado){ e.preventDefault(); e.returnValue = ''; }
+  });
 
   // ===== alternar visibilidad de paneles (toc y panel) =====
   function aplicarToc(visible){
@@ -1480,7 +1668,7 @@
   }
   // clic en un pasaje resaltado en azul: activa su comentario en el panel
   docEl.addEventListener('click', e => {
-    if (!fijas.length || document.body.classList.contains('sin-fijas')) return;
+    if (!fijas.length || editandoTexto || document.body.classList.contains('sin-fijas')) return;
     const sel = window.getSelection(); if (sel && !sel.isCollapsed) return;
     const cr = document.caretRangeFromPoint ? document.caretRangeFromPoint(e.clientX, e.clientY)
              : (document.caretPositionFromPoint ? (p => p && { startContainer: p.offsetNode, startOffset: p.offset })(document.caretPositionFromPoint(e.clientX, e.clientY)) : null);
@@ -1654,6 +1842,7 @@
     $('export').disabled = vacio || editando;
     $('exportMd').disabled = !rawMd || editando;
     $('editar').disabled = !rawMd;
+    if (docName && !editando) $('docname').textContent = docName + (mdServidor != null && rawMd !== mdServidor ? (rawMd === mdExportado ? '  ·  cambios exportados' : '  ·  cambios sin exportar') : '');
     $('recargar').disabled = !docUrl || editando;
     $('contador').textContent = annos.length ? (annos.length + (annos.length === 1 ? ' anotación' : ' anotaciones')) : '';
     
@@ -1734,7 +1923,7 @@
   function tabletOn(){ return document.body.classList.contains('tablet'); }
   function setAnotar(on){ const b = $('anotarBtn'); b.disabled = !on; b.classList.toggle('lista', on); }
   function tryShowFab(){
-    if (editando){ hideFab(); setAnotar(false); pending = null; return; }
+    if (editando || editandoTexto){ hideFab(); setAnotar(false); pending = null; return; }
     const cap = captureSelection();
     if (!cap){ hideFab(); setAnotar(false); pending = null; return; }
     pending = cap;
@@ -1816,6 +2005,7 @@
     const m = base.match(/^(.*)_r(\d+)$/);
     const raiz = m ? m[1] : base;
     revs[raiz] = Math.max(revs[raiz] || 0, m ? +m[2] : 0) + 1;
+    mdExportado = rawMd;
     const blob = new Blob([rawMd], { type:'text/markdown' });
     const url = URL.createObjectURL(blob);
     const el = document.createElement('a');
@@ -1838,7 +2028,7 @@
 
   function avisoDoc(msg){
     $('docname').textContent = msg ? (docName + '  ·  ' + msg) : docName;
-    if (msg) setTimeout(()=>{ if (docName) $('docname').textContent = docName; }, 3500);
+    if (msg) setTimeout(()=>{ if (docName) updateChrome(); }, 3500);
   }
 
   async function recargar(){
@@ -1852,7 +2042,7 @@
       if (texto === rawMd){ avisoDoc('sin cambios'); return; }
       const origen = docUrl;
       const r = aplicarNuevoTexto(texto, docName);
-      docUrl = origen; updateChrome();
+      docUrl = origen; mdServidor = texto; updateChrome();
       avisoDoc('actualizado' + (r.huerf ? (' · ' + r.huerf + (r.huerf === 1 ? ' anotación quedó huérfana' : ' anotaciones quedaron huérfanas')) : ''));
     } catch(e){
       avisoDoc('recarga falló: red o CORS');

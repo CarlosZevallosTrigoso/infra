@@ -19,6 +19,12 @@ Sube su `.md` a `lecturas/` y ábrelo con `lector.html?f=<nombre>.md`. Para que 
 
 Si junto a un texto existe `lecturas/<nombre-del-texto>.comentarios.json`, el lector lo carga al abrirlo y muestra esos comentarios en azul, de solo lectura, intercalados por posición en el panel. Se pueden ocultar en «ajustes». El formato es el mismo que produce «exportar .json» del lector: para fijar anotaciones propias basta con exportarlas, renombrar el archivo con el sufijo `.comentarios.json` y subirlo a `lecturas/`. Las anotaciones personales con el mismo identificador que una fija se retiran del navegador para no duplicarse.
 
+## Corregir un texto
+
+En el lector, «editar» vuelve editable el texto tal como se lee: se corrige escribiendo sobre los párrafos (los cambiados quedan marcados en amarillo) y «guardar» traslada cada cambio al lugar correspondiente del .md, respetando cursivas, llamadas a notas y marcas de página. «descartar» (o Esc) deshace todo. Si algún cambio no se puede ubicar en el .md sin ambigüedad, el lector lo avisa y no lo aplica; para esos casos, y para cambios de estructura (nuevos párrafos, títulos, cursivas), está «editar código», que abre el Markdown completo. Las anotaciones se reanclan solas.
+
+Los cambios viven en el navegador hasta exportarlos: «exportar .md» descarga el archivo corregido, que se sube a `lecturas/` reemplazando al anterior con el mismo nombre. La cabecera indica «cambios sin exportar» mientras haga falta, y el navegador advierte antes de cerrar la página.
+
 ## Notas
 
 - Las anotaciones del lector se guardan en el navegador, por texto, y se pueden exportar e importar como `.json`.
