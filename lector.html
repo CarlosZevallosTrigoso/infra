@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lecturas · lector</title>
+<!-- marked (copia local, sin CDN); si faltara, el lector se degrada a texto plano. -->
+<script src="marked.umd.js"></script>
+<style>
+  :root{
+    --paper:#ffffff;        /* fondo blanco (toolbox) */
+    --panel:#f5f7f2;
+    --line:#dfe3da;
+    --ink:#1d1f1b;
+    --ink-dim:#5b6157;
+    --moss:#5a7a3a;         /* acento primario */
+    --steel:#4f6b82;
+    --warm:#b06a36;
+    --mono: "Fira Code", ui-monospace, "SF Mono", "DejaVu Sans Mono", Menlo, Consolas, monospace;
+    --serif: "Iowan Old Style", "Charter", Georgia, "Times New Roman", serif;
+    --docfs:17px;
+    --r:2px;
+  }
+  /* ---- tema oscuro (paleta czt-bosque en carbón, misma familia que el ordenador de imágenes) ---- */
+  body.oscuro{
+    --paper:#16170f;
+    --panel:#1f2017;
+    --line:#33352a;
+    --ink:#d8d6c4;
+    --ink-dim:#8a8c78;
+    --moss:#8fa676;         /* musgo aclarado: bordes y focos legibles sobre carbón */
+    --steel:#7d99b0;
+    --warm:#c08a5a;
+  }
+  body.oscuro #doc code{background:#ffffff14}
+  body.oscuro #fab{color:#16170f}
+  body.oscuro #fab:hover{color:#16170f}
+  body.oscuro ::highlight(forja-nota){ background:rgba(143,166,118,.26); }
+  body.oscuro ::highlight(forja-activa){ background:rgba(192,138,90,.40); }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--mono); font-size:12px; line-height:1.5;
+    display:flex; flex-direction:column; height:100vh; height:100dvh; overflow:hidden;
+  }
+
+  /* ---- cabecera ---- */
+  header{
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap; row-gap:8px;
+    padding:10px 16px; border-bottom:1px solid var(--line); background:var(--panel);
+    flex:none;
+  }
+  #editar.saliendo{ background:var(--warm); color:#f3efe3; border-color:var(--warm) }
+  #marca{
+    margin:0; font-size:12px; font-weight:600; letter-spacing:.18em; color:var(--ink);
+    cursor:pointer; user-select:none; white-space:nowrap;
+  }
+  #marca:hover{color:var(--moss)}
+  #docname{color:var(--ink-dim); font-size:11px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1}
+  .acciones{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
+  button{
+    font-family:var(--mono); font-size:11px; letter-spacing:.03em; cursor:pointer;
+    border-radius:var(--r); padding:6px 10px; border:1px solid var(--line);
+    background:var(--paper); color:var(--ink); transition:border-color .12s, color .12s, opacity .12s;
+  }
+  button:hover:not(:disabled){border-color:var(--moss); color:var(--moss)}
+  button:disabled{opacity:.4; cursor:default}
+  #contador{color:var(--ink-dim); font-size:10px; font-variant-numeric:tabular-nums; flex:none; min-width:9ch; text-align:right}
+
+  /* ---- estado inactivo para botones conmutadores ---- */
+  .acciones button.inactivo{ opacity:.55; text-decoration:line-through; }
+
+  /* ---- cuerpo: toc + lectura + panel ---- */
+  main{display:flex; flex:1; min-height:0}
+  #toc{
+    width:240px; flex:none; display:none; overflow-y:auto;
+    background:var(--panel); border-right:1px solid var(--line);
+    padding:14px 8px 24px;
+  }
+  #toc h2{
+    margin:0 0 8px; padding:0 6px; font-size:10px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-dim); font-weight:600;
+  }
+  .toc-it{
+    display:block; padding:3px 6px; cursor:pointer; user-select:none;
+    border-left:2px solid transparent; color:var(--ink-dim);
+    font-size:11px; line-height:1.45; word-break:break-word;
+    transition:color .12s, border-color .12s;
+  }
+  .toc-it:hover, .toc-it:focus{color:var(--moss); border-left-color:var(--moss); outline:none}
+  .toc-it.n2{padding-left:18px}
+  .toc-it.n3{padding-left:30px; font-size:10.5px}
+  body.editando #toc{display:none !important}
+  
+  /* ---- reglas de ocultamiento de paneles lateral e índice ---- */
+  body.no-toc #toc { display:none !important; }
+  body.no-panel #panel { display:none !important; }
+
+  #read{
+    flex:1; min-width:0; overflow-y:auto; position:relative;
+    overscroll-behavior:contain;
+    padding:32px 64px 120px 64px;   /* márgenes simétricos; el número de página cae en el margen izquierdo de la columna */
+  }
+  #doc{
+    max-width:90ch; margin:0 auto;      /* columna centrada en el área de lectura; el ancho se ajusta en «ajustes» */
+    font-family:var(--serif); font-size:var(--docfs); line-height:1.75; color:var(--ink);
+  }
+  #doc.plano{font-family:var(--mono); font-size:13px; line-height:1.6; white-space:pre-wrap}
+  #doc h1{font-size:1.7em; line-height:1.2; margin:0 0 .6em}
+  #doc h2{font-size:1.35em; margin:1.6em 0 .5em}
+  #doc h3{font-size:1.12em; margin:1.4em 0 .4em}
+  #doc p{margin:0 0 1.05em; text-align:justify; hyphens:auto}
+  #doc em{font-style:italic}
+  #doc strong{font-weight:600}
+  #doc a{color:var(--steel)}
+  #doc blockquote{border-left:2px solid var(--moss); margin:1em 0; padding:.2em 0 .2em 1em; color:var(--ink-dim)}
+  #doc code{font-family:var(--mono); font-size:.85em; background:#0000000d; padding:.1em .3em; border-radius:var(--r)}
+  #doc ul,#doc ol{padding-left:1.4em; margin:0 0 1.05em}
+  #doc li{margin:.2em 0}
+
+  /* resaltado sin mutar el DOM (offsets intactos) */
+  ::highlight(forja-nota){ background:rgba(88,106,69,.20); }
+  ::highlight(forja-activa){ background:rgba(176,106,54,.34); }
+
+  /* ---- estado vacío ---- */
+  #empty{
+    max-width:64ch; margin:8vh auto 0; text-align:center; color:var(--ink-dim);
+  }
+  #drop{
+    border:1px dashed var(--line); border-radius:var(--r);
+    padding:36px 24px; cursor:pointer; transition:border-color .15s, color .15s;
+  }
+  #drop.hot{border-color:var(--moss); color:var(--ink)}
+  #drop b{display:block; color:var(--ink); font-size:13px; letter-spacing:.02em; margin-bottom:6px}
+  #paste{
+    width:100%; margin-top:14px; min-height:90px; resize:vertical;
+    background:var(--panel); color:var(--ink); border:1px solid var(--line);
+    border-radius:var(--r); padding:8px 10px; font-family:var(--mono); font-size:12px;
+  }
+  #paste:focus{outline:1px solid var(--moss); border-color:var(--moss)}
+  #cargarPaste{margin-top:8px}
+
+  /* ---- panel de notas ---- */
+  #panel{
+    width:560px; max-width:42vw; flex:none; background:var(--panel); border-left:1px solid var(--line);
+    display:flex; flex-direction:column; min-height:0;
+  }
+  #panel h2{
+    margin:0; padding:12px 14px; font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-dim); border-bottom:1px solid var(--line); font-weight:600;
+  }
+  #list{overflow-y:auto; padding:6px; flex:1; min-height:0}
+  .vacio{color:var(--ink-dim); font-size:11px; padding:16px 10px; line-height:1.5}
+  .nota{
+    border:1px solid var(--line); border-radius:var(--r); background:var(--paper);
+    padding:8px 9px; margin-bottom:8px; transition:border-color .12s;
+  }
+  .nota.activa{border-color:var(--warm)}
+  .quote{
+    font-family:var(--serif); font-size:12.5px; line-height:1.4; color:var(--ink);
+    border-left:2px solid var(--moss); padding-left:8px; margin-bottom:6px; cursor:pointer;
+  }
+  .nota.activa .quote{border-left-color:var(--warm)}
+  .quote:hover{color:var(--moss)}
+  .coments{margin:2px 0 4px}
+  .coment{border-left:2px solid var(--line); padding:3px 0 3px 8px; margin:4px 0}
+  .coment-tx{font-family:var(--mono); font-size:11.5px; line-height:1.45; color:var(--ink); white-space:pre-wrap; word-break:break-word}
+  .coment-meta{display:flex; align-items:center; justify-content:space-between; margin-top:2px; color:var(--ink-dim); font-size:9.5px}
+  .cdel{padding:0 5px; font-size:13px; line-height:1; border-color:transparent; background:transparent; color:var(--ink-dim)}
+  .cdel:hover{border-color:var(--warm); color:var(--warm)}
+  .add{display:flex; gap:6px; margin-top:4px}
+  .add-in{flex:1; resize:none; overflow:hidden; min-height:30px; background:transparent; color:var(--ink); border:1px solid var(--line); border-radius:var(--r); padding:5px 6px; font-family:var(--mono); font-size:11.5px; line-height:1.45}
+  .add-in:focus{outline:1px solid var(--moss); border-color:var(--moss)}
+  .add-btn{flex:none; padding:4px 9px; font-size:10px; align-self:flex-start}
+  .fila{display:flex; align-items:center; justify-content:space-between; margin-top:5px; gap:8px}
+  .pos{color:var(--ink-dim); font-size:9.5px; font-variant-numeric:tabular-nums; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .del{padding:2px 7px; font-size:10px; flex:none}
+  .del:hover{border-color:var(--warm); color:var(--warm)}
+
+  /* ---- botón flotante de selección ---- */
+  #fab{
+    position:fixed; z-index:50; display:none;
+    background:var(--moss); color:#f3efe3; border-color:var(--moss); font-weight:600;
+    box-shadow:0 2px 8px #0003; padding:6px 12px;
+  }
+  #fab.on{display:block}
+  #fab:hover{background:var(--warm); border-color:var(--warm); color:#f3efe3}
+
+  /* ---- modo tablet: fab como barra inferior fija + objetivos táctiles ---- */
+  body.tablet #fab{ display:none !important; }
+  body.tablet .acciones button{ padding:9px 12px; min-height:44px; }
+  body.tablet .add-in{ min-height:42px; font-size:13px }
+  body.tablet .add-btn{ min-height:42px; padding:9px 13px }
+  #tablet.activo{ border-color:var(--moss); color:var(--moss) }
+  #anotarBtn{
+    display:none; margin:8px; width:calc(100% - 16px);
+    padding:13px 12px; font-size:14px; font-weight:600; border-radius:2px;
+    background:var(--panel); color:var(--ink-dim); border:1px solid var(--line);
+  }
+  body.tablet #anotarBtn{ display:block }
+  #anotarBtn.lista{ background:var(--moss); color:#f3efe3; border-color:var(--moss) }
+
+  .hide{display:none !important}
+
+  /* ---- sesiones del taller: desplegable y filtro de lectura ---- */
+  #sesionesWrap{position:relative}
+  #sesiones.parcial{border-color:var(--moss); color:var(--moss)}
+  #sesionesPanel{
+    position:absolute; top:calc(100% + 6px); right:0; z-index:65;
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+    padding:8px 10px; box-shadow:0 4px 12px #0002; min-width:300px;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  #sesionesPanel.hide{display:none}
+  #sesionesPanel h3{margin:0 0 6px; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); font-weight:600}
+  .ses-row{display:flex; align-items:flex-start; gap:8px; padding:4px 2px; cursor:pointer; user-select:none; font-size:11px; line-height:1.4; color:var(--ink)}
+  .ses-row:hover{color:var(--moss)}
+  .ses-row input{margin:3px 0 0; accent-color:var(--moss); flex:none}
+  .ses-row.off{color:var(--ink-dim)}
+  .ses-row .ses-n{font-weight:600; white-space:nowrap}
+  .ses-row .ses-d{color:var(--ink-dim); font-size:10px}
+  .ses-row.off .ses-d{opacity:.7}
+  .ses-acc{display:flex; gap:6px; margin-top:6px; padding-top:6px; border-top:1px solid var(--line)}
+  .ses-acc button{flex:1; padding:4px 6px; font-size:10px}
+  body.tablet .ses-row{padding:8px 2px; font-size:13px}
+  body.tablet .ses-row input{width:18px; height:18px}
+
+  /* texto filtrado: los bloques de una sesión apagada no se muestran (los offsets de texto plano no cambian) */
+  body.off-s1 #doc [data-ses="1"], body.off-s2 #doc [data-ses="2"], body.off-s3 #doc [data-ses="3"],
+  body.off-s4 #doc [data-ses="4"], body.off-s5 #doc [data-ses="5"]{display:none}
+  body.off-s1 #toc .toc-it[data-ses="1"], body.off-s2 #toc .toc-it[data-ses="2"], body.off-s3 #toc .toc-it[data-ses="3"],
+  body.off-s4 #toc .toc-it[data-ses="4"], body.off-s5 #toc .toc-it[data-ses="5"]{display:none}
+  /* etiqueta de inicio de sesión al margen: pseudoelemento, no altera el texto del documento */
+  #doc [data-ses-inicio]{position:relative}
+  #doc [data-ses-inicio]::before{
+    content:attr(data-ses-inicio); display:block;
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--moss); margin:0 0 .6em; padding-top:.6em; border-top:1px solid var(--line);
+    user-select:none;
+  }
+  body.sin-sesiones #doc [data-ses-inicio]::before{display:none}
+  #toc .toc-ses{
+    margin:10px 6px 2px; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--moss); font-weight:600;
+  }
+  body.off-s1 #toc .toc-ses[data-ses="1"], body.off-s2 #toc .toc-ses[data-ses="2"], body.off-s3 #toc .toc-ses[data-ses="3"],
+  body.off-s4 #toc .toc-ses[data-ses="4"], body.off-s5 #toc .toc-ses[data-ses="5"]{opacity:.45}
+
+  /* ---- glosario: términos subrayados en el texto y panel de entradas ---- */
+  #doc .gl{
+    text-decoration:underline dotted; text-decoration-color:var(--moss); text-decoration-thickness:1px;
+    text-underline-offset:3px; cursor:pointer; transition:background .12s;
+  }
+  #doc .gl:hover{background:rgba(88,106,69,.12)}
+  #doc .gl.gl-activa{text-decoration-style:solid; text-decoration-color:var(--warm); background:rgba(176,106,54,.10)}
+  body.oscuro #doc .gl:hover{background:rgba(143,166,118,.16)}
+  #doc .gl.gl-alias{text-decoration-color:var(--ink-dim); text-decoration-style:dashed}
+  body.sin-glosario #doc .gl:not(.gl-caso){text-decoration:none; cursor:text; background:none}
+  /* casos: mismo mecanismo que el glosario, subrayado distinto (doble, color acero) */
+  #doc .gl.gl-caso{text-decoration:underline double; text-decoration-color:var(--steel); text-underline-offset:3px}
+  #doc .gl.gl-caso:hover{background:rgba(90,110,140,.12)}
+  body.sin-casos #doc .gl.gl-caso{text-decoration:none; cursor:text; background:none}
+  .gl-sub{font-family:var(--serif); font-style:italic; color:var(--ink-dim); font-size:12px; line-height:1.4; margin-bottom:8px}
+  .gl-tags{display:flex; flex-wrap:wrap; gap:4px; margin:0 0 8px}
+  .gl-tags span{font-family:var(--mono); font-size:9.5px; border:1px solid var(--line); border-radius:3px; padding:1px 6px; color:var(--ink-dim)}
+  .gl-tags span.tipo{color:var(--steel); border-color:var(--steel)}
+  .gl-sec{margin-top:12px}
+  .gl-sec > b{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--steel); display:block; margin-bottom:3px}
+  .gl-sec .gl-def{font-size:13.5px}
+  .gl-sec.gl-dg > b{color:var(--moss)}
+  .gl-apar{width:100%; border-collapse:collapse; font-size:11px; margin-top:4px}
+  .gl-apar td{vertical-align:top; padding:3px 6px 3px 0; border-top:1px solid var(--line)}
+  .gl-apar td.pg{font-family:var(--mono); white-space:nowrap; color:var(--steel)}
+  .gl-apar td.pg a{color:var(--steel); cursor:pointer; text-decoration:none}
+  .gl-apar td.pg a:hover{color:var(--warm)}
+  .gl-apar td.se{color:var(--ink-dim); white-space:nowrap}
+  /* análisis: la frase donde se enuncia una tesis, resaltada; su ficha en el panel */
+  #doc .gl.gl-tesis{text-decoration:none; background:rgba(176,106,54,.13); box-shadow:inset 0 -2px 0 var(--warm); border-radius:2px}
+  #doc .gl.gl-tesis:hover{background:rgba(176,106,54,.24)}
+  #doc .gl.gl-tesis.gl-activa{background:rgba(176,106,54,.30)}
+  body.sin-analisis #doc .gl.gl-tesis{background:none; box-shadow:none; cursor:text}
+  #toggleAna.activo{border-color:var(--warm); color:var(--warm)}
+  .gl-num{font-family:var(--mono); font-size:10px; color:var(--warm); letter-spacing:.08em; text-transform:uppercase; margin-bottom:2px}
+  .gl-form{font-family:var(--serif); font-size:14px; line-height:1.5; color:var(--ink); border-left:2px solid var(--warm); padding-left:10px; margin:8px 0 10px}
+  .gl-sec.gl-letra > b{color:var(--warm)}
+  .gl-sec.gl-obj > b{color:var(--ink-dim)}
+  .gl-it.gl-it-tesis{border-left-color:transparent; padding-left:6px}
+  .gl-it.gl-it-tesis:hover{color:var(--warm); border-left-color:var(--warm)}
+  .gl-it.gl-it-sub{font-size:12px; padding-left:18px; color:var(--ink-dim)}
+  .gl-it .gl-n{font-family:var(--mono); font-size:9.5px; color:var(--warm); margin-right:6px}
+  .gl-it.gl-it-caso{border-left-color:transparent}
+  .gl-it.gl-it-caso:hover{color:var(--steel); border-left-color:var(--steel)}
+  #glos, #glos *{min-width:0; overflow-wrap:anywhere}
+  .gl-desde{font-family:var(--mono); font-size:10px; color:var(--ink-dim); margin:0 0 8px}
+  .gl-desde b{color:var(--ink); font-weight:600}
+  #glos{display:none; overflow-y:auto; padding:10px 12px 24px; flex:1; min-height:0; font-size:11.5px; line-height:1.5}
+  body.modo-glosario #glos{display:block}
+  .gl-def{font-size:14.5px; line-height:1.65; max-width:62ch}
+  .gl-ent h3{font-size:20px}
+  body.modo-glosario #list, body.modo-glosario #anotarBtn{display:none !important}
+  #toggleGlos.activo{border-color:var(--moss); color:var(--moss)}
+  .gl-nav{display:flex; gap:6px; align-items:center; margin-bottom:10px; flex-wrap:wrap}
+  .gl-nav button{padding:3px 8px; font-size:10px}
+  .gl-ses{margin:10px 0 3px; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--moss); font-weight:600}
+  .gl-it{display:block; padding:3px 4px; cursor:pointer; color:var(--ink); border-left:2px solid transparent; font-family:var(--serif); font-size:13px}
+  .gl-it:hover{color:var(--moss); border-left-color:var(--moss)}
+  .gl-it small{font-family:var(--mono); color:var(--ink-dim); font-size:9.5px; margin-left:6px}
+  .gl-ent h3{margin:4px 0 2px; font-family:var(--serif); font-size:17px; line-height:1.25; font-weight:600; color:var(--ink)}
+  .gl-fr{font-family:var(--serif); font-style:italic; color:var(--ink-dim); font-size:12.5px; margin-bottom:8px}
+  .gl-meta{border:1px solid var(--line); border-radius:var(--r); padding:6px 8px; margin:8px 0; font-size:10.5px; color:var(--ink-dim); background:var(--paper)}
+  .gl-meta b{color:var(--ink); font-weight:600}
+  .gl-meta .row{display:flex; gap:6px; margin:2px 0}
+  .gl-meta .k{flex:none; min-width:9ch; color:var(--ink-dim)}
+  .gl-meta a{color:var(--steel); cursor:pointer; text-decoration:none}
+  .gl-meta a:hover{color:var(--warm)}
+  .gl-def{font-family:var(--serif); font-size:13.5px; line-height:1.6; color:var(--ink)}
+  .gl-def p{margin:0 0 .8em; text-align:justify; hyphens:auto}
+  .gl-def em{font-style:italic}
+  .gl-conf{border-left:2px solid var(--warm); padding:.2em 0 .2em 10px; margin:10px 0; font-family:var(--serif); font-size:12.5px; line-height:1.5; color:var(--ink)}
+  .gl-conf b{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--warm); display:block; margin-bottom:3px}
+  .gl-rel{margin-top:10px}
+  .gl-rel b{font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); display:block; margin-bottom:4px}
+  .gl-rel button{margin:0 4px 4px 0; padding:3px 7px; font-size:10px}
+  body.tablet .gl-it{padding:7px 4px; font-size:15px}
+  body.tablet .gl-def{font-size:15px}
+
+  /* ---- marcas de página del libro (anclas <!-- p. N --> del .md) ---- */
+  /* el número va siempre al margen izquierdo de la columna, en la línea donde cambia la página:
+     la marca es absoluta respecto a #doc (left) pero conserva su posición vertical estática (línea) */
+  #doc{position:relative}
+  .pg{position:absolute; left:-3.6em; width:3em; height:0; text-align:right; pointer-events:none}
+  .pg::before{
+    content:attr(data-p); position:relative; top:.2em;
+    font-family:var(--mono); font-size:9.5px; color:var(--ink-dim); opacity:.75; user-select:none;
+  }
+  body.sin-paginas .pg::before{display:none}
+  #doc h1 .pg::before, #doc h2 .pg::before{display:none}
+  .pg.destino::before{color:var(--warm); opacity:1; font-weight:600}
+  #pagActual{color:var(--ink-dim); font-size:11px; font-variant-numeric:tabular-nums; white-space:nowrap}
+  #irPag{width:7ch; font-family:var(--mono); font-size:11px; padding:5px 6px; border:1px solid var(--line); border-radius:var(--r); background:var(--paper); color:var(--ink)}
+  #irPag:focus{outline:1px solid var(--moss); border-color:var(--moss)}
+
+  /* ---- notas al pie ---- */
+  #doc sup.fn a{color:var(--steel); text-decoration:none; font-family:var(--mono); font-size:.72em; padding:0 .1em}
+  #doc sup.fn a:hover{color:var(--warm)}
+  #doc .fn-def{font-size:.86em; line-height:1.5; margin:0 0 .6em; text-align:left}
+  #doc .fn-def:target, #doc .fn-def.destino{background:rgba(176,106,54,.14)}
+  #doc .fn-def .fn-n{font-family:var(--mono); color:var(--ink-dim); margin-right:.4em}
+  #doc .fn-def .fn-back{color:var(--steel); text-decoration:none; margin-left:.3em}
+
+  /* ---- contador de palabras/caracteres/páginas (esquina inferior derecha) ---- */
+  #stats{
+    position:fixed; right:12px; bottom:12px; z-index:70; display:none;
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+    color:var(--ink-dim); font-size:10px; padding:3px 8px;
+    font-variant-numeric:tabular-nums; letter-spacing:.02em; user-select:none;
+  }
+
+  /* ---- controles visuales (esquina inferior izquierda) ---- */
+  #controlesVis{
+    position:fixed; left:12px; bottom:12px; z-index:40; display:none;
+  }
+  body.editando #controlesVis{display:none !important}
+  
+  #btnAjustes{
+    box-shadow:0 2px 6px #0001;
+  }
+  
+  #ajustesPanel{
+    position:absolute; bottom:calc(100% + 8px); left:0;
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+    padding:10px 12px; box-shadow:0 4px 12px #0002;
+    display:flex; flex-direction:column; gap:12px;
+  }
+  #ajustesPanel.hide{display:none}
+  
+  .ajuste-row{
+    display:flex; align-items:center; gap:8px;
+    color:var(--ink-dim); font-size:10px; user-select:none;
+  }
+  .ajuste-row input{width:130px; accent-color:var(--moss); margin:0}
+  .ajuste-row .val{color:var(--moss); font-variant-numeric:tabular-nums; min-width:4ch; text-align:right}
+
+  /* ---- modo edición ---- */
+  body.editando #panel{display:none}
+  #editor{
+    display:block; width:100%; max-width:120ch; margin:0 auto;
+    height:calc(100vh - 130px); height:calc(100dvh - 130px); resize:none;
+    background:var(--panel); color:var(--ink); border:1px solid var(--line);
+    border-radius:var(--r); padding:16px 18px;
+    font-family:var(--mono); font-size:12.5px; line-height:1.65; tab-size:2;
+  }
+  #editor:focus{outline:1px solid var(--moss); border-color:var(--moss)}
+
+  /* ---- campo de URL en estado vacío ---- */
+  .urlrow{display:flex; gap:6px; margin-top:14px}
+  .urlrow input{
+    flex:1; background:var(--panel); color:var(--ink); border:1px solid var(--line);
+    border-radius:var(--r); padding:6px 8px; font-family:var(--mono); font-size:12px; min-width:0;
+  }
+  .urlrow input:focus{outline:1px solid var(--moss); border-color:var(--moss)}
+  #urlEstado{margin-top:6px; font-size:10.5px; color:var(--ink-dim); min-height:14px; text-align:left; line-height:1.4}
+
+  /* ---- modales (subida y carga por URL) ---- */
+  .modal{position:fixed; inset:0; z-index:60; display:flex; align-items:center; justify-content:center; background:#0000005c}
+  .modal-box{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:16px 18px; width:min(430px,92%)}
+  .modal-box h3{margin:0 0 10px; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-dim); font-weight:600}
+  .modal-box label{display:block; margin:8px 0; color:var(--ink-dim); font-size:11px}
+  .modal-box input{width:100%; margin-top:3px; background:var(--paper); color:var(--ink); border:1px solid var(--line); border-radius:var(--r); padding:6px 8px; font-family:var(--mono); font-size:12px}
+  .modal-box input:focus{outline:1px solid var(--moss); border-color:var(--moss)}
+  .modal-acc{display:flex; gap:8px; margin-top:12px}
+  .modal-acc button{flex:1}
+  #estado,#urlEstado2{margin-top:10px; font-size:11px; color:var(--ink-dim); min-height:16px; line-height:1.4}
+  .nota.huerfana{opacity:.72; border-style:dashed}
+  /* ---- añadidos para el lector de lecturas ---- */
+  header a.vinc{font-size:11px; color:var(--moss); text-decoration:none; white-space:nowrap; border:1px solid var(--line); border-radius:var(--r); padding:6px 10px; background:var(--paper)}
+  header a.vinc:hover{border-color:var(--moss)}
+  body.tablet header a.vinc{padding:12px 12px; min-height:44px; display:inline-flex; align-items:center}
+  #elegir{margin:22px auto 0; text-align:left; max-width:64ch}
+  #elegir a{display:block; font-family:var(--serif); font-size:16px; color:var(--ink); text-decoration:none; border:1px solid var(--line); border-left:3px solid var(--moss); border-radius:var(--r); padding:12px 14px; margin:0 0 10px}
+  #elegir a:hover{border-color:var(--moss)}
+  #elegir a small{display:block; font-family:var(--mono); font-size:11px; color:var(--ink-dim); margin-top:4px}
+  #doc img{display:none}
+  ::highlight(lectura-cita){ background:rgba(240,196,64,.55); }
+  #avisoCita{position:fixed; left:50%; top:70px; transform:translateX(-50%); z-index:80; background:var(--panel); border:1px solid var(--moss); border-radius:4px; padding:6px 12px; font-size:11px; color:var(--ink); box-shadow:0 4px 14px #0002; display:none}
+  /* tablet vertical y pantallas estrechas: índice y anotaciones como cajones sobre el texto */
+  @media (max-width:1100px){
+    main{position:relative}
+    #toc{position:absolute; left:0; top:0; bottom:0; z-index:30; width:min(320px,80vw); box-shadow:4px 0 18px #0002}
+    #panel{position:absolute; right:0; top:0; bottom:0; z-index:30; width:min(440px,88vw); max-width:none; box-shadow:-4px 0 18px #0002}
+    #read{padding:24px 28px 120px 52px}
+    .toc-it{padding:8px 6px; font-size:13px}
+  }
+  .nota.huerfana .quote{border-left-color:var(--ink-dim)}
+</style>
+</head>
+<body>
+  <header>
+    <a class="vinc" id="volver" href="index.html" title="Volver al índice de matrices">← matrices</a>
+    <a class="vinc hide" id="verMatriz" href="#" title="Abrir la matriz analítica de este texto">matriz</a>
+    <h1 id="marca">LECTURAS · lector</h1>
+    <div id="docname"></div>
+    <div class="acciones">
+      <span id="pagActual" title="Página del libro en la parte superior de la lectura"></span>
+      <input id="irPag" type="number" placeholder="ir a p." title="Ir a una página del texto">
+      <button id="cargarJson" title="Importar anotaciones desde un .json exportado">importar .json</button>
+      <button id="recargar" disabled title="Volver a pedir el .md al servidor (tras un commit)">recargar</button>
+      <button id="editar" disabled>editar</button>
+      <button id="export" disabled>exportar .json</button>
+      <button id="exportMd" disabled>exportar .md</button>
+      <span id="sesionesWrap" class="hide">
+        <button id="sesiones" title="Sesiones del taller: prender o apagar las partes del libro que se muestran">sesiones</button>
+        <div id="sesionesPanel" class="hide">
+          <h3>Sesiones del taller</h3>
+          <div id="sesionesLista"></div>
+          <div class="ses-acc">
+            <button id="sesTodas">todas</button>
+            <button id="sesNinguna">ninguna</button>
+          </div>
+        </div>
+      </span>
+      <button id="toggleToc" title="Mostrar u ocultar la tabla de contenidos (índice)">índice</button>
+      <button id="togglePanel" title="Mostrar u ocultar el panel lateral de anotaciones">anotaciones</button>
+      <button id="toggleGlos" class="hide" title="Glosario y casos: índice en el panel lateral (términos subrayados con puntos, casos con doble línea)">glosario</button>
+      <button id="toggleAna" class="hide" title="Análisis: las premisas del texto, por tesis; la frase donde cada una se enuncia va resaltada">análisis</button>
+      <button id="tablet" title="Modo táctil: botón anotar fijo abajo y objetivos grandes">tablet</button>
+      <button id="tema" title="Cambiar tema">oscuro</button>
+    </div>
+    <div id="contador"></div>
+  </header>
+
+  <main>
+    <nav id="toc" aria-label="Tabla de contenidos">
+      <h2>Contenido</h2>
+      <div id="tocList"></div>
+    </nav>
+    <section id="read">
+      <div id="empty"><p id="urlEstado">Cargando…</p><div id="elegir"></div></div>
+      <article id="doc"></article>
+      <textarea id="editor" class="hide" spellcheck="false"></textarea>
+    </section>
+
+    <aside id="panel">
+      <h2 id="panelTitulo">Anotaciones</h2>
+      <button id="anotarBtn" disabled>＋ anotar selección</button>
+      <div id="list"><p class="vacio">Sin anotaciones todavía.</p></div>
+      <div id="glos"></div>
+    </aside>
+  </main>
+
+  <button id="fab" title="Crear anotación">＋ anotar</button>
+  <div id="stats"></div>
+  
+  <!-- PANEL DE AJUSTES UNIFICADO -->
+  <div id="controlesVis">
+    <button id="btnAjustes" title="Ajustes de lectura">ajustes</button>
+    <div id="ajustesPanel" class="hide">
+      <div class="ajuste-row">
+        <span>ancho</span>
+        <input type="range" id="ancho" min="60" max="160" step="2" value="90">
+        <span class="val" id="ancho-v">90</span>
+      </div>
+      <div class="ajuste-row">
+        <span>letra</span>
+        <input type="range" id="letra" min="14" max="26" step="1" value="17">
+        <span class="val" id="letra-v">17</span>
+      </div>
+      <div class="ajuste-row hide">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="glosSubrayar" checked style="width:auto;accent-color:var(--moss)"> subrayar glosario</label>
+      </div>
+      <div class="ajuste-row hide">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="casosSubrayar" checked style="width:auto;accent-color:var(--steel)"> subrayar casos</label>
+      </div>
+      <div class="ajuste-row hide">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="anaResaltar" checked style="width:auto;accent-color:var(--warm)"> resaltar análisis</label>
+      </div>
+      <div class="ajuste-row">
+        <span>negro</span>
+        <input type="range" id="tono" min="0" max="100" step="1" value="0">
+        <span class="val" id="tono-v">0%</span>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="fileJson" accept=".json,application/json" class="hide">
+  <div id="avisoCita"></div>
+
+<script>
+(function(){
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const docEl = $('doc'), read = $('read'), empty = $('empty');
+  const list = $('list'), fab = $('fab'), fileInput = $('file');
+  const editor = $('editor');
+  const CTX = 32; // caracteres de contexto para prefix/suffix
+  const estrecho = ()=> !!(window.matchMedia && matchMedia('(max-width:1100px)').matches);
+
+  let rawMd = '', docText = '', docName = '';
+  let annos = [];        // {id, nota, creado, exact, prefix, suffix, start, end, mdStart, mdEnd, mdUnico, range}
+  let pending = null;    // captura de la selección en curso
+  let activeId = null;
+  let editando = false;
+  let docUrl = '';       // URL de origen si el documento se cargó por red; '' si vino de archivo o pegado
+  const revs = Object.create(null); // última revisión _rN exportada por nombre base: nunca se repite en la sesión
+
+  // orden de lectura; huérfanas (start null) al final. Único comparador para toda la app.
+  const cmpAnnos = (x, y) => (x.start == null ? 1e15 : x.start) - (y.start == null ? 1e15 : y.start);
+
+  // ===== render =====
+  function render(md, name){
+    rawMd = md; docName = name || 'documento.md';
+    annos = []; pending = null; activeId = null;
+    docUrl = '';
+    if (window.marked && typeof marked.parse === 'function'){
+      docEl.innerHTML = marked.parse(preprocesar(md));
+      docEl.classList.remove('plano');
+    } else {
+      docEl.textContent = md;                 // degradación honesta: sin CDN, texto crudo (igual anotable)
+      docEl.classList.add('plano');
+    }
+    // texto plano canónico del documento: base de todos los offsets
+    const r = document.createRange();
+    r.selectNodeContents(docEl);
+    docText = r.toString();
+    marcarNotas();
+    asignarSesiones();
+    marcarGlosario();        // envuelve términos en <span class="gl">: no altera docText (solo nodos de texto)
+    indexarPaginas();
+    empty.classList.add('hide');
+    docEl.style.display = 'block';
+    $('docname').textContent = docName;
+    setEdicion(false);
+    buildToc();
+    refreshHighlights(); renderList(); updateChrome();
+  }
+  // ===== lecturas disponibles =====
+  // Cada entrada: archivo dentro de lecturas/, título, desfase de página (página mostrada = n + 1 + desfase,
+  // donde n es la marca {n} del .md) y matriz analítica asociada. Para añadir un texto basta con subir
+  // su .md a lecturas/ y, si se quiere, agregar aquí una entrada; sin entrada, se abre igual con desfase 0.
+  const CARPETA = 'lecturas/';
+  const LECTURAS = [
+    { archivo:'star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md',
+      titulo:'Star y Ruhleder (1994). Steps Towards an Ecology of Infrastructure', desfase:0, nota:'páginas del PDF de la ponencia (1-12)', matriz:'star-ruhleder-1994.html' },
+    { archivo:'star-1999---the-ethnography-of-infrastructure.md',
+      titulo:'Star (1999). The Ethnography of Infrastructure', desfase:376, nota:'páginas de la revista (377-391)', matriz:'star-1999.html' },
+    { archivo:'1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md',
+      titulo:'Harvey, Jensen y Morita (2016). Introduction: Infrastructural Complications', desfase:0, nota:'páginas del libro (1-22)', matriz:'harvey-jensen-morita-2016.html' }
+  ];
+  const PARAMS = new URLSearchParams(location.search);
+  const ARCH = (PARAMS.get('f') || '').replace(/^.*\//, '');
+  const CONF = LECTURAS.find(x=> x.archivo === ARCH) || { archivo:ARCH, titulo:ARCH, desfase:+(PARAMS.get('d') || 0), matriz:'' };
+  let DOC = ARCH ? CARPETA + ARCH : '';
+  let minPag = 1;
+  function elegirLectura(){
+    $('urlEstado').textContent = 'Elige un texto:';
+    $('elegir').innerHTML = LECTURAS.map(x=> '<a href="?f=' + encodeURIComponent(x.archivo) + '">' + x.titulo + '<small>' + x.nota + '</small></a>').join('');
+  }
+  async function cargarLibro(){
+    if (!DOC){ elegirLectura(); return; }
+    CLAVE = 'adinf-lector-anotaciones:' + ARCH;
+    document.title = (CONF.titulo || ARCH) + ' · lector';
+    if (CONF.matriz){ $('verMatriz').href = CONF.matriz; $('verMatriz').classList.remove('hide'); }
+    $('urlEstado').textContent = 'Cargando ' + ARCH + '…';
+    try {
+      const res = await fetch(DOC + '?_t=' + Date.now(), { cache:'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const texto = await res.text();
+      setGlosario(null, null, null);
+      render(texto, ARCH);
+      docUrl = DOC; updateChrome();
+      cargarGuardadas();
+      listo = true;
+      annos.sort(cmpAnnos); refreshHighlights(); renderList(); updateChrome();
+      const tit = (texto.match(/^title:\s*(.+)$/m) || [])[1];
+      if (tit && !CONF.titulo) document.title = tit + ' · lector';
+      const q = PARAMS.get('q'), pg = parseInt(PARAMS.get('p'), 10) || parseInt((location.hash.match(/^#p-(\d+)$/) || [])[1], 10);
+      setTimeout(()=>{ if (q) irACita(q, pg); else if (pg) irPagina(pg); }, 60);
+    } catch(e){
+      $('urlEstado').textContent = 'No se pudo cargar ' + DOC + ' (' + e.message + '). El archivo debe estar en la carpeta lecturas/, junto a lector.html.';
+      $('elegir').innerHTML = '';
+    }
+  }
+
+  // ===== ir a una cita: búsqueda tolerante (minúsculas, sin puntuación) y resaltado =====
+  function normMapa(t){
+    let out = '', map = [], prevSp = true;
+    for (let i = 0; i < t.length; i++){
+      const ch = t[i].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+      if (/[a-z0-9]/.test(ch)){ out += ch; map.push(i); prevSp = false; }
+      else if (!prevSp){ out += ' '; map.push(i); prevSp = true; }
+    }
+    return { out, map };
+  }
+  function irACita(q, pg){
+    const N = normMapa(docText);
+    const nq = normMapa(q).out.trim();
+    let k = nq ? N.out.indexOf(nq) : -1;
+    if (k < 0 && nq.length > 30) k = N.out.indexOf(nq.slice(0, 30));
+    if (k < 0){ if (pg) irPagina(pg); avisoCita('no encontré la cita exacta; abrí la página'); return; }
+    const len = (k >= 0 && N.out.indexOf(nq) === k) ? nq.length : 30;
+    const start = N.map[k], end = N.map[Math.min(k + len - 1, N.map.length - 1)] + 1;
+    const mr = makeRange(start, end); if (!mr) { if (pg) irPagina(pg); return; }
+    const r = mr.range;
+    revelar(r.startContainer);
+    const rc = r.getBoundingClientRect(), cc = read.getBoundingClientRect();
+    read.scrollTop += (rc.top - cc.top) - 140;
+    if (canHL){ CSS.highlights.set('lectura-cita', new Highlight(r)); setTimeout(()=> CSS.highlights.delete('lectura-cita'), 9000); }
+    avisoCita('cita resaltada');
+  }
+  function avisoCita(msg){ const a = $('avisoCita'); a.textContent = msg; a.style.display = 'block'; clearTimeout(avisoCita.t); avisoCita.t = setTimeout(()=> a.style.display = 'none', 2600); }
+
+  // ===== preprocesado del .md del libro: notas al pie y marcas de página =====
+  // Las anclas <!-- p. N --> se vuelven <span class="pg"> sin texto propio (no alteran offsets).
+  // Las notas [^cap-n] se vuelven superíndices enlazados; las definiciones, párrafos con ancla.
+  function preprocesar(md){
+    md = md.replace(/^---\n[\s\S]*?\n---\n/, '');   // frontmatter YAML fuera del render
+    md = md.replace(/!\[[^\]]*\]\([^)]*\)/g, '');       // imágenes de la conversión (logos de editorial): fuera
+    // marcas de página de la conversión: {n} seguido de guiones; página mostrada = n + 1 + desfase
+    md = md.replace(/^\{(\d+)\}-{3,}\s*$/gm, (m, n)=> '<!-- p. ' + (+n + 1 + (CONF.desfase || 0)) + ' -->');
+    // notas al final ("Notes"): ítems "- N texto" → definiciones enlazables; llamadas [N](#page…) y <sup>N</sup> → enlaces
+    const iNotas = md.search(/^#{1,6}\s*\**\s*notes\s*\**\s*$/im);
+    if (iNotas > -1){
+      const cab = md.slice(0, iNotas);
+      let notas = md.slice(iNotas);
+      const fin = notas.search(/^#{1,6}\s*\**\s*references\s*\**\s*$/im);
+      let resto = ''; if (fin > -1){ resto = notas.slice(fin); notas = notas.slice(0, fin); }
+      const vistas = new Set();
+      notas = notas.replace(/^-\s+(\d+)\.?\s+(.*)$/gm, (m, n, txt)=>{ vistas.add(n); return '\n[^n-' + n + ']: ' + txt + '\n'; });
+      let cuerpo = cab.replace(/\[(\d+)\]\(#page[^)]*\)/g, (m, n)=> vistas.has(n) ? '[^n-' + n + ']' : m)
+                      .replace(/<sup>(\d+)<\/sup>/g, (m, n)=> vistas.has(n) ? '[^n-' + n + ']' : m);
+      md = cuerpo + notas + resto;
+    }
+    md = md.replace(/<!--\s*p\.\s*(\d+)(?::[^>]*)?\s*-->/g, (m, n)=> '<span class="pg" id="p-' + n + '" data-p="' + n + '"></span>');
+    // ancla de página sola entre párrafos: se pega al párrafo siguiente para no abrir un hueco
+    md = md.replace(/\n\n(<span class="pg"[^>]*><\/span>)\n\n(?=[^\s#*<>\[-])/g, '\n\n$1');
+    md = md.replace(/^\[\^([a-z0-9-]+)\]:\s*(.*)$/gm, (m, id, txt)=>{
+      const n = id.replace(/^[a-z0-9]+-/, '');
+      return '<span class="fn-n">' + n + '.</span>' + txt + ' <a class="fn-back" href="#fnref-' + id + '" title="volver al texto">↩</a>\n<a id="fn-' + id + '" class="fn-def-anchor"></a>';
+    });
+    md = md.replace(/\[\^([a-z0-9-]+)\](?!:)/g, (m, id)=>{
+      const n = id.replace(/^[a-z0-9]+-/, '');
+      return '<sup class="fn" id="fnref-' + id + '"><a href="#fn-' + id + '">' + (n.startsWith('ast') ? '*' : n) + '</a></sup>';
+    });
+    return md;
+  }
+  // tras el render, marcar los párrafos de nota (el ancla queda al final del párrafo anterior)
+  function marcarNotas(){
+    docEl.querySelectorAll('a.fn-def-anchor').forEach(a=>{
+      const p = a.closest('p'); if (p){ p.classList.add('fn-def'); p.id = a.id; a.remove(); }
+    });
+  }
+  // navegación interna sin recargar: notas y páginas
+  docEl.addEventListener('click', e=>{
+    const a = e.target.closest('a[href^="#"]'); if (!a) return;
+    const id = decodeURIComponent(a.getAttribute('href').slice(1));
+    const el = document.getElementById(id); if (!el) return;
+    e.preventDefault(); irA(el);
+  });
+  // si el destino está en una sesión apagada, la prende antes de ir
+  function revelar(node){
+    const el = node && (node.nodeType === 1 ? node : node.parentElement);
+    const blk = el && el.closest('#doc [data-ses]'); if (!blk) return;
+    const s = +blk.dataset.ses;
+    if (sesOff.has(s)){ sesOff.delete(s); guardarSesiones(); aplicarSesiones(); }
+  }
+  function irA(el){
+    revelar(el);
+    const rc = el.getBoundingClientRect(), cc = read.getBoundingClientRect();
+    read.scrollTop += (rc.top - cc.top) - 80;
+    docEl.querySelectorAll('.destino').forEach(x=> x.classList.remove('destino'));
+    el.classList.add('destino');
+  }
+  // ===== glosario =====
+  // glosario.json: { entradas:[{id, termino, patrones[], frances, traducciones{}, sesion, instalacion{seccion,pagina}, paginas[], definicion, confusion, relacionados[]}] }
+  let GL = [], glRe = null, glAbierta = null;
+  const LIM = '(?<![\\wáéíóúñÁÉÍÓÚÑ])', LIMF = '(?![\\wáéíóúñÁÉÍÓÚÑ])';
+  // casos.json: mismo esquema de detección (id, termino, patrones[]); la ficha lleva subtitulo, tipo, etiquetas[],
+  // sesiones[], paginas[], apariciones[{paginas,seccion,uso}], caso, lectura, detalles, relectura, sesion_taller, relacionados[].
+  // Se funden en GL con esCaso:true: una sola pasada de subrayado, un solo panel.
+  // analisis.json: tesis y sub-tesis; cada una lleva anclas [{patron, pagina}] que son frases literales del texto.
+  // Se funden en GL con esTesis:true; el patrón ancla se vuelve span.gl-tesis y abre la ficha.
+  function setGlosario(json, casos, ana){
+    GL = (json && Array.isArray(json.entradas)) ? json.entradas.filter(e=> e && e.id && e.termino) : [];
+    const CS = (casos && Array.isArray(casos.entradas)) ? casos.entradas.filter(e=> e && e.id && e.termino) : [];
+    for (const c of CS){ c.esCaso = true; GL.push(c); }
+    const AN = (ana && Array.isArray(ana.entradas)) ? ana.entradas.filter(e=> e && e.id && e.titulo) : [];
+    for (const a of AN){ a.esTesis = true; a.termino = a.titulo; a.patrones = (a.anclas || []).map(x=> x.patron); GL.push(a); }
+    // una sola expresión: patrones más largos primero para que la alternancia prefiera el término compuesto
+    const pats = [];
+    for (const e of GL){
+      for (const p of (e.patrones || [])){ try { new RegExp(p); pats.push({ p, e, alias:false }); } catch(err){ console.warn('patrón inválido', e.id, p); } }
+      for (const p of (e.alias || [])){ try { new RegExp(p); pats.push({ p, e, alias:true }); } catch(err){ console.warn('alias inválido', e.id, p); } }
+    }
+    pats.sort((a,b)=> b.p.length - a.p.length);
+    glRe = pats.length ? new RegExp(LIM + '(?:' + pats.map(x=> '(' + x.p + ')').join('|') + ')' + LIMF, 'gi') : null;
+    glRe && (glRe.pats = pats);
+    renderGlosIndice();
+  }
+  function marcarGlosario(){
+    if (!glRe || docEl.classList.contains('plano')) return;
+    const walker = document.createTreeWalker(docEl, NodeFilter.SHOW_TEXT, {
+      acceptNode(n){
+        if (!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        const p = n.parentElement;
+        if (!p || p.closest('h1, h2, h3, .gl, .pg, sup.fn, a.fn-back, .fn-n')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const nodos = []; let n; while ((n = walker.nextNode())) nodos.push(n);
+    let total = 0;
+    for (const tn of nodos){
+      const s = tn.nodeValue; glRe.lastIndex = 0;
+      let m, last = 0, frag = null;
+      while ((m = glRe.exec(s))){
+        if (!frag) frag = document.createDocumentFragment();
+        let k = 1; while (k < m.length && m[k] === undefined) k++;
+        const pt = glRe.pats[k - 1], e = pt.e;
+        if (m.index > last) frag.appendChild(document.createTextNode(s.slice(last, m.index)));
+        const sp = document.createElement('span');
+        sp.className = 'gl' + (pt.alias ? ' gl-alias' : '') + (e.esCaso ? ' gl-caso' : '') + (e.esTesis ? ' gl-tesis' : ''); sp.dataset.id = e.id;
+        sp.title = pt.alias ? ('ver: ' + e.termino) : e.termino; sp.textContent = m[0];
+        frag.appendChild(sp); last = m.index + m[0].length; total++;
+        if (!m[0].length) glRe.lastIndex++;
+      }
+      if (frag){ if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last))); tn.parentNode.replaceChild(frag, tn); }
+    }
+    docEl.dataset.glTotal = total;
+  }
+  docEl.addEventListener('click', e=>{
+    const sp = e.target.closest('.gl'); if (!sp) return;
+    if (document.body.classList.contains(sp.classList.contains('gl-tesis') ? 'sin-analisis' : sp.classList.contains('gl-caso') ? 'sin-casos' : 'sin-glosario')) return;
+    const sel = window.getSelection(); if (sel && !sel.isCollapsed) return;   // selección en curso: no abrir
+    abrirGlosario(sp.dataset.id, sp.classList.contains('gl-alias') ? sp.textContent : null);
+  });
+  let vistaAna = false;   // qué índice muestra el panel: glosario+casos o análisis
+  function setModoGlos(on, ana){
+    document.body.classList.toggle('modo-glosario', on);
+    if (on && ana !== undefined) vistaAna = !!ana;
+    $('toggleGlos').classList.toggle('activo', on && !vistaAna);
+    $('toggleAna').classList.toggle('activo', on && vistaAna);
+    $('panelTitulo').textContent = on ? (vistaAna ? 'Análisis' : 'Glosario') : 'Anotaciones';
+    if (on) aplicarPanel(true);
+  }
+  function abrirGlosario(id, desde){
+    const e = GL.find(x=> x.id === id); if (!e) return;
+    glAbierta = id;
+    setModoGlos(true, !!e.esTesis);
+    docEl.querySelectorAll('.gl.gl-activa').forEach(x=> x.classList.remove('gl-activa'));
+    docEl.querySelectorAll('.gl[data-id="' + CSS.escape(id) + '"]').forEach(x=> x.classList.add('gl-activa'));
+    const box = $('glos'); box.innerHTML = '';
+    const nav = document.createElement('div'); nav.className = 'gl-nav';
+    const bIdx = document.createElement('button'); bIdx.textContent = '← índice'; bIdx.addEventListener('click', ()=>{ glAbierta = null; if (e.esTesis) renderAnaIndice(); else renderGlosIndice(); });
+    const bAn = document.createElement('button'); bAn.textContent = 'anotaciones'; bAn.addEventListener('click', ()=> setModoGlos(false));
+    nav.append(bIdx, bAn);
+    const ent = document.createElement('div'); ent.className = 'gl-ent';
+    const h = document.createElement('h3'); h.textContent = e.termino;
+    const fr = document.createElement('div'); fr.className = 'gl-fr'; fr.textContent = e.frances || '';
+    const meta = document.createElement('div'); meta.className = 'gl-meta';
+    const fila = (k, v)=>{ const r = document.createElement('div'); r.className = 'row'; const a = document.createElement('span'); a.className = 'k'; a.textContent = k; const b = document.createElement('span'); if (typeof v === 'string') b.textContent = v; else b.appendChild(v); r.append(a, b); return r; };
+    const pagLink = (n, txt)=>{ const a = document.createElement('a'); a.textContent = txt || ('p. ' + n); a.title = 'Ir a la página ' + n; a.addEventListener('click', ()=> irPagina(n)); return a; };
+    if (e.esCaso){ renderCaso(e, ent, h, meta, fila, pagLink, desde); box.append(nav, ent); box.scrollTop = 0; try { history.replaceState(null, '', '#g-' + id); } catch(err){} return; }
+    if (e.esTesis){ renderTesis(e, ent, h, meta, fila, pagLink); box.append(nav, ent); box.scrollTop = 0; try { history.replaceState(null, '', '#g-' + id); } catch(err){} return; }
+    if (e.instalacion){ const w = document.createElement('span'); w.appendChild(document.createTextNode((e.instalacion.seccion || '') + ' · ')); w.appendChild(pagLink(e.instalacion.pagina)); meta.appendChild(fila('se instala', w)); }
+    if (e.sesion) meta.appendChild(fila('sesión', String(e.sesion)));
+    if (Array.isArray(e.paginas) && e.paginas.length){ const w = document.createElement('span'); e.paginas.forEach((n,i)=>{ if (i) w.appendChild(document.createTextNode(', ')); w.appendChild(pagLink(n, String(n))); }); meta.appendChild(fila('páginas', w)); }
+    if (e.traducciones) for (const k of Object.keys(e.traducciones)){ const w = document.createElement('span'); const b = document.createElement('b'); b.textContent = e.traducciones[k]; w.appendChild(b); meta.appendChild(fila(k, w)); }
+    const def = document.createElement('div'); def.className = 'gl-def';
+    def.innerHTML = (window.marked && marked.parse) ? marked.parse(e.definicion || '') : (e.definicion || '');
+    ent.append(h, fr);
+    if (desde){ const d = document.createElement('p'); d.className = 'gl-desde'; d.appendChild(document.createTextNode('«')); const b = document.createElement('b'); b.textContent = desde; d.appendChild(b); d.appendChild(document.createTextNode('» remite a esta entrada')); ent.appendChild(d); }
+    ent.append(meta, def);
+    if (e.confusion){ const c = document.createElement('div'); c.className = 'gl-conf'; const b = document.createElement('b'); b.textContent = 'Confusión frecuente'; c.appendChild(b); c.appendChild(document.createTextNode(e.confusion)); ent.appendChild(c); }
+    if (Array.isArray(e.relacionados) && e.relacionados.length){
+      const r = document.createElement('div'); r.className = 'gl-rel'; const b = document.createElement('b'); b.textContent = 'Relacionados'; r.appendChild(b);
+      for (const rid of e.relacionados){ const re = GL.find(x=> x.id === rid); if (!re) continue; const bt = document.createElement('button'); bt.textContent = re.termino; bt.addEventListener('click', ()=> abrirGlosario(rid)); r.appendChild(bt); }
+      ent.appendChild(r);
+    }
+    box.append(nav, ent); box.scrollTop = 0;
+    try { history.replaceState(null, '', '#g-' + id); } catch(err){}
+  }
+  // ficha de caso: caso según su fuente, lectura canónica, detalles, relectura de D&G, dónde aparece, para la sesión
+  function renderCaso(e, ent, h, meta, fila, pagLink, desde){
+    const md = s=> (window.marked && marked.parse) ? marked.parse(s || '') : (s || '');
+    const sub = document.createElement('div'); sub.className = 'gl-sub'; sub.textContent = e.subtitulo || '';
+    const tags = document.createElement('div'); tags.className = 'gl-tags';
+    if (e.tipo){ const t = document.createElement('span'); t.className = 'tipo'; t.textContent = 'caso ' + e.tipo; tags.appendChild(t); }
+    for (const x of (e.etiquetas || [])){ const t = document.createElement('span'); t.textContent = x; tags.appendChild(t); }
+    ent.append(h, sub, tags);
+    if (desde){ const d = document.createElement('p'); d.className = 'gl-desde'; d.appendChild(document.createTextNode('«')); const b = document.createElement('b'); b.textContent = desde; d.appendChild(b); d.appendChild(document.createTextNode('» remite a esta ficha')); ent.appendChild(d); }
+    if (Array.isArray(e.sesiones) && e.sesiones.length) meta.appendChild(fila(e.sesiones.length > 1 ? 'sesiones' : 'sesión', e.sesiones.join(', ')));
+    if (Array.isArray(e.paginas) && e.paginas.length){ const w = document.createElement('span'); e.paginas.forEach((n,i)=>{ if (i) w.appendChild(document.createTextNode(', ')); w.appendChild(pagLink(n, String(n))); }); meta.appendChild(fila('páginas', w)); }
+    ent.appendChild(meta);
+    const sec = (titulo, cuerpo, cls)=>{ if (!cuerpo) return; const s = document.createElement('div'); s.className = 'gl-sec' + (cls ? ' ' + cls : ''); const b = document.createElement('b'); b.textContent = titulo; const d = document.createElement('div'); d.className = 'gl-def'; d.innerHTML = md(cuerpo); s.append(b, d); ent.appendChild(s); };
+    sec('El caso', e.caso);
+    sec('Lectura canónica', e.lectura);
+    sec('Detalles que importan', e.detalles);
+    sec('Relectura de Deleuze y Guattari', e.relectura, 'gl-dg');
+    if (Array.isArray(e.apariciones) && e.apariciones.length){
+      const s = document.createElement('div'); s.className = 'gl-sec'; const b = document.createElement('b'); b.textContent = 'Dónde aparece'; s.appendChild(b);
+      const tb = document.createElement('table'); tb.className = 'gl-apar';
+      for (const r of e.apariciones){
+        const tr = document.createElement('tr');
+        const td1 = document.createElement('td'); td1.className = 'pg';
+        // cada número de página de la celda se vuelve un enlace
+        String(r.paginas || '').split(/(\d+)/).forEach(tok=>{ if (/^\d+$/.test(tok)) td1.appendChild(pagLink(+tok, tok)); else if (tok) td1.appendChild(document.createTextNode(tok)); });
+        const td2 = document.createElement('td'); td2.className = 'se'; td2.textContent = r.seccion || '';
+        const td3 = document.createElement('td'); td3.textContent = r.uso || '';
+        tr.append(td1, td2, td3); tb.appendChild(tr);
+      }
+      s.appendChild(tb); ent.appendChild(s);
+    }
+    sec('Para la sesión', e.sesion_taller);
+    if (Array.isArray(e.relacionados) && e.relacionados.length){
+      const r = document.createElement('div'); r.className = 'gl-rel'; const b = document.createElement('b'); b.textContent = 'Relacionados'; r.appendChild(b);
+      for (const rid of e.relacionados){ const re = GL.find(x=> x.id === rid); if (!re) continue; const bt = document.createElement('button'); bt.textContent = re.termino; bt.addEventListener('click', ()=> abrirGlosario(rid)); r.appendChild(bt); }
+      ent.appendChild(r);
+    }
+  }
+  // ficha de tesis: formulación, letra, genealogía, comentario, consecuencias, objeción, pregunta, sub-tesis
+  function renderTesis(e, ent, h, meta, fila, pagLink){
+    const md = s=> (window.marked && marked.parse) ? marked.parse(s || '') : (s || '');
+    const num = document.createElement('div'); num.className = 'gl-num';
+    const padre = e.de ? GL.find(x=> x.id === e.de) : null;
+    num.textContent = (e.tipo === 'subtesis' ? 'Sub-tesis ' : 'Tesis ') + (e.numero || '') + ' · cap. ' + (e.capitulo || '') + (padre ? ' · de la tesis ' + (padre.numero || '') : '');
+    ent.append(num, h);
+    if (e.formulacion){ const f = document.createElement('div'); f.className = 'gl-form'; f.textContent = e.formulacion; ent.appendChild(f); }
+    if (e.se_enuncia) meta.appendChild(fila('se enuncia', e.se_enuncia));
+    if (e.se_retoma) meta.appendChild(fila('se retoma', e.se_retoma));
+    if (Array.isArray(e.paginas) && e.paginas.length){ const w = document.createElement('span'); e.paginas.forEach((n,i)=>{ if (i) w.appendChild(document.createTextNode(', ')); w.appendChild(pagLink(n, String(n))); }); meta.appendChild(fila('páginas', w)); }
+    if (Array.isArray(e.anclas) && e.anclas.length){ const w = document.createElement('span'); e.anclas.forEach((a,i)=>{ if (i) w.appendChild(document.createTextNode(' · ')); w.appendChild(pagLink(a.pagina, '«' + a.patron.slice(0, 48) + (a.patron.length > 48 ? '…' : '') + '» p. ' + a.pagina)); }); meta.appendChild(fila('en el texto', w)); }
+    ent.appendChild(meta);
+    const sec = (titulo, cuerpo, cls)=>{ if (!cuerpo) return; const s = document.createElement('div'); s.className = 'gl-sec' + (cls ? ' ' + cls : ''); const b = document.createElement('b'); b.textContent = titulo; const d = document.createElement('div'); d.className = 'gl-def'; d.innerHTML = md(cuerpo); s.append(b, d); ent.appendChild(s); };
+    sec('Lo que dice el texto', e.letra, 'gl-letra');
+    sec('De dónde viene', e.genealogia);
+    sec('Lo que dice el comentario', e.comentario);
+    sec('Qué depende de esto', e.consecuencias);
+    sec('La objeción más seria', e.objecion, 'gl-obj');
+    sec('Para la sesión', e.sesion_taller || e.pregunta);
+    const lista = (titulo, ids)=>{
+      const rs = (ids || []).map(id=> GL.find(x=> x.id === id)).filter(Boolean); if (!rs.length) return;
+      const r = document.createElement('div'); r.className = 'gl-rel'; const b = document.createElement('b'); b.textContent = titulo; r.appendChild(b);
+      for (const re of rs){ const bt = document.createElement('button'); bt.textContent = (re.numero ? re.numero + ' · ' : '') + re.termino; bt.addEventListener('click', ()=> abrirGlosario(re.id)); r.appendChild(bt); }
+      ent.appendChild(r);
+    };
+    lista('Sub-tesis', e.subtesis);
+    if (e.de) lista('Pertenece a', [e.de]);
+    lista('Relacionados', e.relacionados);
+  }
+  // índice del análisis: tesis por sección, con sus sub-tesis debajo
+  function renderAnaIndice(){
+    const box = $('glos'); if (!box) return; box.innerHTML = ''; vistaAna = true; setModoGlos(true, true);
+    docEl.querySelectorAll('.gl.gl-activa').forEach(x=> x.classList.remove('gl-activa'));
+    const T = GL.filter(e=> e.esTesis && e.tipo !== 'subtesis'), S = GL.filter(e=> e.esTesis && e.tipo === 'subtesis');
+    const nav = document.createElement('div'); nav.className = 'gl-nav';
+    const bAn = document.createElement('button'); bAn.textContent = 'anotaciones'; bAn.addEventListener('click', ()=> setModoGlos(false));
+    const bGl = document.createElement('button'); bGl.textContent = 'glosario'; bGl.addEventListener('click', ()=> renderGlosIndice());
+    const cnt = document.createElement('span'); cnt.style.cssText = 'color:var(--ink-dim);font-size:10px'; cnt.textContent = T.length + ' tesis · ' + S.length + ' sub-tesis';
+    nav.append(bAn, bGl, cnt); box.appendChild(nav);
+    if (!T.length){ const p = document.createElement('p'); p.className = 'vacio'; p.textContent = 'No se encontró analisis.json.'; box.appendChild(p); return; }
+    const intro = document.createElement('p'); intro.className = 'gl-sub'; intro.textContent = 'Premisas que el texto afirma y que el lector tiene que aceptar para que el capítulo funcione. La frase donde cada una se enuncia va resaltada en el texto.'; box.appendChild(intro);
+    const porCap = new Map();
+    for (const e of T){ const k = e.capitulo || '?'; if (!porCap.has(k)) porCap.set(k, []); porCap.get(k).push(e); }
+    for (const k of porCap.keys()){
+      const h = document.createElement('div'); h.className = 'gl-ses'; h.style.color = 'var(--warm)'; h.textContent = 'Capítulo ' + k; box.appendChild(h);
+      for (const e of porCap.get(k)){
+        const it = document.createElement('div'); it.className = 'gl-it gl-it-tesis'; it.tabIndex = 0;
+        const n = document.createElement('span'); n.className = 'gl-n'; n.textContent = e.numero || ''; it.appendChild(n);
+        it.appendChild(document.createTextNode(e.termino));
+        if (e.seccion){ const sm = document.createElement('small'); sm.textContent = e.seccion + (e.paginas && e.paginas.length ? ' · p. ' + e.paginas[0] : ''); it.appendChild(sm); }
+        it.addEventListener('click', ()=> abrirGlosario(e.id));
+        it.addEventListener('keydown', ev=>{ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); abrirGlosario(e.id); } });
+        box.appendChild(it);
+        for (const sid of (e.subtesis || [])){
+          const s = S.find(x=> x.id === sid); if (!s) continue;
+          const st = document.createElement('div'); st.className = 'gl-it gl-it-tesis gl-it-sub'; st.tabIndex = 0;
+          const sn = document.createElement('span'); sn.className = 'gl-n'; sn.textContent = s.numero || ''; st.appendChild(sn);
+          st.appendChild(document.createTextNode(s.termino));
+          if (s.seccion){ const sm = document.createElement('small'); sm.textContent = s.seccion + (s.paginas && s.paginas.length ? ' · p. ' + s.paginas[0] : ''); st.appendChild(sm); }
+          st.addEventListener('click', ()=> abrirGlosario(s.id));
+          st.addEventListener('keydown', ev=>{ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); abrirGlosario(s.id); } });
+          box.appendChild(st);
+        }
+      }
+    }
+    try { history.replaceState(null, '', location.pathname + location.search); } catch(err){}
+  }
+  function renderGlosIndice(){
+    const box = $('glos'); if (!box) return; box.innerHTML = ''; vistaAna = false; if (document.body.classList.contains('modo-glosario')) setModoGlos(true, false);
+    docEl.querySelectorAll('.gl.gl-activa').forEach(x=> x.classList.remove('gl-activa'));
+    if (!GL.length){ box.innerHTML = '<p class="vacio">No se encontró glosario.json.</p>'; return; }
+    const terminos = GL.filter(e=> !e.esCaso && !e.esTesis), casos = GL.filter(e=> e.esCaso);
+    const nav = document.createElement('div'); nav.className = 'gl-nav';
+    const bAn = document.createElement('button'); bAn.textContent = 'anotaciones'; bAn.addEventListener('click', ()=> setModoGlos(false));
+    const cnt = document.createElement('span'); cnt.style.cssText = 'color:var(--ink-dim);font-size:10px';
+    cnt.textContent = terminos.length + (terminos.length === 1 ? ' término' : ' términos') + (casos.length ? ' · ' + casos.length + (casos.length === 1 ? ' caso' : ' casos') : '');
+    const bAna = document.createElement('button'); bAna.textContent = 'análisis'; bAna.addEventListener('click', ()=> renderAnaIndice());
+    nav.append(bAn, bAna, cnt);
+    box.appendChild(nav);
+    const porSes = new Map();
+    for (const e of terminos){ const s = e.sesion || 0; if (!porSes.has(s)) porSes.set(s, []); porSes.get(s).push(e); }
+    for (const s of [...porSes.keys()].sort((a,b)=> a-b)){
+      const h = document.createElement('div'); h.className = 'gl-ses'; h.textContent = s ? ('Sesión ' + s) : 'Otros'; box.appendChild(h);
+      for (const e of porSes.get(s)){
+        const it = document.createElement('div'); it.className = 'gl-it'; it.tabIndex = 0;
+        it.textContent = e.termino;
+        if (e.instalacion && e.instalacion.pagina){ const sm = document.createElement('small'); sm.textContent = (e.instalacion.seccion ? e.instalacion.seccion + ' · ' : '') + 'p. ' + e.instalacion.pagina; it.appendChild(sm); }
+        it.addEventListener('click', ()=> abrirGlosario(e.id));
+        it.addEventListener('keydown', ev=>{ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); abrirGlosario(e.id); } });
+        box.appendChild(it);
+      }
+    }
+    // casos, agrupados por tipo (clínico, literario, etnográfico), en el orden de primera aparición en el libro
+    const porTipo = new Map();
+    for (const e of casos){ const k = e.tipo || 'otros'; if (!porTipo.has(k)) porTipo.set(k, []); porTipo.get(k).push(e); }
+    for (const k of porTipo.keys()){
+      const h = document.createElement('div'); h.className = 'gl-ses'; h.style.color = 'var(--steel)'; h.textContent = 'Casos ' + k + 's'; box.appendChild(h);
+      for (const e of porTipo.get(k).sort((a,b)=> ((a.paginas||[])[0]||999) - ((b.paginas||[])[0]||999))){
+        const it = document.createElement('div'); it.className = 'gl-it gl-it-caso'; it.tabIndex = 0;
+        it.textContent = e.termino;
+        if (Array.isArray(e.paginas) && e.paginas.length){ const sm = document.createElement('small'); sm.textContent = 'p. ' + e.paginas[0] + (e.sesiones && e.sesiones.length ? ' · s. ' + e.sesiones.join(',') : ''); it.appendChild(sm); }
+        it.addEventListener('click', ()=> abrirGlosario(e.id));
+        it.addEventListener('keydown', ev=>{ if (ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); abrirGlosario(e.id); } });
+        box.appendChild(it);
+      }
+    }
+    if (document.body.classList.contains('modo-glosario')) try { history.replaceState(null, '', location.pathname + location.search); } catch(err){}
+  }
+  function irPagina(n){
+    let el = null;
+    for (let k = n; k >= minPag && !el; k--) el = document.getElementById('p-' + k);
+    if (el) irA(el);
+  }
+  $('toggleGlos').addEventListener('click', ()=>{
+    const on = !(document.body.classList.contains('modo-glosario') && !vistaAna);
+    if (on){ const e = glAbierta && GL.find(x=> x.id === glAbierta); if (e && !e.esTesis) abrirGlosario(glAbierta); else renderGlosIndice(); }
+    else setModoGlos(false);
+  });
+  $('toggleAna').addEventListener('click', ()=>{
+    const on = !(document.body.classList.contains('modo-glosario') && vistaAna);
+    if (on){ const e = glAbierta && GL.find(x=> x.id === glAbierta); if (e && e.esTesis) abrirGlosario(glAbierta); else renderAnaIndice(); }
+    else setModoGlos(false);
+  });
+  function aplicarResaltadoAna(on){ document.body.classList.toggle('sin-analisis', !on); $('anaResaltar').checked = on; }
+  $('anaResaltar').addEventListener('change', ()=>{ aplicarResaltadoAna($('anaResaltar').checked); try { localStorage.setItem('antiedipo-analisis-resaltar', $('anaResaltar').checked ? '1' : '0'); } catch(e){} });
+  (function(){ let v = null; try { v = localStorage.getItem('antiedipo-analisis-resaltar'); } catch(e){} aplicarResaltadoAna(v !== '0'); })();
+  function aplicarSubrayado(on){
+    document.body.classList.toggle('sin-glosario', !on);
+    $('glosSubrayar').checked = on;
+  }
+  $('glosSubrayar').addEventListener('change', ()=>{
+    aplicarSubrayado($('glosSubrayar').checked);
+    try { localStorage.setItem('antiedipo-glosario-subrayar', $('glosSubrayar').checked ? '1' : '0'); } catch(e){}
+  });
+  (function(){ let v = null; try { v = localStorage.getItem('antiedipo-glosario-subrayar'); } catch(e){} aplicarSubrayado(v !== '0'); })();
+  function aplicarSubrayadoCasos(on){
+    document.body.classList.toggle('sin-casos', !on);
+    $('casosSubrayar').checked = on;
+  }
+  $('casosSubrayar').addEventListener('change', ()=>{
+    aplicarSubrayadoCasos($('casosSubrayar').checked);
+    try { localStorage.setItem('antiedipo-casos-subrayar', $('casosSubrayar').checked ? '1' : '0'); } catch(e){}
+  });
+  (function(){ let v = null; try { v = localStorage.getItem('antiedipo-casos-subrayar'); } catch(e){} aplicarSubrayadoCasos(v !== '0'); })();
+
+  // ===== sesiones del taller =====
+  // Cada sesión se define por secciones (capítulo romano + número de sección), no por páginas.
+  // La sesión 4 cruza de capítulo: III.9–11 + IV.1–3. El apéndice va con la 5.
+  const SESIONES = [];   // sin sesiones de taller en este lector
+  const sesOff = new Set();   // sesiones apagadas
+  function sesionDe(cap, sec){ const s = SESIONES.find(x=> x.dentro(cap, sec)); return s ? s.n : null; }
+  function capDe(h2){
+    const t = h2.textContent;
+    const m = t.match(/^Capítulo\s+(I{1,3}|IV)\b/); if (m) return m[1];
+    if (/^Apéndice/.test(t)) return 'AP';
+    if (/^Notas/.test(t)) return 'NOTAS';
+    return null;
+  }
+  // Recorre los bloques de primer nivel de #doc y les asigna data-ses. Las notas al pie heredan la
+  // sesión del pasaje que las llama. Los pseudoelementos y atributos no alteran docText.
+  function asignarSesiones(){
+    let cap = null, sec = 0, ses = null;
+    const inicios = new Set();
+    for (const el of docEl.children){
+      if (el.tagName === 'H1'){ el.removeAttribute('data-ses'); continue; }
+      if (el.tagName === 'H2'){
+        cap = capDe(el); sec = 0;
+        // el título de capítulo va con la sesión de su primera sección
+        ses = (cap === 'NOTAS' || cap == null) ? null : sesionDe(cap, 1);
+      } else if (el.tagName === 'H3'){
+        const m = el.textContent.match(/^\s*(\d+)\./); if (m) sec = +m[1];
+        ses = (cap === 'NOTAS' || cap == null) ? null : sesionDe(cap, sec);
+      }
+      if (cap === 'NOTAS') break;        // las notas se asignan después, por referencia
+      el.removeAttribute('data-ses-inicio');
+      if (ses == null) el.removeAttribute('data-ses'); else el.dataset.ses = ses;
+    }
+    // una marca de página sola justo antes de un título pertenece a la sección que empieza en esa página
+    for (const el of docEl.children){
+      const nx = el.nextElementSibling;
+      if (el.tagName === 'P' && !el.textContent.trim() && el.querySelector('.pg') && nx && /^H[23]$/.test(nx.tagName) && nx.dataset.ses)
+        el.dataset.ses = nx.dataset.ses;
+    }
+    // etiqueta de inicio: primer bloque de cada sesión
+    for (const el of docEl.children){
+      const s = +el.dataset.ses; if (!s || inicios.has(s) || !el.textContent.trim()) continue;
+      inicios.add(s);
+      const S = SESIONES[s-1];
+      el.dataset.sesInicio = 'Sesión ' + S.n + ' · ' + S.secs + ' · pp. ' + S.pp;
+    }
+    // notas al pie: sesión del párrafo donde está la llamada
+    docEl.querySelectorAll('.fn-def').forEach(p=>{
+      const id = p.id.replace(/^fn-/, '');
+      const ref = document.getElementById('fnref-' + id);
+      const blk = ref && ref.closest('#doc > *');
+      if (blk && blk.dataset.ses) p.dataset.ses = blk.dataset.ses; else p.removeAttribute('data-ses');
+    });
+    aplicarSesiones();
+  }
+  function aplicarSesiones(){
+    for (const S of SESIONES) document.body.classList.toggle('off-s' + S.n, sesOff.has(S.n));
+    $('sesiones').classList.toggle('parcial', sesOff.size > 0);
+    $('sesiones').textContent = sesOff.size ? ('sesiones ' + (SESIONES.length - sesOff.size) + '/' + SESIONES.length) : 'sesiones';
+    renderSesionesLista();
+    indexarPaginas();
+  }
+  function renderSesionesLista(){
+    const box = $('sesionesLista'); box.innerHTML = '';
+    for (const S of SESIONES){
+      const row = document.createElement('label');
+      row.className = 'ses-row' + (sesOff.has(S.n) ? ' off' : '');
+      const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = !sesOff.has(S.n);
+      cb.addEventListener('change', ()=>{ cb.checked ? sesOff.delete(S.n) : sesOff.add(S.n); guardarSesiones(); aplicarSesiones(); });
+      const tx = document.createElement('span');
+      tx.innerHTML = '<span class="ses-n">Sesión ' + S.n + '</span> · ' + S.titulo + '<br><span class="ses-d">' + S.secs + ' · pp. ' + S.pp + '</span>';
+      row.append(cb, tx);
+      box.appendChild(row);
+    }
+  }
+  function guardarSesiones(){ try { localStorage.setItem('antiedipo-sesiones-off', JSON.stringify([...sesOff])); } catch(e){} }
+  (function(){
+    try { const t = localStorage.getItem('antiedipo-sesiones-off'); if (t) JSON.parse(t).forEach(n=>{ if (SESIONES.some(S=> S.n === n)) sesOff.add(n); }); } catch(e){}
+  })();
+  $('sesiones').addEventListener('click', e=>{ e.stopPropagation(); $('sesionesPanel').classList.toggle('hide'); });
+  $('sesionesPanel').addEventListener('click', e=> e.stopPropagation());
+  document.addEventListener('click', e=>{ if (!$('sesionesWrap').contains(e.target)) $('sesionesPanel').classList.add('hide'); });
+  $('sesTodas').addEventListener('click', ()=>{ sesOff.clear(); guardarSesiones(); aplicarSesiones(); });
+  $('sesNinguna').addEventListener('click', ()=>{ SESIONES.forEach(S=> sesOff.add(S.n)); guardarSesiones(); aplicarSesiones(); });
+  renderSesionesLista();
+
+  // página actual: la última marca que ha pasado por el borde superior de la lectura
+  let pgMarks = [], pgTimer = null;
+  // solo marcas visibles: las de sesiones apagadas no tienen geometría y romperían la búsqueda
+  function indexarPaginas(){
+    pgMarks = [...docEl.querySelectorAll('.pg')].filter(m=> m.offsetParent !== null);
+    if (pgMarks.length){ minPag = +pgMarks[0].dataset.p; $('irPag').min = minPag; $('irPag').max = pgMarks[pgMarks.length-1].dataset.p; $('irPag').title = 'Ir a la página (' + minPag + '–' + $('irPag').max + ')'; }
+    actualizarPagina();
+  }
+  function actualizarPagina(){
+    if (!pgMarks.length){ $('pagActual').textContent = ''; return; }
+    const top = read.getBoundingClientRect().top + 40;
+    let lo = 0, hi = pgMarks.length - 1, best = -1;
+    while (lo <= hi){ const mid = (lo + hi) >> 1; if (pgMarks[mid].getBoundingClientRect().top <= top){ best = mid; lo = mid + 1; } else hi = mid - 1; }
+    $('pagActual').textContent = best >= 0 ? 'p. ' + pgMarks[best].dataset.p : '';
+  }
+  read.addEventListener('scroll', ()=>{ if (pgTimer) return; pgTimer = setTimeout(()=>{ pgTimer = null; actualizarPagina(); }, 80); });
+  window.addEventListener('resize', actualizarPagina);
+
+  $('irPag').addEventListener('keydown', e=>{
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    let n = parseInt($('irPag').value, 10); if (!n) return;
+    let el = null;
+    for (let k = n; k >= minPag && !el; k--) el = document.getElementById('p-' + k);   // página en blanco → anterior
+    if (el) irA(el);
+  });
+
+  // ===== tabla de contenidos =====
+  function buildToc(){
+    const nav = $('toc'), tl = $('tocList');
+    tl.innerHTML = '';
+    const hs = docEl.querySelectorAll('h1, h2, h3');
+    if (!hs.length){ nav.style.display = 'none'; return; }   // texto plano o md sin cabeceras
+    let sesPrev = null;
+    hs.forEach(h => {
+      const ses = h.dataset.ses || null;
+      if (ses && ses !== sesPrev){
+        const S = SESIONES[+ses-1];
+        const cab = document.createElement('div');
+        cab.className = 'toc-ses'; cab.dataset.ses = ses;
+        cab.textContent = 'Sesión ' + S.n + ' · pp. ' + S.pp;
+        tl.appendChild(cab);
+      }
+      sesPrev = ses;
+      const it = document.createElement('div');
+      it.className = 'toc-it n' + h.tagName.charAt(1);
+      if (ses) it.dataset.ses = ses;
+      it.textContent = h.textContent;
+      it.title = h.textContent;
+      it.tabIndex = 0;
+      const ir = ()=>{
+        const rc = h.getBoundingClientRect(), cc = read.getBoundingClientRect();
+        read.scrollTop += (rc.top - cc.top) - 16;
+        if (estrecho()){ aplicarToc(false); }
+      };
+      it.addEventListener('click', ir);
+      it.addEventListener('keydown', e=>{ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); ir(); } });
+      tl.appendChild(it);
+    });
+    nav.style.display = 'block';
+  }
+
+  // offset de un punto (nodo, offset) dentro de docEl, medido en el mismo espacio que docText
+  function pointOffset(node, offset){
+    const r = document.createRange();
+    r.selectNodeContents(docEl);
+    try { r.setEnd(node, offset); } catch(e){ return null; }
+    return r.toString().length;
+  }
+
+  // ===== captura de selección =====
+  function captureSelection(){
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || sel.rangeCount === 0) return null;
+    const range = sel.getRangeAt(0);
+    if (range.collapsed) return null;
+    if (!docEl.contains(range.commonAncestorContainer)) return null; // solo dentro del texto
+    const start = pointOffset(range.startContainer, range.startOffset);
+    const end   = pointOffset(range.endContainer, range.endOffset);
+    if (start == null || end == null || end <= start) return null;
+    const exact = docText.slice(start, end);
+    if (!exact.trim()) return null;
+    const prefix = docText.slice(Math.max(0, start - CTX), start);
+    const suffix = docText.slice(end, end + CTX);
+    const md = mdOffset(exact);
+    return {
+      range: range.cloneRange(), exact, prefix, suffix, start, end,
+      mdStart: md.start, mdEnd: md.end, mdUnico: md.unico
+    };
+  }
+
+  // offset best-effort en el .md crudo: sirve si la selección aparece verbatim en la fuente
+  function mdOffset(exact){
+    const first = rawMd.indexOf(exact);
+    if (first === -1) return { start:null, end:null, unico:false };
+    const second = rawMd.indexOf(exact, first + 1);
+    return { start:first, end:first + exact.length, unico: second === -1 };
+  }
+
+  // ===== re-anclaje (para importar .json) =====
+  function pointFromOffset(target){
+    target = Math.max(0, Math.min(target, docText.length));
+    const walker = document.createTreeWalker(docEl, NodeFilter.SHOW_TEXT, null);
+    let acc = 0, node, last = null;
+    while ((node = walker.nextNode())){
+      const len = node.nodeValue.length;
+      if (acc + len >= target) return { node, offset: target - acc };
+      acc += len; last = node;
+    }
+    return last ? { node: last, offset: last.nodeValue.length } : null;
+  }
+  function makeRange(start, end){
+    const a = pointFromOffset(start), b = pointFromOffset(end);
+    if (!a || !b) return null;
+    const r = document.createRange();
+    try { r.setStart(a.node, a.offset); r.setEnd(b.node, b.offset); } catch(e){ return null; }
+    return { range: r, start, end };
+  }
+  function commonSuffixLen(a, b){ let i=0; while(i<a.length && i<b.length && a[a.length-1-i]===b[b.length-1-i]) i++; return i; }
+  function commonPrefixLen(a, b){ let i=0; while(i<a.length && i<b.length && a[i]===b[i]) i++; return i; }
+  function findByQuote(exact, prefix, suffix){
+    const hits = []; let i = docText.indexOf(exact);
+    while (i !== -1){ hits.push(i); i = docText.indexOf(exact, i + 1); }
+    if (!hits.length) return null;
+    if (hits.length === 1) return { start: hits[0], end: hits[0] + exact.length };
+    let best = hits[0], score = -1;
+    for (const s of hits){
+      const pre = docText.slice(Math.max(0, s - prefix.length), s);
+      const suf = docText.slice(s + exact.length, s + exact.length + suffix.length);
+      const sc = commonSuffixLen(pre, prefix) + commonPrefixLen(suf, suffix);
+      if (sc > score){ score = sc; best = s; }
+    }
+    return { start: best, end: best + exact.length };
+  }
+  function resolveAnchor(obj){
+    const exact = obj.exact || '';
+    const tp = obj.textoPlano || {};
+    if (exact && Number.isInteger(tp.start) && Number.isInteger(tp.end) && docText.slice(tp.start, tp.end) === exact)
+      return makeRange(tp.start, tp.end);
+    if (exact){ const h = findByQuote(exact, obj.prefix || '', obj.suffix || ''); if (h) return makeRange(h.start, h.end); }
+    if (Number.isInteger(tp.start) && Number.isInteger(tp.end) && tp.end > tp.start && tp.end <= docText.length)
+      return makeRange(tp.start, tp.end);
+    return null;
+  }
+
+  // ===== modo edición =====
+  function reanclar(){
+    let ok = 0, huerf = 0;
+    for (const a of annos){
+      const anc = resolveAnchor({
+        exact: a.exact, prefix: a.prefix, suffix: a.suffix,
+        textoPlano: (a.start != null && a.end != null) ? { start: a.start, end: a.end } : null
+      });
+      const valido = anc && a.exact && docText.slice(anc.start, anc.end) === a.exact;
+      if (valido){
+        a.start = anc.start; a.end = anc.end; a.range = anc.range; a.huerfana = false;
+        a.prefix = docText.slice(Math.max(0, a.start - CTX), a.start);
+        a.suffix = docText.slice(a.end, a.end + CTX);
+        ok++;
+      } else {
+        a.start = null; a.end = null; a.range = null; a.huerfana = true; huerf++;
+      }
+      const md = a.exact ? mdOffset(a.exact) : { start:null, end:null, unico:false };
+      a.mdStart = md.start; a.mdEnd = md.end; a.mdUnico = md.unico;
+    }
+    return { ok, huerf };
+  }
+
+  function setEdicion(on){
+    editando = on;
+    document.body.classList.toggle('editando', on);
+    editor.classList.toggle('hide', !on);
+    docEl.style.display = on ? 'none' : 'block';
+    $('editar').textContent = on ? 'volver a lectura' : 'editar';
+    $('editar').classList.toggle('saliendo', on);
+    hideFab();
+    updateChrome();
+  }
+
+  function aplicarNuevoTexto(nuevo, nombre){
+    const snapshot = annos;
+    render(nuevo, nombre);
+    annos = snapshot;
+    const r = reanclar();
+    annos.sort(cmpAnnos);
+    refreshHighlights(); renderList(); updateChrome();
+    return r;
+  }
+
+  function aplicarEdicion(nuevo){
+    const r = aplicarNuevoTexto(nuevo, docName);
+    if (r.huerf)
+      alert(r.ok + ' re-ancladas, ' + r.huerf + ' sin anclar (huérfanas): su pasaje cambió o desapareció. Siguen en la lista y se re-anclan solas si el texto reaparece.');
+  }
+
+  $('editar').addEventListener('click', ()=>{
+    if (!rawMd) return;
+    if (!editando){
+      editor.value = rawMd;
+      setEdicion(true);
+      editor.focus();
+    } else {
+      const nuevo = editor.value;
+      if (nuevo === rawMd){ setEdicion(false); return; }
+      aplicarEdicion(nuevo);
+    }
+  });
+  document.addEventListener('keydown', e=>{ if (e.key === 'Escape' && editando){ e.preventDefault(); $('editar').click(); } });
+
+  // ===== alternar visibilidad de paneles (toc y panel) =====
+  function aplicarToc(visible){
+    document.body.classList.toggle('no-toc', !visible);
+    $('toggleToc').classList.toggle('inactivo', !visible);
+  }
+  function aplicarPanel(visible){
+    document.body.classList.toggle('no-panel', !visible);
+    $('togglePanel').classList.toggle('inactivo', !visible);
+  }
+
+  $('toggleToc').addEventListener('click', ()=>{
+    const visible = document.body.classList.contains('no-toc');
+    aplicarToc(visible);
+    if (visible && estrecho()) aplicarPanel(false);
+    try { localStorage.setItem('forja-anotador-toc', visible ? '1' : '0'); } catch(e){}
+  });
+
+  $('togglePanel').addEventListener('click', ()=>{
+    const visible = document.body.classList.contains('no-panel');
+    aplicarPanel(visible);
+    if (visible && estrecho()) aplicarToc(false);
+    try { localStorage.setItem('forja-anotador-panel', visible ? '1' : '0'); } catch(e){}
+  });
+
+  (function(){
+    let pt = null, pp = null;
+    try {
+      pt = localStorage.getItem('forja-anotador-toc');
+      pp = localStorage.getItem('forja-anotador-panel');
+    } catch(e){}
+    const n = estrecho();
+    aplicarToc(n ? false : pt !== '0');
+    aplicarPanel(n ? false : pp !== '0');
+  })();
+
+  // ===== importar .json =====
+  function importJSON(text, fname, silencioso){
+    let data;
+    try { data = JSON.parse(text); } catch(e){ alert('JSON inválido: ' + e.message); return; }
+    const items = Array.isArray(data) ? data : (data.anotaciones || []);
+    if (!items.length){ if (!silencioso) alert('El .json no contiene anotaciones reconocibles.'); return; }
+    if (!rawMd){ alert('Carga primero el documento .md correspondiente: las anotaciones se anclan sobre su texto.'); return; }
+    if (!silencioso && data.documento && data.documento.hashMd && data.documento.hashMd !== hash32(rawMd)){
+      if (!confirm('El .json se generó sobre otro documento (hash distinto). Intento relocalizar por contexto de todos modos. ¿Continuar?')) return;
+    }
+    let ok = 0, huerf = 0, dup = 0;
+    for (const it of items){
+      const obj = it.objetivo || it;
+      const id = it.id || ('a' + Date.now().toString(36) + Math.random().toString(36).slice(2,6));
+      if (annos.some(a => a.id === id)){ dup++; continue; }
+      const anc = resolveAnchor(obj);
+      const tp = obj.textoPlano || {};
+      let coments = [];
+      if (Array.isArray(it.comentarios))
+        coments = it.comentarios.filter(c => c && typeof c.texto === 'string' && c.texto.trim())
+                                .map(c => ({ texto: c.texto, creado: c.creado || new Date().toISOString() }));
+      else if (typeof it.nota === 'string' && it.nota.trim())
+        coments = [{ texto: it.nota, creado: it.creado || new Date().toISOString() }];
+      const a = {
+        id, comentarios: coments, creado: it.creado || new Date().toISOString(),
+        exact: obj.exact || '', prefix: obj.prefix || '', suffix: obj.suffix || '',
+        start: anc ? anc.start : (Number.isInteger(tp.start) ? tp.start : null),
+        end:   anc ? anc.end   : (Number.isInteger(tp.end)   ? tp.end   : null),
+        range: anc ? anc.range : null,
+        huerfana: !anc
+      };
+      const md = a.exact ? mdOffset(a.exact) : { start:null, end:null, unico:false };
+      a.mdStart = md.start; a.mdEnd = md.end; a.mdUnico = md.unico;
+      annos.push(a); anc ? ok++ : huerf++;
+    }
+    annos.sort(cmpAnnos);
+    refreshHighlights(); renderList(); updateChrome();
+    if (!silencioso && (huerf || dup))
+      alert(ok + ' ancladas' + (huerf ? ', ' + huerf + ' sin anclar (huérfanas)' : '') + (dup ? ', ' + dup + ' duplicadas omitidas' : '') + '.');
+  }
+  function readJsonFile(file){
+    if (!file) return;
+    const fr = new FileReader();
+    fr.onload = ()=> importJSON(String(fr.result), file.name);
+    fr.onerror = ()=> alert('No se pudo leer el .json.');
+    fr.readAsText(file);
+  }
+
+  // ===== resaltado =====
+  const canHL = ('highlights' in CSS) && (typeof Highlight === 'function');
+  function refreshHighlights(){
+    if (!canHL) return;
+    const base = new Highlight(), act = new Highlight();
+    for (const a of annos){
+      if (!a.range) continue;
+      (a.id === activeId ? act : base).add(a.range);
+    }
+    CSS.highlights.set('forja-nota', base);
+    CSS.highlights.set('forja-activa', act);
+  }
+
+  // ===== crear anotación desde la captura pendiente =====
+  function addAnno(){
+    if (!pending) return;
+    const a = Object.assign({
+      id: 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+      comentarios: [], creado: new Date().toISOString()
+    }, pending);
+    annos.push(a);
+    annos.sort(cmpAnnos);
+    activeId = a.id; pending = null;
+    hideFab();
+    const sel = window.getSelection(); if (sel) sel.removeAllRanges();
+    refreshHighlights(); renderList(true); updateChrome();
+  }
+
+  function removeAnno(id){
+    annos = annos.filter(a=> a.id !== id);
+    if (activeId === id) activeId = null;
+    refreshHighlights(); renderList(); updateChrome();
+  }
+
+  function setActive(id){
+    activeId = id;
+    list.querySelectorAll('.nota').forEach(n=> n.classList.toggle('activa', n.dataset.id === id));
+    refreshHighlights();
+  }
+
+  function gotoAnno(id){
+    setActive(id);
+    const a = annos.find(x=> x.id === id);
+    if (a && a.range && !editando){
+      revelar(a.range.startContainer);
+      const rc = a.range.getBoundingClientRect();
+      const cc = read.getBoundingClientRect();
+      read.scrollTop += (rc.top - cc.top) - 100;
+    }
+  }
+
+  // ===== lista lateral =====
+  function autoGrow(ta){ ta.style.height='auto'; ta.style.height = ta.scrollHeight + 'px'; }
+  function fmtFecha(iso){
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    try { return d.toLocaleString('es', { dateStyle:'short', timeStyle:'short' }); }
+    catch(e){ return d.toISOString().slice(0,16).replace('T',' '); }
+  }
+
+  function commentNode(a, c){
+    const row = document.createElement('div');
+    row.className = 'coment';
+    const tx = document.createElement('div');
+    tx.className = 'coment-tx';
+    tx.textContent = c.texto;
+    const meta = document.createElement('div');
+    meta.className = 'coment-meta';
+    const when = document.createElement('span');
+    when.textContent = fmtFecha(c.creado);
+    const x = document.createElement('button');
+    x.className = 'cdel'; x.textContent = '×'; x.title = 'Borrar comentario';
+    x.addEventListener('click', ()=>{ a.comentarios = a.comentarios.filter(k=> k !== c); renderList(); updateChrome(); });
+    meta.append(when, x);
+    row.append(tx, meta);
+    return row;
+  }
+
+  function renderList(focusNew){
+    list.innerHTML = '';
+    if (!annos.length){
+      list.innerHTML = '<p class="vacio">Selecciona texto y pulsa «anotar» para empezar.</p>';
+      return;
+    }
+    for (const a of annos){
+      const item = document.createElement('div');
+      item.className = 'nota' + (a.id === activeId ? ' activa' : '') + (a.huerfana ? ' huerfana' : '');
+      item.dataset.id = a.id;
+
+      const q = document.createElement('div');
+      q.className = 'quote';
+      q.textContent = a.exact.length > 160 ? a.exact.slice(0,160) + '…' : a.exact;
+      q.title = 'Ir al pasaje';
+      q.addEventListener('click', ()=> gotoAnno(a.id));
+
+      const coments = document.createElement('div');
+      coments.className = 'coments';
+      for (const c of a.comentarios) coments.appendChild(commentNode(a, c));
+
+      const add = document.createElement('div');
+      add.className = 'add';
+      const ta = document.createElement('textarea');
+      ta.className = 'add-in';
+      ta.placeholder = 'Añadir comentario… (Enter guarda)';
+      ta.enterKeyHint = 'done';
+      ta.addEventListener('input', ()=> autoGrow(ta));
+      ta.addEventListener('focus', ()=> setActive(a.id));
+      const doAdd = ()=>{
+        const t = ta.value.trim(); if (!t) return;
+        const c = { texto: t, creado: new Date().toISOString() };
+        a.comentarios.push(c);
+        coments.appendChild(commentNode(a, c));
+        ta.value = ''; autoGrow(ta); ta.focus();
+        updateChrome();
+      };
+      ta.addEventListener('keydown', e=>{
+        if (e.isComposing || e.keyCode === 229) return;
+        if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); doAdd(); }
+      });
+      const btn = document.createElement('button');
+      btn.className = 'add-btn'; btn.textContent = 'añadir';
+      btn.addEventListener('click', doAdd);
+      add.append(ta, btn);
+
+      const fila = document.createElement('div');
+      fila.className = 'fila';
+      const pos = document.createElement('span');
+      pos.className = 'pos';
+      pos.textContent = (a.huerfana || a.start == null)
+        ? 'sin anclar en este documento'
+        : ('plano ' + a.start + '–' + a.end +
+           (a.mdStart != null ? ' · md ' + a.mdStart + '–' + a.mdEnd + (a.mdUnico ? '' : ' (múltiple)') : ' · md n/d'));
+      const del = document.createElement('button');
+      del.className = 'del'; del.textContent = 'eliminar';
+      del.addEventListener('click', ()=> removeAnno(a.id));
+      fila.append(pos, del);
+
+      item.append(q, coments, add, fila);
+      list.appendChild(item);
+      autoGrow(ta);
+      if (focusNew && a.id === activeId) ta.focus();
+    }
+  }
+
+  // ===== persistencia local: las anotaciones viven en este navegador, por documento =====
+  let CLAVE = 'adinf-lector-anotaciones';
+  let cargandoGuardadas = false, listo = false;   // no se guarda nada hasta haber restaurado lo guardado
+  function guardar(){
+    if (!rawMd || cargandoGuardadas || !listo) return;
+    try { localStorage.setItem(CLAVE, JSON.stringify(buildPayload())); } catch(e){}
+  }
+  function cargarGuardadas(){
+    let t = null;
+    try { t = localStorage.getItem(CLAVE); } catch(e){}
+    if (!t) return;
+    cargandoGuardadas = true;
+    try { importJSON(t, 'local', true); } finally { cargandoGuardadas = false; }
+  }
+
+  function updateChrome(){
+    guardar();
+    const vacio = annos.length === 0;
+    $('export').disabled = vacio || editando;
+    $('exportMd').disabled = !rawMd || editando;
+    $('editar').disabled = !rawMd;
+    $('recargar').disabled = !docUrl || editando;
+    $('contador').textContent = annos.length ? (annos.length + (annos.length === 1 ? ' anotación' : ' anotaciones')) : '';
+    
+    // Mostramos el contenedor de ajustes si hay documento cargado
+    $('controlesVis').style.display = rawMd ? 'block' : 'none';
+    
+    updateStats();
+  }
+
+  // ===== alternar menú de ajustes =====
+  $('btnAjustes').addEventListener('click', (e) => {
+    e.stopPropagation();
+    $('ajustesPanel').classList.toggle('hide');
+  });
+  document.addEventListener('click', (e) => {
+    if (!$('controlesVis').contains(e.target)) {
+      $('ajustesPanel').classList.add('hide');
+    }
+  });
+
+  // ===== ancho de lectura configurable =====
+  function aplicarAncho(v){
+    v = Math.max(60, Math.min(160, +v || 90));
+    docEl.style.maxWidth = v + 'ch';
+    $('ancho').value = v;
+    $('ancho-v').textContent = v;
+  }
+  $('ancho').addEventListener('input', ()=>{
+    aplicarAncho($('ancho').value);
+    try { localStorage.setItem('adinf-ancho', $('ancho').value); } catch(e){}
+  });
+  (function(){
+    let a = null;
+    try { a = localStorage.getItem('adinf-ancho'); } catch(e){}
+    if (a != null) aplicarAncho(a);
+  })();
+
+  function aplicarLetra(v){
+    v = Math.max(14, Math.min(26, +v || 17));
+    document.documentElement.style.setProperty('--docfs', v + 'px');
+    $('letra').value = v; $('letra-v').textContent = v;
+  }
+  $('letra').addEventListener('input', ()=>{ aplicarLetra($('letra').value); try { localStorage.setItem('adinf-letra', $('letra').value); } catch(e){} });
+  (function(){ let v = null; try { v = localStorage.getItem('adinf-letra'); } catch(e){} aplicarLetra(v != null ? v : (estrecho() ? 19 : 17)); })();
+
+  function miles(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  function updateStats(){
+    const el = $('stats');
+    if (!rawMd){ el.style.display = 'none'; return; }
+    const texto = editando ? editor.value : docText;
+    const palabras = (texto.match(/\S+/g) || []).length;
+    const pags = Math.ceil(palabras / 500);
+    el.style.display = 'block';
+    el.textContent = miles(palabras) + ' palabras · '
+      + miles(texto.length) + ' caracteres · '
+      + pags + (pags === 1 ? ' página' : ' páginas');
+  }
+  editor.addEventListener('input', updateStats);
+
+  // ===== botón flotante =====
+  function showFab(range){
+    fab.classList.add('on');
+    if (document.body.classList.contains('tablet')){
+      fab.style.left = ''; fab.style.top = '';
+      return;
+    }
+    const rects = range.getClientRects();
+    const r = rects.length ? rects[rects.length - 1] : range.getBoundingClientRect();
+    const fw = fab.offsetWidth || 96, fh = fab.offsetHeight || 40;
+    const left = Math.max(8, Math.min(r.right, window.innerWidth - fw - 8));
+    let top = r.bottom + 8;
+    if (top + fh > window.innerHeight - 8) top = Math.max(8, r.top - fh - 8);
+    fab.style.left = left + 'px';
+    fab.style.top = top + 'px';
+  }
+  function hideFab(){ fab.classList.remove('on'); }
+
+  function tabletOn(){ return document.body.classList.contains('tablet'); }
+  function setAnotar(on){ const b = $('anotarBtn'); b.disabled = !on; b.classList.toggle('lista', on); }
+  function tryShowFab(){
+    if (editando){ hideFab(); setAnotar(false); pending = null; return; }
+    const cap = captureSelection();
+    if (!cap){ hideFab(); setAnotar(false); pending = null; return; }
+    pending = cap;
+    if (tabletOn()) setAnotar(true);
+    else showFab(cap.range);
+  }
+  let selTimer = null;
+  function tryShowFabDebounced(){ clearTimeout(selTimer); selTimer = setTimeout(tryShowFab, 250); }
+  document.addEventListener('selectionchange', tryShowFabDebounced);
+  read.addEventListener('mouseup', tryShowFab);
+  read.addEventListener('touchend', tryShowFabDebounced);
+  fab.addEventListener('click', addAnno);
+  $('anotarBtn').addEventListener('click', ()=>{ if (pending){ addAnno(); setAnotar(false); } });
+  document.addEventListener('pointerdown', e=>{ if (!fab.contains(e.target)) hideFab(); });
+  read.addEventListener('scroll', ()=>{ if (!tabletOn()) hideFab(); });
+
+  // ===== modo tablet =====
+  function aplicarTablet(on){
+    document.body.classList.toggle('tablet', on);
+    $('tablet').classList.toggle('activo', on);
+    $('tablet').textContent = on ? 'tablet ✓' : 'tablet';
+    hideFab(); tryShowFab();
+  }
+  $('tablet').addEventListener('click', ()=>{
+    const on = !document.body.classList.contains('tablet');
+    aplicarTablet(on);
+    try { localStorage.setItem('forja-anotador-tablet', on ? '1' : '0'); } catch(e){}
+  });
+  (function(){
+    let pref = null;
+    try { pref = localStorage.getItem('forja-anotador-tablet'); } catch(e){}
+    const touch = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);
+    aplicarTablet(pref != null ? pref === '1' : touch);
+  })();
+
+  // ===== exportar =====
+  function hash32(s){ let h = 5381; for (let i=0;i<s.length;i++) h = ((h<<5) + h + s.charCodeAt(i)) | 0; return (h>>>0).toString(16); }
+
+  function buildPayload(){
+    return {
+      forjaAnotador: '1',
+      generado: new Date().toISOString(),
+      documento: {
+        nombre: docName,
+        hashMd: hash32(rawMd),
+        longitudMd: rawMd.length,
+        longitudPlano: docText.length
+      },
+      anotaciones: annos.map(a=>({
+        id: a.id,
+        creado: a.creado,
+        objetivo: {
+          exact: a.exact,
+          prefix: a.prefix,
+          suffix: a.suffix,
+          textoPlano: (a.start != null && a.end != null) ? { start: a.start, end: a.end } : null,
+          fuenteMd: a.mdStart == null ? null : { start: a.mdStart, end: a.mdEnd, unico: a.mdUnico }
+        },
+        comentarios: a.comentarios.map(c=>({ texto: c.texto, creado: c.creado }))
+      }))
+    };
+  }
+
+  function exportar(){
+    if (!annos.length) return;
+    const blob = new Blob([JSON.stringify(buildPayload(), null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const el = document.createElement('a');
+    el.href = url;
+    el.download = docName.replace(/\.(md|markdown|txt)$/i, '') + '.anotaciones.json';
+    el.click();
+    URL.revokeObjectURL(url);
+  }
+  $('export').addEventListener('click', exportar);
+
+  function exportarMd(){
+    if (!rawMd) return;
+    const base = docName.replace(/\.(md|markdown|txt)$/i, '');
+    const m = base.match(/^(.*)_r(\d+)$/);
+    const raiz = m ? m[1] : base;
+    revs[raiz] = Math.max(revs[raiz] || 0, m ? +m[2] : 0) + 1;
+    const blob = new Blob([rawMd], { type:'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const el = document.createElement('a');
+    el.href = url;
+    el.download = raiz + '_r' + revs[raiz] + '.md';
+    el.click();
+    URL.revokeObjectURL(url);
+  }
+  $('exportMd').addEventListener('click', exportarMd);
+
+  // ===== carga de documento =====
+  function maybeRender(text, name){
+    if (editando && editor.value !== rawMd && !confirm('Hay una edición con cambios sin aplicar; cargar otro documento la descartará. ¿Continuar?')) return false;
+    if (annos.length && !confirm('Cargar otro documento descartará las anotaciones actuales sin exportar. ¿Continuar?')) return false;
+    render(text, name);
+    return true;
+  }
+  $('cargarJson').addEventListener('click', ()=> $('fileJson').click());
+  $('fileJson').addEventListener('change', e=>{ readJsonFile(e.target.files[0]); e.target.value = ''; });
+
+  function avisoDoc(msg){
+    $('docname').textContent = msg ? (docName + '  ·  ' + msg) : docName;
+    if (msg) setTimeout(()=>{ if (docName) $('docname').textContent = docName; }, 3500);
+  }
+
+  async function recargar(){
+    if (!docUrl || editando) return;
+    const u = docUrl + (docUrl.includes('?') ? '&' : '?') + '_t=' + Date.now();
+    avisoDoc('recargando…');
+    try {
+      const res = await fetch(u, { cache: 'no-store' });
+      if (!res.ok){ avisoDoc('recarga falló (' + res.status + ')'); return; }
+      const texto = await res.text();
+      if (texto === rawMd){ avisoDoc('sin cambios'); return; }
+      const origen = docUrl;
+      const r = aplicarNuevoTexto(texto, docName);
+      docUrl = origen; updateChrome();
+      avisoDoc('actualizado' + (r.huerf ? (' · ' + r.huerf + (r.huerf === 1 ? ' anotación quedó huérfana' : ' anotaciones quedaron huérfanas')) : ''));
+    } catch(e){
+      avisoDoc('recarga falló: red o CORS');
+    }
+  }
+  $('recargar').addEventListener('click', recargar);
+
+  $('marca').addEventListener('click', ()=>{ location.href = location.pathname; });
+  cargarLibro();
+
+  // ===== control dinámico de porcentaje de negro =====
+  function aplicarTono(porcentaje){
+    porcentaje = Math.max(0, Math.min(100, +porcentaje || 0));
+    $('tono').value = porcentaje;
+    $('tono-v').textContent = porcentaje + '%';
+    
+    const root = document.documentElement;
+    
+    // Si estamos en 0% y no se ha forzado, limpiamos para volver al cálido original.
+    if (porcentaje === 0 && !localStorage.getItem('forja-anotador-tono-fijo')) {
+      root.style.removeProperty('--paper');
+      root.style.removeProperty('--panel');
+      root.style.removeProperty('--line');
+      root.style.removeProperty('--ink');
+      root.style.removeProperty('--ink-dim');
+      return;
+    }
+
+    // Cálculo: L = 100% es blanco puro, L = 0% es negro puro.
+    const L = 100 - porcentaje;
+    const textoClaro = L < 55; // Umbral de inversión
+    
+    root.style.setProperty('--paper', `hsl(0, 0%, ${L}%)`);
+    root.style.setProperty('--panel', `hsl(0, 0%, ${L > 50 ? L - 4 : L + 4}%)`);
+    root.style.setProperty('--line',  `hsl(0, 0%, ${L > 50 ? L - 12 : L + 12}%)`);
+
+    if (textoClaro) {
+      root.style.setProperty('--ink', '#ffffff');
+      root.style.setProperty('--ink-dim', '#a0a0a0');
+    } else {
+      root.style.setProperty('--ink', '#111111');
+      root.style.setProperty('--ink-dim', '#555555');
+    }
+  }
+
+  $('tono').addEventListener('input', ()=>{
+    localStorage.setItem('forja-anotador-tono-fijo', '1');
+    aplicarTono($('tono').value);
+    try { localStorage.setItem('forja-anotador-tono', $('tono').value); } catch(e){}
+  });
+
+  (function(){
+    let t = null;
+    try { t = localStorage.getItem('forja-anotador-tono'); } catch(e){}
+    if (t != null) aplicarTono(t);
+  })();
+
+  // ===== tema claro/oscuro =====
+  function aplicarTema(oscuro){
+    document.body.classList.toggle('oscuro', oscuro);
+    $('tema').textContent = oscuro ? 'claro' : 'oscuro';
+  }
+  $('tema').addEventListener('click', ()=>{
+    const o = !document.body.classList.contains('oscuro');
+    aplicarTema(o);
+    try { localStorage.setItem('forja-anotador-tema', o ? 'oscuro' : 'claro'); } catch(e){}
+  });
+  (function(){
+    let pref = null;
+    try { pref = localStorage.getItem('forja-anotador-tema'); } catch(e){}
+    aplicarTema(pref === 'oscuro');
+  })();
+
+  if (!canHL){
+    $('contador').title = 'Este navegador no resalta en pantalla, pero las anotaciones y el export funcionan.';
+  }
+})();
+</script>
+</body>
+</html>
