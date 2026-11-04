@@ -1,0 +1,180 @@
+{
+  "forjaAnotador": "1",
+  "generado": "2026-11-04T20:20:06.569Z",
+  "documento": {
+    "nombre": "venkatesan-et-al-2018---attention-to-infrastructure-offers-a-welcome-reconfiguration-of-anthropological-approaches-to-the-political.md",
+    "hashMd": "e4dc676b",
+    "longitudMd": 167295,
+    "longitudPlano": 161594
+  },
+  "anotaciones": [
+    {
+      "id": "amw2iviqtdh5b",
+      "creado": "2026-11-04T19:41:20.933Z",
+      "objetivo": {
+        "exact": "However, it is not always easy to establish what kind of attention this might be. The term invokes quite different relational fields for different people. One core tension that tends to emerge in discussions of infrastructural politics is that between the material form (the 'thing' and its constitutive relations) and the connective capacity of such forms that are built to enable circulation or to sustain particular life projects (the structuring effects of infrastructural forms).",
+        "prefix": "attention in a variety of ways. ",
+        "suffix": " Awareness of the tension betwee",
+        "textoPlano": {
+          "start": 3491,
+          "end": 3975
+        },
+        "fuenteMd": {
+          "start": 4566,
+          "end": 5050,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "El contraste entre lo relacional (entendido como inmaterial) y lo material.",
+          "creado": "2026-11-04T19:41:35.981Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2j07xsqfbm",
+      "creado": "2026-11-04T19:45:00.208Z",
+      "objetivo": {
+        "exact": "Here the question is less about how a system comes into being, than it is about the life worlds that such systems sustain and/or destroy. ",
+        "prefix": "s, and create new environments. ",
+        "suffix": "If we take this understanding of",
+        "textoPlano": {
+          "start": 4525,
+          "end": 4663
+        },
+        "fuenteMd": {
+          "start": 5654,
+          "end": 5792,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Otra aproximación, otro entendimiento de lo histórico.",
+          "creado": "2026-11-04T19:45:11.504Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2ja4st9j4o",
+      "creado": "2026-11-04T19:52:42.701Z",
+      "objetivo": {
+        "exact": " then infrastructures offer specific ways of thinking and of investigating human worlds without embracing human exceptionalism",
+        "prefix": "ndeed for other than human life,",
+        "suffix": ", or relying on singular definit",
+        "textoPlano": {
+          "start": 4799,
+          "end": 4925
+        },
+        "fuenteMd": {
+          "start": 5928,
+          "end": 6054,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "¿Por qué es importante ir contra el excepcionalismo humano?",
+          "creado": "2026-11-04T19:52:53.141Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2jci1amz7v",
+      "creado": "2026-11-04T19:54:33.166Z",
+      "objetivo": {
+        "exact": "the material conditions of possibility for life.",
+        "prefix": "not single built structures but ",
+        "suffix": " Such conditions are differentia",
+        "textoPlano": {
+          "start": 5296,
+          "end": 5344
+        },
+        "fuenteMd": {
+          "start": 6426,
+          "end": 6474,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "#importante",
+          "creado": "2026-11-04T19:54:37.718Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2jl2f3tg2p",
+      "creado": "2026-11-04T20:01:12.831Z",
+      "objetivo": {
+        "exact": "infrastructural investment",
+        "prefix": "uture, working with a notion of ",
+        "suffix": " that becomes increasingly conte",
+        "textoPlano": {
+          "start": 6225,
+          "end": 6251
+        },
+        "fuenteMd": {
+          "start": 7356,
+          "end": 7382,
+          "unico": false
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Inversión infraestructural.",
+          "creado": "2026-11-04T20:01:19.191Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2k1qbl8foa",
+      "creado": "2026-11-04T20:14:10.305Z",
+      "objetivo": {
+        "exact": "How could these all be about politics in the same way?",
+        "prefix": " a single explanatory approach? ",
+        "suffix": " We have come up against the par",
+        "textoPlano": {
+          "start": 11966,
+          "end": 12020
+        },
+        "fuenteMd": {
+          "start": 13225,
+          "end": 13279,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Interesante, la homologación.",
+          "creado": "2026-11-04T20:14:16.857Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2k8u699raa",
+      "creado": "2026-11-04T20:19:41.889Z",
+      "objetivo": {
+        "exact": "These included middle class nationalists drain of wealth theory of a bloodsucking imperial metropole and protests against the immorality of the spaces of modernity in the railway carriage by protesting rape cases, thereby calling a respectable middle class public into being. Workers and unions forged links in protests over the immorality, corruption and scarring degenerative violence of British officers. The Indian railways were not infrastructure and certainly Indians were not demanding the right to infrastructure. They demanded the right to a regenerative national circulatory system coursing with capital figured as healthy blood.",
+        "prefix": "ic that fused caste and race. \n\n",
+        "suffix": "\nSo when and how was infrastruct",
+        "textoPlano": {
+          "start": 14153,
+          "end": 14792
+        },
+        "fuenteMd": {
+          "start": 15466,
+          "end": 16105,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Esto implica que la infraestructura es un modelo cognitivo antes que una ontología.",
+          "creado": "2026-11-04T20:20:02.506Z"
+        }
+      ]
+    }
+  ]
+}
