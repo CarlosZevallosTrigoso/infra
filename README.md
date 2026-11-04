@@ -17,7 +17,7 @@ Sube su `.md` a `lecturas/` y ábrelo con `lector.html?f=<nombre>.md`. Para que 
 
 ## Comentarios fijos
 
-Si junto a un texto existe `lecturas/<nombre-del-texto>.comentarios.json`, el lector lo carga al abrirlo y muestra esos comentarios en azul, de solo lectura, intercalados por posición en el panel. Se pueden ocultar en «ajustes». El formato es el mismo que produce «exportar .json» del lector: para fijar anotaciones propias basta con exportarlas, renombrar el archivo con el sufijo `.comentarios.json` y subirlo a `lecturas/`. Las anotaciones personales con el mismo identificador que una fija se retiran del navegador para no duplicarse.
+Si junto a un texto existe `lecturas/<nombre-del-texto>.comentarios.json`, el lector lo carga al abrirlo y muestra esos comentarios en azul, de solo lectura, intercalados por posición en el panel. Se pueden ocultar en «ajustes». «Exportar .json» del lector ya produce el archivo con ese nombre: para fijar anotaciones propias basta con exportarlas y subir el archivo a `lecturas/` sin renombrarlo. Las anotaciones personales con el mismo identificador que una fija se retiran del navegador para no duplicarse.
 
 ## Corregir un texto
 

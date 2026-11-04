@@ -2035,7 +2035,7 @@
     const url = URL.createObjectURL(blob);
     const el = document.createElement('a');
     el.href = url;
-    el.download = docName.replace(/\.(md|markdown|txt)$/i, '') + '.anotaciones.json';
+    el.download = docName.replace(/\.(md|markdown|txt)$/i, '') + '.comentarios.json';
     el.click();
     URL.revokeObjectURL(url);
   }
