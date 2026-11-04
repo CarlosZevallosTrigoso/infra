@@ -21,7 +21,11 @@ Si junto a un texto existe `lecturas/<nombre-del-texto>.comentarios.json`, el le
 
 ## Lectura atenta
 
-El botón «lectura atenta» del lector activa un resaltado que recorre el texto frase a frase (o párrafo a párrafo, según «ajustes»): el resto del texto se atenúa y el pasaje activo se mantiene en la franja central de la ventana. Con teclado: `↓` `→` `j` o espacio avanzan; `↑` `←` `k` retroceden; `Enter` y `Shift+Enter` saltan de párrafo; `Inicio`/`Fin` van al principio y al final; `a` crea una anotación con la frase activa; `Esc` sale. En tablet, tocar una frase coloca el resaltado ahí, tocarlo de nuevo avanza, y hay una barra fija abajo con «atrás» y «siguiente»; un pasador de diapositivas Bluetooth también sirve, porque envía flechas. En «ajustes», «ritmo» fija un avance automático en palabras por minuto (0 lo apaga). La posición se recuerda por texto en el navegador. El resaltado no toca el HTML, así que las anotaciones y la edición siguen funcionando igual.
+El botón «lectura atenta» del lector activa un resaltado que recorre el texto frase a frase (o párrafo a párrafo, según «ajustes»): el resto del texto se atenúa y el pasaje activo se mantiene en la franja central de la ventana. Con teclado: `↓` `→` `j` o espacio avanzan; `↑` `←` `k` retroceden; `Enter` y `Shift+Enter` saltan de párrafo; `Inicio`/`Fin` van al principio y al final; `a` crea una anotación con la frase activa; `Esc` sale. En tablet, tocar una frase coloca el resaltado ahí, tocarlo de nuevo avanza, y hay una barra fija abajo con «atrás» y «siguiente»; un pasador de diapositivas Bluetooth también sirve, porque envía flechas. En «ajustes», «ritmo» fija un avance automático en palabras por minuto (0 lo apaga). La posición se recuerda por texto en el navegador.
+
+Bajo la cabecera hay una barra de progreso. El marcador indica dónde estás (la frase activa en lectura atenta; el scroll fuera de ella) y los tramos en ámbar, lo leído con atención: solo cuentan las frases por las que se avanza paso a paso (flecha, espacio, toque, ritmo automático), no los saltos, así que los huecos muestran lo que falta. La cabecera indica la posición y el porcentaje leído; un clic en la barra lleva a ese punto, y doble clic sobre el porcentaje reinicia el registro. El registro vive en el navegador, por texto.
+
+El resaltado no toca el HTML, así que las anotaciones y la edición siguen funcionando igual.
 
 ## Corregir un texto
 

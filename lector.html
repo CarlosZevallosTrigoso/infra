@@ -339,6 +339,15 @@
   #doc h1 .pg::before, #doc h2 .pg::before{display:none}
   .pg.destino::before{color:var(--warm); opacity:1; font-weight:600}
   #pagActual{color:var(--ink-dim); font-size:11px; font-variant-numeric:tabular-nums; white-space:nowrap}
+  /* ---- progreso de lectura: barra al pie de la cabecera ---- */
+  header{position:relative}
+  #progreso{position:absolute; left:0; right:0; bottom:-6px; height:12px; z-index:20; cursor:pointer; display:none}
+  #progreso::before{content:""; position:absolute; left:0; right:0; top:5px; height:3px; background:var(--line)}
+  #progresoLeido{position:absolute; left:0; right:0; top:5px; height:3px}
+  #progresoPos{position:absolute; top:2px; width:3px; height:9px; margin-left:-1px; border-radius:1px; background:var(--moss); transition:left .25s ease}
+  body.gusano #progresoPos{background:var(--warm)}
+  #progreso:hover::before, #progreso:hover #progresoLeido{top:4px; height:5px}
+  #pctLeido{color:var(--ink-dim); font-size:11px; font-variant-numeric:tabular-nums; white-space:nowrap; min-width:4ch; text-align:right; cursor:default}
   #irPag{width:7ch; font-family:var(--mono); font-size:11px; padding:5px 6px; border:1px solid var(--line); border-radius:var(--r); background:var(--paper); color:var(--ink)}
   #irPag:focus{outline:1px solid var(--moss); border-color:var(--moss)}
 
@@ -478,6 +487,7 @@
     <h1 id="marca">LECTURAS · lector</h1>
     <div id="docname"></div>
     <div class="acciones">
+      <span id="pctLeido"></span>
       <span id="pagActual" title="Página del libro en la parte superior de la lectura"></span>
       <input id="irPag" type="number" placeholder="ir a p." title="Ir a una página del texto">
       <button id="cargarJson" title="Importar anotaciones desde un .json exportado">importar .json</button>
@@ -505,6 +515,7 @@
       <button id="tema" title="Cambiar tema">oscuro</button>
     </div>
     <div id="contador"></div>
+    <div id="progreso" title="Progreso · en ámbar, lo leído en lectura atenta · clic para ir a ese punto"><div id="progresoLeido"></div><div id="progresoPos"></div></div>
   </header>
 
   <main>
@@ -2201,6 +2212,8 @@
     const tactil = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);
     if (tactil) document.body.classList.add('tactil');
     let activo = false, camino = [], idx = -1, unidad = 'frase', ritmo = 0, timer = null, obsTimer = null;
+    let acum = [], total = 0;            // caracteres acumulados hasta cada frase: base del porcentaje
+    let leidos = [], leidosDoc = null;   // tramos leídos en lectura atenta, como fracciones [a,b] del texto, por texto
     const ABREV = /\b(?:p|pp|vol|cf|cfr|ed|eds|no|núm|nº|art|cap|fig|etc|et al|vs|dr|dra|mr|mrs|ms|st|sr|sra|prof|univ|jr|ca)$/i;   // abreviaturas: el punto no cierra frase
     const INICIAL = /(?:\b[A-ZÁÉÍÓÚ]|[A-Z]\.[A-Z])$/;                                                                                  // iniciales: «J. Smith», «U.S.»
 
@@ -2253,6 +2266,8 @@
           a = c;
         }
       }
+      acum = []; total = 0;
+      for (const sg of camino){ total += sg.b - sg.a; acum.push(total); }
     }
     function rango(k){
       const s = camino[k]; if (!s) return null;
@@ -2278,6 +2293,7 @@
       if (r) encuadrar(r);
       try { if (docName) localStorage.setItem('adinf-gusano-' + docName, String(idx)); } catch(e){}
       programarRitmo();
+      progreso();
     }
     // mantiene el gusano en la franja central de la ventana de lectura
     function encuadrar(r){
@@ -2289,7 +2305,7 @@
       }
     }
     function ir(k){ if (!camino.length) return; idx = Math.max(0, Math.min(camino.length - 1, k)); pintar(); }
-    function siguiente(){ ir(idx + 1); } function anterior(){ ir(idx - 1); }
+    function siguiente(){ if (idx >= 0) marcarLeida(idx); ir(idx + 1); } function anterior(){ ir(idx - 1); }
     function saltarBloque(dir){
       const el = camino[idx] && camino[idx].el; let k = idx;
       if (dir > 0){ while (k < camino.length - 1 && camino[k].el === el) k++; }
@@ -2334,6 +2350,7 @@
       activo = false; clearTimeout(timer); timer = null;
       document.body.classList.remove('gusano'); btn.classList.remove('activo'); btn.textContent = 'lectura atenta';
       if (canHL) CSS.highlights.delete('gusano'); capa.innerHTML = '';
+      progreso();
     }
     btn.addEventListener('click', ()=> activo ? salir() : entrar());
     $('gusanoAva').addEventListener('click', siguiente);
@@ -2343,6 +2360,7 @@
     // el botón se habilita con el documento; si cambia el DOM (edición, recarga, glosario), se rehace el camino
     new MutationObserver(()=>{
       btn.disabled = !docEl.textContent.trim();
+      requestAnimationFrame(progreso);
       if (!activo) return;
       clearTimeout(obsTimer);
       obsTimer = setTimeout(()=>{
@@ -2404,6 +2422,69 @@
     $('gusanoRitmo').addEventListener('input', ()=>{
       ritmo = +$('gusanoRitmo').value || 0; pintarRitmo(); try { localStorage.setItem('adinf-gusano-ritmo', String(ritmo)); } catch(e){}
       programarRitmo();
+    });
+
+    // ===== progreso de lectura =====
+    // Barra al pie de la cabecera. El marcador indica la posición: en lectura atenta, la frase activa; fuera de
+    // ella, el scroll. Los tramos en ámbar son lo leído: solo cuentan las frases por las que se avanza paso a paso
+    // (flecha, espacio, toque en el gusano, ritmo automático), no los saltos. Se guardan por texto en el navegador.
+    const barra = $('progreso'), barraLeido = $('progresoLeido'), barraPos = $('progresoPos'), pct = $('pctLeido');
+    function cargarLeidos(){
+      if (leidosDoc === docName) return;
+      leidosDoc = docName; leidos = [];
+      try { const v = JSON.parse(localStorage.getItem('adinf-leidos-' + docName) || '[]'); if (Array.isArray(v)) leidos = v.filter(x=> Array.isArray(x) && x.length === 2); } catch(e){}
+    }
+    function marcarLeida(k){
+      if (!total || !camino[k]) return;
+      cargarLeidos();
+      const b = acum[k] / total, a = (acum[k] - (camino[k].b - camino[k].a)) / total, tol = 1 / total;
+      const out = []; let na = a, nb = b;
+      for (const [x, y] of leidos){
+        if (y < na - tol || x > nb + tol) out.push([x, y]);
+        else { na = Math.min(na, x); nb = Math.max(nb, y); }
+      }
+      out.push([na, nb]); out.sort((p, q)=> p[0] - q[0]); leidos = out;
+      try { localStorage.setItem('adinf-leidos-' + docName, JSON.stringify(leidos.map(([x, y])=> [+x.toFixed(5), +y.toFixed(5)]))); } catch(e){}
+    }
+    function dibujarLeidos(){
+      if (!leidos.length){ barraLeido.style.background = 'none'; return; }
+      const c = 'rgba(214,160,30,.85)', st = [];
+      for (const [x, y] of leidos){
+        const a = (x * 100).toFixed(3), b = (Math.max(y, x + 0.002) * 100).toFixed(3);   // tramos mínimos visibles
+        st.push('transparent ' + a + '%', c + ' ' + a + '%', c + ' ' + b + '%', 'transparent ' + b + '%');
+      }
+      barraLeido.style.background = 'linear-gradient(to right, ' + st.join(', ') + ')';
+    }
+    function progreso(){
+      const hay = !!docEl.textContent.trim() && !!docName;
+      barra.style.display = hay ? 'block' : 'none';
+      if (!hay){ pct.textContent = ''; return; }
+      cargarLeidos();
+      let f;
+      if (activo && total && idx >= 0) f = (acum[idx] - (camino[idx].b - camino[idx].a)) / total;
+      else { const m = read.scrollHeight - read.clientHeight; f = m > 0 ? read.scrollTop / m : 1; }
+      f = Math.max(0, Math.min(1, f));
+      const leido = leidos.reduce((t, [x, y])=> t + (y - x), 0);
+      barraPos.style.left = (f * 100) + '%';
+      dibujarLeidos();
+      const P = Math.round(f * 100), L = Math.round(leido * 100);
+      pct.textContent = P + ' %' + (leidos.length ? ' · leído ' + L + ' %' : '');
+      pct.title = (activo ? 'Frase activa en el ' : 'Posición en el texto: ') + P + ' %'
+        + (leidos.length ? ' · leído en lectura atenta: ' + L + ' % (doble clic para reiniciar el registro)' : '');
+    }
+    let progPend = false;
+    read.addEventListener('scroll', ()=>{ if (activo || progPend) return; progPend = true; requestAnimationFrame(()=>{ progPend = false; progreso(); }); }, { passive: true });
+    window.addEventListener('resize', ()=> requestAnimationFrame(progreso));
+    barra.addEventListener('click', e=>{
+      const r = barra.getBoundingClientRect(), f = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      if (activo && total){ let k = acum.findIndex(v=> v / total >= f); ir(k < 0 ? camino.length - 1 : k); }
+      else { const m = read.scrollHeight - read.clientHeight; read.scrollTo({ top: f * m, behavior: 'smooth' }); }
+    });
+    pct.addEventListener('dblclick', ()=>{
+      if (!docName || !leidos.length) return;
+      if (!confirm('¿Reiniciar el registro de lectura atenta de este texto?')) return;
+      leidos = []; try { localStorage.removeItem('adinf-leidos-' + docName); } catch(e){}
+      progreso();
     });
   })();
 
