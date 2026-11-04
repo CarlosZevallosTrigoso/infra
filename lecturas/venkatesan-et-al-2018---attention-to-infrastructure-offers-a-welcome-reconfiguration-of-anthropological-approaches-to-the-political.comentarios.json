@@ -1,6 +1,6 @@
 {
   "forjaAnotador": "1",
-  "generado": "2026-11-04T20:20:06.569Z",
+  "generado": "2026-11-04T21:33:08.747Z",
   "documento": {
     "nombre": "venkatesan-et-al-2018---attention-to-infrastructure-offers-a-welcome-reconfiguration-of-anthropological-approaches-to-the-political.md",
     "hashMd": "e4dc676b",
@@ -173,6 +173,242 @@
         {
           "texto": "Esto implica que la infraestructura es un modelo cognitivo antes que una ontología.",
           "creado": "2026-11-04T20:20:02.506Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2ka97ds7md",
+      "creado": "2026-11-04T20:20:48.025Z",
+      "objetivo": {
+        "exact": "Infrastructure was born in the last years of the second world war as experts gathered in the League of Nations to imagine forms of long-term planning and the reconstruction of a social contract out of the violence and ruins.",
+        "prefix": "sations, we can trace its life. ",
+        "suffix": " Its telos was peacemaking, pros",
+        "textoPlano": {
+          "start": 15211,
+          "end": 15435
+        },
+        "fuenteMd": {
+          "start": 16525,
+          "end": 16749,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Clave.",
+          "creado": "2026-11-04T20:20:51.417Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2kffw984l2",
+      "creado": "2026-11-04T20:24:49.977Z",
+      "objetivo": {
+        "exact": "So importantly attention to infrastructure as a historically emergent form reconfigures our approach to the political. It reveals the dominant forms of contemporary economic governance. It makes visible the conduct of productivity, vectors of accumulation and political situations in which we live.",
+        "prefix": "ribute to its greater goodness. ",
+        "suffix": "\nYet, attention to infrastructur",
+        "textoPlano": {
+          "start": 18805,
+          "end": 19103
+        },
+        "fuenteMd": {
+          "start": 20173,
+          "end": 20471,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "ARGUMENTO CLAVE",
+          "creado": "2026-11-04T20:24:54.953Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2kg69en84p",
+      "creado": "2026-11-04T20:25:24.146Z",
+      "objetivo": {
+        "exact": "Specific circulatory networks of capital, resources, information and people, including those that we now call infrastructure, provide the non-human ground for such experiences.",
+        "prefix": " timespaces (Bear, 2014, 2015). ",
+        "suffix": " Current forms of this or infras",
+        "textoPlano": {
+          "start": 19682,
+          "end": 19858
+        },
+        "fuenteMd": {
+          "start": 21051,
+          "end": 21227,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "La idea de infraestructura como base de la experiencia me parece clave.",
+          "creado": "2026-11-04T20:25:34.313Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2kkim1dgfv",
+      "creado": "2026-11-04T20:28:46.777Z",
+      "objetivo": {
+        "exact": "Wittfogelian ",
+        "prefix": "ty of infrastructural outcomes. ",
+        "suffix": "determinisms are ridiculed, if e",
+        "textoPlano": {
+          "start": 26069,
+          "end": 26082
+        },
+        "fuenteMd": {
+          "start": 28030,
+          "end": 28043,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Tesis sobre la importncia del control de agua para el origen de las civilizaciones.",
+          "creado": "2026-11-04T20:28:58.777Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2klxz6lym8",
+      "creado": "2026-11-04T20:29:53.346Z",
+      "objetivo": {
+        "exact": "It is my contention that Pfaffenberger's cultural theory of peripheral industrialisation and Lemonnier's technological choices have both reconfigured anthropological approaches to the politics of infrastructure in ways that have not been superseded by the more recent literature evoked earlier. ",
+        "prefix": " widely discussed 20 years ago. ",
+        "suffix": "I have found inspiration in both",
+        "textoPlano": {
+          "start": 26464,
+          "end": 26759
+        },
+        "fuenteMd": null
+      },
+      "comentarios": [
+        {
+          "texto": "Osea, crítica el vacío antes que solo el concepto?",
+          "creado": "2026-11-04T20:30:08.779Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2l5n7qw0id",
+      "creado": "2026-11-04T20:45:12.518Z",
+      "objetivo": {
+        "exact": "No matter how phronetically inspired, the economic reasoning built-in the megaproject approach remains economistic, that is, blind to the realities of the biophysical world.",
+        "prefix": "an air of political neutrality. ",
+        "suffix": " To take one example among many,",
+        "textoPlano": {
+          "start": 34914,
+          "end": 35087
+        },
+        "fuenteMd": {
+          "start": 37069,
+          "end": 37242,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Por muy inspirado en la frónesis (sabiduría práctica) que esté, el razonamiento económico integrado en el enfoque de los megaproyectos sigue siendo economicista; es decir, ciego a las realidades del mundo biofísico",
+          "creado": "2026-11-04T20:45:14.630Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2l7nbjv9xf",
+      "creado": "2026-11-04T20:46:45.967Z",
+      "objetivo": {
+        "exact": "Lemonnier's insistence that material actions reveal the 'blending power of things' (2014)",
+        "prefix": "sions briefly alluded to above, ",
+        "suffix": " allows us to apprehend the card",
+        "textoPlano": {
+          "start": 37877,
+          "end": 37966
+        },
+        "fuenteMd": {
+          "start": 40100,
+          "end": 40189,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "UTIL, revisemos esto.",
+          "creado": "2026-11-04T20:46:52.182Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2l8be8wsf7",
+      "creado": "2026-11-04T20:47:17.168Z",
+      "objetivo": {
+        "exact": "Andrew Barry's (2013) 'material politics'",
+        "prefix": "ng I have said so far speaks to ",
+        "suffix": ", and that I have done no more b",
+        "textoPlano": {
+          "start": 38372,
+          "end": 38413
+        },
+        "fuenteMd": {
+          "start": 40596,
+          "end": 40637,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "REVISAR.",
+          "creado": "2026-11-04T20:47:21.272Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2lwzajqwrz",
+      "creado": "2026-11-04T21:06:27.883Z",
+      "objetivo": {
+        "exact": "As Michael Dutton (2012) points out, the political is always a potentiality, expressed through the flows of affective intensity, buried within the circuits of power. ",
+        "prefix": "things encountering each other. ",
+        "suffix": "The machinery of politics draws ",
+        "textoPlano": {
+          "start": 50654,
+          "end": 50820
+        },
+        "fuenteMd": {
+          "start": 53885,
+          "end": 54051,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Importante.",
+          "creado": "2026-11-04T21:06:30.196Z"
+        }
+      ]
+    },
+    {
+      "id": "amw2mb4r3m5m8",
+      "creado": "2026-11-04T21:17:28.143Z",
+      "objetivo": {
+        "exact": "Rather, things work out through an intensely politicised inter-mixing of different forces, capabilities, inclinations, styles and opportunities that stretch and constrain what it is possible for residents of any given background or status to do (Massumi, 2014)",
+        "prefix": "oficient organising techniques. ",
+        "suffix": ". That no matter what formal str",
+        "textoPlano": {
+          "start": 52235,
+          "end": 52495
+        },
+        "fuenteMd": {
+          "start": 55524,
+          "end": 55784,
+          "unico": true
+        }
+      },
+      "comentarios": [
+        {
+          "texto": "Interesante y Deleuziano.",
+          "creado": "2026-11-04T21:17:32.504Z"
         }
       ]
     }
