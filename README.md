@@ -1,11 +1,11 @@
-# Matrices · antropología de las infraestructuras
+# Lecturas · antropología de las infraestructuras
 
-Sitio estático para GitHub Pages: matrices analíticas de las lecturas del círculo y un lector anotador de los textos.
+Sitio estático para GitHub Pages: lector anotador de los textos del círculo, con comentarios fijos, y matrices analíticas de algunos de ellos.
 
 ## Estructura
 
-- `index.html` — índice: los tres textos y un cuadro de cómo dialogan.
-- `star-ruhleder-1994.html`, `star-1999.html`, `harvey-jensen-morita-2016.html` — una matriz por texto, para leer de arriba abajo: tesis, esquema del texto, núcleo (hallazgos en 1994, principios en 1999, movimientos en 2016), argumentos clave, citas, límites y síntesis. Las páginas y las citas abren el pasaje en el lector.
+- `index.html` — índice de los textos, con enlace al lector y, donde existe, a la matriz.
+- `star-ruhleder-1994.html`, `star-1999.html`, `harvey-jensen-morita-2016.html` — matrices de tres textos, para leer de arriba abajo: tesis, esquema del texto, núcleo (hallazgos en 1994, principios en 1999, movimientos en 2016), argumentos clave, citas, límites y síntesis. Las páginas y las citas abren el pasaje en el lector.
 - `lector.html` — lector y anotador de Markdown. Se abre con `lector.html?f=<archivo.md>`; acepta `&p=<página>` para saltar a una página y `&q=<texto>` para ir a una cita y resaltarla. Sin parámetros, muestra la lista de lecturas.
 - `marked.umd.js` — conversor Markdown→HTML local (sin CDN).
 - `lecturas/` — los `.md` de los textos, con sus nombres originales.
