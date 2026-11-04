@@ -453,6 +453,22 @@
     .toc-it{padding:8px 6px; font-size:13px}
   }
   .nota.huerfana .quote{border-left-color:var(--ink-dim)}
+
+  /* ---- lectura atenta: el «gusano» recorre el texto frase a frase, sin tocar el DOM ---- */
+  ::highlight(gusano){ background:rgba(246,206,74,.55); color:#1d1f1b; }
+  body.oscuro ::highlight(gusano){ background:rgba(246,206,74,.42); color:#f6f1dc; }
+  body.gusano #doc{ color:var(--ink-dim); transition:color .2s; }
+  body.gusano #doc h1, body.gusano #doc h2, body.gusano #doc h3{ color:var(--ink-dim); }
+  #lectura.activo{ border-color:var(--warm); color:var(--warm); }
+  #gusanoCapa{ position:absolute; left:0; top:0; width:0; height:0; pointer-events:none; z-index:1; }
+  #gusanoCapa div{ position:absolute; background:rgba(246,206,74,.55); mix-blend-mode:multiply; border-radius:2px; }
+  body.oscuro #gusanoCapa div{ mix-blend-mode:screen; background:rgba(246,206,74,.28); }
+  #gusanoBar{ position:fixed; left:50%; bottom:14px; transform:translateX(-50%); z-index:60; display:none; gap:10px; }
+  body.gusano.tablet #gusanoBar, body.gusano.tactil #gusanoBar{ display:flex; }
+  #gusanoBar button{ font-family:var(--mono); font-size:16px; min-width:88px; min-height:52px; padding:10px 18px;
+    background:var(--panel); color:var(--ink); border:1px solid var(--line); border-radius:6px; box-shadow:0 2px 10px #0003; }
+  #gusanoBar button.ava{ background:var(--moss); color:#f3efe3; border-color:var(--moss); }
+  body.gusano #fab{ z-index:55; }
 </style>
 </head>
 <body>
@@ -485,6 +501,7 @@
       <button id="toggleGlos" class="hide" title="Glosario y casos: índice en el panel lateral (términos subrayados con puntos, casos con doble línea)">glosario</button>
       <button id="toggleAna" class="hide" title="Análisis: las premisas del texto, por tesis; la frase donde cada una se enuncia va resaltada">análisis</button>
       <button id="tablet" title="Modo táctil: botón anotar fijo abajo y objetivos grandes">tablet</button>
+      <button id="lectura" disabled title="Lectura atenta: un resaltado recorre el texto frase a frase. Teclas: ↓ → j espacio avanzan · ↑ ← k retroceden · Enter salta de párrafo · a anota la frase · Esc sale">lectura atenta</button>
       <button id="tema" title="Cambiar tema">oscuro</button>
     </div>
     <div id="contador"></div>
@@ -515,6 +532,7 @@
     </aside>
   </main>
 
+  <div id="gusanoBar"><button id="gusanoAtras" title="Frase anterior">‹ atrás</button><button id="gusanoSalir" title="Salir de lectura atenta">salir</button><button id="gusanoAva" class="ava" title="Frase siguiente">siguiente ›</button></div>
   <button id="fab" title="Crear anotación">＋ anotar</button>
   <div id="stats"></div>
   
@@ -543,6 +561,18 @@
       </div>
       <div class="ajuste-row hide">
         <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="anaResaltar" checked style="width:auto;accent-color:var(--warm)"> resaltar análisis</label>
+      </div>
+      <div class="ajuste-row" id="filaGusano">
+        <span>lectura</span>
+        <select id="gusanoUnidad" style="font-family:var(--mono);font-size:12px;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:var(--r);padding:3px 6px">
+          <option value="frase">por frase</option>
+          <option value="parrafo">por párrafo</option>
+        </select>
+      </div>
+      <div class="ajuste-row" id="filaRitmo">
+        <span>ritmo</span>
+        <input type="range" id="gusanoRitmo" min="0" max="400" step="10" value="0" title="Avance automático en palabras por minuto; 0 = apagado">
+        <span class="val" id="gusanoRitmo-v">off</span>
       </div>
       <div class="ajuste-row">
         <span>negro</span>
@@ -2161,6 +2191,222 @@
   if (!canHL){
     $('contador').title = 'Este navegador no resalta en pantalla, pero las anotaciones y el export funcionan.';
   }
+
+  // ===== lectura atenta: un resaltado («gusano») recorre el texto frase a frase =====
+  // No muta el DOM: usa la API de CSS Highlight (como las anotaciones) o, sin ella, cajas sobre el texto.
+  // Teclado: ↓ → j espacio avanzan · ↑ ← k retroceden · Enter / Shift+Enter saltan de párrafo · a anota · Esc sale.
+  // Táctil: tocar una frase coloca el gusano; tocar el gusano avanza; barra fija abajo con atrás/siguiente.
+  (function(){
+    const btn = $('lectura'), capa = document.createElement('div'); capa.id = 'gusanoCapa'; read.appendChild(capa);
+    const tactil = !!(window.matchMedia && matchMedia('(pointer: coarse)').matches);
+    if (tactil) document.body.classList.add('tactil');
+    let activo = false, camino = [], idx = -1, unidad = 'frase', ritmo = 0, timer = null, obsTimer = null;
+    const ABREV = /\b(?:p|pp|vol|cf|cfr|ed|eds|no|núm|nº|art|cap|fig|etc|et al|vs|dr|dra|mr|mrs|ms|st|sr|sra|prof|univ|jr|ca)$/i;   // abreviaturas: el punto no cierra frase
+    const INICIAL = /(?:\b[A-ZÁÉÍÓÚ]|[A-Z]\.[A-Z])$/;                                                                                  // iniciales: «J. Smith», «U.S.»
+
+    try { unidad = localStorage.getItem('adinf-gusano-unidad') || 'frase'; } catch(e){}
+    try { ritmo = +(localStorage.getItem('adinf-gusano-ritmo') || 0) || 0; } catch(e){}
+    $('gusanoUnidad').value = unidad; $('gusanoRitmo').value = ritmo; pintarRitmo();
+    function pintarRitmo(){ $('gusanoRitmo-v').textContent = ritmo ? ritmo + ' ppm' : 'off'; }
+
+    // bloques de lectura, en orden; cada uno con sus nodos de texto (sin marcas de página ni llamadas a notas)
+    function bloques(){
+      const out = [];
+      const sel = 'p, h1, h2, h3, h4, h5, h6, li, td, th, pre';
+      for (const el of docEl.querySelectorAll(sel)){
+        const anc = el.parentElement && el.parentElement.closest(sel);
+        if (anc && docEl.contains(anc)) continue;
+        const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, { acceptNode(n){
+          const p = n.parentElement;
+          if (!p || p.closest('.pg, sup.fn, a.fn-back, .fn-n, script, style')) return NodeFilter.FILTER_REJECT;
+          return n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+        }});
+        const nodos = []; let n; while ((n = w.nextNode())) nodos.push(n);
+        if (nodos.length) out.push({ el, nodos });
+      }
+      return out;
+    }
+    // posición (nodo, offset) para un desplazamiento dentro del texto concatenado del bloque
+    function pos(nodos, off){
+      let acc = 0;
+      for (const n of nodos){ const L = n.nodeValue.length; if (off <= acc + L) return { n, o: off - acc }; acc += L; }
+      const u = nodos[nodos.length - 1]; return { n: u, o: u.nodeValue.length };
+    }
+    function construir(){
+      camino = [];
+      for (const b of bloques()){
+        const txt = b.nodos.map(n=> n.nodeValue).join('');
+        const cortes = [];
+        if (unidad === 'frase' && !/^H[1-6]$/.test(b.el.tagName)){
+          const re = /[.!?…]+["»”’')\]]*\s+(?=["«“‘(\[]?[A-ZÁÉÍÓÚÑÀÈÌÒÙÂÊÎÔÛÄËÏÖÜ0-9¿¡])/g; let m;
+          while ((m = re.exec(txt))){
+            const antes = txt.slice(0, m.index);
+            if (ABREV.test(antes) || INICIAL.test(antes)) continue;
+            cortes.push(m.index + m[0].length);
+          }
+        }
+        let a = 0;
+        for (const c of cortes.concat([txt.length])){
+          // recortar espacios en los bordes
+          let i = a, j = c; while (i < j && /\s/.test(txt[i])) i++; while (j > i && /\s/.test(txt[j-1])) j--;
+          if (j > i) camino.push({ el: b.el, nodos: b.nodos, a: i, b: j, texto: txt.slice(i, j) });
+          a = c;
+        }
+      }
+    }
+    function rango(k){
+      const s = camino[k]; if (!s) return null;
+      const r = document.createRange(), p1 = pos(s.nodos, s.a), p2 = pos(s.nodos, s.b);
+      try { r.setStart(p1.n, p1.o); r.setEnd(p2.n, p2.o); } catch(e){ return null; }
+      return r;
+    }
+    function pintar(){
+      const r = rango(idx);
+      if (canHL){ if (r) CSS.highlights.set('gusano', new Highlight(r)); else CSS.highlights.delete('gusano'); capa.innerHTML = ''; }
+      else {
+        capa.innerHTML = '';
+        if (!r) return;
+        const base = read.getBoundingClientRect();
+        for (const q of r.getClientRects()){
+          const d = document.createElement('div');
+          d.style.left = (q.left - base.left + read.scrollLeft) + 'px';
+          d.style.top = (q.top - base.top + read.scrollTop) + 'px';
+          d.style.width = q.width + 'px'; d.style.height = q.height + 'px';
+          capa.appendChild(d);
+        }
+      }
+      if (r) encuadrar(r);
+      try { if (docName) localStorage.setItem('adinf-gusano-' + docName, String(idx)); } catch(e){}
+      programarRitmo();
+    }
+    // mantiene el gusano en la franja central de la ventana de lectura
+    function encuadrar(r){
+      const rr = r.getBoundingClientRect(), base = read.getBoundingClientRect();
+      if (!rr.height) return;
+      const y = rr.top - base.top, h = base.height;
+      if (y < h * 0.18 || rr.bottom - base.top > h * 0.62){
+        read.scrollTo({ top: read.scrollTop + y - h * 0.33, behavior: 'smooth' });
+      }
+    }
+    function ir(k){ if (!camino.length) return; idx = Math.max(0, Math.min(camino.length - 1, k)); pintar(); }
+    function siguiente(){ ir(idx + 1); } function anterior(){ ir(idx - 1); }
+    function saltarBloque(dir){
+      const el = camino[idx] && camino[idx].el; let k = idx;
+      if (dir > 0){ while (k < camino.length - 1 && camino[k].el === el) k++; }
+      else { while (k > 0 && camino[k - 1].el === el) k--; if (k === idx && k > 0){ const e2 = camino[k - 1].el; while (k > 0 && camino[k - 1].el === e2) k--; } }
+      ir(k);
+    }
+    // índice de la frase que contiene un punto del texto
+    function indicePorNodo(node, off){
+      for (let k = 0; k < camino.length; k++){
+        const s = camino[k]; if (!s.nodos.includes(node)) continue;
+        let acc = 0; for (const n of s.nodos){ if (n === node) break; acc += n.nodeValue.length; }
+        const o = acc + off; if (o >= s.a && o <= s.b) return k;
+      }
+      return -1;
+    }
+    function indicePorSeleccion(){
+      const sel = window.getSelection(); if (!sel || !sel.rangeCount) return -1;
+      const r = sel.getRangeAt(0); if (!docEl.contains(r.startContainer)) return -1;
+      let n = r.startContainer, o = r.startOffset;
+      if (n.nodeType !== 3){ const w = document.createTreeWalker(n, NodeFilter.SHOW_TEXT); n = w.nextNode(); o = 0; if (!n) return -1; }
+      return indicePorNodo(n, o);
+    }
+    function programarRitmo(){
+      clearTimeout(timer); timer = null;
+      if (!activo || !ritmo || idx < 0 || idx >= camino.length - 1) return;
+      const palabras = Math.max(3, camino[idx].texto.split(/\s+/).length);
+      timer = setTimeout(siguiente, palabras / ritmo * 60000);
+    }
+
+    function entrar(){
+      if (!rawMd || editando || editandoTexto) return;
+      construir(); if (!camino.length) return;
+      activo = true; document.body.classList.add('gusano'); btn.classList.add('activo'); btn.textContent = 'lectura ✓';
+      let k = indicePorSeleccion();
+      if (k < 0){ try { k = +(localStorage.getItem('adinf-gusano-' + docName)); } catch(e){} }
+      if (!(k >= 0 && k < camino.length)) k = 0;
+      try { window.getSelection().removeAllRanges(); } catch(e){}
+      hideFab();
+      ir(k);
+    }
+    function salir(){
+      activo = false; clearTimeout(timer); timer = null;
+      document.body.classList.remove('gusano'); btn.classList.remove('activo'); btn.textContent = 'lectura atenta';
+      if (canHL) CSS.highlights.delete('gusano'); capa.innerHTML = '';
+    }
+    btn.addEventListener('click', ()=> activo ? salir() : entrar());
+    $('gusanoAva').addEventListener('click', siguiente);
+    $('gusanoAtras').addEventListener('click', anterior);
+    $('gusanoSalir').addEventListener('click', salir);
+
+    // el botón se habilita con el documento; si cambia el DOM (edición, recarga, glosario), se rehace el camino
+    new MutationObserver(()=>{
+      btn.disabled = !docEl.textContent.trim();
+      if (!activo) return;
+      clearTimeout(obsTimer);
+      obsTimer = setTimeout(()=>{
+        if (editando || editandoTexto){ salir(); return; }
+        const antes = camino[idx] && camino[idx].texto;
+        construir();
+        let k = antes ? camino.findIndex(s=> s.texto === antes) : -1;
+        if (k < 0) k = Math.min(idx, camino.length - 1);
+        if (camino.length) ir(k); else salir();
+      }, 200);
+    }).observe(docEl, { childList: true, characterData: true, subtree: true });
+    window.addEventListener('resize', ()=>{ if (activo && !canHL) pintar(); });
+    if (!canHL) read.addEventListener('scroll', ()=>{ /* las cajas se posicionan en coordenadas del contenido: nada que hacer */ });
+
+    document.addEventListener('keydown', e=>{
+      if (!activo) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      const t = e.target, tag = t && t.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable)) return;
+      if (editando || editandoTexto) return;
+      switch (e.key){
+        case 'ArrowDown': case 'ArrowRight': case 'j': case 'J': case ' ': case 'PageDown': e.preventDefault(); siguiente(); break;
+        case 'ArrowUp': case 'ArrowLeft': case 'k': case 'K': case 'PageUp': e.preventDefault(); anterior(); break;
+        case 'Enter': e.preventDefault(); saltarBloque(e.shiftKey ? -1 : 1); break;
+        case 'Home': e.preventDefault(); ir(0); break;
+        case 'End': e.preventDefault(); ir(camino.length - 1); break;
+        case 'a': case 'A': {
+          e.preventDefault(); const r = rango(idx); if (!r) break;
+          const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+          tryShowFab(); if (pending){ addAnno(); setAnotar(false); } hideFab();
+          try { sel.removeAllRanges(); } catch(x){}
+          break;
+        }
+        case 'Escape': e.preventDefault(); salir(); break;
+      }
+    }, true);
+
+    // táctil: un toque sin arrastre coloca el gusano en la frase tocada; sobre el gusano, avanza
+    let pd = null;
+    docEl.addEventListener('pointerdown', e=>{ pd = activo ? { x: e.clientX, y: e.clientY, t: Date.now() } : null; }, { passive: true });
+    docEl.addEventListener('pointerup', e=>{
+      if (!pd || !activo) return; const d = Math.hypot(e.clientX - pd.x, e.clientY - pd.y), dt = Date.now() - pd.t; pd = null;
+      if (d > 8 || dt > 600) return;
+      setTimeout(()=>{
+        const sel = window.getSelection(); if (sel && !sel.isCollapsed) return;   // hubo selección: no mover
+        let n = null, o = 0;
+        if (document.caretPositionFromPoint){ const c = document.caretPositionFromPoint(e.clientX, e.clientY); if (c){ n = c.offsetNode; o = c.offset; } }
+        else if (document.caretRangeFromPoint){ const c = document.caretRangeFromPoint(e.clientX, e.clientY); if (c){ n = c.startContainer; o = c.startOffset; } }
+        if (!n || n.nodeType !== 3) return;
+        const k = indicePorNodo(n, o); if (k < 0) return;
+        if (k === idx) siguiente(); else ir(k);
+      }, 30);
+    });
+
+    $('gusanoUnidad').addEventListener('change', ()=>{
+      unidad = $('gusanoUnidad').value; try { localStorage.setItem('adinf-gusano-unidad', unidad); } catch(e){}
+      if (activo){ const el = camino[idx] && camino[idx].el; construir(); const k = camino.findIndex(s=> s.el === el); ir(k < 0 ? 0 : k); }
+    });
+    $('gusanoRitmo').addEventListener('input', ()=>{
+      ritmo = +$('gusanoRitmo').value || 0; pintarRitmo(); try { localStorage.setItem('adinf-gusano-ritmo', String(ritmo)); } catch(e){}
+      programarRitmo();
+    });
+  })();
+
 })();
 </script>
 </body>
