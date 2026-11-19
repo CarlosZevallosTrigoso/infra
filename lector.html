@@ -431,7 +431,17 @@
   #elegir a{display:block; font-family:var(--serif); font-size:16px; color:var(--ink); text-decoration:none; border:1px solid var(--line); border-left:3px solid var(--moss); border-radius:var(--r); padding:12px 14px; margin:0 0 10px}
   #elegir a:hover{border-color:var(--moss)}
   #elegir a small{display:block; font-family:var(--mono); font-size:11px; color:var(--ink-dim); margin-top:4px}
-  #doc img{display:none}
+  #doc img{display:block; max-width:100%; height:auto; margin:16px auto; border:1px solid var(--line); border-radius:var(--r); background:#fff; cursor:zoom-in}
+  #doc img.rota{display:none}
+  /* visor de imágenes: toca una imagen del texto para verla en grande */
+  #visor{position:fixed; inset:0; z-index:9999; background:var(--paper); display:none; overflow:auto; cursor:zoom-out; padding-bottom:40px}
+  #visor.abierto{display:flex; align-items:center; justify-content:center}
+  #visor.zoom{display:block}
+  #visor img{max-width:96vw; max-height:calc(100vh - 96px); background:#fff; border:1px solid var(--line); cursor:zoom-in}
+  #visor.zoom img{width:180vw; max-width:none; max-height:none; display:block; margin:24px; cursor:zoom-out}
+  #visor .cerrar{position:fixed; top:10px; right:12px; font-family:var(--mono); font-size:12px; color:var(--ink); background:var(--paper); border:1px solid var(--line); border-radius:var(--r); padding:8px 12px; cursor:pointer}
+  #visor .cerrar:hover{border-color:var(--moss)}
+  #visor .pie{position:fixed; left:0; right:0; bottom:0; padding:9px 14px; font-family:var(--mono); font-size:11px; color:var(--ink-dim); background:var(--paper); border-top:1px solid var(--line); text-align:center}
   ::highlight(lectura-cita){ background:rgba(240,196,64,.55); }
   /* comentarios fijos (del repo): azul, de solo lectura */
   ::highlight(lectura-fija){ background:rgba(63,111,168,.20); }
@@ -626,6 +636,7 @@
     docUrl = '';
     if (window.marked && typeof marked.parse === 'function'){
       docEl.innerHTML = marked.parse(preprocesar(md));
+      prepararImagenes();
       docEl.classList.remove('plano');
     } else {
       docEl.textContent = md;                 // degradación honesta: sin CDN, texto crudo (igual anotable)
@@ -645,6 +656,17 @@
     setEdicion(false);
     buildToc();
     refreshHighlights(); renderList(); updateChrome();
+  }
+  // ===== imágenes del texto =====
+  // Las rutas relativas del .md se resuelven desde lecturas/ (igual que en GitHub). Si una imagen no carga, se oculta.
+  function prepararImagenes(){
+    docEl.querySelectorAll('img').forEach(img=>{
+      const src = img.getAttribute('src') || '';
+      if (src && !/^(?:[a-z][a-z0-9+.-]*:|\/|#)/i.test(src)) img.setAttribute('src', CARPETA + src);
+      img.decoding = 'async';
+      img.title = img.alt ? img.alt + ' · tocar para ampliar' : 'Tocar para ampliar';
+      img.addEventListener('error', ()=> img.classList.add('rota'), { once:true });
+    });
   }
   // ===== lecturas disponibles =====
   // Cada entrada: archivo dentro de lecturas/, título, desfase de página (página mostrada = n + 1 + desfase,
@@ -732,7 +754,7 @@
   // Las notas [^cap-n] se vuelven superíndices enlazados; las definiciones, párrafos con ancla.
   function preprocesar(md){
     md = md.replace(/^---\n[\s\S]*?\n---\n/, '');   // frontmatter YAML fuera del render
-    md = md.replace(/!\[[^\]]*\]\([^)]*\)/g, '');       // imágenes de la conversión (logos de editorial): fuera
+    md = md.replace(/!\[[^\]]*\]\([^)]*_page_\d+_[^)]*\)/g, '');   // imágenes de página de la conversión (logos de editorial): fuera; las demás se muestran
     // marcas de página de la conversión: {n} seguido de guiones; página mostrada = n + 1 + desfase
     md = md.replace(/^\{(\d+)\}-{3,}\s*$/gm, (m, n)=> '<!-- p. ' + (+n + 1 + (CONF.desfase || 0)) + ' -->');
     // notas al final ("Notes"): ítems "- N texto" → definiciones enlazables; llamadas [N](#page…) y <sup>N</sup> → enlaces
@@ -2488,6 +2510,49 @@
       leidos = []; try { localStorage.removeItem('adinf-leidos-' + docName); } catch(e){}
       progreso();
     });
+  })();
+
+  // ===== visor de imágenes =====
+  // Toca una imagen del texto: se abre a pantalla completa. Tocarla de nuevo la amplía; Esc, «cerrar» o tocar fuera, cierra.
+  (function(){
+    const visor = document.createElement('div');
+    visor.id = 'visor'; visor.setAttribute('role', 'dialog'); visor.setAttribute('aria-modal', 'true'); visor.setAttribute('aria-label', 'Imagen ampliada');
+    visor.innerHTML = '<button class="cerrar" type="button">cerrar ✕</button><img alt=""><div class="pie"></div>';
+    document.body.appendChild(visor);
+    const vImg = visor.querySelector('img'), pie = visor.querySelector('.pie'), btn = visor.querySelector('.cerrar');
+    let previo = null;
+    const abierto = ()=> visor.classList.contains('abierto');
+    function abrir(img){
+      previo = document.activeElement;
+      vImg.src = img.currentSrc || img.src; vImg.alt = img.alt || '';
+      pie.textContent = (img.alt ? img.alt + ' · ' : '') + 'toca la imagen para ampliarla · Esc o toca fuera para cerrar';
+      visor.classList.remove('zoom'); visor.classList.add('abierto'); visor.scrollTop = 0; visor.scrollLeft = 0;
+      btn.focus();
+    }
+    function cerrar(){
+      visor.classList.remove('abierto', 'zoom'); vImg.removeAttribute('src');
+      if (previo && previo.focus) previo.focus();
+    }
+    vImg.addEventListener('click', e=>{
+      e.stopPropagation();
+      const r = vImg.getBoundingClientRect(), fx = (e.clientX - r.left) / r.width, fy = (e.clientY - r.top) / r.height;
+      visor.classList.toggle('zoom');
+      if (visor.classList.contains('zoom')){
+        visor.scrollLeft = fx * visor.scrollWidth - visor.clientWidth / 2;
+        visor.scrollTop = fy * visor.scrollHeight - visor.clientHeight / 2;
+      } else { visor.scrollTop = 0; visor.scrollLeft = 0; }
+    });
+    visor.addEventListener('click', e=>{ if (e.target === visor || e.target === btn) cerrar(); });
+    document.addEventListener('keydown', e=>{
+      if (!abierto()) return;
+      if (e.key === 'Escape'){ e.preventDefault(); e.stopImmediatePropagation(); cerrar(); return; }
+      if (e.key !== 'Tab') e.stopImmediatePropagation();   // con el visor abierto, las teclas no mueven la lectura atenta
+    }, true);
+    docEl.addEventListener('click', e=>{
+      const img = e.target.closest ? e.target.closest('img') : null;
+      if (!img || docEl.isContentEditable || img.classList.contains('rota')) return;
+      e.preventDefault(); e.stopImmediatePropagation(); abrir(img);
+    }, true);
   })();
 
 })();

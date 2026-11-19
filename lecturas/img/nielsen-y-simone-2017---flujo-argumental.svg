@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 568" width="760" height="568" role="img" aria-label="Lo genérico enlaza los dos casos y deja la conclusión en tensión" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5">
+  <title>Lo genérico enlaza los dos casos y deja la conclusión en tensión</title>
+  <defs>
+    <marker id="flujo-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8d9488"/></marker>
+  </defs>
+  <rect width="760" height="568" fill="#ffffff"/>
+  <text x="24" y="32" font-size="15" font-weight="600" fill="#1d1f1b">Lo genérico enlaza los dos casos y deja la conclusión en tensión</text>
+  <text x="24" y="52" fill="#6b7166">Flujo argumental de Nielsen y Simone (2017), por sección</text>
+  <g fill="none" stroke="#8d9488" stroke-width="1.25">
+    <path d="M380 164V184H200V204" marker-end="url(#flujo-arrow)"/>
+    <path d="M380 184H560V204" marker-end="url(#flujo-arrow)"/>
+    <path d="M200 340V372" marker-end="url(#flujo-arrow)"/>
+    <path d="M560 340V372" marker-end="url(#flujo-arrow)"/>
+  </g>
+  <g>
+    <rect x="120" y="76" width="520" height="88" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+    <text x="136" y="100" font-size="13" font-weight="600" fill="#1d1f1b">Introducción · pp. 128-130</text>
+    <text x="136" y="116" fill="#1d1f1b">Paradoja: la utopía urbana se duplica para no tener que cumplirse</text>
+    <text x="136" y="132" fill="#1d1f1b">Concepto: lo genérico de Laruelle determina sin entrar en relación</text>
+    <text x="136" y="148" fill="#1d1f1b">Tesis: la infraestructura conecta, pero también sustrae y desprende</text>
+  </g>
+  <g>
+    <rect x="40" y="204" width="320" height="136" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+    <text x="56" y="228" font-size="13" font-weight="600" fill="#1d1f1b">Yakarta: desprendimiento</text>
+    <text x="56" y="246" fill="#6b7166">Detaching the city · pp. 130-133</text>
+    <text x="56" y="270" fill="#1d1f1b">Mecanismo: el rakyat, que nunca se prueba</text>
+    <text x="56" y="286" fill="#1d1f1b">Evidencia: inventario de lotes de tierra</text>
+    <text x="56" y="302" fill="#1d1f1b">Concepto: vacíos infraestructurales</text>
+    <text x="56" y="318" fill="#1d1f1b">Caso: Kali Baru redescribe otros mercados</text>
+  </g>
+  <g>
+    <rect x="400" y="204" width="320" height="136" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+    <text x="416" y="228" font-size="13" font-weight="600" fill="#1d1f1b">Maputo: duplicación</text>
+    <text x="416" y="246" fill="#6b7166">Twinning the city · pp. 133-138</text>
+    <text x="416" y="270" fill="#1d1f1b">Mecanismo: el gemelo, copia idéntica y extraña</text>
+    <text x="416" y="286" fill="#1d1f1b">Inversión: la ciudad necesita la falta</text>
+    <text x="416" y="302" fill="#1d1f1b">Gemelo-padre: KaTembe, la ciudad paralela</text>
+    <text x="416" y="318" fill="#1d1f1b">Gemelo-hijo: Maxaquene B, la toma privada</text>
+  </g>
+  <g>
+    <rect x="24" y="372" width="712" height="172" rx="8" fill="#f4f6f1" stroke="#8d9488" stroke-width="1.25"/>
+    <text x="40" y="396" font-size="13" font-weight="600" fill="#1d1f1b">Conclusión · p. 138</text>
+    <text x="40" y="414" fill="#1d1f1b">Giro: el riesgo no es solo el enclave, sino un desprendimiento absoluto</text>
+    <text x="40" y="528" fill="#6b7166">El texto sostiene las dos valencias sin resolver la tensión</text>
+  </g>
+  <g>
+    <rect x="40" y="432" width="320" height="72" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+    <text x="56" y="456" font-size="13" font-weight="600" fill="#1d1f1b">Método: dejar hablar a los detalles</text>
+    <text x="56" y="472" fill="#1d1f1b">Desprenderse de las imágenes familiares</text>
+    <text x="56" y="488" fill="#6b7166">Resuena con Kali Baru</text>
+  </g>
+  <g>
+    <rect x="400" y="432" width="320" height="72" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+    <text x="416" y="456" font-size="13" font-weight="600" fill="#1d1f1b">Amenaza: un diagrama de poder</text>
+    <text x="416" y="472" fill="#1d1f1b">Fórmula genérica que se impone (Foucault)</text>
+    <text x="416" y="488" fill="#6b7166">Resuena con Maxaquene B</text>
+  </g>
+</svg>
