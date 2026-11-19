@@ -6,192 +6,68 @@
 <title>Antropología de las infraestructuras</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#ffffff; --ink:#1d1f1b; --muted:#5b6157; --accent:#5a7a3a; --accent-dark:#3f5728;
-  --accent-soft:#eef3e8; --line:#dfe3da; --quote:#f7f8f4; --steel:#3f5f78; --steel-soft:#e9eff4;
+  --bg:#ffffff; --ink:#1d1f1b; --muted:#6b7166; --accent:#5a7a3a; --accent-dark:#3f5728; --line:#e6e9e2;
   --mono:'Fira Code',ui-monospace,Menlo,Consolas,monospace;
   --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
-  --fs:17px;
+  --fs:16px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.62}
-a{color:var(--accent-dark)}
-.wrap{max-width:860px;margin:0 auto;padding:0 22px}
-.lay{max-width:1180px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:230px minmax(0,860px);gap:40px}
-header.top .lay{display:block}
-aside.toc{position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;padding:26px 6px 40px 0;border-right:1px solid var(--line)}
-aside.toc .label{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:0 0 8px}
-aside.toc a{display:block;text-decoration:none;color:var(--ink);font-size:.86em;line-height:1.35;padding:5px 8px 5px 10px;border-left:2px solid transparent}
-aside.toc a:hover{color:var(--accent-dark);border-left-color:var(--line)}
-aside.toc a.on{color:var(--accent-dark);border-left-color:var(--accent);font-weight:600}
-aside.toc a.sub{font-size:.76em;color:var(--muted);padding:3px 8px 3px 22px}
-aside.toc a.sub.on{color:var(--accent-dark);font-weight:600}
-main{min-width:0}
-header.top{border-bottom:3px solid var(--accent);padding:22px 0 16px}
-.crumbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
-.crumbs a{color:var(--accent-dark);text-decoration:none}
-h1{font-size:1.7em;line-height:1.2;margin:0 0 8px}
-.ref{color:var(--muted);font-size:.92em}
-.tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.btn{font-family:var(--mono);font-size:12.5px;padding:7px 11px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;min-height:36px;cursor:pointer}
-.btn:hover{border-color:var(--accent);color:var(--accent-dark)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-nav.secs{display:none;position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line)}
-nav.secs .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:6px;padding-bottom:6px;scrollbar-width:none}
-nav.secs a{font-family:var(--mono);font-size:12px;white-space:nowrap;text-decoration:none;color:var(--muted);padding:6px 9px;border-radius:4px}
-nav.secs a:hover{background:var(--accent-soft);color:var(--accent-dark)}
-section{padding:30px 0 6px;scroll-margin-top:48px}
-h3[id],h4[id]{scroll-margin-top:56px}
-h2{font-size:1.32em;margin:0 0 14px;display:flex;gap:12px;align-items:baseline}
-h2 .n{font-family:var(--mono);font-size:.62em;color:var(--accent);font-weight:500}
-h3{font-size:1.06em;margin:22px 0 8px}
-.intro{color:var(--muted);margin:-4px 0 16px}
-.tesis{font-size:1.08em;border-left:4px solid var(--accent);padding:4px 0 4px 18px;margin:0}
-
-/* esquema */
-.esq{margin:4px 0 0}
-.paso{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px}
-.pp{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;padding-top:13px}
-.pp a{color:var(--accent-dark);text-decoration:none}
-.caja{border:1px solid var(--line);border-radius:6px;padding:11px 15px 12px;background:#fff}
-.caja .tit{font-style:italic;font-weight:600}
-.fun{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.03em;color:var(--accent-dark);background:var(--accent-soft);border-radius:3px;padding:1px 7px;margin-left:8px;font-style:normal;font-weight:400;vertical-align:2px}
-.caja p{margin:6px 0 0}
-.caja ul{margin:8px 0 0;padding-left:20px}
-.caja li{margin:3px 0}
-.caja li .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
-.trans{display:grid;grid-template-columns:76px minmax(0,1fr);gap:14px;color:var(--muted);font-size:.86em;font-style:italic}
-.trans span:last-child{padding:5px 0 5px 16px;border-left:2px dashed var(--line);margin-left:14px}
-
-/* núcleo */
-.bloque{margin:0 0 8px}
-.fichas{display:grid;gap:10px}
-.ficha{border:1px solid var(--line);border-radius:6px;padding:11px 15px}
-.ficha .cab{font-weight:600}
-.ficha .cab .en{font-weight:400;font-style:italic;color:var(--muted)}
-.ficha .cab .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;margin-left:6px}
-.ficha p{margin:5px 0 0}
-.ficha .ej{color:var(--muted);font-size:.95em}
-.ficha .ej b{color:var(--ink);font-weight:600}
-.ficha ul{margin:6px 0 0;padding-left:20px}
-.ficha li{margin:4px 0}
-.mov{border:1px solid var(--line);border-left:4px solid var(--steel);border-radius:6px;padding:12px 16px;margin:0 0 12px}
-.mov .cab{font-weight:700}
-.mov .cab .pg{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:400;margin-left:6px}
-.mov dl{margin:8px 0 0;display:grid;grid-template-columns:92px minmax(0,1fr);gap:6px 12px}
-.mov dt{font-family:var(--mono);font-size:11.5px;color:var(--steel);padding-top:3px;text-transform:uppercase;letter-spacing:.04em}
-.mov dd{margin:0}
-.caso{background:var(--quote);border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin:0 0 14px}
-.caso p{margin:6px 0 0}.caso p:first-child{margin-top:0}
-.qi{font-style:italic}
-.qi a,.lk{font-family:var(--mono);font-size:11px;text-decoration:none;font-style:normal;white-space:nowrap}
-
-/* argumentos */
-.arg{border:1px solid var(--line);border-radius:6px;padding:14px 18px 6px;margin:0 0 14px}
-.arg h3{margin:0 0 8px;display:flex;gap:10px}
-.arg h3 .n{font-family:var(--mono);font-size:.78em;color:var(--accent);font-weight:500;padding-top:2px}
-.arg ol{margin:4px 0 8px;padding-left:22px}
-.arg li{margin:4px 0}
-.arg .ev{margin:6px 0 10px}
-.arg .ev b{font-family:var(--mono);font-size:11.5px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em;margin-right:6px}
-
-/* citas */
-blockquote.q{margin:0 0 12px;padding:10px 16px;background:var(--quote);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
-blockquote.q .en{font-style:italic}
-blockquote.q .es{color:var(--muted);margin-top:4px;font-size:.95em}
-blockquote.q .meta{font-family:var(--mono);font-size:11.5px;margin-top:6px;color:var(--muted)}
-blockquote.q .meta a{text-decoration:none}
-blockquote.q .co{font-size:.92em;margin-top:4px}
-.arg blockquote.q{margin-bottom:12px}
-
-/* síntesis */
-.sint{border-top:1px solid var(--line);padding-top:6px}
-.sint h4{font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-dark);margin:26px 0 8px;font-weight:500}
-.sint p{margin:0 0 12px}
-.sint ol,.sint ul{padding-left:22px}
-.sint .ref0{color:var(--muted);font-size:.92em}
-
-/* índice */
-.textos{display:grid;gap:14px;margin-top:6px}
-.texto{border:1px solid var(--line);border-radius:8px;padding:16px 18px}
-.texto .ano{font-family:var(--mono);font-size:12px;color:var(--accent-dark)}
-.texto h3{margin:4px 0 4px;font-size:1.12em}
-.texto p{margin:6px 0}
-.texto .tools{margin-top:10px}
-table.dia{width:100%;border-collapse:collapse;font-size:.93em}
-table.dia th,table.dia td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
-table.dia th{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--muted);background:var(--quote)}
-table.dia td:first-child{font-weight:600;width:16%}
-
-footer{color:var(--muted);font-family:var(--mono);font-size:11.5px;padding:34px 0 40px;border-top:1px solid var(--line);margin-top:30px}
-
-@media (max-width:1000px){
-  .lay{display:block}
-  aside.toc{display:none}
-  nav.secs{display:block}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:var(--fs);line-height:1.5}
+a{color:var(--accent-dark);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:680px;margin:0 auto;padding:40px 22px 48px}
+header{margin-bottom:28px}
+.crumb{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+h1{font-size:1.3em;line-height:1.25;margin:6px 0 4px;font-weight:600}
+.sub{color:var(--muted);font-size:.9em;margin:0}
+.meta{font-family:var(--mono);font-size:11.5px;margin-top:10px;display:flex;gap:14px;align-items:center}
+.meta button{font:inherit;color:var(--muted);background:none;border:0;padding:0;cursor:pointer}
+.meta button:hover{color:var(--accent-dark)}
+ol.lista{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+ol.lista li{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ano{font-family:var(--mono);font-size:12px;color:var(--muted);padding-top:2px}
+.tit{font-weight:600;line-height:1.35}
+.aut{color:var(--muted);font-size:.86em;margin-top:2px}
+.enl{font-family:var(--mono);font-size:11.5px;margin-top:5px;display:flex;gap:14px;flex-wrap:wrap}
+footer{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:28px}
+@media (max-width:520px){
+  .wrap{padding-top:28px}
+  ol.lista li{grid-template-columns:1fr;gap:2px}
 }
-@media (max-width:640px){
-  .paso,.trans{grid-template-columns:1fr;gap:4px}
-  .pp{text-align:left;padding-top:0}
-  .trans span:first-child{display:none}
-  .trans span:last-child{margin-left:10px}
-  .mov dl{grid-template-columns:1fr}
-  table.dia, table.dia tbody, table.dia tr, table.dia td, table.dia th{display:block;width:auto}
-  table.dia thead{display:none}
-  table.dia td{border-top:none}
-  table.dia td:first-child{width:auto;border-top:1px solid var(--line);background:var(--quote)}
-  table.dia td[data-t]::before{content:attr(data-t) " · ";font-family:var(--mono);font-size:11px;color:var(--muted)}
-}
-@media print{nav.secs,.tools,aside.toc{display:none}.lay{display:block}}
 </style>
 </head>
 <body>
-<header class="top"><div class="lay">
-  <div class="crumbs"><span>Círculo de lecturas · antropología de las infraestructuras</span></div>
+<div class="wrap">
+<header>
+  <div class="crumb">Círculo de lecturas</div>
   <h1>Antropología de las infraestructuras</h1>
-  <div class="ref">Lector anotador de los textos del círculo y matrices de lectura de tres de ellos.</div>
-  <div class="tools">
-    <a class="btn primary" href="lector.html">lector de textos</a>
-    <button class="btn" id="fsMenos" title="Letra más pequeña">A−</button>
-    <button class="btn" id="fsMas" title="Letra más grande">A+</button>
-  </div>
-</div></header>
-<nav class="secs" aria-label="Secciones"><div class="wrap"><a href="#textos">Textos</a></div></nav>
-<div class="lay">
-<aside class="toc" aria-label="Contenido"><div class="label">Contenido</div><a href="#textos">Textos</a></aside>
+  <p class="sub">Textos del círculo para leer y anotar en el lector, con matrices y resúmenes de algunos de ellos.</p>
+  <div class="meta"><a href="lector.html">abrir el lector →</a><button id="fsMenos" title="Letra más pequeña">A−</button><button id="fsMas" title="Letra más grande">A+</button></div>
+</header>
 <main>
-<section id="textos"><h2><span class="n">01</span>Los textos</h2><p class="intro">Cada texto se lee y anota en el lector; los comentarios fijos aparecen en azul. Tres textos tienen además una matriz: tesis, esquema, núcleo, argumentos, citas, límites y síntesis.</p><div class="textos"><div class="texto"><div class="ano">1994 · hallazgos</div><h3>Steps Towards an Ecology of Infrastructure</h3><div class="ref">Star y Ruhleder · ponencia en CSCW 94</div><p>Un sistema elogiado por sus usuarios y casi no usado. La infraestructura es una relación, y los problemas de adopción son discontinuidades entre contextos que producen dobles vínculos.</p><div class="tools"><a class="btn primary" href="star-ruhleder-1994.html">abrir la matriz</a><a class="btn" href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md">leer el texto ↗</a></div></div><div class="texto"><div class="ano">1999 · principios</div><h3>The Ethnography of Infrastructure</h3><div class="ref">Star · American Behavioral Scientist</div><p>Un programa para estudiar «cosas aburridas»: la infraestructura es relacional y ecológica, tiene nueve propiedades y se lee con unos trucos del oficio.</p><div class="tools"><a class="btn primary" href="star-1999.html">abrir la matriz</a><a class="btn" href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md">leer el texto ↗</a></div></div><div class="texto"><div class="ano">2016 · movimientos</div><h3>Introduction: Infrastructural Complications</h3><div class="ref">Harvey, Jensen y Morita · Routledge</div><p>Las infraestructuras son formaciones complicadas: producen conexiones y huecos a la vez, nadie las controla y su estudio debe empezar por los huecos.</p><div class="tools"><a class="btn primary" href="harvey-jensen-morita-2016.html">abrir la matriz</a><a class="btn" href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md">leer el texto ↗</a></div><div class="texto"><div class="ano">2018 · debate</div><h3>Attention to Infrastructure Offers a Welcome Reconfiguration of Anthropological Approaches to the Political</h3><div class="ref">Venkatesan (ed.), Bear, Harvey, Lazar, Rival y Simone · Critique of Anthropology · debate GDAT 2015</div><p>Una moción, dos proponentes (Bear, Simone), dos oponentes (Rival, Lazar) y una sala que vota en contra por 30 a 26. Se discute si «infraestructura» nombra algo, si reconfigura lo político o solo lo renombra, y si esa reconfiguración es bienvenida.</p><div class="tools"><a class="btn primary" href="lector.html?f=venkatesan-et-al-2018---attention-to-infrastructure-offers-a-welcome-reconfiguration-of-anthropological-approaches-to-the-political.md">leer el texto ↗</a></div></div></div></section>
-
-<footer>Matriz · Círculo de lecturas de antropología de las infraestructuras · Octubre de 2026 · Traducciones propias. Los enlaces «↗» abren el pasaje en el lector.</footer>
+<ol class="lista">
+  <li><div class="ano">1994</div><div><div class="tit">Steps Towards an Ecology of Infrastructure</div><div class="aut">Star y Ruhleder · ponencia en CSCW 94</div><div class="enl"><a href="star-ruhleder-1994.html">matriz</a><a href="lector.html?f=star-y-ruhleder-1994---steps-towards-an-ecology-of-infrastructure-complex-problems-in-design-and-access-for-large-scale-collaborative-systems.md">texto ↗</a></div></div></li>
+  <li><div class="ano">1999</div><div><div class="tit">The Ethnography of Infrastructure</div><div class="aut">Star · American Behavioral Scientist</div><div class="enl"><a href="star-1999.html">matriz</a><a href="lector.html?f=star-1999---the-ethnography-of-infrastructure.md">texto ↗</a></div></div></li>
+  <li><div class="ano">2016</div><div><div class="tit">Introduction: Infrastructural Complications</div><div class="aut">Harvey, Jensen y Morita · Routledge</div><div class="enl"><a href="harvey-jensen-morita-2016.html">matriz</a><a href="lector.html?f=1-harvey-bruun-jensen-y-morita-2016---introduction-infrastructural-complications.md">texto ↗</a></div></div></li>
+  <li><div class="ano">2017</div><div><div class="tit">The Generic City: Examples from Jakarta, Indonesia, and Maputo, Mozambique</div><div class="aut">Nielsen y Simone · Routledge</div><div class="enl"><a href="lector.html?f=nielsen-y-simone-2017---the-generic-city---resumen-operativo.md">resumen ↗</a></div></div></li>
+  <li><div class="ano">2018</div><div><div class="tit">Attention to Infrastructure Offers a Welcome Reconfiguration of Anthropological Approaches to the Political</div><div class="aut">Venkatesan (ed.), Bear, Harvey, Lazar, Rival y Simone · Critique of Anthropology</div><div class="enl"><a href="lector.html?f=venkatesan-et-al-2018---attention-to-infrastructure-offers-a-welcome-reconfiguration-of-anthropological-approaches-to-the-political.md">texto ↗</a></div></div></li>
+</ol>
 </main>
+<footer>Círculo de lecturas de antropología de las infraestructuras · 2026</footer>
 </div>
 <script>
 (function(){
   var K='adinf-matriz-fs', r=document.documentElement;
   function set(v){ r.style.setProperty('--fs', v+'px'); try{localStorage.setItem(K, v);}catch(e){} }
-  var v=17; try{ var g=parseFloat(localStorage.getItem(K)); if(g>=13&&g<=24) v=g; }catch(e){}
+  var v=16; try{ var g=parseFloat(localStorage.getItem(K)); if(g>=13&&g<=24) v=g; }catch(e){}
   set(v);
   var a=document.getElementById('fsMenos'), b=document.getElementById('fsMas');
   if(a) a.onclick=function(){ v=Math.max(13,v-1); set(v); };
   if(b) b.onclick=function(){ v=Math.min(24,v+1); set(v); };
-})();
-(function(){
-  var links=[].slice.call(document.querySelectorAll('aside.toc a[href^="#"]'));
-  if(!links.length || !('IntersectionObserver' in window)) return;
-  var dest=links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); });
-  function marcar(){
-    var y=window.innerHeight*0.25, act=-1, actSub=-1;
-    dest.forEach(function(el,i){ if(el && el.getBoundingClientRect().top<=y){ if(links[i].classList.contains('sub')) actSub=i; else { act=i; actSub=-1; } } });
-    links.forEach(function(a,i){ a.classList.toggle('on', i===act || i===actSub); });
-    var on=document.querySelector('aside.toc a.on.sub')||document.querySelector('aside.toc a.on');
-    var t=document.querySelector('aside.toc');
-    if(on && t){ var r=on.getBoundingClientRect(), rt=t.getBoundingClientRect(); if(r.top<rt.top+40||r.bottom>rt.bottom-40) t.scrollTop+=r.top-rt.top-rt.height/3; }
-  }
-  var pend=false; window.addEventListener('scroll', function(){ if(!pend){ pend=true; requestAnimationFrame(function(){ pend=false; marcar(); }); } }, {passive:true});
-  marcar();
 })();
 </script>
 </body>

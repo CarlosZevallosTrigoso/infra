@@ -194,6 +194,10 @@ Nota de lectura: la conclusión sostiene dos valencias a la vez y no resuelve la
 
 El argumento va de un concepto a dos casos y vuelve a una conclusión con dos caras. La introducción fija lo genérico, Yakarta lo muestra como desprendimiento productivo y Maputo como duplicación por la que la ciudad se expande.
 
+![Flujo argumental: lo genérico enlaza los dos casos y deja la conclusión en tensión](img/nielsen-y-simone-2017---flujo-argumental.svg)
+
+El mismo esquema, en texto:
+
 - **Introducción (pp. 128-130).** Paradoja: la utopía urbana se duplica para no tener que cumplirse. Concepto: lo genérico de Laruelle determina sin entrar en relación. Tesis: la infraestructura conecta, pero también sustrae y desprende.
     - **Yakarta: desprendimiento** (Detaching the city, pp. 130-133). Mecanismo: el rakyat, que nunca se prueba. Evidencia: inventario de lotes de tierra. Concepto: vacíos infraestructurales. Caso: Kali Baru redescribe otros mercados.
         - → **Método** (conclusión): dejar hablar a los detalles y desprenderse de las imágenes familiares. Resuena con Kali Baru.
