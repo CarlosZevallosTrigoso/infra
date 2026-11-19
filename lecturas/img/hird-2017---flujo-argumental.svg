@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 476" width="760" height="476" role="img" aria-label="Enterrar para olvidar, resucitar para lucrar: el ciclo del residuo" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5"><title>Enterrar para olvidar, resucitar para lucrar: el ciclo del residuo</title><defs><marker id="hird-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8d9488"/></marker></defs><rect width="760" height="476" fill="#ffffff"/>
+<text x="24" y="32" font-size="15" font-weight="600" fill="#1d1f1b">Enterrar para olvidar, resucitar para lucrar: el ciclo del residuo</text>
+<text x="24" y="52" fill="#6b7166">Flujo argumental de Hird (2017), por sección</text>
+<g fill="none" stroke="#8d9488" stroke-width="1.25"><path d="M380 164V184H174V204" marker-end="url(#hird-arrow)"/><path d="M380 184H586V204" marker-end="url(#hird-arrow)"/><path d="M324 240H436" marker-end="url(#hird-arrow)"/><path d="M436 300H324" marker-end="url(#hird-arrow)"/><path d="M174 332V364" marker-end="url(#hird-arrow)"/><path d="M586 332V364" marker-end="url(#hird-arrow)"/></g>
+<rect x="24" y="76" width="712" height="88" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="40" y="100" font-size="13" font-weight="600" fill="#1d1f1b">Introducción · pp. 242-243</text>
+<text x="40" y="116" fill="#1d1f1b">El residuo como firma del Antropoceno: combustibles fósiles, Trinity (1945), rellenos</text>
+<text x="40" y="132" fill="#1d1f1b">Marco teológico: pecado original, caída, entierro y resurrección</text>
+<text x="40" y="148" fill="#1d1f1b">Tesis: el manejo de residuos entierra para olvidar y resucita para lucrar</text>
+<rect x="24" y="204" width="300" height="128" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="40" y="228" font-size="13" font-weight="600" fill="#1d1f1b">Entierro</text>
+<text x="40" y="244" fill="#6b7166">Burial · pp. 243-246</text>
+<text x="40" y="268" fill="#1d1f1b">Rellenos, cenizas, relaves (Giant Mine)</text>
+<text x="40" y="284" fill="#1d1f1b">Corporaciones: gestionar, no reducir</text>
+<text x="40" y="300" fill="#1d1f1b">Consulta acotada y reciclaje como coartada</text>
+<text x="40" y="316" fill="#1d1f1b">El relleno como infraestructura del olvido</text>
+<rect x="436" y="204" width="300" height="128" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="452" y="228" font-size="13" font-weight="600" fill="#1d1f1b">Resurrección</text>
+<text x="452" y="244" fill="#6b7166">Resurrection · pp. 246-248</text>
+<text x="452" y="268" fill="#1d1f1b">Minería urbana de urks y metales</text>
+<text x="452" y="284" fill="#1d1f1b">Minería de rellenos: perforar las celdas</text>
+<text x="452" y="300" fill="#1d1f1b">Riesgos: fugas y bacterias liberadas</text>
+<text x="452" y="316" fill="#1d1f1b">¿Residuo o recurso? Según convenga</text>
+<text x="380" y="232" text-anchor="middle" fill="#6b7166">se reextrae</text>
+<text x="380" y="318" text-anchor="middle" fill="#6b7166">se reentierra</text>
+<text x="380" y="266" text-anchor="middle" fill="#6b7166">fracking:</text>
+<text x="380" y="282" text-anchor="middle" fill="#6b7166">entre ambos</text>
+<rect x="24" y="364" width="712" height="88" rx="8" fill="#eef3e8" stroke="#5a7a3a" stroke-width="2"/>
+<text x="40" y="388" font-size="13" font-weight="600" fill="#1d1f1b">Conclusiones · pp. 248-250</text>
+<text x="40" y="404" fill="#1d1f1b">Un ciclo sin fin de entierro y resurrección que desestratifica y reestratifica</text>
+<text x="40" y="420" fill="#1d1f1b">Umbrales biogeológicos desconocidos y tecnologías de residuo sin debate democrático</text>
+<text x="40" y="436" fill="#1d1f1b">Resultado: zonas de sacrificio subterráneas de las que dependemos</text>
+</svg>

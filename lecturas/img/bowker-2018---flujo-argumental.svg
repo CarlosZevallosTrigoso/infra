@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 640" width="760" height="640" role="img" aria-label="Rediseñar el saber exige rediseñar su infraestructura" font-family="system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5"><title>Rediseñar el saber exige rediseñar su infraestructura</title><defs><marker id="bowker-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8d9488"/></marker></defs><rect width="760" height="640" fill="#ffffff"/>
+<text x="24" y="32" font-size="15" font-weight="600" fill="#1d1f1b">Rediseñar el saber exige rediseñar su infraestructura</text>
+<text x="24" y="52" fill="#6b7166">Flujo argumental de Bowker (2018), por sección</text>
+<g fill="none" stroke="#8d9488" stroke-width="1.25"><path d="M240 120H272" marker-end="url(#bowker-arrow)"/><path d="M488 120H520" marker-end="url(#bowker-arrow)"/><path d="M628 164V196" marker-end="url(#bowker-arrow)"/><path d="M380 284V316" marker-end="url(#bowker-arrow)"/><path d="M380 496V528" marker-end="url(#bowker-arrow)"/></g>
+<rect x="24" y="76" width="216" height="88" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="40" y="100" font-size="13" font-weight="600" fill="#1d1f1b">Prólogo</text>
+<text x="40" y="116" fill="#6b7166">Prolegomenon · pp. 203-205</text>
+<text x="40" y="134" fill="#1d1f1b">Saber e infraestructura:</text>
+<text x="40" y="150" fill="#1d1f1b">equivalencia, no analogía</text>
+<rect x="272" y="76" width="216" height="88" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="288" y="100" font-size="13" font-weight="600" fill="#1d1f1b">Introducción</text>
+<text x="288" y="116" fill="#6b7166">Introduction · p. 205</text>
+<text x="288" y="134" fill="#1d1f1b">El sistema no es sostenible</text>
+<text x="288" y="150" fill="#1d1f1b">Muchos autores, pocos lectores</text>
+<rect x="520" y="76" width="216" height="88" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="536" y="100" font-size="13" font-weight="600" fill="#1d1f1b">Antes de empezar</text>
+<text x="536" y="116" fill="#6b7166">Before We Begin · pp. 205-206</text>
+<text x="536" y="134" fill="#1d1f1b">La clasificación ilustrada</text>
+<text x="536" y="150" fill="#1d1f1b">sigue inscrita en los campus</text>
+<rect x="24" y="196" width="712" height="88" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="40" y="220" font-size="13" font-weight="600" fill="#1d1f1b">Las formas nuevas exigen infraestructuras nuevas</text>
+<text x="40" y="236" fill="#6b7166">New Forms of Knowledge Expression Require New Knowledge Infrastructures · pp. 206-210</text>
+<text x="40" y="254" fill="#1d1f1b">Diagnóstico: el texto lineal es un vestigio que traba los artefactos nuevos y su reconocimiento</text>
+<text x="40" y="270" fill="#1d1f1b">Propuesta: relevar las formas nuevas de expresión y aliar humanidades y ciencias</text>
+<rect x="24" y="316" width="712" height="180" rx="8" fill="#f4f6f1" stroke="#8d9488" stroke-width="1.25"/>
+<text x="40" y="340" font-size="13" font-weight="600" fill="#1d1f1b">Diseñar infraestructuras nuevas</text>
+<text x="40" y="358" fill="#6b7166">Designing New Knowledge Infrastructures · pp. 210-219</text>
+<text x="40" y="376" fill="#1d1f1b">Base heredada: ontología, comunicación y comunidad (Warner y Siskin)</text>
+<rect x="40" y="392" width="328" height="88" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="56" y="416" font-size="13" font-weight="600" fill="#1d1f1b">Qué construir</text>
+<text x="56" y="432" fill="#1d1f1b">Brokers y transducers</text>
+<text x="56" y="448" fill="#1d1f1b">Plataformas y estándares</text>
+<text x="56" y="464" fill="#1d1f1b">Re:Enlightenment: salir del atasco</text>
+<rect x="392" y="392" width="328" height="88" rx="8" fill="#ffffff" stroke="#8d9488" stroke-width="1.25"/>
+<text x="408" y="416" font-size="13" font-weight="600" fill="#1d1f1b">Qué lo traba</text>
+<text x="408" y="432" fill="#1d1f1b">Estándares universales contra cambio</text>
+<text x="408" y="448" fill="#1d1f1b">Ontologías incompatibles entre disciplinas</text>
+<text x="408" y="464" fill="#1d1f1b">Brecha entre ciencia y política</text>
+<rect x="24" y="528" width="712" height="88" rx="8" fill="#eef3e8" stroke="#5a7a3a" stroke-width="2"/>
+<text x="40" y="552" font-size="13" font-weight="600" fill="#1d1f1b">Conclusión</text>
+<text x="40" y="568" fill="#6b7166">Conclusion · pp. 219-220</text>
+<text x="40" y="586" fill="#1d1f1b">La base de datos, no el texto, es hoy el lugar del saber</text>
+<text x="40" y="602" fill="#1d1f1b">Promesa rizomática: infraestructura y saber se repiensan uno al otro</text>
+</svg>
